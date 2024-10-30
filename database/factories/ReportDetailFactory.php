@@ -20,13 +20,14 @@ class ReportDetailFactory extends Factory
      */
     public function definition(): array
     {
-        $files = File::allFiles('D:\Tugas Viko\Universitas Sanata Dharma\Semester 4\Lomba Gamma Fest\gammafest24\Train');
+        // $files = File::allFiles('D:\Tugas Viko\Universitas Sanata Dharma\Semester 4\Lomba Gamma Fest\gammafest24\Train');
         return [
             'report_id' => Report::factory(),
             'content_of_report' => fake()->realText(),
             'admin_id' => Admin::factory(),
             'content_of_response'=>fake()->realText(),
-            'img' => file_get_contents(Arr::random($files)),
+            // 'img' => file_get_contents(Arr::random([1,2,3,4,5,6,7,8,9,10])),
+            'img' => (Arr::random([1,2,3,4,5,6,7,8,9,10])),
             'respose_time' => now()
         ];
     }
