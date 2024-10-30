@@ -9,4 +9,8 @@ class ProfileController extends Controller
     function profile(){
         return view('profile');
     }
+
+    function soba() {
+        return view('soba');
+    }
 }
