@@ -13,4 +13,8 @@ class ProfileController extends Controller
     function soba() {
         return view('soba');
     }
+
+    function aoka() {
+        return view('aoka');
+    }
 }
