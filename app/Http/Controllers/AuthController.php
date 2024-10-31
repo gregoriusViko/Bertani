@@ -101,39 +101,20 @@ class AuthController extends Controller
         'email_address' => $request->input('email_address'),
         'password' => $request->input('password')
         ];
-        if  (Auth::guard('buyer')->attempt($data)) { 
+        if  (Auth::guard('buyer')->attempt($data, true)) { 
             // $request->session()->regenerate();
-             return redirect('/');
-        }if  (Auth::guard('farmer')->attempt($data)) { 
-            // $request->session()->regenerate();
-             return redirect('/');
-        }if  (Auth::guard('admin')->attempt($data)) { 
-            // $request->session()->regenerate();
-             return redirect('/');
-        }
-        return redirect()->back()->with('gagal', "Email atau password anda salah!");
-    }
-
-    function coba1(Request $request){
-
-        $validator = Validator::make($request->all(), [
-            'email_address' => 'required|email|max:45',
-            'password' => 'required|min:6']);
-
-        $data = [
-        'email_address' => $request->input('email_address'),
-        'password' => $request->input('password')
-        ];
-        if  (Auth::guard('buyer')->attempt($data)) { 
-            $request->session()->regenerate();
              return redirect('/home');
-        }if  (Auth::guard('farmer')->attempt($data)) { 
-            $request->session()->regenerate();
+        }if  (Auth::guard('farmer')->attempt($data, true)) { 
+            // $request->session()->regenerate();
              return redirect('/home');
-        }if  (Auth::guard('admin')->attempt($data)) { 
-            $request->session()->regenerate();
+        }if  (Auth::guard('admin')->attempt($data, true)) { 
+            // $request->session()->regenerate();
              return redirect('/home');
         }
+
+        // if  (Auth::attempt($data)){
+        //     return redirect('/home');
+        // }
         return redirect()->back()->with('gagal', "Email atau password anda salah!");
     }
 }    
