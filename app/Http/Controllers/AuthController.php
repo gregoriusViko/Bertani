@@ -78,43 +78,30 @@ class AuthController extends Controller
             'email_address' => 'required|email|max:45',
             'password' => 'required|min:6']);
 
-        $user = Farmer::where('email_address', $request->email_address)->first()
-                ?? Buyer::where('email_address', $request->email_address)->first()
-                ?? Admin::where('email_address', $request->email_address)->first();
-
-        if  ($user && $user->password === $request->password) {
-            Auth::login($user);
-            $request->session()->regenerate();
-            return redirect()->route('home');
-        } else {
-            return redirect()->back()->with('gagal', "Email atau password anda salah!");
-        }
-    }
-
-    function coba(Request $request){
-
-        $validator = Validator::make($request->all(), [
-            'email_address' => 'required|email|max:45',
-            'password' => 'required|min:6']);
-
         $data = [
         'email_address' => $request->input('email_address'),
         'password' => $request->input('password')
         ];
         if  (Auth::guard('buyer')->attempt($data, true)) { 
-            // $request->session()->regenerate();
+            // $request->session()->regenerateToken();
              return redirect('/home');
         }if  (Auth::guard('farmer')->attempt($data, true)) { 
-            // $request->session()->regenerate();
+            // $request->session()->regenerateToken();
              return redirect('/home');
         }if  (Auth::guard('admin')->attempt($data, true)) { 
-            // $request->session()->regenerate();
+            // $request->session()->regenerateToken();
              return redirect('/home');
         }
-
-        // if  (Auth::attempt($data)){
-        //     return redirect('/home');
-        // }
         return redirect()->back()->with('gagal', "Email atau password anda salah!");
+    }
+
+    function logout(Request $request){
+        Auth::logout();
+ 
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+ 
+        return redirect('/home');
     }
 }    

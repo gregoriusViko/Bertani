@@ -15,10 +15,10 @@
                     class="bg-green-600 text-white px-4 py-1 relative font-[hind] text-1xl text-semibold rounded-full hover:bg-white hover:text-green-600 flex items-center justify-center space-x-2"
                     type="button">
                     <span class="group-hover:text-green-600 relative font-[hind] text-1xl text-base text-semibold">
-                        @if (Auth::check())
-                            {{ Auth::user()->email_address }}
+                        @if (Auth::guard('admin')->check())
+                            {{ Auth::guard('admin')->user()->email_address }}
                         @else
-                            Belum login
+                            <a href="/login">Belum login</a>
                         @endif
                     </span>
                     <ion-icon name="person-circle-outline" class="text-2xl group-hover:text-green-600"></ion-icon>
