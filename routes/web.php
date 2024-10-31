@@ -52,17 +52,14 @@ Route::get('/profile', function () {
     return view('ProfilePage');
 })->name('profile');
 
-
-// Route::get('/login', function () {
-//     return view('login');
-// });
-
 Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register.tampil');
 Route::post('/register/submit',[AuthController::class, 'submitRegister'])->name('register.submit');
 
 Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login.tampil');
-Route::post('/login/submit',[AuthController::class, 'coba'])->name('login.proses');
+Route::post('/login/submit',[AuthController::class, 'submitLogin'])->name('login.proses');
 
-Route::middleware(['auth:buyer, farmer, admin'])->group(function() {
-    Route::post('/register/submit');
-});
+// Route::middleware(['auth:buyer, farmer, admin'])->group(function() {
+//     Route::post('/register/submit');
+// });
+
+Route::post('/logout', [AuthController::class, 'logout']);
