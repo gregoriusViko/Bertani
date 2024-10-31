@@ -61,8 +61,8 @@ Route::get('/register', [AuthController::class, 'tampilRegister'])->name('regist
 Route::post('/register/submit',[AuthController::class, 'submitRegister'])->name('register.submit');
 
 Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login.tampil');
-Route::post('/login/submit',[AuthController::class, 'submitLogin'])->name('login.proses');
+Route::post('/login/submit',[AuthController::class, 'coba'])->name('login.proses');
 
-// Route::middleware(['auth:buyer, farmer, admin'])->group(function() {
-//     Route::get('/home');
-// });
+Route::middleware(['auth:buyer, farmer, admin'])->group(function() {
+    Route::post('/register/submit');
+});

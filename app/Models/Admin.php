@@ -14,14 +14,18 @@ class Admin extends Authenticatable
         'password',
         'remember_token'
     ];
-    // protected function casts(): array
-    // {
-    //     return [
-    //         'email_verified_at' => 'datetime',
-    //         'password' => 'hashed',
-    //     ];
-    // }
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+    protected $fillable = [
+        'name',
+        'email_address',
+        'password',
+    ];
     use HasFactory, Notifiable;
 
     public function reports(): HasMany{

@@ -83,15 +83,15 @@ return [
 
         'buyers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Buyer::class,
+            'model' => env('AUTH_MODEL',Buyer::class),
         ],
-        'farmer' => [
+        'farmers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Farmer::class,
+            'model' => env('AUTH_MODEL',Farmer::class),
         ],
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => env('AUTH_MODEL',Admin::class),
         ]
     ],
 

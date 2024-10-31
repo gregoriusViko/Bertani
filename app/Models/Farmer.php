@@ -10,7 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Farmer extends Authenticatable
 {
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'name',
+        'email_address',
+        'password',
+    ];
     /** @use HasFactory<\Database\Factories\FarmerFactory> */
     use HasFactory, Notifiable;
 
@@ -19,13 +23,13 @@ class Farmer extends Authenticatable
         'remember_token'
     ];
 
-    // protected function casts(): array
-    // {
-    //     return [
-    //         'email_verified_at' => 'datetime',
-    //         'password' => 'hashed',
-    //     ];
-    // }
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
 
     public function buyerChats(): HasMany{
         return $this->hasMany(BuyerChat::class);
