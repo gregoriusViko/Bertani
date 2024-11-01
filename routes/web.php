@@ -1,9 +1,10 @@
 <?php
 use App\Http\Controllers\AuthController;
-use App\Http\Middleware\BlockAccess;
-use App\Http\Middleware\BlockLogin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Middleware\BlockAccess;
+use App\Http\Middleware\BlockLogin;
+use App\Http\Controllers\ProfileController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -63,8 +64,6 @@ Route::get('/laporan', function () {
     return view('LaporanPage');
 })->name('laporan');
 
-// Route::middleware(['auth:buyer, farmer, admin'])->group(function() {
-//     Route::post('/register/submit');
-// });
+Route::middleware(['MultiAuth'])->get('/profile', [ProfileController::class, 'profile'])->name('profile');
 
 Route::post('/logout', [AuthController::class, 'logout']);
