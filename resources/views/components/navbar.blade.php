@@ -18,7 +18,7 @@
                         @if (Auth::guard('admin')->check())
                             {{ Auth::guard('admin')->user()->email_address }}
                         @elseif (Auth::guard('buyer')->check())
-                            {{ Auth::guard('admin')->user()->email_address }}
+                            {{ Auth::guard('buyer')->user()->email_address }}
                         @elseif (Auth::guard('farmer')->check())
                             {{ Auth::guard('farmer')->user()->email_address }}
                         @else
