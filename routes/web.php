@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -54,8 +55,6 @@ Route::post('/register/submit',[AuthController::class, 'submitRegister'])->name(
 Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login.tampil');
 Route::post('/login/submit',[AuthController::class, 'submitLogin'])->name('login.proses');
 
-// Route::middleware(['auth:buyer, farmer, admin'])->group(function() {
-//     Route::post('/register/submit');
-// });
+Route::middleware(['auth:buyer,farmer'])->get('/profile', [ProfileController::class, 'profile'])->name('profile');
 
 Route::post('/logout', [AuthController::class, 'logout']);
