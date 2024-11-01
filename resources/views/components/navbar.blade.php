@@ -16,11 +16,11 @@
                     type="button">
                     <span class="group-hover:text-green-600 relative font-[hind] text-1xl text-base text-semibold">
                         @if (Auth::guard('admin')->check())
-                            {{ Auth::guard('admin')->user()->email_address }}
+                            <a href="{{ route('profile')}}"> {{ Auth::guard('admin')->user()->email_address }}</a>
                         @elseif (Auth::guard('buyer')->check())
-                            {{ Auth::guard('buyer')->user()->email_address }}
+                            <a href="{{ route('profile')}}" > {{ Auth::guard('buyer')->user()->email_address }}</a>
                         @elseif (Auth::guard('farmer')->check())
-                            {{ Auth::guard('farmer')->user()->email_address }}
+                            <a href="{{ route('profile')}}" >{{ Auth::guard('farmer')->user()->email_address }}</a>
                         @else
                             <a href="/login">Belum Login</a>
                         @endif
