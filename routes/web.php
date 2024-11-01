@@ -1,5 +1,7 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\BlockAccess;
+use App\Http\Middleware\BlockLogin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -8,6 +10,27 @@ use Illuminate\Http\Request;
 // });
 
 #untuk calon user
+
+Route::middleware(BlockAccess::class)->group(function(){
+    Route::get('/profile', function () {
+        return view('ProfilePage');
+    })->name('profile');
+
+    Route::get('/chat', function () {
+        return view('ChatPage');
+    })->name('chat');
+});
+
+Route::middleware(BlockLogin::class)->group(
+    function(){
+        Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register.tampil');
+    Route::post('/register/submit',[AuthController::class, 'submitRegister'])->name('register.submit');
+
+    Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login.tampil');
+    Route::post('/login/submit',[AuthController::class, 'submitLogin'])->name('login.proses');
+    }
+);
+
 Route::get('/', function () {
     return view('HomePageDefault');
 })->name('HomePageDefault');
@@ -36,23 +59,9 @@ Route::get('/dafpesanan', function () {
     return view('PetDafPesananPage');
 })->name('dafpesanan');
 
-Route::get('/chat', function () {
-    return view('ChatPage');
-})->name('chat');
-
 Route::get('/laporan', function () {
     return view('LaporanPage');
 })->name('laporan');
-
-Route::get('/profile', function () {
-    return view('ProfilePage');
-})->name('profile');
-
-Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register.tampil');
-Route::post('/register/submit',[AuthController::class, 'submitRegister'])->name('register.submit');
-
-Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login.tampil');
-Route::post('/login/submit',[AuthController::class, 'submitLogin'])->name('login.proses');
 
 // Route::middleware(['auth:buyer, farmer, admin'])->group(function() {
 //     Route::post('/register/submit');
