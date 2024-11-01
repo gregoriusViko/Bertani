@@ -1,46 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
+<x-layout>
+    <x-slot:title>Daftar Pesanan-Bertani.com</x-slot:title>
+    <div dir="ltr">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">Daftar Pesanan</h1>
+        </div>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/dropdown.js'])
-    {{-- <link rel="preload" as="style" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><link rel="modulepreload" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js" /><link rel="stylesheet" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><script type="module" src="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js"></script>     --}}
-    {{-- <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>Daftar Pesanan-Bertani.com</title>
-</head>
-<body class="font-[Poppins] bg-white h-full">
-    <header class="bg-green-600">
-        {{-- <x-navbarpetani></x-navbarpetani> --}}
-        <!-- <x-navbarpembeli></x-navbarpembeli> -->
-        {{-- <x-navbaradmin></x-navbaradmin> --}}
-        {{-- <x-navbardefault></x-navbardefault> --}}
-        <x-navbarpetani></x-navbarpetani>
-    </header>
+    <!-- bawah ini adalah component untuk produk -->
+    <div id="cardContainer"
+        class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
+        {{-- @foreach ($products as $product) --}}
+        <div class="grid grid-cols-5 grid-rows-4 gap-4 border rounded-lg p-4">
+            <div class="col-start-1 col-span-2 row-span-4 border rounded-lg">gambar </div>
+            <div class="col-span-2">{{-- {{ $product->name --}}"Nama Produk"</div>
+            <div class="col-end-6">{{-- {{ $product->date --}}"dd-mm-yyyy - 13.20 WIB"</div>
+            <div class="col-span-2">{{-- {{ $product->buyer_id --}}"nama_pembeli - notelpon" </div>
+            <div class="col-end-6 ">{{-- {{ $product->price --}}"Rp xx.xxx"</div>
+            <div class="col-span-2">{{-- {{ $product->payment_proof --}}
+                <h4>"metode_pembayaran"</h4>
+                {{-- if (metode pembayaran == transfer) : --}}
+                <button class="bg-blue-500 rounded-md p-1 items-center text-white"><ion-icon
+                    name="document-outline"></ion-icon>
+                <span>Bukti Pembayaran</span>
+            </button>
+            </div>
+            <div class="col-end-6 ">{{-- {{ $product->price --}}
+                <h4>"order_status"</h4> 
+                <button class="text-base rounded-md"><ion-icon name="create-outline"
+                        class="transition ease-in duration-300"></ion-icon></span></button>
+                <button class="text-base rounded-md"onclick="toggleComponent()">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                </button>
+            </div>
+            
+            
+            
 
-    <script>
-        const navLinks = document.querySelector('.nav-links')
-        function onToggleMenu(e){
-            e.name = e.name === 'menu' ? 'close' : 'menu'
-            navLinks.classList.toggle('top-[9%]')
-        }
-    </script>
-
-    <main px-7>
-        <h1>ini daftar pesanan</h1>
-        
-        
-
-    </main>
-</body>
-</html>
+        </div>
+        <div id="componentContainer" class="hidden mt-4">
+            @include('components.delete_confirm')
+        </div>
+        <script>
+            function toggleComponent() {
+                const container = document.getElementById('componentContainer');
+                container.classList.toggle('hidden');
+            }
+        </script>
+        {{-- @endforeach --}}
+    </div>
+</x-layout>
