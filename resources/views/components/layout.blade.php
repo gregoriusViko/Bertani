@@ -21,7 +21,13 @@
 </head>
 <body class="font-[Poppins] bg-white h-full">
     <header class="bg-green-600">
-        <x-navbar_petani></x-navbar_petani>
+        @if (Auth::guard('admin')->check())
+            <x-navbar_admin></x-navbar_admin>
+        @elseif (Auth::guard('farmer')->check())
+            <x-navbar_petani></x-navbar_petani>
+        @else
+            <x-navbar_pembeli></x-navbar_pembeli>
+        @endif
     </header>
 
     <main px-7>

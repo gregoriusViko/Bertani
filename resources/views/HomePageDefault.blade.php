@@ -1,4 +1,4 @@
-<x-layout-pembeli>
+<x-layout>
     <x-slot:title>Home-Bertani.com</x-slot:title>
     <div class="jumbotron mt-6 bg-cover bg-centerflex items-center justify-center text-gray-800 gap-x-3 p-14 w-15 rounded-lg font-[sans-serif] max-w-4xl mx-auto" style="background-image: url('./img/bgjumbo.jpg');">
         <h1 class="text-4xl font-extrabold text-white text-center">BELI PRODUK HASIL TANI</h1>
@@ -25,4 +25,4 @@
             </button>
         </div>
     </form>
-</x-layout-pembeli>
+</x-layout>
