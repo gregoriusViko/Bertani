@@ -17,8 +17,12 @@
                     <span class="group-hover:text-green-600 relative font-[hind] text-1xl text-base text-semibold">
                         @if (Auth::guard('admin')->check())
                             {{ Auth::guard('admin')->user()->email_address }}
+                        @elseif (Auth::guard('buyer')->check())
+                            {{ Auth::guard('admin')->user()->email_address }}
+                        @elseif (Auth::guard('farmer')->check())
+                            {{ Auth::guard('farmer')->user()->email_address }}
                         @else
-                            <a href="/login">Belum login</a>
+                            <a href="/login">Belum Login</a>
                         @endif
                     </span>
                     <ion-icon name="person-circle-outline" class="text-2xl group-hover:text-green-600"></ion-icon>
