@@ -64,6 +64,4 @@ Route::get('/laporan', function () {
     return view('LaporanPage');
 })->name('laporan');
 
-Route::middleware(['MultiAuth'])->get('/profile', [ProfileController::class, 'profile'])->name('profile');
-
 Route::post('/logout', [AuthController::class, 'logout']);
