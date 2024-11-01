@@ -30,7 +30,7 @@
         @endif
     </header>
 
-    <main px-7>
+    <main px-7 mx-auto>
         {{ $slot }}
     </main>
 </body>
