@@ -20,11 +20,17 @@ Route::middleware(BlockAccess::class)->group(function(){
     Route::get('/chat', function () {
         return view('ChatPage');
     })->name('chat');
+
+        // Rute untuk menampilkan halaman profil
+        Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+
+        // Rute untuk memperbarui profil
+        Route::post('/profile/update', [ProfileController::class, 'updates'])->name('profile.update');
 });
 
 Route::middleware(BlockLogin::class)->group(
     function(){
-        Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register.tampil');
+    Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register.tampil');
     Route::post('/register/submit',[AuthController::class, 'submitRegister'])->name('register.submit');
 
     Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login.tampil');
