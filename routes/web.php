@@ -12,10 +12,6 @@ Route::get('/', function () {
     return view('HomePageDefault');
 })->name('HomePageDefault');
 
-Route::get('/home', function () {
-    return view('HomePage');
-})->name('home');
-
 Route::get('/hargapasar', function () {
     return view('HargaPasarPage');
 })->name('hargapasar');
