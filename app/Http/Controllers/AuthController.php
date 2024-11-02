@@ -96,12 +96,14 @@ class AuthController extends Controller
     }
 
     function logout(Request $request){
-        Auth::logout();
+        Auth::guard('farmer')->logout();
+        Auth::guard('buyer')->logout();
+        Auth::guard('admin')->logout();
  
         $request->session()->invalidate();
     
         $request->session()->regenerateToken();
  
-        return redirect('/home');
+        return redirect('/');
     }
 }    
