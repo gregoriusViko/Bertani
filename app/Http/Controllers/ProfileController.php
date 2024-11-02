@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller
 {
     function profile(){
-        $user = Auth::guard('buyer')->check() ? Auth::guard('buyer')->user() : Auth::guard('farmer')->user();
-        $role = Auth::guard('buyer')->check() ? 'buyer ' : 'farmer';
-        return view('profile', compact('user', 'role'));
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            $role = 'admin';
+        } elseif (Auth::guard('buyer')->check()) {
+            $user = Auth::guard('buyer')->user();
+            $role = 'buyer';
+        } else {
+            $user = Auth::guard('farmer')->user();
+            $role = 'farmer';
+        }        
+        return view('profilePage', compact('user', 'role'));
     }
 
     function updates(Request $request){
