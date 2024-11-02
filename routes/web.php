@@ -70,4 +70,4 @@ Route::get('/laporan', function () {
     return view('LaporanPage');
 })->name('laporan');
 
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout');
