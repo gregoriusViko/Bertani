@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class BlockLogin
+class AuthAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class BlockLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('admin')->check() || Auth::guard('buyer')->check() || Auth::guard('farmer')->check()){
-            return redirect()->back();
+        if(Auth::guard('admin')->check()){
+            return $next($request);
         }
-        return $next($request);
+        return redirect()->back()->with('error-permission','Anda tidak memiliki izin');
     }
 }

@@ -18,7 +18,7 @@ class BuyerSeeder extends Seeder
             'password' => 'Pembeli1234',
             'name' => 'Pembeli 1',
             'phone_number' => '087234451234',
-            'profile_img_link' => '/buyers/pembeli.jpeg',
+            'profile_img_link' => '/buyers/pembeli.jpg',
             'home_address' => 'http//tidak-tau'
         ]);
         Buyer::factory(50)->create();
