@@ -6,7 +6,7 @@
         <div class="flex flex-col items-center">
             <div class="avatar mb-3 w-24 h-24">
                 {{-- <div class="size-16 rounded-full border border-black"> --}}
-                <img class="rounded-full w-24 h-24" src="./img/orang.jpeg.jpg" alt="avatar">
+                <img class="rounded-full object-cover w-24 h-24" src="{{ $user->profile_img_link ? $user->profile_img_link : './img/orang.jpeg.jpg' }}" alt="avatar">
                 {{-- </div> --}}
             </div>
             <h2 class="text-base font-bold text-black">{{$user->email_address}}</h2>
