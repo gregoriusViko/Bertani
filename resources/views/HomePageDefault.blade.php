@@ -25,40 +25,46 @@
     </form>
     <div id="cardContainer" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-10">
         {{-- @foreach ($products as $product) --}}
-        @foreach ($products as $product)
-        <div class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer" onclick="handleClick()">
-            <img class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1" src="./img/logo3.jpg" alt="">
-            <div class="p-2 grid-cols-2">
-                <div class="col-span-2 text-base font-mono">
-                    {{ $product->name }} - "Berat"
-                </div>
-                <div class="text-xl font-mono font-bold">
-                    Rp {{ Number::format($product->price) }}
-                </div>
-                <div class="text-sm font-mono font-light">
-                    {{ Str::before($product->farmer->name, ' ') }} - "asal"
-                </div>
-                <div class="text-sm font-mono font-light">
-                    "Terjual : xx "
-                </div>
-                <div class="text-sm font-mono font-light">
-                    "Stok : {{ $product->stock }} Kg"
-                </div>
-                
-            </div>
-        </div>
-        @endforeach
-        
-        
+        @include('partials.product')      
+    </div>
 
-        <script>
-            function handleClick() {
-                // Lakukan aksi di sini, misalnya:
-                window.location.href = "link-ke-halaman"; // Mengalihkan ke halaman lain
+    <div id="loading" style="display: none;">Loading...</div>
+    <script>
+        function handleClick() {
+            // Lakukan aksi di sini, misalnya:
+            window.location.href = "link-ke-halaman"; // Mengalihkan ke halaman lain
+        }
+    </script> 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            let page = 1;
+    
+            $(window).scroll(function() {
+                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 15) {
+                    loadMoreData(++page);
+                }
+            });
+    
+            function loadMoreData(page) {
+                $.ajax({
+                    url: '/products/load?page=' + page,
+                    type: "get",
+                    beforeSend: function() {
+                        $('#loading').show();
+                    }
+                }).done(function(data) {
+                    if (data == "") {
+                        $('#loading').html("No more records found");
+                        return;
+                    }
+                    $('#loading').hide();
+                    $("#cardContainer").append(data);
+                }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                    alert('No response from server');
+                });
             }
         </script>
-       
-    </div>
 
 
 </x-layout>
