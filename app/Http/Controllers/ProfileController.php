@@ -8,19 +8,9 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    function profile()
-    {
-        // Cek jenis pengguna dan ambil data dari tabel yang sesuai
-        if (Auth::guard('buyer')->check()) {
-            $user = Auth::guard('buyer')->user();
-            $role = 'buyer';
-        } elseif (Auth::guard('farmer')->check()) {
-            $user = Auth::guard('farmer')->user();
-            $role = 'farmer';
-        } else {
-            return redirect()->route('login'); // Atau ke rute lain jika tidak terautentikasi
-        }
-
+    function profile(){
+        $user = Auth::guard('buyer')->check() ? Auth::guard('buyer')->user() : Auth::guard('farmer')->user();
+        $role = Auth::guard('buyer')->check() ? 'buyer ' : 'farmer';
         return view('profile', compact('user', 'role'));
     }
 

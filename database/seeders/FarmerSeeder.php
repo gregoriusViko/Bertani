@@ -18,7 +18,6 @@ class FarmerSeeder extends Seeder
             'password' => 'petani1234',
             'name' => 'petani 1',
             'phone_number' => '087234455234',
-            'profile_img_link' => '/farmers/petani.jpg',
             'home_address' => 'http//tidak-tau'
         ]);
         Farmer::factory(25)->create();
