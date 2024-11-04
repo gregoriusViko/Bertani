@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Middleware\BlockAccess;
 use App\Http\Middleware\BlockLogin;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\AuthAdmin;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -38,6 +39,16 @@ Route::middleware(BlockLogin::class)->group(
     }
 );
 
+Route::middleware(AuthAdmin::class)->group(
+    function(){
+        Route::prefix('admin')->group(function(){
+            Route::get('/laporan', function () {
+                return view('LaporanPage');
+            })->name('admin.laporan');
+        });
+    }
+);
+
 Route::get('/', function () {
     return view('HomePageDefault');
 })->name('HomePageDefault');
@@ -66,8 +77,4 @@ Route::get('/dafpesanan', function () {
     return view('PetDafPesananPage');
 })->name('dafpesanan');
 
-Route::get('/laporan', function () {
-    return view('LaporanPage');
-})->name('laporan');
-
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout');
