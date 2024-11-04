@@ -24,7 +24,7 @@
     </script>
     <title>{{ $title }}</title>
 </head>
-<body class="font-[Poppins] bg-white h-full">
+<body class="font-[Poppins] bg-white min-h-screen">
     <header class="bg-green-600">
         @if (Auth::guard('admin')->check())
             <x-navbar_admin></x-navbar_admin>
