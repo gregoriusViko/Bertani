@@ -17,7 +17,7 @@ class BlockLogin
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::guard('admin')->check() || Auth::guard('buyer')->check() || Auth::guard('farmer')->check()){
-            return redirect('/');
+            return redirect()->back();
         }
         return $next($request);
     }

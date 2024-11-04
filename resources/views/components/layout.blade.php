@@ -17,6 +17,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        @if (session('error-permission'))
+            alert("{{ session('error-permission') }}");
+        @endif
+    </script>
     <title>{{ $title }}</title>
 </head>
 <body class="font-[Poppins] bg-white h-full">
@@ -39,7 +44,7 @@
     const navLinks = document.querySelector('.nav-links')
     function onToggleMenu(e){
         e.name = e.name === 'menu' ? 'close' : 'menu'
-        navLinks.classList.toggle('top-[11%]')
+        navLinks.classList.toggle('top-[9%]')
         main(z-[99])
     }
 </script>
