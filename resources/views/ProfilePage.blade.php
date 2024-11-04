@@ -59,9 +59,6 @@
                 <button class="text-white bg-yellow-600 px-4 py-1 rounded-lg hover:bg-yellow-400 mr-2" type="button" id="edit-button" onclick="toggleAllInputs()">EDIT</button>
                 <button class="text-white bg-blue-600 px-4 py-1 rounded-lg hover:bg-blue-400" type="submit" id="save-button" form="profile-form" disabled>SIMPAN</button>
             </div>
-        </div>
-        <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
-    </div>
 </x-layout>
 {{-- toggleAllInputs() dan saveChanges() ada di \resources\js\app.js --}}
 <script>

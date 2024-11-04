@@ -17,7 +17,7 @@ class ProfileController extends Controller
             $user = Auth::guard('farmer')->user();
             $role = 'farmer';
         }        
-        return view('profilePage', compact('user', 'role'));
+        return view('ProfilePage', compact('user', 'role'));
     }
 
     function updates(Request $request){
