@@ -2,7 +2,7 @@
     <x-slot:title>Daftar Pesanan-Bertani.com</x-slot:title>
     <div dir="ltr">
         <div class="mb-4 mx-auto max-w-7xl px-4 mt-5 sm:px-6 lg:px-8 flex justify-between items-center">
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900">Daftar Pesanan</h1>
+            <h1 class="text-3xl font-libre-franklin font-bold tracking-tight text-gray-900">Daftar Pesanan</h1>
         </div>
     </div>
 
@@ -19,39 +19,39 @@
             </div>
             <!-- Nama Produk -->
             <div
-                class="sm:col-span-1 md:col-span-3 lg:col-span-4 sm:text-sm md:text-base lg:text-lg font-semibold mt-1 lg:ml-5 md:-ml-5">
+                class="font-libre-franklin sm:col-span-1 md:col-span-3 lg:col-span-4 sm:text-sm md:text-base lg:text-lg font-semibold mt-1 lg:ml-5 md:-ml-5">
                 {{-- {{ $product->productname }} --}} "Nama Produk"
             </div>
             <!-- namapembeli -->
             <div
-                class="sm:col-span-1 md:row-start-3 md:col-start-4 md:col-span-3 lg:row-start-3 lg:col-start-3 lg:col-span-4 lg:ml-5 md:-ml-5 sm:text-sm md:text-base lg:text-lg text-gray-600">
+                class="font-libre-franklin font-medium sm:col-span-1 md:row-start-3 md:col-start-4 md:col-span-3 lg:row-start-3 lg:col-start-3 lg:col-span-4 lg:ml-5 md:-ml-5 sm:text-sm md:text-base lg:text-lg text-gray-600">
                 {{-- {{ $product->buyername - no telp }} --}}"nama_pembeli - notelpon"
             </div>
             <div
-                class="sm:col-span-1 md:col-start-7 md:col-span-3 lg:row-start-1 lg:col-start-7 lg:col-span-3 sm:text-sm md:text-base lg:text-lg md:flex md:flex-col md:items-end  text-gray-600 mt-1">
+                class="font-libre-franklin font-light sm:col-span-1 md:col-start-7 md:col-span-3 lg:row-start-1 lg:col-start-7 lg:col-span-3 sm:text-sm md:text-base lg:text-lg md:flex md:flex-col md:items-end  text-gray-600 mt-1">
                 {{-- {{ $product->date }} --}}
                 <h4 class="text-sm">"dd-mm-yyyy - 13.20 WIB"</h4>
             </div>
             <div
-                class="sm:col-span-1 md:row-start-3 md:col-start-7 md:col-span-3 lg:row-start-3 lg:col-start-7 lg:col-span-3 sm:text-lg md:text-xl lg:text-2xl md:flex md:flex-col md:items-end text-gray-600">
+                class="font-libre-franklin font-normal sm:col-span-1 md:row-start-3 md:col-start-7 md:col-span-3 lg:row-start-3 lg:col-start-7 lg:col-span-3 sm:text-lg md:text-xl lg:text-2xl md:flex md:flex-col md:items-end text-gray-600">
                 <h2>{{-- {{ $product->price }} --}}"Rp xx.xxx"</h2>
             </div>
 
 
             <!-- metode pembayaran -->
             <div
-                class="sm:col-span-1 md:row-start-5 md:col-start-4 md:col-span-3 lg:row-start-5 lg:col-start-3 lg:col-span-4 lg:ml-5 md:-ml-5 sm:text-sm md:text-base lg:text-lg text-gray-600">
+                class=" sm:col-span-1 md:row-start-5 md:col-start-4 md:col-span-3 lg:row-start-5 lg:col-start-3 lg:col-span-4 lg:ml-5 md:-ml-5 sm:text-sm md:text-base lg:text-lg text-gray-600">
                 {{-- {{ $product->stock }} --}}
-                <h4>"metode_pembayaran"</h4>
+                <h4 class="font-libre-franklin font-normal">"metode_pembayaran"</h4>
                 {{-- if (metode pembayaran == transfer) : --}}
-                <button class=" bg-blue-500 rounded-md p-1 items-center text-white text-sm hover:bg-blue-900 "><ion-icon
-                        name="document-outline"></ion-icon>
-                    <span>Bukti Pembayaran</span>
+                <button class=" bg-blue-500 rounded-md p-1 flex items-center text-white font-libre-franklin font-light text-sm hover:bg-blue-900 transition ease-in duration-100"><ion-icon
+                        name="document-outline"class="mr-2"></ion-icon>
+                    <span class="mt-0.5" >Bukti Transfer</span>
                 </button>
             </div>
             <!-- Tombol Aksi -->
             <div
-                class="sm:col-span-2 md:row-start-5 md:col-start-7 md:col-span-3 lg:col-start-7 lg:col-span-3 lg:row-start-5 space-x-2 sm:text-sm md:text lg:text lg:justify-end md:flex md:flex-col md:items-end md:ml-auto lg:flex lg:flex-col lg:items-end  lg:ml-auto">
+                class="font-libre-franklin font-normal sm:col-span-2 md:row-start-5 md:col-start-7 md:col-span-3 lg:col-start-7 lg:col-span-3 lg:row-start-5 space-x-2 sm:text-sm md:text lg:text lg:justify-end md:flex md:flex-col md:items-end md:ml-auto lg:flex lg:flex-col lg:items-end  lg:ml-auto">
 
                 {{-- if(status butuh konfirmasi) --}}
                 <h4 class="bg-yellow-200 rounded-md p-1 inline-block mb-1">"butuh konfirmasi"</h4>
