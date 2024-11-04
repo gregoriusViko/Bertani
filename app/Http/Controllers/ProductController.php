@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     function home(){
-        $products = Product::all();
+        $products = Product::with('farmer')->get();
         return view('HomePageDefault', compact('products'));
     }
 }
