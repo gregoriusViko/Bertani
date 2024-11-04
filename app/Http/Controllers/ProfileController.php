@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Buyer;
-use App\Models\Farmer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -11,7 +9,7 @@ class ProfileController extends Controller
     function profile(){
         $user = Auth::guard('buyer')->check() ? Auth::guard('buyer')->user() : Auth::guard('farmer')->user();
         $role = Auth::guard('buyer')->check() ? 'buyer ' : 'farmer';
-        return view('profile', compact('user', 'role'));
+        return view('ProfilePage', ['user'=>$user, 'role'=>$role]);
     }
 
     function updates(Request $request){
@@ -43,7 +41,7 @@ class ProfileController extends Controller
 
         // $user->save();
 
-        return redirect()->route('profile')->with('success','Profil telah diperbarui');
+        return redirect()->route('ProfilePage')->with('success','Profil telah diperbarui');
     }
 
 }
