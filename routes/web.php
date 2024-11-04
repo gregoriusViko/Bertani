@@ -51,6 +51,7 @@ Route::middleware(AuthAdmin::class)->group(
 );
 
 Route::get('/', [ProductController::class, 'home'])->name('HomePageDefault');
+Route::get('/products/load', [ProductController::class, 'loadMoreProducts']);
 
 Route::get('/hargapasar', function () {
     return view('HargaPasarPage');
