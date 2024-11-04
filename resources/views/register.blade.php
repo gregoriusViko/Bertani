@@ -10,11 +10,11 @@
 
 <body>
     <div
-        class="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full bg-no-repeat bg-cover bg-left z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]" 
+        class="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full bg-no-repeat bg-cover bg-center z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]" 
         style="background-image: url('https://www.infosawit.com/wp-content/uploads/2023/07/lanskap-sawi_Miftahurrohman.jpg');">
         <div class="w-full max-w-lg bg-green-400 shadow-lg rounded-lg p-8 relative opacity-80">
             <div class="my-7 text-center">
-                <h4 class="text-3xl text-gray-800 font-bold">Buat Akun</h4>
+                <h4 class="text-3xl text-gray-800 font-inter font-bold">Buat Akun</h4>
                 <!-- <img class="w-5 h-5" src="./img/logo2.png" alt="bertani"> -->
             </div>
 
@@ -22,18 +22,18 @@
                 @csrf        
                 <div class="relative flex items-center">
                     <input type="text" placeholder="Nama" name="name"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
                 </div>
                 
                 <div class="relative flex items-center">
                     <input type="email" placeholder="Email" name="email"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
                 </div>
 
                 <div class="relative flex w-full">
                     <!-- Button untuk membuka dropdown dan menampilkan opsi yang terpilih -->
                     <button type="button" id="peran" onclick="toggleDropdown()"
-                        class="px-4 py-3 border bg-white text-gray-400 text-sm border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start w-[450px]">
+                        class="px-4 py-3 border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start w-[450px]">
                         <div class="flex items-end w-full justify-between">
                             <p id="selectedOption">Peran</p> <!-- Element ini akan diupdate dengan teks opsi terpilih -->
                             <div>
@@ -50,9 +50,9 @@
                     <ul id="dropdownMenu"
                         class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[1000] w-full divide-y max-h-96 overflow-auto rounded-lg mt-8" >
                         <li onclick="selectOption('Pembeli')"
-                            class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm cursor-pointer">Pembeli</li>
+                            class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">Pembeli</li>
                         <li onclick="selectOption('Petani')"
-                            class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm cursor-pointer">Petani</li>
+                            class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">Petani</li>
                     </ul>
                 </div>
 
@@ -61,16 +61,16 @@
 
                 <div class="relative flex items-center">
                     <input type="tel" placeholder="08xxxxxxxxx" pattern="08[0-9]{9}" name="telepon"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
                 </div>
 
                 <div class="relative flex items-center">
                     <input type="password" placeholder="Password" name="password"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
                 </div>
 
                 <button type="submit"
-                    class="px-5 py-2.5 w-full bg-black text-white text-sm rounded-lg tracking-wide">Register
+                    class="px-5 py-2.5 w-full bg-black text-white text-sm font-inter font-medium rounded-lg tracking-wide hover:bg-green-500">Register
                 </button>
 
             </form>
