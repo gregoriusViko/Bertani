@@ -1,29 +1,65 @@
 <x-layout>
     <x-slot:title>Home-Bertani.com</x-slot:title>
-    <div class="jumbotron mt-6 bg-cover bg-centerflex items-center justify-center text-gray-800 gap-x-3 p-10 w-15 rounded-lg font-[sans-serif] mx-auto max-w-4xl px-4 sm:px-6 lg:px-6" style="background-image: url('./img/bgjumbo.jpg');">
-        <h1 class="lg:text-4xl md:text-4xl sm:text-lg font-extrabold text-white text-center">BELI PRODUK HASIL TANI</h1>
-        <p class="mt-4 text-base text-white text-center">Dukung petani lokal dan rasakan hasil bumi Indonesia.</p>
-  
-       
+    <div class="jumbotron mt-6 bg-cover bg-center flex flex-col items-center justify-center text-gray-800 gap-x-3 p-10 rounded-lg mx-auto max-w-4xl px-5 sm:px-5 md:px-5 lg:px-0"
+        style="background-image: url('./img/bgjumbo.jpg');">
+        <h1 class="font-hind font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white text-center">
+            BELI PRODUK HASIL TANI
+        </h1>
+        <p class="font-hind font-normal mt-4 text-sm sm:text-base md:text-lg lg:text-xl text-white text-center">
+            Dukung petani lokal dan rasakan hasil bumi Indonesia.
+        </p>
     </div>
-    
-    {{-- form searching --}}
-    <form class="mt-4 px-5 mb-4 max-w-md mx-auto" action="">
-        <label for="searching" class="mb-2 text-sm font-regular text-white sr-only">Cari Produk</label>
-        <div class="relative">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-white">
-                <ion-icon name="search" class="text-white"></ion-icon>
+
+    {{-- <div class="relative w-full h-52 min-w-[16rem] max-w-5xl mx-auto sm:mx-4 md:mx-6 lg:mx-8 overflow-hidden rounded-xl">
+        <!-- Carousel Wrapper -->
+        <div class="overflow-hidden relative h-50">
+            <!-- Slides -->
+            <div id="carouselSlides" class="flex rounded-lg transition-transform duration-500">
+                <div class="w-full flex-shrink-0">
+                    <img src="./img/carousel1.jpg" class="w-full h-56 object-cover" alt="Slide 1">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="./img/carousel2.jpg" class="w-full h-56 object-cover" alt="Slide 2">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="img/carousel3.jpeg" class="w-full h-56 object-cover" alt="Slide 3">
+                </div>
             </div>
-            <input type="search" id="default-search"
-                class="block w-full p-4 pl-10 text-sm text-white border border-gray-300 rounded-lg bg-green-600 placeholder-white focus:ring-green-500 focus:border-green-500"
-                placeholder="Cari Produk" required />
-            <button type="submit"
-                class="text-white absolute right-2.5 bottom-2.5 bg-green-600 hover:bg-white hover:text-green-600 focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-4 py-2 ">
-                Search
-            </button>
         </div>
-    </form>
-    <div id="cardContainer" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-10">
+        <!-- Indicator Dots -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            <span class="dot w-3 h-3 bg-green-600 rounded-full cursor-pointer" onclick="goToSlide(0)"></span>
+            <span class="dot w-3 h-3 bg-green-600 rounded-full cursor-pointer" onclick="goToSlide(1)"></span>
+            <span class="dot w-3 h-3 bg-green-600 rounded-full cursor-pointer" onclick="goToSlide(2)"></span>
+        </div>
+    </div>
+    <script src="./js/carousel.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const header = document.querySelector("header");
+                const main = document.querySelector("main");
+                const headerHeight = header.offsetHeight;
+
+                main.style.paddingTop = `${headerHeight}px`;
+            });
+        </script> --}}
+
+    {{-- form searching --}}
+    <div class="flex rounded-md my-5 border-2 border-green-600 overflow-hidden max-w-md mx-auto font-[sans-serif]">
+        <input type="email" placeholder="Cari Produk"
+            class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3" />
+        <button type='button' onclick="#" class="flex items-center justify-center bg-green-600 px-5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-white">
+                <path
+                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                </path>
+            </svg>
+        </button>
+    </div>
+
+    {{-- card produk --}}
+    <div id="cardContainer"
+        class="mx-auto max-w-4xl px-8 sm:px-8 md:px-5 lg:px-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-10">
         {{-- @foreach ($products as $product) --}}
         @include('partials.product')      
     </div>
