@@ -25,28 +25,29 @@
     </form>
     <div id="cardContainer" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-10">
         {{-- @foreach ($products as $product) --}}
-        
+        @foreach ($products as $product)
         <div class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer" onclick="handleClick()">
             <img class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1" src="./img/logo3.jpg" alt="">
             <div class="p-2 grid-cols-2">
                 <div class="col-span-2 text-base font-mono">
-                    "Nama Produk" - "Berat"
+                    {{ $product->name }} - "Berat"
                 </div>
                 <div class="text-xl font-mono font-bold">
-                    "Rp XX.XXX"
+                    Rp {{ Number::format($product->price) }}
                 </div>
                 <div class="text-sm font-mono font-light">
-                    "Nama petani" - "asal"
+                    {{ Str::before($product->farmer->name, ' ') }} - "asal"
                 </div>
                 <div class="text-sm font-mono font-light">
                     "Terjual : xx "
                 </div>
                 <div class="text-sm font-mono font-light">
-                    "Stok : xx kg"
+                    "Stok : {{ $product->stock }} Kg"
                 </div>
                 
             </div>
         </div>
+        @endforeach
         
         
 
