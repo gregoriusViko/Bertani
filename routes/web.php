@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Middleware\BlockAccess;
@@ -49,9 +50,7 @@ Route::middleware(AuthAdmin::class)->group(
     }
 );
 
-Route::get('/', function () {
-    return view('HomePageDefault');
-})->name('HomePageDefault');
+Route::get('/', [ProductController::class, 'home'])->name('HomePageDefault');
 
 Route::get('/hargapasar', function () {
     return view('HargaPasarPage');
