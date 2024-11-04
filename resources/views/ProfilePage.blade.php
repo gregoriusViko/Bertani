@@ -13,19 +13,19 @@
             <h4 class="text-sm text-gray-700">{{$role}}</h4>
         </div>
         {{-- form --}}
-        <form class="mt-6 max-w-sm mx-auto " id = "profile-form" action="{{route('profile.update')}}" method="POST">
+        <form class="mt-6 max-w-sm mx-auto " id="profile-form" action="{{route('profile.update')}}" method="POST">
             @csrf
             <div class="mb-5">
                 <label for="nama-input" class="block mb-1 text-base font-semibold  text-black">Nama Pengguna</label>
-                <input type="text" id="nama-input"name="name"
+                <input type="text" id="nama-input" name="name"
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{$user->name}}"required readonly/>
+                    value="{{$user->name}}" required readonly />
             </div>
             <div class="mb-5">
                 <label for="alamat-input" class="block mb-1 text-base font-semibold  text-black">Alamat</label>
-                <input type="text" id="alamat-input" name="home_addres"
+                <input type="text" id="alamat-input" name="home_address"
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{$user->home_address}}"required readonly />
+                    value="{{$user->home_address}}" required readonly />
             </div>
             <div class="mb-5">
                 <label for="notelp-input" class="block mb-1 text-base font-semibold  text-black">No Telepon</label>
@@ -35,13 +35,7 @@
             </div>
             <div class="mb-5">
                 <label for="email-input" class="block mb-1 text-base font-semibold  text-black">Email</label>
-                <input type="text" id="email-input" name="email"
-                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{$user->email_address}}" required readonly />
-            </div>
-            <div class="mb-5">
-                <label for="password-input" class="block mb-1 text-base font-semibold text-black">Password</label>
-                <input type="password" id="password-input" name="password"
+                <input type="text" id="email-input" name="email_address"
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     value="{{$user->email_address}}" required readonly />
             </div>
@@ -59,6 +53,18 @@
                 <button class="text-white bg-yellow-600 px-4 py-1 rounded-lg hover:bg-yellow-400 mr-2" type="button" id="edit-button" onclick="toggleAllInputs()">EDIT</button>
                 <button class="text-white bg-blue-600 px-4 py-1 rounded-lg hover:bg-blue-400" type="submit" id="save-button" form="profile-form" disabled>SIMPAN</button>
             </div>
+        </div>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+    </div>
 </x-layout>
 {{-- toggleAllInputs() dan saveChanges() ada di \resources\js\app.js --}}
 <script>
@@ -66,8 +72,8 @@
         var inputs = document.querySelectorAll('input[readonly]');
         var isEditMode = !inputs[0].hasAttribute('readonly');
         // mengaktifkan tombol edit
-        inputs.forEach(input =>{
-            if(isEditMode) {
+        inputs.forEach(input => {
+            if (isEditMode) {
                 input.setAttribute('readonly', true);
                 input.value = input.getAttribute('data-original');
             } else {
