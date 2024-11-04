@@ -19,6 +19,6 @@ class AuthAdmin
         if(Auth::guard('admin')->check()){
             return $next($request);
         }
-        return redirect()->back()->with('error-permission','Anda tidak memiliki izin');
+        abort(404);
     }
 }
