@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Admin;
+use App\Models\Buyer;
+use App\Models\Farmer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 
 class ProfileController extends Controller
 {
@@ -21,11 +25,12 @@ class ProfileController extends Controller
     }
 
     function updates(Request $request){
+
         $request->validate([
             'name' => 'required|string|max:50',
             'home_address' => 'required|string|max:150',
             'phone_number' => 'required|string|regex:/^\d{10,13}$/',
-            'email' => 'required|string|max45',
+            'email_address' => 'required|string|max:45',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
@@ -35,19 +40,25 @@ class ProfileController extends Controller
                     $user = Auth::guard('buyer')->user();
                 } elseif (Auth::guard('farmer')->check()) {
                     $user = Auth::guard('farmer')->user();
+                } elseif (Auth::guard('admin')->check()){
+                    $user = Auth::guard('admin')->user();
+                } else {
+                    return redirect()->route('ProfilePage');
                 }
+                
+        dd($user);
 
         // Update data pengguna
         $user->name = $request->input('name');
         $user->home_address = $request->input('home_address');
         $user->phone_number = $request->input('phone_number');
-        $user->email = $request->input('email');
+        $user->email_address = $request->input('email');
 
         if  ($request->filled('password')){
             $user->password = bcrypt($request->input('password'));
         }
 
-        // $user->save();
+        $user->save();
 
         return redirect()->route('ProfilePage')->with('success','Profil telah diperbarui');
     }
