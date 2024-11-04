@@ -78,20 +78,20 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\User::class,
         ],
 
         'buyers' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL',Buyer::class),
+            'model' => App\Models\Buyer::class,
         ],
         'farmers' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL',Farmer::class),
+            'model' => App\Models\Farmer::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL',Admin::class),
+            'model' => App\Models\Admin::class,
         ]
     ],
 
