@@ -16,6 +16,9 @@ export default {
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                hind: ['Hind', 'sans-serif'],
+                'libre-franklin': ['"Libre Franklin"', 'sans-serif'],
+                inter: ['Inter', 'sans-serif'],
             },
         },
     },
