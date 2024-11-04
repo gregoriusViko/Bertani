@@ -45,22 +45,18 @@
         </script> --}}
 
     {{-- form searching --}}
-    <form class="mt-4 px-5 mb-4 max-w-md mx-auto" action="">
-        <label for="searching" class="mb-2  font-hind font-normal text-sm font-regular text-white sr-only">Cari
-            Produk</label>
-        <div class="relative items-center">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 py-2 pointer-events-none text-white">
-                <ion-icon name="search" class="text-white text-lg"></ion-icon>
-            </div>
-            <input type="search" id="default-search"
-                class="block w-full py-2 pl-10 pr-20 text-sm font-hind item-center font-normal text-white border border-gray-300 rounded-lg bg-green-600 placeholder-white"
-                placeholder="Cari Produk" required />
-            <button type="submit"
-                class="flex item-center text-white font-hind font-normal absolute right-2 top-1/2 -translate-y-1/2  bg-green-600 hover:bg-white hover:text-green-600 focus:ring-2 focus:ring-white rounded-lg text-sm px-4 py-2 m-0 ">
-                Search
-            </button>
-        </div>
-    </form>
+    <div class="flex rounded-md my-5 border-2 border-green-600 overflow-hidden max-w-md mx-auto font-[sans-serif]">
+        <input type="email" placeholder="Cari Produk"
+            class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3" />
+        <button type='button' onclick="#" class="flex items-center justify-center bg-green-600 px-5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-white">
+                <path
+                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                </path>
+            </svg>
+        </button>
+    </div>
+
     {{-- card produk --}}
     <div id="cardContainer"
         class="mx-auto max-w-4xl px-8 sm:px-8 md:px-5 lg:px-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-10">
