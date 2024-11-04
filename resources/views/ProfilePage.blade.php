@@ -64,9 +64,19 @@
 <script>
     function toggleAllInputs() {
         var inputs = document.querySelectorAll('input[readonly]');
+        var isEditMode = !inputs[0].hasAttribute('readonly');
+        // mengaktifkan tombol edit
         inputs.forEach(input =>{
-            input.readOnly = false;
-        });
-        document.getElementById('save-button').disabled = false;
+            if(isEditMode) {
+                input.setAttribute('readonly', true);
+                input.value = input.getAttribute('data-original');
+            } else {
+                input.removeAttribute('readonly');
+                input.setAttribute('data-original', input.value);
+            }
+        })
+
+        // aktif tombol simpan
+        document.getElementById('save-button').disabled = isEditMode;
     }
 </script>
