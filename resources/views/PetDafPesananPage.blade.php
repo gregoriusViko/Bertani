@@ -65,33 +65,49 @@
                 {{-- {{ $product->product_type }} --}}"nama_pembeli - notelpon"
             </div>
             <div
-                class="sm:col-span-1 md:col-start-7 md:col-span-2 lg:row-start-1 lg:col-start-7 lg:col-span-2 sm:text-sm md:text-base lg:text-lg md:flex md:justify-end  text-gray-600">
+                class="sm:col-span-1 md:col-start-7 md:col-span-2 lg:row-start-1 lg:col-start-7 lg:col-span-3 sm:text-sm md:text-base lg:text-lg md:flex md:flex-col md:items-end  text-gray-600">
                 {{-- {{ $product->price }} --}}
-                <h4 class="text-sm">"dd-mm-yyyy - 13.20 WIB"</h4> 
+                <h4 class="text-sm">"dd-mm-yyyy - 13.20 WIB"</h4>
             </div>
             <div
-                class="sm:col-span-1 md:row-start-3 md:col-start-7 md:col-span-3 lg:row-start-3 lg:col-start-7 lg:col-span-2 sm:text-sm md:text-base lg:text-lg md:flex md:justify-end text-gray-600">
-                <h3>{{-- {{ $product->price }} --}}"Rp xx.xxx"</h3>
+                class="sm:col-span-1 md:row-start-3 md:col-start-7 md:col-span-3 lg:row-start-3 lg:col-start-7 lg:col-span-2 sm:text-lg md:text-xl lg:text-2xl md:flex md:flex-col md:items-end text-gray-600">
+                <h2>{{-- {{ $product->price }} --}}"Rp xx.xxx"</h2>
             </div>
             <!-- tanggal-jam -->
-            
+
             <!-- metode pembayaran -->
             <div
                 class="sm:col-span-1 md:row-start-5 md:col-start-4 md:col-span-3 lg:row-start-5 lg:col-start-3 lg:col-span-4 sm:text-sm md:text-base lg:text-lg text-gray-600">
-                {{-- {{ $product->stock }} --}} 
+                {{-- {{ $product->stock }} --}}
                 <h4>"metode_pembayaran"</h4>
                 {{-- if (metode pembayaran == transfer) : --}}
-                <button class=" bg-blue-500 rounded-md p-1 items-center text-white text-sm"><ion-icon
+                <button class=" bg-blue-500 rounded-md p-1 items-center text-white text-sm hover:bg-blue-900 "><ion-icon
                         name="document-outline"></ion-icon>
                     <span>Bukti Pembayaran</span>
                 </button>
             </div>
             <!-- Tombol Aksi -->
             <div
-                class="sm:col-span-2 md:row-start-5 md:col-start-7 md:col-span-2 lg:col-start-7 lg:col-span-2 lg:row-start-5 md:flex md:justify-end space-x-2 sm:text-sm md:text-base lg:text-lg  ">
-                <button><ion-icon name="create-outline" class="transition ease-in duration-300"></ion-icon></button>
-                <button onclick="toggleComponent()"><ion-icon name="trash-outline"
-                        class="transition ease-in duration-300"></ion-icon></button>
+                class="sm:col-span-2 md:row-start-5 md:col-start-7 md:col-span-2 lg:col-start-7 lg:col-span-2 lg:row-start-5 space-x-2 sm:text-sm md:text-base lg:text-base lg:justify-end md:flex md:flex-col md:items-end md:space-y-2 md:ml-auto lg:flex lg:flex-col lg:items-end lg:space-y-2 lg:ml-auto">
+                
+                    {{-- if(status butuh konfirmasi) --}}
+                    <h4 class="bg-yellow-200 rounded-md p-1 inline-block">"butuh konfirmasi"</h4>
+                    {{-- if(status pesanan diproses) --}}
+                    {{-- <h4 class="bg-[#6687FF]">"pesanan diproses"</h4> --}}
+                    {{-- if(status ppesanan selesai) --}}
+                    {{-- <h4 class="bg-[#00D115]">"pesanan selesai"</h4> --}}
+                    {{-- if(status mengajukan pembatalan) --}}
+                    {{-- <h4 class="bg-[#f44747]">"mengajukan pembatalan"</h4> --}}
+                    {{-- if(status pesanan dibatalkan) --}}
+                    {{-- <h4 class="bg-[#FF0000]">"mengajukan pembatalan"</h4> --}}
+                
+                
+                    <div class="space-x-2 ml-auto">
+                        <button><ion-icon name="close-circle-outline" class="text-3xl"></ion-icon></button>
+                        <button><ion-icon name="checkmark-circle-outline" class="text-3xl"></ion-icon></button>
+                        {{-- <button><ion-icon name="close-outline" class="color-blue transition ease-in duration-300 rounded-lg border-red-500"></ion-icon></button> --}}
+                        {{-- <button onclick="toggleComponent()"><ion-icon name="checkmark-outline" class="transition ease-in duration-300"></ion-icon></button> --}}
+                    </div>
             </div>
         </div>
 
