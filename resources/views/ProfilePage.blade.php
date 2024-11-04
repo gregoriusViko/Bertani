@@ -9,7 +9,7 @@
                 <img class="rounded-full object-cover w-24 h-24" src="{{ $user->profile_img_link ? $user->profile_img_link : './img/orang.jpeg.jpg' }}" alt="avatar">
                 {{-- </div> --}}
             </div>
-            <h2 class="text-base font-bold text-black">{{$user->email_address}}</h2>
+            <h2 class="text-base font-bold text-black">{{$user->email}}</h2>
             <h4 class="text-sm text-gray-700">{{$role}}</h4>
         </div>
         {{-- form --}}
@@ -23,7 +23,7 @@
             </div>
             <div class="mb-5">
                 <label for="alamat-input" class="block mb-1 text-base font-semibold  text-black">Alamat</label>
-                <input type="text" id="alamat-input" name="addres"
+                <input type="text" id="alamat-input" name="home_addres"
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     value="{{$user->home_address}}"required readonly />
             </div>
@@ -59,9 +59,6 @@
                 <button class="text-white bg-yellow-600 px-4 py-1 rounded-lg hover:bg-yellow-400 mr-2" type="button" id="edit-button" onclick="toggleAllInputs()">EDIT</button>
                 <button class="text-white bg-blue-600 px-4 py-1 rounded-lg hover:bg-blue-400" type="submit" id="save-button" form="profile-form" disabled>SIMPAN</button>
             </div>
-        </div>
-        <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
-    </div>
 </x-layout>
 {{-- toggleAllInputs() dan saveChanges() ada di \resources\js\app.js --}}
 <script>

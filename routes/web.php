@@ -22,7 +22,7 @@ Route::middleware(BlockAccess::class)->group(function(){
         return view('ChatPage');
     })->name('chat');
 
-        // Rute untuk menampilkan halaman profil
+        // // Rute untuk menampilkan halaman profil
         Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 
         // Rute untuk memperbarui profil
