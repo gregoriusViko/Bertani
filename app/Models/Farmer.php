@@ -14,6 +14,8 @@ class Farmer extends Authenticatable
         'name',
         'email_address',
         'password',
+        'home_address',
+        'phone_number',
     ];
     /** @use HasFactory<\Database\Factories\FarmerFactory> */
     use HasFactory, Notifiable;
