@@ -1,14 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Buyer;
+use App\Models\Farmer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    function profile(){
-        $user = Auth::guard('buyer')->check() ? Auth::guard('buyer')->user() : Auth::guard('farmer')->user();
-        $role = Auth::guard('buyer')->check() ? 'buyer ' : 'farmer';
+    function profile()
+    {
+        // Cek jenis pengguna dan ambil data dari tabel yang sesuai
+        if (Auth::guard('buyer')->check()) {
+            $user = Auth::guard('buyer')->user();
+            $role = 'buyer';
+        } elseif (Auth::guard('farmer')->check()) {
+            $user = Auth::guard('farmer')->user();
+            $role = 'farmer';
+        } else {
+            return redirect()->route('login'); // Atau ke rute lain jika tidak terautentikasi
+        }
+
         return view('profile', compact('user', 'role'));
     }
 
@@ -19,15 +31,19 @@ class ProfileController extends Controller
             'phone_number' => 'required|string|regex:/^\d{10,13}$/',
             'email' => 'required|string|max45',
             'password' => 'nullable|string|min:8|confirmed',
-
         ]);
 
         // Dapat user
-        $user = Auth::guard('buyer')->check() ? Auth::guard('buyer')->user() : Auth::guard('farmer')->user();
+        // Dapatkan user berdasarkan jenis pengguna
+                if (Auth::guard('buyer')->check()) {
+                    $user = Auth::guard('buyer')->user();
+                } elseif (Auth::guard('farmer')->check()) {
+                    $user = Auth::guard('farmer')->user();
+                }
 
         // Update data pengguna
         $user->name = $request->input('name');
-        $user->home_address = $request->input('address');
+        $user->home_address = $request->input('home_address');
         $user->phone_number = $request->input('phone_number');
         $user->email = $request->input('email');
 
