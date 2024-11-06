@@ -35,7 +35,7 @@
         @endif
     </header>
 
-    <main px-7 mx-auto>
+    <main class="px-7 mx-auto max-w-screen-lg border border-red-500">
         {{ $slot }}
     </main>
 </body>
