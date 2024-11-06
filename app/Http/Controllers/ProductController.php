@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     function home(){
+        // $product = Product::find(id: 13);
+        // dd($product->orderDetails);
         $products = Product::with('farmer')->paginate(12);
         return view('HomePageDefault', compact('products'));
     }
