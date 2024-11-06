@@ -21,9 +21,10 @@ class ProductFactory extends Factory
             'farmer_id' => Farmer::factory(),
             'name'=>fake()->text(5),
             'description'=>fake()->realText(),
-            'stock'=>fake()->randomFloat(2, 1, 1000),
+            'stock_kg'=>fake()->randomFloat(2, 0, 10000),
+            'selling_unit_kg'=>fake()->randomFloat(2, 1, 1000),
             'product_type' => fake()->text(5),
-            'price' => (int)fake()->randomFloat(2, 1000, 1000000),
+            'price' => fake()->randomFloat(0, 1000, 1000000),
             'img_link' => fake()->url()
         ];
     }
