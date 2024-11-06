@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>Home-Bertani.com</x-slot:title>
-    <div class="jumbotron mt-6 bg-cover bg-center flex flex-col items-center justify-center text-gray-800 gap-x-3 p-10 rounded-lg mx-auto max-w-4xl px-4 sm:px-5 md:px-5 lg:px-0"
+    <div class="jumbotron mt-6 bg-cover bg-center flex flex-col items-center justify-center text-gray-800 gap-x-3 p-10 rounded-lg mx-auto max-w-full px-4 sm:px-5 md:px-5 lg:px-0"
         style="background-image: url('./img/bgjumbo.jpg');">
         <h1 class="font-hind font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white text-center">
             BELI PRODUK HASIL TANI
@@ -45,7 +45,7 @@
         </script> --}}
 
     {{-- form searching --}}
-    <div class="flex rounded-md my-5 mx-5 overflow-hidden max-w-full font-[sans-serif]">
+    <div class="flex rounded-md my-5 overflow-hidden max-w-full font-[sans-serif]">
         <input type="email" placeholder="Cari Produk"
             class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3" />
         <button type='button' onclick="#" class="flex items-center justify-center bg-green-600 px-5">
@@ -59,7 +59,7 @@
 
     {{-- card produk --}}
     <div id="cardContainer"
-        class="mx-auto max-w-4xl px-4 md:px-5 lg:px-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
+        class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
         {{-- @foreach ($products as $product) --}}
         @include('partials.product')      
     </div>
