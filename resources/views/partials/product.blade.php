@@ -4,7 +4,7 @@
             alt="">
         <div class="p-2 grid-cols-2">
             <div class="col-span-2 text-base font-mono">
-                {{ $product->name }} - "Berat"
+                {{ $product->name }} - {{ WeightConverter::convert($product->selling_unit_kg) }}
             </div>
             <div class="text-xl font-mono font-bold">
                 {{ Number::currency($product->price, in: 'idr') }}
@@ -13,10 +13,10 @@
                 {{ Str::before($product->farmer->name, ' ') }} - "asal"
             </div>
             <div class="text-sm font-mono font-light">
-                "Terjual : xx "
+                "Terjual : xx"
             </div>
             <div class="text-sm font-mono font-light">
-                "Stok : {{ $product->stock }} Kg"
+                "Stok : {{ WeightConverter::convert($product->stock_kg) }}"
             </div>
 
         </div>
