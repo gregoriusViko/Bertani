@@ -52,6 +52,7 @@ class ProfileController extends Controller
         $user->phone_number = $request->input('phone_number');
         $user->email_address = $request->input('email_address');
 
+
         $user->save();
 
         return redirect()->route('profile')->with('success','Profil telah diperbarui');
