@@ -1,12 +1,14 @@
 <div>
-    <div>
-        <nav class="flex justify-between items-center w-[90%]  mx-auto">
-            <div class="overflow-hidden sm:w-20 sm:h-14 md:w-36 md:h-20 lg:w-40 lg:h-20 flex items-center justify-center">
-                <img class="max-w-full max-h-full object-cover" src="/img/logo1.png" alt="Your Company">
+    <div class="mx-10">
+        <nav class="flex justify-between items-center">
+            {{-- <div class="overflow-hidden sm:w-20 sm:h-14 md:w-36 md:h-20 lg:w-40 lg:h-20 flex items-center justify-center"> --}}
+            <div>
+                {{-- <img class="max-w-full max-h-full object-cover" src="/img/logo1.png" alt="Your Company"> --}}
+                <img class="w-26 h-20" src="/img/logo1.png" alt="Your Company">
             </div>
             <div
-                class="nav-links transition ease-in duration-200 md:static absolute bg-green-600 md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5 py-1">
-                <ul class="relative font-hind flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8 md:text-base text-lg">
+                class="nav-links transition ease-in duration-200 md:static absolute bg-green-600 md:min-h-fit left-0 top-[-100%] md:w-auto  w-full flex items-center px-5 py-4">
+                <ul class="relative font-hind flex flex-col md:flex-row md:items-center md:gap-[2vw] md:text-base text-lg">
                     {{ $slot }}
                 </ul>
             </div>
@@ -40,7 +42,7 @@
                     @endif
                 </button>
                 <ion-icon onclick="onToggleMenu(this)" name="menu"
-                    class="text-1xl cursor-pointer md:hidden"></ion-icon>
+                    class="text-1xl cursor-pointer md:hidden text-white"></ion-icon>
             </div>
         </nav>
     </div>
