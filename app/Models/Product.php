@@ -17,6 +17,6 @@ class Product extends Model
         return $this->belongsTo(Farmer::class);
     }
     public function orderDetails(): HasMany{
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'product_id');
     }
 }
