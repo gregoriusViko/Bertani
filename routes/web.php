@@ -69,11 +69,9 @@ Route::get('/lapPen', function () {
     return view('PetLaporanPenjualanPage');
 })->name('lapPen');
 
-Route::get('/dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
-
-Route::get('/addProduct', function () {
-    return view('petani.addProduct');
-})->name('addProduct');
+Route::get('/dafproduk', function () {
+    return view('PetDafProdPage');
+})->name('dafproduk');
 
 Route::get('/dafpesanan', function () {
     return view('PetDafPesananPage');
