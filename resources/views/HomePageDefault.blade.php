@@ -97,7 +97,7 @@
                     $('#loading').hide();
                     $("#cardContainer").append(data);
                 }).fail(function(jqXHR, ajaxOptions, thrownError) {
-                    alert('No response from server');
+                    $('#loading').html("Sedang ada gangguan");
                 });
             }
         </script>
