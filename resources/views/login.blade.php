@@ -10,7 +10,7 @@
     <div class="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
         <div class="w-full max-w-lg bg-green-400 shadow-lg rounded-lg p-8 relative opacity-80">
             <div class="my-2 text-center items-center">
-                <h4 class="text-3xl text-gray-800 font-bold">Selamat Datang di </h4>
+                <h4 class="text-3xl text-black font-bold">Selamat Datang di </h4>
                 <span><img class="size-4" src="./img/logo1.png" alt="bertani"></span>
             </div>     
             <form class="space-y-4" action="{{ route('login.proses')}}" method="post">
@@ -30,7 +30,7 @@
                 </button>
 
                 <div class="relative flex justify-center">
-                    <p>Belum punya akun? <label> <a href="{{ route('register.tampil')}}" style="color: deepskyblue;">Sign Up</a></label></p>
+                    <p>Belum punya akun? <label> <a href="{{ route('register.tampil')}}" style="color: blue;hover:text-white" class="font-bold hover:text-white">Sign Up</a></label></p>
                 </div>
 
             </form>

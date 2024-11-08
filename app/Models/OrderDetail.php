@@ -12,7 +12,7 @@ class OrderDetail extends Model
     protected $guarded = [];
     public $timestamps = false;
 
-    protected $with = ['order, product'];
+    protected $with = ['order', 'product'];
     public function order(): BelongsTo{
         return $this->belongsTo(related: Order::class);
     }

@@ -1,10 +1,12 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Middleware\BlockAccess;
 use App\Http\Middleware\BlockLogin;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Middleware\AuthAdmin;
 
 // Route::get('/', function () {
@@ -22,11 +24,20 @@ Route::middleware(BlockAccess::class)->group(function(){
         return view('ChatPage');
     })->name('chat');
 
-        // Rute untuk menampilkan halaman profil
+        // // Rute untuk menampilkan halaman profil
         Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 
         // Rute untuk memperbarui profil
         Route::post('/profile/update', [ProfileController::class, 'updates'])->name('profile.update');
+
+        Route::middleware(AuthAdmin::class)->group(
+            function(){
+                Route::prefix('admin')->group(function(){
+                    Route::resource('laporan', ReportController::class);
+                    Route::get('hapus-akun/detail/{id}', [AuthController::class, 'hapusAkun']);
+                });
+            }
+        );
 });
 
 Route::middleware(BlockLogin::class)->group(
@@ -39,19 +50,8 @@ Route::middleware(BlockLogin::class)->group(
     }
 );
 
-Route::middleware(AuthAdmin::class)->group(
-    function(){
-        Route::prefix('admin')->group(function(){
-            Route::get('/laporan', function () {
-                return view('LaporanPage');
-            })->name('admin.laporan');
-        });
-    }
-);
-
-Route::get('/', function () {
-    return view('HomePageDefault');
-})->name('HomePageDefault');
+Route::get('/', [ProductController::class, 'home'])->name('HomePageDefault');
+Route::get('/products/load', [ProductController::class, 'loadMoreProducts']);
 
 Route::get('/hargapasar', function () {
     return view('HargaPasarPage');
@@ -69,9 +69,7 @@ Route::get('/lapPen', function () {
     return view('PetLaporanPenjualanPage');
 })->name('lapPen');
 
-Route::get('/dafproduk', function () {
-    return view('PetDafProdPage');
-})->name('dafproduk');
+Route::get('/dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
 
 Route::get('/dafpesanan', function () {
     return view('PetDafPesananPage');
