@@ -16,4 +16,7 @@ class ReportDetail extends Model
     public function responder(): BelongsTo{
         return $this->belongsTo(Admin::class);
     }
+    public function report(): BelongsTo{
+        return $this->belongsTo(Report::class);
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Middleware\BlockAccess;
 use App\Http\Middleware\BlockLogin;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Middleware\AuthAdmin;
 
 // Route::get('/', function () {
@@ -28,6 +29,15 @@ Route::middleware(BlockAccess::class)->group(function(){
 
         // Rute untuk memperbarui profil
         Route::post('/profile/update', [ProfileController::class, 'updates'])->name('profile.update');
+
+        Route::middleware(AuthAdmin::class)->group(
+            function(){
+                Route::prefix('admin')->group(function(){
+                    Route::resource('laporan', ReportController::class);
+                    Route::get('hapus-akun/detail/{id}', [AuthController::class, 'hapusAkun']);
+                });
+            }
+        );
 });
 
 Route::middleware(BlockLogin::class)->group(
@@ -37,16 +47,6 @@ Route::middleware(BlockLogin::class)->group(
 
     Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login.tampil');
     Route::post('/login/submit',[AuthController::class, 'submitLogin'])->name('login.proses');
-    }
-);
-
-Route::middleware(AuthAdmin::class)->group(
-    function(){
-        Route::prefix('admin')->group(function(){
-            Route::get('/laporan', function () {
-                return view('LaporanPage');
-            })->name('admin.laporan');
-        });
     }
 );
 
