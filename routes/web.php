@@ -73,6 +73,10 @@ Route::get('/dafproduk', function () {
     return view('PetDafProdPage');
 })->name('dafproduk');
 
+Route::get('/addProduct', function () {
+    return view('petani.addProduct');
+})->name('addProduct');
+
 Route::get('/dafpesanan', function () {
     return view('PetDafPesananPage');
 })->name('dafpesanan');
