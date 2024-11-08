@@ -16,7 +16,7 @@
                 Terjual : {{ WeightConverter::convert($product->orderDetails->sum('order_quantity')) }}
             </div>
             <div class="text-sm font-mono font-light">
-                "Stok : {{ WeightConverter::convert($product->stock_kg) }}"
+                Stok : {{ WeightConverter::convert($product->stock_kg) }}
             </div>
 
         </div>
