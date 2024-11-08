@@ -80,3 +80,7 @@ Route::get('/laporan', function () {
 })->name('laporan');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout');
+
+Route::get('/addProduct', function () {
+    return view('petani.addProduct');
+})->name('addProduct');
