@@ -27,7 +27,8 @@ return new class  extends Migration
             );
             $table->string('name', 50);
             $table->text('description')->nullable();
-            $table->decimal('stock');
+            $table->decimal('stock_kg');
+            $table->decimal('selling_unit_kg');
             $table->string('product_type', 50)->nullable();
             $table->decimal('price')->nullable();
             $table->dateTimes();
