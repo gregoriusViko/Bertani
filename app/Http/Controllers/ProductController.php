@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -21,5 +22,11 @@ class ProductController extends Controller
     {
         $products = Product::with('farmer')->paginate(perPage: 8);
         return view('partials.product', compact('products'))->render();
+    }
+
+    public function farmerProducts(){
+        $farmer = Auth::guard('farmer')->user();
+        $products = $farmer->products;
+        return view('PetDafProdPage', compact('products'));
     }
 }
