@@ -77,4 +77,8 @@ Route::get('/dafpesanan', function () {
     return view('PetDafPesananPage');
 })->name('dafpesanan');
 
+Route::get('/laporan', function () {
+    return view('LaporanPage');
+})->name('laporan');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout');
