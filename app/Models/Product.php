@@ -9,8 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    protected $guarded = ['id', 'created_at', 'updated_at'];
-    use HasFactory;
+    protected $fillable = [
+        'name',
+        'description',
+        'stock_kg',
+        'selling_unit_kg',
+        'product_type',
+        'price',
+        'img_link',
+    ];
 
     protected $with = ['farmer'];
     public function farmer(): BelongsTo{
