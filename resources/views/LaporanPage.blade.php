@@ -2,79 +2,57 @@
     <x-slot:title>Laporan-Bertani.com</x-slot:title>
 
     <div class="bg-gray-200 min-h-screen">
-    <section class="py-10 bg-gray-200">
-        <form class="mb-10 max-lg:max-w-xl max-lg:mx-auto flex">
-            <label for="urutkan_laporan" class="text-sm text-black px-4 font-semibold">Tampilkan Berdasarkan</label>
-            <select id="urutkan_laporan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-1 px-4">
-                <option selected>Semua</option>
-                <option value="pembeli">Pembeli</option>
-                <option value="petani">Petani</option>
-            </select>
-        </form>
-        
-        <div class="w-full max-w-7xl mx-auto px-4 md:px-8">
+        <section class="py-10 bg-gray-200">
+            <form class="mb-10 max-lg:max-w-xl max-lg:mx-auto flex">
+                <label for="urutkan_laporan" class="text-sm text-black px-4 font-semibold">Tampilkan Berdasarkan</label>
+                <select id="urutkan_laporan"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-1 px-4">
+                    <option selected>Semua</option>
+                    <option value="pembeli">Pembeli</option>
+                    <option value="petani">Petani</option>
+                </select>
+            </form>
 
-        <!-- <form class="max-w-sm mx-auto mb-10 flex items-center space-x-2"> -->
-        
-        <div class="box p-8 rounded-3xl bg-white mb-7 transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex relative">
-            <input type="checkbox" class="self-center mr-4">
-            <div class="w-20 flex-shrink-0 mr-4">
-            <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="earbuds image" class="rounded-xl object-cover">
-        </div>
-        <div class="flex flex-col justify-start items-start space-y-4 flex-grow">
-            <div class="flex items-center space-x-4">
-                <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">Rudi</h3>
-                <p class="text-lg font-medium text-gray-400">PEMBELI</p> 
-            </div>
-            <div class="flex flex-col space-y-2 w-full" style="padding-right: 2rem;">
-                <p class="text-lg leading-none text-black font-semibold">Laporan : Penjual terlalu lama merespon</p>
-                <p class="text-base leading-none text-black">Dilaporkan pada tanggal 30 September 2024</p>
-            </div>
-        </div>
-    
-    <!-- Kontainer ikon di pojok kanan bawah dari kotak putih -->
-        <div class="absolute bottom-4 right-4 flex space-x-2">
-            <button onclick="showPopup('teruskan')"><img src="/img/paperplane.png" alt="icon_teruskan" class="w-10 h-10"></button>
-            <button onclick=""><img src="/img/trash.png" alt="icon_sampah" class="w-10 h-10"></button>
-        </div>
-        </div>
+            <div class="w-full max-w-7xl mx-auto px-4 md:px-8">
 
+                <!-- <form class="max-w-sm mx-auto mb-10 flex items-center space-x-2"> -->
 
-        <!-- <div class="box p-8 rounded-3xl bg-white mb-7 cursor-pointer transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex">
-            <input type="checkbox" class="self-center mr-4">
-            <div class="w-20 flex-shrink-0 mr-4">
-                <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="earbuds image" class="rounded-xl object-cover">
-            </div>
-            <div class="flex flex-col justify-start items-start space-y-4 flex-grow">
-                <div class="flex items-center space-x-4">
-                    <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">Budi</h3>
-                    <p class="text-lg font-medium text-gray-400">PENJUAL</p> 
-                </div>
-                <div class="flex flex-col space-y-2 w-full">
-                    <p class="text-lg leading-none text-black font-semibold">Laporan : Tidak bisa upload gambar</p>
-                    <p class="text-base leading-none text-black">Dilaporkan pada tanggal 30 September 2024</p>
-                </div>
-            </div>
-        </div>
+                @foreach ($reportDetails as $reportDetail)
+                @php
+                    $report = $reportDetail->report;
+                    $reporter = $report->reporter;
+                    $person = $reporter == 'buyer' ? $report->buyer : $report->farmer;
+                @endphp
+                    <div
+                        class="box p-8 rounded-3xl bg-white mb-7 transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex relative">
+                        <input type="checkbox" class="self-center mr-4">
+                        <div class="w-20 flex-shrink-0 mr-4">
+                            <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="earbuds image"
+                                class="rounded-xl object-cover">
+                        </div>
+                        <div class="flex flex-col justify-start items-start space-y-4 flex-grow">
+                            <div class="flex items-center space-x-4">
+                                <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">{{ $person->name }}</h3>
+                                <p class="text-lg font-medium text-gray-400">{{ $reporter == 'buyer' ? 'PEMBELI' : 'PETANI' }}</p>
+                            </div>
+                            <div class="flex flex-col space-y-2 w-full" style="padding-right: 2rem;">
+                                <p class="text-lg leading-none text-black font-semibold">Laporan : {{ Str::limit($reportDetail->content_of_report, 100) }}</p>
+                                <p class="text-base leading-none text-black">Dilaporkan pada {{ $reportDetail->report_time->diffForHumans() }}
+                                </p>
+                            </div>
+                        </div>
 
-        <div class="box p-8 rounded-3xl bg-white mb-7 cursor-pointer transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex">
-            <input type="checkbox" class="self-center mr-4">
-            <div class="w-20 flex-shrink-0 mr-4">
-                <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="earbuds image" class="rounded-xl object-cover">
-            </div>
-            <div class="flex flex-col justify-start items-start space-y-4 flex-grow">
-                <div class="flex items-center space-x-4">
-                    <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">Arif</h3>
-                    <p class="text-lg font-medium text-gray-400">PENJUAL</p> 
-                </div>
-                <div class="flex flex-col space-y-2 w-full">
-                    <p class="text-lg leading-none text-black font-semibold">Laporan : Harga beras sudah naik</p>
-                    <p class="text-base leading-none text-black">Dilaporkan pada tanggal 30 September 2024</p>
-                </div>
-            </div>
-        </div> -->
+                        <!-- Kontainer ikon di pojok kanan bawah dari kotak putih -->
+                        <div class="absolute bottom-4 right-4 flex space-x-2">
+                            <button onclick="showPopup('teruskan')"><img src="/img/paperplane.png" alt="icon_teruskan"
+                                    class="w-10 h-10"></button>
+                            <button onclick=""><img src="/img/trash.png" alt="icon_sampah"
+                                    class="w-10 h-10"></button>
+                        </div>
+                    </div>
+                @endforeach
 
-    </section>
+        </section>
     </div>
 
     <!-- Popup untuk mengirim laporan -->
@@ -90,13 +68,14 @@
 
             <!-- Foto Profil Pengguna -->
             <div class="flex items-center justify-center mb-4">
-                <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="Foto Profil" class="w-24 h-24 rounded-full">
+                <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="Foto Profil"
+                    class="w-24 h-24 rounded-full">
             </div>
 
             <div class="mb-12 flex flex-col justify-start items-start space-y-4 flex-grow">
                 <div class="flex items-center space-x-4">
                     <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">Rudi</h3>
-                    <p class="text-lg font-medium text-gray-400">PEMBELI</p> 
+                    <p class="text-lg font-medium text-gray-400">PEMBELI</p>
                 </div>
                 <div class="mb-12 flex flex-col space-y-2 w-full" style="padding-right: 2rem;">
                     <p class="text-lg leading-none text-black font-semibold">Laporan : Penjual terlalu lama merespon</p>
@@ -104,7 +83,8 @@
             </div>
 
             <div class="mb-4">
-            <input type="file" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
+                <input type="file" id="uploadImage" accept="image/*"
+                    class="mt-1 block w-full text-sm text-gray-500
             file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
             file:text-white hover:file:bg-blue-500 active:scale-95">
             </div>
@@ -112,7 +92,8 @@
             <!-- Textbox untuk menulis pesan -->
             <div class="mb-4">
                 <label for="message" class="block text-sm font-normal text-gray-700">Tulis pesan untuk pelapor</label>
-                <textarea id="message" rows="3" placeholder="" class="w-full p-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <textarea id="message" rows="3" placeholder=""
+                    class="w-full p-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
             </div>
 
             <!-- Tombol aksi -->
@@ -134,5 +115,5 @@
             document.getElementById(popupId).classList.add("hidden");
         }
     </script>
-                                            
+
 </x-layout>
