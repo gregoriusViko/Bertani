@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Buyer;
 use App\Models\Farmer;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -90,7 +91,7 @@ class AuthController extends Controller
              return redirect('/');
         }if  (Auth::guard('admin')->attempt($data, true)) { 
             // $request->session()->regenerateToken();
-             return redirect('/laporan');
+             return redirect('/admin/laporan');
         }
         return redirect()->back()->with('gagal', "Email atau password anda salah!");
     }
@@ -105,5 +106,10 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
  
         return redirect('/');
+    }
+
+    // fungsi untuk admin
+    function hapusAkun(Farmer $farmer){
+        dd($farmer);
     }
 }    
