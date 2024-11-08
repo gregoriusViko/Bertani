@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory(count: 50)->recycle([
+        Product::factory(count: 100)->recycle([
             Farmer::all()
         ])->create();
     }
