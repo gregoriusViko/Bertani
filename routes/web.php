@@ -8,6 +8,7 @@ use App\Http\Middleware\BlockLogin;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Middleware\AuthAdmin;
+use Illuminate\Container\Attributes\Auth;
 
 // Route::get('/', function () {
 //     return view('welcome');
