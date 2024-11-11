@@ -109,7 +109,7 @@ class AuthController extends Controller
     }
 
     // fungsi untuk admin
-    function hapusAkun(Farmer $farmer){
+    function detailAkun(Farmer $farmer){
         dd($farmer);
     }
 }    
