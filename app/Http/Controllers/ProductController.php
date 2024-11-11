@@ -33,10 +33,8 @@ class ProductController extends Controller
     }
 
     public function create() {
-        return view('product.create');
+        return view('products.create');
     }
-
-
 
     public function Toko(Request $request){
         $request->validate([

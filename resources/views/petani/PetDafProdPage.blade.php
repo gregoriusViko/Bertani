@@ -5,12 +5,14 @@
             <h1 class="text-3xl font-bold tracking-tight text-gray-900">Daftar Produk</h1>
 
             <div dir="rtl">
+                <a href="{{route('products.create')}}">
                 <button
                     class="font-libre-franklin font-light flex items-center justify-center text-white bg-green-300 px-4 py-1 rounded-lg hover:bg-green-600"
-                    type="button" id="addProduct-button" onclick="toggleAllInputs()">
+                    type="button" id="addProduct-button">
                     <span><ion-icon name="add-circle-outline" class="ml-2 mt-1.5 text-lg"></ion-icon></span>
                     Tambah Produk
                 </button>
+                </a>
             </div>
         </div>
     </div>
