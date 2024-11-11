@@ -67,13 +67,13 @@ Route::get('/pesanan', function () {
 })->name('pesanan');
 
 Route::get('/lapPen', function () {
-    return view('PetLaporanPenjualanPage');
+    return view('petani.PetLaporanPenjualanPage');
 })->name('lapPen');
 
 Route::get('dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
 
 Route::get('/dafpesanan', function () {
-    return view('PetDafPesananPage');
+    return view('petani.PetDafPesananPage');
 })->name('dafpesanan');
 
 Route::get('/laporan', function () {
@@ -85,3 +85,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout'
 Route::get('/addProduct', function () {
     return view('petani.addProduct');
 })->name('addProduct');
+
+Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('products/Toko', [ProductController::class, 'Toko'])->name('products.Toko');
