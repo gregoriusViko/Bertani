@@ -110,6 +110,11 @@ class AuthController extends Controller
 
     // fungsi untuk admin
     function detailAkun(Farmer $farmer){
-        dd($farmer);
+        dd($farmer->name);
+    }
+    function deleteAkun(Farmer $farmer){
+        $farmer->status = 'blocked';
+        $farmer->save();
+        return 'berhasil';
     }
 }    
