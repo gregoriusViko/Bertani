@@ -59,12 +59,14 @@
                             Sayuran</li>
                     </ul>
 
+                    <input type="hidden" id="jenis" name="jenis"/>
+
                     <x-input-error :messages="$errors->get('jenis')" class="mt-2 " />
                 </div>
 
                 <div class="mt-4">
                     <x-input-label for="Stok" :value="__('Jumlah Stok')" />
-                    <x-text-input id="Stok" class="block mt-1  border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full" type="number" name="Stok"
+                    <x-text-input id="Stok" class="block mt-1  border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full" type="number" name="stok"
                         :value="old('Stok')" x-mask:dynamic="$Stok($input, ',')" required />
                     <x-input-error :messages="$errors->get('Stok')" class="mt-2 " />
                 </div>
@@ -84,7 +86,7 @@
                 </div>
                 <div class="mt-4 flex space-x-2 justify-end">
                     <button class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2" type="button" id="cancel-button">BATAL</button>
-                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400" type="submit" id="add-button" disabled>TAMBAH</button>
+                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400" type="submit" id="add-button" >TAMBAH</button>
                 </div>
                 {{-- <x-primary-button class="justify-center w-full mt-4">
                     {{ __('Submit') }}
@@ -102,12 +104,17 @@
 
         // Fungsi untuk memilih opsi dan menutup dropdown
         function selectOption(option) {
+            
             const selectedOptionElement = document.getElementById("selectedOption");
             selectedOptionElement.innerText = option;
             selectedOptionElement.classList.add("text-gray-800");
 
             document.getElementById("selectedOption").innerText = option; // Tampilkan teks opsi terpilih di button
-            document.getElementById("peranValue").value = option;
+            
+            document.getElementById("peran").value = option;
+            
+            document.getElementById("jenis").value = option;
+            
             toggleDropdown(); // Tutup dropdown setelah memilih opsi
         }
 
@@ -120,6 +127,23 @@
                 dropdown.classList.add("hidden");
             }
         });
+
+        // function checkFormValidity() {
+        //     const foto = document.getElementById("foto").files.length > 0;
+        //     const nama = document.getElementById("nama").value.trim() !== "";
+        //     const jenis = document.getElementById("jenis").value.trim() !== "";
+        //     const stok = document.getElementById("Stok").value.trim() !== "";
+        //     const harga = document.getElementById("harga").value.trim() !== "";
+
+        //     const addButton = document.getElementById("add-button");
+        //     addButton.disabled = !(foto && nama && jenis && stok && harga);
+        // }
+
+        // document.querySelectorAll('#foto, #nama, #jenis, #Stok, #harga').forEach((input) => {
+        //     input.addEventListener('input', checkFormValidity);
+        //     input.addEventListener('change', checkFormValidity);
+        // });
+
     </script>
 
 </x-layout>
