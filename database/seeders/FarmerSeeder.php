@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Farmer;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -13,11 +14,13 @@ class FarmerSeeder extends Seeder
      */
     public function run(): void
     {
+        $petani = 'petani@gmail.com';
         Farmer::create([
-            'email_address' => 'petani@gmail.com',
+            'email_address' => $petani,
             'password' => 'petani1234',
             'name' => 'petani 1',
             'phone_number' => '087234455234',
+            'slug' => Str::slug($petani),
             'home_address' => 'http//tidak-tau'
         ]);
         Farmer::factory(25)->create();
