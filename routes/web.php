@@ -86,3 +86,4 @@ Route::get('/addProduct', function () {
 })->name('addProduct');
 
 Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('products/Toko', [ProductController::class, 'Toko'])->name('products.Toko');
