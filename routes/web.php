@@ -34,7 +34,7 @@ Route::middleware(BlockAccess::class)->group(function(){
             function(){
                 Route::prefix('admin')->group(function(){
                     Route::resource('laporan', ReportController::class);
-                    Route::get('hapus-akun/detail/{id}', [AuthController::class, 'hapusAkun']);
+                    Route::get('hapus-akun/detail-petani/{farmer:slug}', [AuthController::class, 'detailAkun']);
                 });
             }
         );
