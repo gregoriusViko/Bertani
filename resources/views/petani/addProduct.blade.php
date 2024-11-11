@@ -82,7 +82,10 @@
                         name="deskripsi">{{ old('deskripsi') }}</x-text-area>
                     <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                 </div>
-
+                <div class="mt-4 flex space-x-2 justify-end">
+                    <button class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2" type="button" id="cancel-button">BATAL</button>
+                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400" type="submit" id="add-button" disabled>TAMBAH</button>
+                </div>
                 {{-- <x-primary-button class="justify-center w-full mt-4">
                     {{ __('Submit') }}
                 </x-primary-button> --}}
