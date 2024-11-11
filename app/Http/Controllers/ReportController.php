@@ -9,6 +9,6 @@ class ReportController extends Controller
 {
     function index(){
         $reportDetails = ReportDetail::with(['report'])->paginate(10);
-        return view('LaporanPage', compact('reportDetails'));
+        return view('admin.LaporanPage', compact('reportDetails'));
     }
 }
