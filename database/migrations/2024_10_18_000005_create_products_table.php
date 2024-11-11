@@ -32,7 +32,7 @@ return new class  extends Migration
             $table->string('product_type', 50)->nullable();
             $table->decimal('price')->nullable();
             $table->dateTimes();
-            $table->string('img_link', length: 150)->nullable();
+            $table->string('img_link', length: 150)->default('noimage.png');
         });
  
     }
