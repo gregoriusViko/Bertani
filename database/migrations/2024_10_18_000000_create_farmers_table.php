@@ -30,6 +30,7 @@ return new class  extends Migration
             $table->string('slug')->unique();
             $table->rememberToken();
             $table->dateTimes();
+            $table->string('status', 10)->default('active');
         });
  
     }
