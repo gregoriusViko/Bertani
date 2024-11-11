@@ -5,7 +5,7 @@
         <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Tambah Produk</h1>
     </div>
     <div class="mt-4 px-7 mx-auto max-w-screen-lg" x-data="{ imageUrl: '/img/noimage.png' }">
-        <form enctype="multipart/form-data" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto max-w-full">
+        <form enctype="multipart/form-data" method="POST" action="{{route('products.Toko')}}" class="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto max-w-full">
             @csrf
 
             <div>
