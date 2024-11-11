@@ -47,8 +47,7 @@ class ProductController extends Controller
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         $foto = $request->file('foto');
-        $foto->storeAs('/product', 'gambar1.jpg');
-        dd('hooh');
+        $foto->store('products', 'public');
         Product::create([
             'farmer_id' => Auth::guard('farmer')->user()->id,
             'name' => $request->nama,
@@ -57,7 +56,7 @@ class ProductController extends Controller
             'stock_kg' => $request->stok,
             'selling_unit_kg' => 10,
             'product_type' => $request->jenis,
-            'img_link' => $foto->hashName(),
+            'img_link' => '/storage/products/'.$foto->hashName(),
         ]);
 
         dd('hooh');
@@ -89,7 +88,7 @@ class ProductController extends Controller
             Storage::disk('local')->delete('public/'. $product->foto);
             $foto = $request->file('foto');
             $foto->storeAs('public', $foto->hashName());
-            $product->foto = $foto->hashName();
+            $product->foto = '/storage/products'.$foto->hashName();
         }
 
         $product->update();
