@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function farmerProducts(){
         $farmer = Auth::guard('farmer')->user();
         $products = $farmer->products;
-        return view('PetDafProdPage', compact('products'));
+        return view('petani.PetDafProdPage', compact('products'));
     }
 
     public function create() {

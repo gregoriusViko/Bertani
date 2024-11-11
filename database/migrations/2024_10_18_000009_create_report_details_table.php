@@ -27,7 +27,7 @@ return new class  extends Migration
             $table->dateTime('report_time');
             $table->dateTime('respose_time')->nullable();
             $table->text('content_of_report');
-            $table->foreignId('admin_id')->constrained(
+            $table->foreignId('admin_id')->nullable()->constrained(
                 table:'admins',
                 indexName: 'reportDetails_admin_id'
             );
