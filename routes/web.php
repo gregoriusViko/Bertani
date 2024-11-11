@@ -66,13 +66,13 @@ Route::get('/pesanan', function () {
 })->name('pesanan');
 
 Route::get('/lapPen', function () {
-    return view('PetLaporanPenjualanPage');
+    return view('petani.PetLaporanPenjualanPage');
 })->name('lapPen');
 
 Route::get('dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
 
 Route::get('/dafpesanan', function () {
-    return view('PetDafPesananPage');
+    return view('petani.PetDafPesananPage');
 })->name('dafpesanan');
 
 Route::get('/laporan', function () {
