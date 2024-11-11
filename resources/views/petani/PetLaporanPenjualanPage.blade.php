@@ -65,10 +65,10 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Cash
-                    </th> 
+                    </th>
                     <th scope="col" class="px-6 py-3">
                         Mamat
-                    </th> 
+                    </th>
                 </tr>
                 <tr>
                     <th scope="col" class="px-6 py-3">
@@ -91,15 +91,29 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Cash
-                    </th> 
+                    </th>
                     <th scope="col" class="px-6 py-3">
                         Mamat
-                    </th> 
+                    </th>
                 </tr>
+                {{-- @foreach ($produkList as $produk)
+                    <tr
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $produk->id }}</td>
+                        <td class="px-6 py-4">{{ $produk->tanggal_waktu }}</td>
+                        <td class="px-6 py-4">{{ $produk->nama_produk }}</td>
+                        <td class="px-6 py-4">{{ $produk->harga_produk }}</td>
+                        <td class="px-6 py-4">{{ $produk->jumlah }}</td>
+                        <td class="px-6 py-4">{{ $produk->total_pembelian }}</td>
+                        <td class="px-6 py-4">{{ $produk->metode_pembelian }}</td>
+                        <td class="px-6 py-4">{{ $produk->nama_pembeli }}</td>
+                    </tr>
+                @endforeach --}}
             </tbody>
         </table>
     </div>
-    
+
 
 
 
