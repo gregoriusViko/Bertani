@@ -33,33 +33,36 @@ class ProductController extends Controller
     }
 
     public function create() {
-        return view('products.create');
+        return view('petani.addProduct');
     }
 
     public function Toko(Request $request){
         $request->validate([
-            'name' => 'required|string|max:50',
-            'price' => 'required|numeric',
-            'description' => 'required',
-            'stock_kg' => 'required|decimal',
-            'selling_unit_kg' => 'required|decimal',
-            'img_link' => 'required|images|mimes:jpeg,png,jpg'
+            'nama' => 'required|string|max:50',
+            'harga' => 'required|numeric',
+            'deskripsi' => 'required',
+            'stok' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            // 'selling_unit_kg' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'jenis' => 'required',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
         $foto = $request->file('foto');
-        $foto->storeAs('public', $foto->hashName());
-
+        $foto->storeAs('/product', 'gambar1.jpg');
+        dd('hooh');
         Product::create([
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-            'stock_kg' => $request->stock_kg,
-            'selling_unit_kg' => $request->selling_unit_kg,
-            'product_type' => $request->product_type,
+            'farmer_id' => Auth::guard('farmer')->user()->id,
+            'name' => $request->nama,
+            'price' => $request->harga,
+            'description' => $request->deskripsi,
+            'stock_kg' => $request->stok,
+            'selling_unit_kg' => 10,
+            'product_type' => $request->jenis,
             'img_link' => $foto->hashName(),
         ]);
 
-        return redirect()->route('')->with('success', 'sukses menambahkan produk');
+        dd('hooh');
+
+        return redirect('petani.PetDafProdPage')->with('Sukses', 'Berhasil menambahkan produk');
     }
 
     public function edit(Product $product) {
@@ -68,11 +71,11 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product) {
         $request->validate([
-            'name' => 'required|string|max:50',
-            'price' => 'required|numeric',
-            'description' => 'required',
-            'stock_kg' => 'required|decimal',
-            'selling_unit_kg' => 'required|decimal',
+            'nama' => 'required|string|max:50',
+            'harga' => 'required|numeric',
+            'deskripsi' => 'required',
+            'stok' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'selling_unit_kg' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
         ]);
 
         $product->name = $request->name;
