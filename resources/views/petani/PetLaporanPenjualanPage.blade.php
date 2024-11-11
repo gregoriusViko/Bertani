@@ -1,47 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
+<x-layout>
+    <x-slot:title>Laporan Penjualan-Bertani.com</x-slot:title>
+    <div dir="ltr">
+        <div class="mb-4 mx-auto max-w-7xl px-4 mt-5 sm:px-6 lg:px-8 flex justify-between items-center">
+            <h1 class="text-3xl font-libre-franklin font-bold tracking-tight text-gray-900">Laporan Penjualan</h1>
+        </div>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/dropdown.js'])
-    {{-- <link rel="preload" as="style" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><link rel="modulepreload" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js" /><link rel="stylesheet" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><script type="module" src="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js"></script>     --}}
-    
-    {{-- <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>LaporanPenjualan-Bertani.com</title>
-</head>
-<body class="font-[Poppins] bg-white h-full">
-    <header class="bg-green-600">
-        {{-- <x-navbarpetani></x-navbarpetani> --}}
-        <!-- <x-navbarpembeli></x-navbarpembeli> -->
-        {{-- <x-navbaradmin></x-navbaradmin> --}}
-        {{-- <x-navbardefault></x-navbardefault> --}}
-        <x-navbarpetani></x-navbarpetani>
-    </header>
+    <div class="grid grid-rows-8 grid-flow-col gap-4">
+        <div class=" row-span-8  flex justify-center items-center">
+            <div class="text-center">
+                <h1 class="font-libre-franklin text-lg font-normal">Total Produk Terjual</h1>
+                <h4 class="font-libre-franklin text-2xl font-bold">xx</h4>
+            </div>
+        </div>
+        <div class="row-span-4 col-span-2 flex justify-center items-center">
+            <div class="text-center">
+                <h1 class="font-libre-franklin font-normal text-lg">Total Pemasukan</h1>
+                <h4 class="font-libre-franklin text-2xl font-bold">xx</h4>
+            </div>
+        </div>
+        <div class="row-span-4 col-span-2 flex justify-center items-center">
+            <div class="text-center">
+                <h1 class="font-libre-franklin font-normal text-lg">Produk Terlaku</h1>
+                <h4 class="font-libre-franklin text-2xl font-bold">xx</h4>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        const navLinks = document.querySelector('.nav-links')
-        function onToggleMenu(e){
-            e.name = e.name === 'menu' ? 'close' : 'menu'
-            navLinks.classList.toggle('top-[9%]')
-        }
-    </script>
 
-    <main px-7>
-        <h1>ini laporan penjualan</h1>
-        
-        
 
-    </main>
-</body>
-</html>
+    <div class="mt-8 overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
+        <table class="w-full text-sm text-left rtl:text-right text-black border border-black">
+            <thead class="text-xs text-white uppercase bg-blue-600">
+                <tr>
+                    <th scope="col" class="px-6 py-3">ID</th>
+                    <th scope="col" class="px-6 py-3">Tanggal-Waktu</th>
+                    <th scope="col" class="px-6 py-3">Nama Produk</th>
+                    <th scope="col" class="px-6 py-3">Harga Produk</th>
+                    <th scope="col" class="px-6 py-3">Jumlah</th>
+                    <th scope="col" class="px-6 py-3">Total Pembelian</th>
+                    <th scope="col" class="px-6 py-3">Metode Pembelian</th>
+                    <th scope="col" class="px-6 py-3">Nama Pembeli</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        1
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Senin 11/11/2024 - 16.53
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Kentang
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        5000
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        100
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Rp 500000
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Cash
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Mamat
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        2
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Senin 11/11/2024 - 16.53
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Kentang
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        5000
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        100
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Rp 500000
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Cash
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Mamat
+                    </th>
+                </tr>
+                {{-- @foreach ($produkList as $produk)
+                    <tr
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $produk->id }}</td>
+                        <td class="px-6 py-4">{{ $produk->tanggal_waktu }}</td>
+                        <td class="px-6 py-4">{{ $produk->nama_produk }}</td>
+                        <td class="px-6 py-4">{{ $produk->harga_produk }}</td>
+                        <td class="px-6 py-4">{{ $produk->jumlah }}</td>
+                        <td class="px-6 py-4">{{ $produk->total_pembelian }}</td>
+                        <td class="px-6 py-4">{{ $produk->metode_pembelian }}</td>
+                        <td class="px-6 py-4">{{ $produk->nama_pembeli }}</td>
+                    </tr>
+                @endforeach --}}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</x-layout>
