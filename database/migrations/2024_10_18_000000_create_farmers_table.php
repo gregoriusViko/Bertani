@@ -29,6 +29,7 @@ return new class  extends Migration
             $table->string('home_address', 150)->nullable();
             $table->string('slug')->unique();
             $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             $table->dateTimes();
             $table->string('status', 10)->default('active');
         });
