@@ -11,7 +11,7 @@
         class="mx-auto max-w-7xl px-4 py-1 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-1">
         {{-- @foreach ($products as $product) --}}
         <div
-            class="shadow-lg border rounded-lg p-4 grid sm:grid-cols-2 sm:grid-flow-row md:grid-cols-8 md:grid-flow-row lg:grid-cols-8 lg:grid-flow-row gap-4 items-start">
+            class="shadow-lg border rounded-lg p-4 grid sm:grid-cols-2 sm:grid-flow-row md:grid-cols-8 md:grid-flow-row lg:grid-cols-8 lg:grid-flow-row gap-4 items-start my-2">
             <!-- Gambar Produk -->
             <div
                 class="sm:col-span-1 sm:row-span-2 md:col-span-3 md:row-span-5 lg:col-span-2 lg:row-span-5 flex justify-center items-center border rounded-lg sm:w-1/2 sm:h-1/2 lg:w-60 lg:h-48 md:w-56 md:h-44 md:mt-1 overflow-hidden">
