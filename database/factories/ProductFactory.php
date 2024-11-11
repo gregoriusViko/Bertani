@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'selling_unit_kg'=>fake()->randomFloat(2, 1, 1000),
             'product_type' => fake()->text(5),
             'price' => fake()->randomFloat(0, 1000, 1000000),
-            'img_link' => fake()->url()
+            'img_link' => 'tidaktau'
         ];
     }
 }
