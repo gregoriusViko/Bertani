@@ -84,3 +84,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout'
 Route::get('/addProduct', function () {
     return view('petani.addProduct');
 })->name('addProduct');
+
+Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('products/Toko', [ProductController::class, 'Toko'])->name('products.Toko');
