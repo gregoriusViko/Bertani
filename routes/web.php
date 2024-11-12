@@ -1,8 +1,5 @@
 <?php
 use Illuminate\Http\Request;
-use App\Http\Middleware\AuthAdmin;
-use App\Http\Middleware\BlockLogin;
-use App\Http\Middleware\BlockAccess;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Container\Attributes\Auth;
@@ -11,17 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-#untuk calon user
-
-Route::middleware('auth:buyer')->group(function(){
-    Route::get('/profile', function () {
-        return view('ProfilePage');
-    })->name('profile');
-
+// rute yang bisa diakses pengguna yang telah login
+Route::middleware('auth:admin,buyer,farmer')->group(function(){
     Route::get('/chat', function () {
         return view('ChatPage');
     })->name('chat');
@@ -31,19 +19,35 @@ Route::middleware('auth:buyer')->group(function(){
 
         // Rute untuk memperbarui profil
         Route::post('/profile/update', [ProfileController::class, 'updates'])->name('profile.update');
-
-        Route::middleware(AuthAdmin::class)->group(
-            function(){
-                Route::prefix('admin')->group(function(){
-                    Route::resource('laporan', ReportController::class);
-                    Route::get('detail-petani/{farmer:slug}', [AuthController::class, 'detailAkun']);
-                    Route::get('delete/{farmer:slug}', [AuthController::class, 'deleteAkun']);
-                });
-            }
-        );
 });
 
-Route::middleware(BlockLogin::class)->group(
+// rute yang hanya diakses admin
+Route::middleware('auth:admin')->group(
+    function(){
+        Route::prefix('admin')->group(function(){
+            Route::resource('laporan', ReportController::class);
+            Route::get('detail-petani/{farmer:slug}', [AuthController::class, 'detailAkun']);
+            Route::get('delete/{farmer:slug}', [AuthController::class, 'deleteAkun']);
+        });
+    }
+);
+
+// rute yang hanya diakses petani
+Route::middleware(['auth:farmer','verified'])->group(function(){
+    Route::get('petani/coba', function(){
+        return 'berhasil petani';
+    });
+});
+
+// rute yang hanya diakses pembeli
+Route::middleware(['auth:buyer', 'verified'])->group(function(){
+    Route::get('pembeli/coba', function(){
+        return 'berhasil pembeli';
+    });
+});
+
+// rute untuk orang yang belum login
+Route::middleware('guest:admin,farmer,buyer')->group(
     function(){
     Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register.tampil');
     Route::post('/register/submit',[AuthController::class, 'submitRegister'])->name('register.submit');
@@ -95,4 +99,8 @@ Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $reque
     $request->fulfill();
  
     return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['auth:buyer,farmer'])->name('verification.verify');
+
+Route::get('/email/verify', function () {
+    return 'verifikasi dulu dong';
+})->middleware('auth:buyer,farmer')->name('verification.notice');
