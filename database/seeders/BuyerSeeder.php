@@ -22,6 +22,7 @@ class BuyerSeeder extends Seeder
             'phone_number' => '087234451234',
             'slug' => Str::slug($pembeli1),
             'profile_img_link' => '/buyers/pembeli.jpg',
+            'email_verified_at' => now(),
             'home_address' => 'http//tidak-tau'
         ]);
         Buyer::factory(50)->create();
