@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Pengguna1',
             'username' => 'pengguna',
-            'email_address' => 'pengguna@gmail.com',
+            'email' => 'pengguna@gmail.com',
             'email_verified_at' => now(),
             'password' => 'pengguna1234',
             'remember_token' => Str::random(10)

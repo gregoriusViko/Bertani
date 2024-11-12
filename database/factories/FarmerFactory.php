@@ -20,12 +20,13 @@ class FarmerFactory extends Factory
     {
         $email = fake()->unique()->safeEmail();
         return [
-            'email_address' => $email,
+            'email' => $email,
             'password' => Str::random(10),
             'name' => fake()->unique()->name(),
             'phone_number' => fake()->unique()->phoneNumber(),
             'slug' => Str::slug($email),
             'profile_img_link' => fake()->imageUrl(),
+            'email_verified_at' => now(),
             'home_address' => fake()->url()
         ];
     }
