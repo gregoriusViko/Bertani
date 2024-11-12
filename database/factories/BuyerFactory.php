@@ -20,7 +20,7 @@ class BuyerFactory extends Factory
     {
         $email = fake()->unique()->safeEmail();
         return [
-            'email_address' => $email,
+            'email' => $email,
             'password' => Str::random(10),
             'name' => fake()->unique()->name(),
             'phone_number' => fake()->unique()->phoneNumber(),

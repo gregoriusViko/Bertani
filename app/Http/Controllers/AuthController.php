@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Buyer;
 use App\Models\Farmer;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class AuthController extends Controller
     function submitRegister(Request $request){
         $request->validate([
             'name' => 'required|alpha|unique:farmers,name|unique:buyers,name',
-            'email' => 'required|email|unique:farmers,email_address|unique:buyers,email_address|max:45',
+            'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
             'telepon' => 'required|unique:farmers,phone_number|unique:buyers,phone_number|regex:/^08[0-9]{8,10}$/',
             'password' => 'required|min:6|max:45',
             'peran' => 'required|in:Pembeli,Petani'
@@ -33,12 +34,13 @@ class AuthController extends Controller
             $user = new Buyer();
         }
         // Data Berdasar Kolom
-        $user->email_address = $request->email;
+        $user->email = $request->email;
         $user->phone_number = $request->telepon;
         $user->password = $request->password;
         $user->slug = Str::slug($request->email);
         $user->name = $request->name;
         $user->save();
+        event(new Registered($user));
         
         return redirect('login');
     }
@@ -50,11 +52,11 @@ class AuthController extends Controller
     function submitLogin(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'email_address' => 'required|email|max:45',
+            'email' => 'required|email|max:45',
             'password' => 'required|min:6']);
 
         $data = [
-        'email_address' => $request->input('email_address'),
+        'email' => $request->input('email'),
         'password' => $request->input('password')
         ];
         if  (Auth::guard('buyer')->attempt($data, true)) { 

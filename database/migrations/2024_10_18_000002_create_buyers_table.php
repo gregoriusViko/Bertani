@@ -21,7 +21,7 @@ return new class  extends Migration
         Schema::create('buyers', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('email_address', 45)->unique();
+            $table->string('email', 45)->unique();
             $table->string('password');
             $table->string('name', 50)->unique();
             $table->string('phone_number', 45)->nullable();
