@@ -29,7 +29,7 @@
                         class="bg-green-600 text-white px-4 py-1 relative font-hind text-1xl font-semibold rounded-full hover:bg-white hover:text-green-600 flex items-center justify-center space-x-2"
                         type="button">
                         <span class="group-hover:text-green-600 relative font-hind text-1xl text-base font-semibold">
-                            {{ $user ? $user->email_address : 'Belum Login' }}
+                            {{ $user ? $user->email : 'Belum Login' }}
                         </span>
                         @if ($user && $user->profile_img_link)
                             <img src="{{ $user->profile_img_link }}" alt=""
