@@ -25,11 +25,10 @@ return new class  extends Migration
                 table:'farmers',
                 indexName: 'products_farmer_id'
             );
-            $table->string('name', 50);
+            $table->foreignId('type_of_product_id')->constrained(
+                'type_of_product')->index('products_type_of_product_id');
             $table->text('description')->nullable();
             $table->decimal('stock_kg');
-            $table->decimal('selling_unit_kg');
-            $table->string('product_type', 50)->nullable();
             $table->decimal('price')->nullable();
             $table->dateTimes();
             $table->string('img_link', length: 150)->default('noimage.png');
