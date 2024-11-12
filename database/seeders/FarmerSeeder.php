@@ -21,6 +21,7 @@ class FarmerSeeder extends Seeder
             'name' => 'petani 1',
             'phone_number' => '087234455234',
             'slug' => Str::slug($petani),
+            'email_verified_at' => now(),
             'home_address' => 'http//tidak-tau'
         ]);
         Farmer::factory(25)->create();
