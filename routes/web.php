@@ -34,9 +34,19 @@ Route::middleware('auth:admin')->group(
 
 // rute yang hanya diakses petani
 Route::middleware(['auth:farmer','verified'])->group(function(){
-    Route::get('petani/coba', function(){
-        return 'berhasil petani';
-    });
+    Route::get('dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
+
+    Route::get('/dafpesanan', function () {
+        return view('petani.PetDafPesananPage');
+    })->name('dafpesanan');
+
+    Route::get('/lapPen', function () {
+        return view('petani.PetLaporanPenjualanPage');
+    })->name('lapPen');
+
+    Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+
+    Route::post('products/Toko', [ProductController::class, 'Toko'])->name('products.Toko');
 });
 
 // rute yang hanya diakses pembeli
@@ -72,16 +82,6 @@ Route::get('/pesanan', function () {
     return view('PesananPage');
 })->name('pesanan');
 
-Route::get('/lapPen', function () {
-    return view('petani.PetLaporanPenjualanPage');
-})->name('lapPen');
-
-Route::get('dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
-
-Route::get('/dafpesanan', function () {
-    return view('petani.PetDafPesananPage');
-})->name('dafpesanan');
-
 Route::get('/laporan', function () {
     return view('LaporanPage');
 })->name('laporan');
@@ -91,9 +91,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout'
 Route::get('/addProduct', function () {
     return view('petani.addProduct');
 })->name('addProduct');
-
-Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
-Route::post('products/Toko', [ProductController::class, 'Toko'])->name('products.Toko');
 
 Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
