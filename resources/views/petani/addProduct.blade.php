@@ -20,13 +20,6 @@
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
 
-                <div class="mt-4">
-                    <x-input-label for="nama" :value="__('Nama')" />
-                    <x-text-input id="nama" class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50" type="text" name="nama"
-                        :value="old('nama')" required />
-                    <x-input-error :messages="$errors->get('nama')" class="mt-2" />
-                </div>
-
                 <div class="mt-4 relative">
                     <x-input-label for="jenis" :value="__('Jenis Produk')" />
                     <button type="button" id="peran" onclick="toggleDropdown()"
@@ -62,6 +55,13 @@
                     <input type="hidden" id="jenis" name="jenis"/>
 
                     <x-input-error :messages="$errors->get('jenis')" class="mt-2 " />
+                </div>
+
+                <div class="mt-4">
+                    <x-input-label for="nama" :value="__('Nama')" />
+                    <x-text-input id="nama" class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50" type="text" name="nama"
+                        :value="old('nama')" required />
+                    <x-input-error :messages="$errors->get('nama')" class="mt-2" />
                 </div>
 
                 <div class="mt-4">
