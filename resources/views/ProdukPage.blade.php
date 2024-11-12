@@ -12,10 +12,4 @@
             </svg>
         </button>
     </div>
-
-    
-
-
-
-
 </x-layout>
