@@ -16,7 +16,7 @@ class FarmerSeeder extends Seeder
     {
         $petani = 'petani@gmail.com';
         Farmer::create([
-            'email_address' => $petani,
+            'email' => $petani,
             'password' => 'petani1234',
             'name' => 'petani 1',
             'phone_number' => '087234455234',

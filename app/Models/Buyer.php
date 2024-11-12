@@ -13,7 +13,7 @@ class Buyer extends Authenticatable
     use HasFactory, Notifiable;
     protected $fillable = [
         'name',
-        'email_address',
+        'email',
         'password',
         'home_address',
         'phone_number',
