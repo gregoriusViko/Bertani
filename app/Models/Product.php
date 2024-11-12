@@ -10,20 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'farmer_id',
-        'name',
-        'description',
-        'stock_kg',
-        'selling_unit_kg',
-        'product_type',
-        'price',
-        'img_link',
-    ];
+    protected $guarded = ['id','created_at', 'updated_at'];
 
-    protected $with = ['farmer'];
+    protected $with = ['farmer', 'type'];
     public function farmer(): BelongsTo{
         return $this->belongsTo(Farmer::class);
+    }
+    public function type(): BelongsTo{
+        return $this->belongsTo(TypeOfProduct::class, 'type_of_product_id');
     }
     public function orderDetails(): HasMany{
         return $this->hasMany(OrderDetail::class);
