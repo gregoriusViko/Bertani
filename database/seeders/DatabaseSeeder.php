@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             Farmer::all()
         ])->create();
 
-        $this->call([OrderSeeder::class, ProductSeeder::class]);
+        $this->call([OrderSeeder::class, TypeOfProductSeeder::class, ProductSeeder::class]);
 
         OrderDetail::factory(150)->recycle([
             Order::all(),
