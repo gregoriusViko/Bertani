@@ -54,7 +54,6 @@ class ProductController extends Controller
             'price' => $request->harga,
             'description' => $request->deskripsi,
             'stock_kg' => $request->stok,
-            'selling_unit_kg' => 10,
             'product_type' => $request->jenis,
             'img_link' => '/storage/products/'.$foto->hashName(),
         ]);
