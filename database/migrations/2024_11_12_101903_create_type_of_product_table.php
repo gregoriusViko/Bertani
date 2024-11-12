@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('type_of_product', function (Blueprint $table) {
+        Schema::create('type_of_products', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('Product Type');
-            $table->string('Product name');
-            
+            $table->string('name');
+            $table->string('category');
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('type_of_product');
+        Schema::dropIfExists('type_of_products');
     }
 };
