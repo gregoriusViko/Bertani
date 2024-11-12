@@ -59,9 +59,7 @@ class ProductController extends Controller
             'img_link' => '/storage/products/'.$foto->hashName(),
         ]);
 
-        dd('hooh');
-
-        return redirect('petani.PetDafProdPage')->with('Sukses', 'Berhasil menambahkan produk');
+        return redirect('dafproduk')->with('Sukses', 'Berhasil menambahkan produk');
     }
 
     public function edit(Product $product) {
