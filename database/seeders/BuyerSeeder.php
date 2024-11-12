@@ -16,7 +16,7 @@ class BuyerSeeder extends Seeder
     {
         $pembeli1 = 'pembeli@gmail.com';
         Buyer::create([
-            'email_address' => $pembeli1,
+            'email' => $pembeli1,
             'password' => 'Pembeli1234',
             'name' => 'Pembeli 1',
             'phone_number' => '087234451234',
