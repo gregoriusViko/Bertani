@@ -22,12 +22,12 @@
                 @csrf        
                 <div class="relative flex items-center">
                     <input type="text" placeholder="Nama" name="name"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" required/>
                 </div>
                 
                 <div class="relative flex items-center">
                     <input type="email" placeholder="Email" name="email"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" required/>
                 </div>
 
                 <div class="relative flex w-full">
@@ -57,16 +57,16 @@
                 </div>
 
                 <!-- input tersembunyi -->
-                <input type="hidden" id="peranValue" name="peran" />
+                <input type="hidden" id="peranValue" name="peran" required/>
 
                 <div class="relative flex items-center">
-                    <input type="tel" placeholder="08xxxxxxxxx" pattern="08[0-9]{9}" name="telepon"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                    <input type="tel" placeholder="08xxxxxxxxx" pattern="^08[0-9]{8,10}$" name="telepon"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" required/>
                 </div>
 
                 <div class="relative flex items-center">
                     <input type="password" placeholder="Password" name="password"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" required minlength="6"/>
                 </div>
 
                 <button type="submit"

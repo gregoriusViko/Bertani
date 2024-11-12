@@ -35,9 +35,9 @@
             </div>
             <div class="mb-5">
                 <label for="email-input" class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Email</label>
-                <input type="text" id="email-input" name="email_address"
+                <input type="text" id="email-input" name="email"
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{$user->email_address}}" required readonly />
+                    value="{{$user->email}}" required readonly />
             </div>
         </form>
         {{-- button group --}}
