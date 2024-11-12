@@ -26,7 +26,9 @@ return new class  extends Migration
                 indexName: 'products_farmer_id'
             );
             $table->foreignId('type_of_product_id')->constrained(
-                'type_of_product')->index('products_type_of_product_id');
+                table:'type_of_products',
+                indexName: 'products_type_id'
+            );
             $table->text('description')->nullable();
             $table->decimal('stock_kg');
             $table->decimal('price')->nullable();

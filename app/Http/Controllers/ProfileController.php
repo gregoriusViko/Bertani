@@ -31,7 +31,7 @@ class ProfileController extends Controller
             'name' => 'required|string|max:50',
             'home_address' => 'required|string|max:150',
             'phone_number' => 'required|string|regex:/^\d{10,13}$/',
-            'email_address' => 'required|string|max:45',
+            'email' => 'required|string|max:45',
         ]);
 
         // Dapat user
@@ -50,7 +50,7 @@ class ProfileController extends Controller
         $user->name = $request->input('name');
         $user->home_address = $request->input('home_address');
         $user->phone_number = $request->input('phone_number');
-        $user->email_address = $request->input('email_address');
+        $user->email = $request->input('email');
 
 
         $user->save();
