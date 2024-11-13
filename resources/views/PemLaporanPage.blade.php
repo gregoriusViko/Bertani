@@ -1,33 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
+<x-layout>
+    <x-slot:title>Home-Bertani.com</x-slot:title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/dropdown.js'])
-    {{-- <link rel="preload" as="style" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><link rel="modulepreload" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js" /><link rel="stylesheet" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><script type="module" src="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js"></script>     --}}
-    
-    {{-- <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>Pesanan-Bertani.com</title>
-</head>
-<body class="font-[Poppins] bg-white h-full">
-    <header class="bg-green-600">
-        {{-- <x-navbarpetani></x-navbarpetani> --}}
-        <x-navbarpembeli></x-navbarpembeli>
-        {{-- <x-navbaradmin></x-navbaradmin> --}}
-        {{-- <x-navbardefault></x-navbardefault> --}}
-    </header>
-<body>
-    
-</body>
-</html>
+    <div class="text-sm font-medium text-center">
+        <ul class="flex flex-wrap -mb-px">
+            <li class="me-2">
+                <a href="#" class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500" aria-current="page">LAPORAN</a>
+            </li>
+            <li class="me-2">
+                <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">DAFTAR LAPORAN</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="border border-black p-8 rounded-md w-full h-auto">
+        <p class="text-3xl font-bold mb-4">Laporan Sistem</p>
+        
+        <div class="mb-4">
+            <label for="message" class="block text-xl font-normal mb-4">Deskripsi Laporan</label>
+            <textarea id="message" rows="3" placeholder="" class="w-full h-60 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+        </div>
+
+        <p class="text-2xl font-bold mb-4">Foto Bukti Laporan</p>
+
+        <div class="mb-4">
+            <input type="file" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
+            file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
+            file:text-white hover:file:bg-blue-500 active:scale-95">
+        </div>
+
+        <p class="block text-base font-normal mb-4">Saya dengan ini menyatakan bahwa segala informasi yang dilaporkan memang benar</p>
+            
+        <div class="flex justify-end space-x-4">
+            <button class="px-4 py-2 bg-white rounded-lg border border-black">Batal</button>
+            <button class="px-4 py-2 bg-white-300 rounded-lg border border-black">Kirim</button>
+        </div>
+    </div>
+</x-layout>

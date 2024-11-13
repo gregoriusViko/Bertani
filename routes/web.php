@@ -83,4 +83,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout'
 
 Route::get('/laporanpembeli', function () {
     return view('PemLaporanPage');
-})->name('laporanpembelian');
+})->name('laporanpembeli');
+
+Route::get('/laporanpetani', function () {
+    return view('PetLaporanPage');
+})->name('laporanpetani');
