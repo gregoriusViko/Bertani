@@ -16,7 +16,7 @@
             <form class="space-y-4" action="{{ route('login.proses')}}" method="post">
                 @csrf
                 <div class="relative flex items-center">
-                    <input type="email" placeholder="Email" name="email_address"
+                    <input type="email" placeholder="Email" name="email"
                     class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
                 </div>
 
