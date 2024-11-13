@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Farmer extends Authenticatable
+class Farmer extends Authenticatable implements MustVerifyEmail
 {
     protected $fillable = [
         'name',
-        'email_address',
+        'email',
         'password',
         'home_address',
         'phone_number',
