@@ -109,3 +109,7 @@ Route::get('/laporanpembeli', function () {
 Route::get('/laporanpetani', function () {
     return view('PetLaporanPage');
 })->name('laporanpetani');
+
+Route::get('/DetailProductPage', function () {
+    return view('DetailProductPage');
+})->name('DetailProductPage');
