@@ -61,13 +61,13 @@ class AuthController extends Controller
         ];
         if  (Auth::guard('buyer')->attempt($data, true)) { 
             // $request->session()->regenerateToken();
-             return redirect('/');
+            return redirect()->intended('/');
         }if  (Auth::guard('farmer')->attempt($data, true)) { 
             // $request->session()->regenerateToken();
-             return redirect('/');
+            return redirect()->intended('/');
         }if  (Auth::guard('admin')->attempt($data, true)) { 
             // $request->session()->regenerateToken();
-             return redirect('/admin/laporan');
+            return redirect()->intended('/admin/laporan');
         }
         return redirect()->back()->with('gagal', "Email atau password anda salah!");
     }
