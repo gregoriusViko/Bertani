@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Buyer;
 use App\Models\Farmer;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,79 +20,54 @@ class AuthController extends Controller
     }
 
     function submitRegister(Request $request){
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:farmers,email_address|unique:buyers,email_address|max:45',
-            'telepon' => 'required|regex:/^08[0-9]{9}$/|min:11|max:45',
+        $request->validate([
+            'name' => 'required|alpha|unique:farmers,name|unique:buyers,name',
+            'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
+            'telepon' => 'required|unique:farmers,phone_number|unique:buyers,phone_number|regex:/^08[0-9]{8,10}$/',
             'password' => 'required|min:6|max:45',
             'peran' => 'required|in:Pembeli,Petani'
         ]);
-
-        if($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        // ceking email yang sudah digunakan
-        $validator->after(function ($validator) use ($request){
-            $email = $request->email;
-                       
-            if ($request->peran == 'Petani') {
-                # cek email apakah ada di tabel buyer
-                if  (Buyer::where('email_address', $email)->exists()){
-                    $validator->errors()->add('email', 'Email sudah terdaftar sebagai Pembeli');
-                }
-            } elseif ($request->peran == 'Pembeli') {
-                # cek email apakah ada di tabel farmer
-                if (Farmer::where('email_address', $email)->exists()){
-                    $validator->errors()->add('email', 'Email sudah terdaftar sebagai Petani');
-                }
-            }
-        });
-
-        if ($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
 
         if ($request->peran == 'Petani') {
             $user = new Farmer();
         } else {
             $user = new Buyer();
         }
-
         // Data Berdasar Kolom
-        $user->email_address = $request->email;
+        $user->email = $request->email;
         $user->phone_number = $request->telepon;
         $user->password = $request->password;
+        $user->slug = Str::slug($request->email);
         $user->name = $request->name;
-
         $user->save();
-
+        event(new Registered($user));
         
         return redirect('login');
     }
 
-    function tampilLogin(Request $request){
+    function tampilLogin(){
         return view('login');
     }
 
     function submitLogin(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'email_address' => 'required|email|max:45',
+            'email' => 'required|email|max:45',
             'password' => 'required|min:6']);
 
         $data = [
-        'email_address' => $request->input('email_address'),
+        'email' => $request->input('email'),
         'password' => $request->input('password')
         ];
         if  (Auth::guard('buyer')->attempt($data, true)) { 
             // $request->session()->regenerateToken();
-             return redirect('/');
+            return redirect()->intended('/');
         }if  (Auth::guard('farmer')->attempt($data, true)) { 
             // $request->session()->regenerateToken();
-             return redirect('/');
+            return redirect()->intended('/');
         }if  (Auth::guard('admin')->attempt($data, true)) { 
             // $request->session()->regenerateToken();
-             return redirect('/admin/laporan');
+            return redirect()->intended('/admin/laporan');
         }
         return redirect()->back()->with('gagal', "Email atau password anda salah!");
     }
@@ -109,7 +85,12 @@ class AuthController extends Controller
     }
 
     // fungsi untuk admin
-    function hapusAkun(Farmer $farmer){
-        dd($farmer);
+    function detailAkun(Farmer $farmer){
+        dd($farmer->name);
+    }
+    function deleteAkun(Farmer $farmer){
+        $farmer->status = 'blocked';
+        $farmer->save();
+        return 'berhasil';
     }
 }    

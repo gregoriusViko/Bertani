@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ReportController extends Controller
 {
     function index(){
-        $detailReport = ReportDetail::with(['report'])->paginate(10);
-        dd($detailReport);
+        $reportDetails = ReportDetail::with(['report'])->paginate(10);
+        return view('admin.LaporanPage', compact('reportDetails'));
     }
 }

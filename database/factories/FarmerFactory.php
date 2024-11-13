@@ -18,11 +18,13 @@ class FarmerFactory extends Factory
      */
     public function definition(): array
     {
+        $email = fake()->unique()->safeEmail();
         return [
-            'email_address' => fake()->unique()->safeEmail(),
+            'email' => $email,
             'password' => Str::random(10),
             'name' => fake()->unique()->name(),
             'phone_number' => fake()->unique()->phoneNumber(),
+            'slug' => Str::slug($email),
             'profile_img_link' => fake()->imageUrl(),
             'home_address' => fake()->url()
         ];
