@@ -1,47 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
+<x-layout>
+    <x-slot:title>Produk-Bertani.com</x-slot:title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/dropdown.js'])
-    {{-- <link rel="preload" as="style" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><link rel="modulepreload" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js" /><link rel="stylesheet" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><script type="module" src="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js"></script>     --}}
-    
-    {{-- <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>Produk-Bertani.com</title>
-</head>
-<body class="font-[Poppins] bg-white h-full">
-    <header class="bg-green-600">
-        {{-- <x-navbarpetani></x-navbarpetani> --}}
-        <!-- <x-navbarpembeli></x-navbarpembeli> -->
-        {{-- <x-navbaradmin></x-navbaradmin> --}}
-        {{-- <x-navbardefault></x-navbardefault> --}}
-        <x-navbarpetani></x-navbarpetani>
-    </header>
-
-    <script>
-        const navLinks = document.querySelector('.nav-links')
-        function onToggleMenu(e){
-            e.name = e.name === 'menu' ? 'close' : 'menu'
-            navLinks.classList.toggle('top-[9%]')
-        }
-    </script>
-
-    <main px-7>
-        <h1>ini laporan penjualan</h1>
-        
-        
-
-    </main>
-</body>
-</html>
+    <div class="flex rounded-md my-8 overflow-hidden max-w-full font-[sans-serif] w-1/2 mx-auto">
+        <input type="email" placeholder="Cari Produk"
+            class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3" />
+        <button type='button' onclick="" class="flex items-center justify-center bg-green-600 px-5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-white">
+                <path
+                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                </path>
+            </svg>
+        </button>
+    </div>
+</x-layout>

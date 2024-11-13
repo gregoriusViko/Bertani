@@ -25,13 +25,13 @@ return new class  extends Migration
                 indexName: 'reportDetails_report_id'
             );
             $table->dateTime('report_time');
-            $table->dateTime('respose_time');
+            $table->dateTime('respose_time')->nullable();
             $table->text('content_of_report');
-            $table->foreignId('admin_id')->constrained(
+            $table->foreignId('admin_id')->nullable()->constrained(
                 table:'admins',
                 indexName: 'reportDetails_admin_id'
             );
-            $table->text('content_of_response');
+            $table->text('content_of_response')->nullable();
             $table->mediumText('img')->charset('binary');
         });
  

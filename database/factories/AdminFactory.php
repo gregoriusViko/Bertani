@@ -19,7 +19,7 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'email_address' => fake()->unique()->safeEmail(),
+            'email' => fake()->unique()->safeEmail(),
             'password' => Str::random(10),
             'name' => fake()->unique()->name(),
             'phone_number' => fake()->unique()->phoneNumber(),

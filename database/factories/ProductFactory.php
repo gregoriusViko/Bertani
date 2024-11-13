@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Farmer;
+use App\Models\TypeOfProduct;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,13 +20,11 @@ class ProductFactory extends Factory
     {
         return [
             'farmer_id' => Farmer::factory(),
-            'name'=>fake()->text(5),
+            'type_of_product_id' => TypeOfProduct::factory(),
             'description'=>fake()->realText(),
             'stock_kg'=>fake()->randomFloat(2, 0, 10000),
-            'selling_unit_kg'=>fake()->randomFloat(2, 1, 1000),
-            'product_type' => fake()->text(5),
             'price' => fake()->randomFloat(0, 1000, 1000000),
-            'img_link' => fake()->url()
+            'img_link' => 'tidaktau'
         ];
     }
 }
