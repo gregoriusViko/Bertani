@@ -108,3 +108,8 @@ Route::get('/laporan', function () {
 Route::get('/DetailProductPage', function () {
     return view('DetailProductPage');
 })->name('DetailProductPage');
+
+
+Route::get('/PembayaranPage', function () {
+    return view('pembeli.PembayaranPage');
+})->name('PembayaranPage');
