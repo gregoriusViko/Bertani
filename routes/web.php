@@ -102,10 +102,6 @@ Route::get('/email/verify', function () {
     return 'verifikasi dulu dong';
 })->middleware('auth:buyer,farmer')->name('verification.notice');
 
-Route::get('/laporanpembeli', function () {
+Route::get('/laporan', function () {
     return view('PemLaporanPage');
-})->name('laporanpembeli');
-
-Route::get('/laporanpetani', function () {
-    return view('PetLaporanPage');
-})->name('laporanpetani');
+})->name('laporan');

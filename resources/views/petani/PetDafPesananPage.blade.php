@@ -8,8 +8,8 @@
 
     <!-- bawah ini adalah component untuk produk -->
     <div id="cardContainer"
-        class="mx-auto max-w-7xl px-4 py-1 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-1">
-        {{-- @foreach ($products as $product) --}}
+        class="mx-auto m2ax-w-7xl px-4 py-1 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-1">
+        @foreach ($products as $product)
         <div
             class="shadow-lg border rounded-lg p-4 grid sm:grid-cols-2 sm:grid-flow-row md:grid-cols-8 md:grid-flow-row lg:grid-cols-8 lg:grid-flow-row gap-4 items-start my-2">
             <!-- Gambar Produk -->
@@ -73,6 +73,7 @@
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
     <div id="componentContainer" class="hidden mt-4">
         @include('components.delete_confirm')
