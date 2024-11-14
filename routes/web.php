@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Container\Attributes\Auth;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
@@ -34,19 +35,17 @@ Route::middleware('auth:admin')->group(
 
 // rute yang hanya diakses petani
 Route::middleware(['auth:farmer','verified'])->group(function(){
-    Route::get('dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('/dafproduk', 'farmerProducts')->name('dafproduk');
+        Route::get('products/create', 'create')->name('products.create');
+        Route::post('products/Toko', 'Toko')->name('products.Toko');
+    });
 
-    Route::get('/dafpesanan', function () {
-        return view('petani.PetDafPesananPage');
-    })->name('dafpesanan');
+    Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
 
     Route::get('/lapPen', function () {
         return view('petani.PetLaporanPenjualanPage');
     })->name('lapPen');
-
-    Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
-
-    Route::post('products/Toko', [ProductController::class, 'Toko'])->name('products.Toko');
 });
 
 // rute yang hanya diakses pembeli

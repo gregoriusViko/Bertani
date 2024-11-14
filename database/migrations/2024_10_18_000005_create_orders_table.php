@@ -25,6 +25,12 @@ return new class  extends Migration
                 table:'buyers',
                 indexName: 'orders_buyer_id'
             );
+            $table->foreignId('product_id')->constrained(
+                table:'products',
+                indexName: 'order_product_id'
+            );
+            $table->decimal('price');
+            $table->decimal('quantity_kg');
             $table->dateTime('order_time');
             $table->string('payment_proof', 150)->nullable();
             $table->string('receipt_number', 15)->unique();
