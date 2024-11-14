@@ -13,7 +13,7 @@
                 {{ Str::before($product->farmer->name, ' ') }} - "asal"
             </div>
             <div class="text-sm font-mono font-light">
-                Terjual : {{ WeightConverter::convert($product->orderDetails->sum('order_quantity')) }}
+                Terjual : {{ WeightConverter::convert($product->order->sum('order_quantity')) }}
             </div>
             <div class="text-sm font-mono font-light">
                 Stok : {{ WeightConverter::convert($product->stock_kg) }}
