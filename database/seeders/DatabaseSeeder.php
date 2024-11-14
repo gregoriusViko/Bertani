@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             Farmer::all()
         ])->create();
 
-        $this->call([OrderSeeder::class, TypeOfProductSeeder::class, ProductSeeder::class]);
+        $this->call([TypeOfProductSeeder::class, ProductSeeder::class, OrderSeeder::class]);
 
         $this->call(ReportSeeder::class);
 
