@@ -27,7 +27,7 @@ class OrderFactory extends Factory
             'receipt_number' => $randomString,
             'price' => fake()->randomFloat(2, 1000, 1000000),
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
-            'order_status' => Arr::random(['done', 'waiting for acceptance', 'request accepted', 'denied'])
+            'order_status' => Arr::random(['selesai', 'menunggu konfirmasi', 'permintaan diterima', 'ditolak'])
         ];
 
     }
