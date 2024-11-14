@@ -105,3 +105,7 @@ Route::get('/email/verify', function () {
 Route::get('/laporan', function () {
     return view('PemLaporanPage');
 })->name('laporan');
+
+Route::get('/DetailProductPage', function () {
+    return view('DetailProductPage');
+})->name('DetailProductPage');
