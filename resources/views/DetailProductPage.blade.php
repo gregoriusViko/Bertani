@@ -5,24 +5,41 @@
         <div class=" row-span-8 col-span-2 md:col-span-2 flex justify-center items-center">
             <img :src="imageUrl" class="rounded-md border-2 md:w-[full] md:h-[200px] lg:w-[300px] lg:h-[400px] object-contain" />
         </div>
-        <div class="row-span-4 col-span-2 flex justify-start items-center">
-            <div class="text-start">
-                <h1 class="font-inter font-bold text-base md:text-2xl mb-1">"Nama Produk"</h1>
-                <div class="flex items-center">
-                    <ion-icon name="person-circle-outline" class="text-nd"></ion-icon>
-                    <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">"Nama Petani"</h4>
+        <div class="row-span-4 col-span-2  flex items-center ">
+            <div class="text-start w-full">
+                <div class="rounded-md w-full">
+                    <div class="  rounded-md grid grid-flow-col ">
+                        <div class="w 1/2">
+                            <h1 class="font-inter font-bold text-base md:text-2xl mb-1">"Nama Produk"</h1>
+                            <div class="flex items-center">
+                                <ion-icon name="person-circle-outline" class="text-nd"></ion-icon>
+                                <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">"Nama Petani"</h4>
+                                
+                            </div>
+                            <div class="flex items-center">
+                                <ion-icon name="location-outline" class="text"></ion-icon>
+                                <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">"Alamat lengkap petani"
+                                </h4>
+                            </div>
+                            <h1 class="mt-2 font-inter font-bold text-sm md:text-xl">"Rp XX.XXX"</h1>
+                        </div>
+                        <div class="w 1/2 ">
+                            <div class="flex justify-end">
+                                <button
+                                    class="w-1/2 text-black text-sm md:text-base border border-opacity-90 border-black bg-white py-1 rounded-lg hover:bg-green-400 hover:text-white flex items-center justify-center"
+                                    type="submit"
+                                    id="chat-button"
+                                >
+                                    <ion-icon class="mr-1 text-base md:text-lg" name="chatbubble-ellipses-outline"></ion-icon>
+                                    <span>CHAT</span>
+                                </button>                 
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex items-center">
-                    <ion-icon name="location-outline" class="text"></ion-icon>
-                    <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">"Alamat lengkap petani"
-                    </h4>
-                </div>
-                <div class="mt-2">
-                    <h1 class="font-inter font-bold text-sm md:text-xl">"Rp XX.XXX"</h1>
-                </div>
-
             </div>
         </div>
+
         <div class="row-span-4 col-span-2  flex items-center ">
             <div class="text-start w-full">
                 <div class="border border-black rounded-md w-full">
@@ -37,12 +54,12 @@
                     <div class="border  rounded-md grid grid-flow-col ">
                         <div class="w 1/2">
                             <div class="font-inter font-normal text-sm md:text-md lg:text-lg">
-                                <h3 class="ml-2">Jumlah Stok</h3>
-                                <div class="mt-2 grid grid-cols-2">
-                                    <input type="number" class=" w-3/4 md:w-1/2 ml-2 border border-black rounded-md">
+                                <h3 class="ml-2">Jumlah</h3>
+                                <div class="mt-2 grid grid-cols-2 grid-auto-columns:auto">
+                                    <input type="number" min="0" class=" w-3/4 md:w-1/2 ml-2 border border-black rounded-md">
                                     <h3 class="text-sm font-inter md:w-1/2">Sisa stok : xx </h3>
                                 </div>
-                                <div class="mt-2 grid grid-cols-2">
+                                <div class="mt-2 grid grid-cols-2 grid-auto-columns:auto">
                                     <h3 class="mt-2 ml-2 w-full md:w-1/2">Subtotal</h3>
                                     <h3 class="mt-2 font-inter font-bold text-sm md:text-md lg:text-lg">Rp xxx.xxx</h3>
                                 </div>
