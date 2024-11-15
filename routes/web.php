@@ -39,13 +39,10 @@ Route::middleware(['auth:farmer','verified'])->group(function(){
         Route::get('/dafproduk', 'farmerProducts')->name('dafproduk');
         Route::get('products/create', 'create')->name('products.create');
         Route::post('products/Toko', 'Toko')->name('products.Toko');
+        Route::get('/lapPen', 'laporanPenjualan')->name('lapPen');
     });
 
     Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
-
-    Route::get('/lapPen', function () {
-        return view('petani.PetLaporanPenjualanPage');
-    })->name('lapPen');
 });
 
 // rute yang hanya diakses pembeli
