@@ -104,3 +104,11 @@ Route::get('/email/verify', function () {
 
 
 Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);
+
+Route::get('/DetailProductPage', function () {
+    return view('DetailProductPage');
+})->name('DetailProductPage');
+
+Route::get('/PembayaranPage', function () {
+    return view('pembeli.PembayaranPage');
+})->name('PembayaranPage');
