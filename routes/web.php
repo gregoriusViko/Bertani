@@ -101,3 +101,6 @@ Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $reque
 Route::get('/email/verify', function () {
     return 'verifikasi dulu dong';
 })->middleware('auth:buyer,farmer')->name('verification.notice');
+
+
+Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);

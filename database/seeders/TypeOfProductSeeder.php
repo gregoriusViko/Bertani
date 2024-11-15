@@ -14,9 +14,32 @@ class TypeOfProductSeeder extends Seeder
     public function run(): void
     {
         TypeOfProduct::create([
-            'name' => 'gabah',
-            'category' => 'gabah jenis 1'
+            'name' => 'semangka',
+            'category' => 'buah'
         ]);
-        TypeOfProduct::factory(10)->create();
+        TypeOfProduct::create([
+            'name' => 'melon',
+            'category' => 'buah'
+        ]);
+        TypeOfProduct::create([
+            'name' => 'terong',
+            'category' => 'sayuran'
+        ]);
+        TypeOfProduct::create([
+            'name' => 'tomat',
+            'category' => 'sayuran'
+        ]);
+        TypeOfProduct::create([
+            'name' => 'melon',
+            'category' => 'buah'
+        ]);
+        TypeOfProduct::create([
+            'name' => 'gabah',
+            'category' => 'biji-bijian'
+        ]);
+        TypeOfProduct::create([
+            'name' => 'cabai merah',
+            'category' => 'sayuran'
+        ]);
     }
 }

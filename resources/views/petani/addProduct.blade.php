@@ -20,13 +20,13 @@
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
 
-                <div class="mt-4 relative">
+                <!-- Jenis Produk Dropdown -->
+                <!-- <div class="mt-4 relative">
                     <x-input-label for="jenis" :value="__('Jenis Produk')" />
-                    <button type="button" id="peran" onclick="toggleDropdown()"
+                    <button type="button" id="jenisProdukButton" onclick="toggleDropdown('jenisDropdown')"
                         class="px-4 py-2 w-full shadow-lg border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start">
                         <div class="flex items-end w-full justify-between">
-                            <p id="selectedOption">Jenis</p>
-                            <!-- Element ini akan diupdate dengan teks opsi terpilih -->
+                            <p id="selectedJenis">Pilih Jenis Produk</p>
                             <div class="block">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3"
                                     viewBox="0 0 24 24">
@@ -36,33 +36,71 @@
                                 </svg>
                             </div>
                         </div>
-                    </button>
+                    </button> -->
 
-                    <!-- Dropdown menu -->
-                    <ul id="dropdownMenu"
+                    <!-- Dropdown menu untuk kategori -->
+                    <!-- <ul id="jenisDropdown"
                         class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[99] w-full max-w-[full] divide-y max-h-96 overflow-auto rounded-lg mt-1">
-                        <li onclick="selectOption('Gabah')"
-                            class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                            Gabah</li>
-                        <li onclick="selectOption('Buah')"
-                            class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                            Buah</li>
-                        <li onclick="selectOption('Sayuran')"
-                            class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                            Sayuran</li>
+                        @foreach ($categories as $category)
+                            <li onclick="selectJenis('{{ $category->category }}')"
+                                class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
+                                {{ $category->category }}
+                            </li>
+                        @endforeach
                     </ul>
-
-                    <input type="hidden" id="jenis" name="jenis"/>
+                    <input type="hidden" id="jenis" name="jenis" />
 
                     <x-input-error :messages="$errors->get('jenis')" class="mt-2 " />
-                </div>
+                </div> -->
 
-                <div class="mt-4">
-                    <x-input-label for="nama" :value="__('Nama')" />
-                    <x-text-input id="nama" class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50" type="text" name="nama"
-                        :value="old('nama')" required />
-                    <x-input-error :messages="$errors->get('nama')" class="mt-2" />
-                </div>
+                <!-- Nama Produk Dropdown -->
+                <!-- <div class="mt-4 relative">
+                    <x-input-label for="nama" :value="__('Nama Produk')" />
+                    <button type="button" id="namaProdukButton" onclick="toggleDropdown('namaDropdown')"
+                        class="px-4 py-2 w-full shadow-lg border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start">
+                        <div class="flex items-end w-full justify-between">
+                            <p id="selectedNamaProduk">Pilih Nama Produk</p>
+                            <div class="block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3"
+                                    viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
+                                        clip-rule="evenodd" data-original="#000000" />
+                                </svg>
+                            </div>
+                        </div>
+                    </button> -->
+
+                    <!-- Dropdown menu untuk nama produk -->
+                    <!-- <ul id="namaDropdown"
+                        class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[99] w-full max-w-[full] divide-y max-h-96 overflow-auto rounded-lg mt-1"> -->
+                        <!-- Nama produk akan diisi secara dinamis melalui JavaScript -->
+                    <!-- </ul>
+                    <input type="hidden" id="nama" name="nama" />
+
+                    <x-input-error :messages="$errors->get('nama')" class="mt-2 " />
+                </div> -->
+                
+            <!-- Jenis Produk Dropdown -->
+             <div class="mt-4 relative">
+                <x-input-label for="jenis" :value="__('Jenis Produk')" />
+                <select id="categoryDropdown" name="jenis" class="block mt-1 w-full border-gray-300 focus:border-green-600 rounded-lg" required>
+                    <option disabled selected>Pilih Jenis Produk</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->category }}">{{ $category->category }}</option>
+                    @endforeach
+                </select>
+            </div> 
+
+            <!-- Nama Produk Dropdown -->
+             <div class="mt-4 relative">
+                <x-input-label for="namaProduk" :value="__('Nama Produk')" />
+                <select id="productDropdown" name="nama" class="block mt-1 w-full border-gray-300 focus:border-green-600 rounded-lg" required>
+                    <option disabled selected>Pilih Nama Produk</option>
+                    <!-- Nama produk akan diisi secara dinamis melalui JavaScript -->
+                 </select>
+            </div>
+
 
                 <div class="mt-4">
                     <x-input-label for="Stok" :value="__('Jumlah Stok')" />
@@ -97,52 +135,32 @@
     </div>
 
     <script>
+
         function toggleDropdown() {
-            const dropdownMenu = document.getElementById("dropdownMenu");
+            const dropdownMenu = document.getElementById(id);
             dropdownMenu.classList.toggle("hidden");
         }
 
-        // Fungsi untuk memilih opsi dan menutup dropdown
-        function selectOption(option) {
-            
-            const selectedOptionElement = document.getElementById("selectedOption");
-            selectedOptionElement.innerText = option;
-            selectedOptionElement.classList.add("text-gray-800");
+        document.getElementById("categoryDropdown").addEventListener("change", function() {
+                    const selectedCategory = this.value;
 
-            document.getElementById("selectedOption").innerText = option; // Tampilkan teks opsi terpilih di button
-            
-            document.getElementById("peran").value = option;
-            
-            document.getElementById("jenis").value = option;
-            
-            toggleDropdown(); // Tutup dropdown setelah memilih opsi
-        }
+                    // Mengambil data produk berdasarkan kategori melalui AJAX
+                    fetch(`/products/get-by-category/${selectedCategory}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const productDropdown = document.getElementById("productDropdown");
+                            productDropdown.innerHTML = '<option disabled selected>Pilih Nama Produk</option>';
 
-        // Tutup dropdown jika klik di luar area dropdown atau button
-        document.addEventListener('click', function(event) {
-            const dropdown = document.getElementById("dropdownMenu");
-            const button = document.getElementById("peran");
-
-            if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-                dropdown.classList.add("hidden");
-            }
-        });
-
-        // function checkFormValidity() {
-        //     const foto = document.getElementById("foto").files.length > 0;
-        //     const nama = document.getElementById("nama").value.trim() !== "";
-        //     const jenis = document.getElementById("jenis").value.trim() !== "";
-        //     const stok = document.getElementById("Stok").value.trim() !== "";
-        //     const harga = document.getElementById("harga").value.trim() !== "";
-
-        //     const addButton = document.getElementById("add-button");
-        //     addButton.disabled = !(foto && nama && jenis && stok && harga);
-        // }
-
-        // document.querySelectorAll('#foto, #nama, #jenis, #Stok, #harga').forEach((input) => {
-        //     input.addEventListener('input', checkFormValidity);
-        //     input.addEventListener('change', checkFormValidity);
-        // });
+                            // Tambahkan produk ke dropdown nama produk
+                            for (const [id, name] of Object.entries(data)) {
+                                const option = document.createElement("option");
+                                option.value = id;
+                                option.textContent = name;
+                                productDropdown.appendChild(option);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
 
     </script>
 
