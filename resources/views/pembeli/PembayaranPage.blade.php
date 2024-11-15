@@ -38,47 +38,61 @@
         </table>
     </div>
 
-    <div class="grid grid-cols-2 ">
-        <div class="border border-red-500 ">
-            {{-- informasi kiri atas --}}
-            <div class="grid grid-cols-2">
+    <div class="grid grid-cols-2 border border-black rounded-md ">
+        {{-- informasi kiri atas --}}
+        <div class="border border-b-black">
+            <div class="grid grid-cols-2 font-inter font-semibold my-3 mx-2">
                 <h3 class="flex justify-center">Biaya Admin</h3>
                 <h3>Rp xx.xxx</h3>
                 <h3 class="flex justify-center -ml-3">Total Bayar</h3>
                 <h3>Rp xx.xxx</h3>
             </div>
         </div>
-        <div class="border border-red-500">
-            {{-- informasi rekening --}}
-            <div class="ml-4 grid grid-flow-row">
-                <h2>Transfer ke rekening :</h2>
-                <h3>"BANK - NOREK"</h3>
+        {{-- informasi kanan atas --}}
+        <div class="border border-b-black border-l-black">
+            <div class="ml-4 grid grid-flow-row font-inter  my-3 mx-2">
+                <h2 class="font-semibold">Transfer ke rekening :</h2>
+                <h3 class="font-normal">"BANK - NOREK || NAMA"</h3>
             </div>
 
         </div>
-        <div class="border border-red-500 flex items-center justify-center">
-            {{-- informasi alamat --}}
-            <div class="grid grid-flow-row">
-                <h2>Alamat Pengambilan barang</h2>
+        {{-- !!if metode pembayaran transfer!! --}}
+        {{-- informasi kiri bawah --}}
+        <div class="">
+            <div class="grid grid-flow-row font-inter my-3 mx-2">
+                <h2 class="flex items-center justify-center font-semibold">Alamat Pengambilan barang</h2>
                 <div class="flex items-center justify-center">
-                    <ion-icon name="location-outline"></ion-icon><span><h3>"alamatnya"</h3></span>
+                    <ion-icon name="location-outline"></ion-icon><span><h3 class="font-normal">"alamatnya"</h3></span>
                 </div>
                 
             </div>
         </div>
-        <div class="border border-red-500">
-            <div class="ml-4 grid grid-flow-row">
-                {{-- <x-text-input accept="image/*" id="foto" class="block mt-1 w-full border p-2" type="file"
-                    name="foto" :value="old('foto')" required
-                    @change="imageUrl = URL.createObjectURL($event.target.files[0])" /> --}}
+        {{-- informasi kanan bawah --}}
+        <div class="border border-l-black">
+            <div class="ml-4 grid grid-flow-row font-inter font-normal my-3 mx-2">
                 <label for="bukti-transfer" class="block text-sm font-medium text-gray-700 mb-2">Upload Bukti Transfer
                     Pembayaran</label>
                 <input type="file" id="bukti-transfer" name="bukti_transfer" accept="image/*"
-                    class="block  w-1/2 text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    class="block  lg:w-3/4 w-3/4 text-sm text-gray-500 border border-gray-300 rounded-r-md cursor-pointer bg-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                 <x-input-error :messages="$errors->get('foto')" class="mt-2" />
-                    <button class="my-2 w-full md:w-1/2 text-white text-sm md:text-md bg-green-600 py-1 rounded-md hover:bg-green-400" type="submit" id="add-button" >Konfirmasi Pesanan</button>
+                    <button class="my-2 lg:w-3/4 w-3/4 text-white text-sm md:text-md bg-green-600 py-1 rounded-md hover:bg-green-400" type="submit" id="add-button" >Konfirmasi Pesanan</button>
             </div>
         </div>
+
+        {{-- !!else if metode pembayaran cod!! --}}
+        {{-- <div class="col-span-2">
+            <div class="grid grid-flow-row grid-cols-2 font-inter my-3 mx-2">
+                <div>
+                    <h2 class="flex items-center justify-center font-semibold">Alamat Pengambilan barang</h2>
+                    <div class="flex items-center justify-center">
+                    <ion-icon name="location-outline"></ion-icon><span><h3 class="font-normal">"alamatnya"</h3></span>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button class="my-2 lg:w-3/4 w-3/4 text-white text-sm md:text-md bg-green-600 py-1 rounded-md hover:bg-green-400" type="submit" id="add-button" >Konfirmasi Pesanan</button>
+                </div>
+            </div>
+        </div> --}}
     </div>
 
 </x-layout>
