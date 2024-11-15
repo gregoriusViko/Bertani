@@ -98,14 +98,12 @@ Route::get('/email/verify', function () {
     return 'verifikasi dulu dong';
 })->middleware('auth:buyer,farmer')->name('verification.notice');
 
-Route::get('/laporan', function () {
-    return view('PemLaporanPage');
-})->name('laporan');
+
+Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
 Route::get('/DetailProductPage', function () {
     return view('DetailProductPage');
 })->name('DetailProductPage');
-
 
 Route::get('/PembayaranPage', function () {
     return view('pembeli.PembayaranPage');
