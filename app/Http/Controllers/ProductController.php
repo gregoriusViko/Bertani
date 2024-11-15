@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\TypeOfProduct;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,16 +34,23 @@ class ProductController extends Controller
     }
 
     public function create() {
-        return view('petani.addProduct');
+        // Mengambil kategori unik saja (sayuran, buah, biji-bijian)
+        $categories = TypeOfProduct::select('category')->distinct()->get();
+        return view('petani.addProduct', compact('categories'));
+    }
+    
+    public function getProductsByCategory($category) {
+        // Ambil nama produk berdasarkan kategori dari tabel TypeOfProduct
+        $products = TypeOfProduct::where('category', $category)->pluck('name', 'id');
+        return response()->json($products);
     }
 
     public function Toko(Request $request){
         $request->validate([
-            'nama' => 'required|string|max:50',
+            'nama' => 'required|string',
             'harga' => 'required|numeric',
             'deskripsi' => 'required',
             'stok' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
-            // 'selling_unit_kg' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
             'jenis' => 'required',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
