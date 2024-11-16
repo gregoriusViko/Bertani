@@ -15,6 +15,14 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
+        Product::create([
+            'farmer_id' => 1,
+            'type_of_product_id' => 1,
+            'description'=>fake()->realText(),
+            'stock_kg'=>fake()->randomFloat(2, 0, 10000),
+            'price' => fake()->randomFloat(0, 1000, 1000000),
+            'img_link' => 'tidaktau'
+        ]);
         Product::factory(count: 100)->recycle([
             Farmer::all(),
             TypeOfProduct::all(),
