@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Container\Attributes\Auth;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
@@ -34,19 +35,14 @@ Route::middleware('auth:admin')->group(
 
 // rute yang hanya diakses petani
 Route::middleware(['auth:farmer','verified'])->group(function(){
-    Route::get('dafproduk', [ProductController::class, 'farmerProducts'])->name('dafproduk');
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('/dafproduk', 'farmerProducts')->name('dafproduk');
+        Route::get('products/create', 'create')->name('products.create');
+        Route::post('products/Toko', 'Toko')->name('products.Toko');
+        Route::get('/lapPen', 'laporanPenjualan')->name('lapPen');
+    });
 
-    Route::get('/dafpesanan', function () {
-        return view('petani.PetDafPesananPage');
-    })->name('dafpesanan');
-
-    Route::get('/lapPen', function () {
-        return view('petani.PetLaporanPenjualanPage');
-    })->name('lapPen');
-
-    Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
-
-    Route::post('products/Toko', [ProductController::class, 'Toko'])->name('products.Toko');
+    Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
 });
 
 // rute yang hanya diakses pembeli
@@ -102,10 +98,13 @@ Route::get('/email/verify', function () {
     return 'verifikasi dulu dong';
 })->middleware('auth:buyer,farmer')->name('verification.notice');
 
-Route::get('/laporanpembeli', function () {
-    return view('PemLaporanPage');
-})->name('laporanpembeli');
 
-Route::get('/laporanpetani', function () {
-    return view('PetLaporanPage');
-})->name('laporanpetani');
+Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);
+
+Route::get('/DetailProductPage', function () {
+    return view('DetailProductPage');
+})->name('DetailProductPage');
+
+Route::get('/PembayaranPage', function () {
+    return view('pembeli.PembayaranPage');
+})->name('PembayaranPage');
