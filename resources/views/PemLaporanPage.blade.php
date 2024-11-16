@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot:title>Home-Bertani.com</x-slot:title>
+    <x-slot:title>Laporan-Bertani.com</x-slot:title>
 
     <!-- <div class="text-sm font-medium text-center">
         <ul class="flex flex-wrap -mb-px">
