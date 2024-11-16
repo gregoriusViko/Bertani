@@ -26,7 +26,7 @@ Route::middleware('auth:admin,buyer,farmer')->group(function(){
 Route::middleware('auth:admin')->group(
     function(){
         Route::prefix('admin')->group(function(){
-            Route::resource('laporan', ReportController::class);
+            Route::resource('/laporan', ReportController::class);
             Route::get('detail-petani/{farmer:slug}', [AuthController::class, 'detailAkun']);
             Route::get('delete/{farmer:slug}', [AuthController::class, 'deleteAkun']);
         });
@@ -40,6 +40,7 @@ Route::middleware(['auth:farmer','verified'])->group(function(){
         Route::get('products/create', 'create')->name('products.create');
         Route::post('products/Toko', 'Toko')->name('products.Toko');
         Route::get('/lapPen', 'laporanPenjualan')->name('lapPen');
+        Route::view('/laporan-petani', 'PemLaporanPage')->name('laporan-petani');
     });
 
     Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
@@ -50,6 +51,7 @@ Route::middleware(['auth:buyer', 'verified'])->group(function(){
     Route::get('pembeli/coba', function(){
         return 'berhasil pembeli';
     });
+    Route::view('/laporan-pembeli', 'PemLaporanPage')->name('laporan-pembeli');
 });
 
 // rute untuk orang yang belum login
@@ -77,10 +79,6 @@ Route::get('/produk', function () {
 Route::get('/pesanan', function () {
     return view('PesananPage');
 })->name('pesanan');
-
-Route::get('/laporan', function () {
-    return view('LaporanPage');
-})->name('laporan');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout');
 
