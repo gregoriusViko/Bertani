@@ -6,6 +6,6 @@
     <x-nav-dropdown>
         <x-slot:title>Lainnya</x-slot:title>
         <x-dropdown-list href="/chat" :active="request()->is('chat')">Chat</x-dropdown-list>
-        <x-dropdown-list href="/laporan" :active="request()->is('laporan')">Laporan</x-dropdown-list>
+        <x-dropdown-list href="/laporan-pembeli" :active="request()->is('laporan-pembeli')">Laporan</x-dropdown-list>
     </x-nav-dropdown>
 </x-navbar>
