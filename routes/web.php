@@ -108,9 +108,13 @@ Route::get('/PembayaranPage', function () {
     return view('pembeli.PembayaranPage');
 })->name('PembayaranPage');
 
+Route::get('/DafPesananPembeli', function () {
+    return view('pembeli.PemDafPesananPage');
+})->name('PemDafPesananPage');
+
 Route::get('/PemLaporanPage', function () {
     return view('PemLaporanPage');
-    
+
 })->name('PemLaporanPage');
 Route::get('/PetLaporanPage', function () {
     return view('PetLaporanPage');
