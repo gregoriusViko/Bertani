@@ -106,3 +106,11 @@ Route::get('/DetailProductPage', function () {
 Route::get('/PembayaranPage', function () {
     return view('pembeli.PembayaranPage');
 })->name('PembayaranPage');
+
+Route::get('/PemLaporanPage', function () {
+    return view('PemLaporanPage');
+    
+})->name('PemLaporanPage');
+Route::get('/PetLaporanPage', function () {
+    return view('PetLaporanPage');
+})->name('PetLaporanPage');
