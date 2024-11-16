@@ -7,6 +7,7 @@ use Illuminate\Container\Attributes\Auth;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Product;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 // rute yang bisa diakses pengguna yang telah login
@@ -37,7 +38,7 @@ Route::middleware('auth:admin')->group(
 Route::middleware(['auth:farmer','verified'])->group(function(){
     Route::controller(ProductController::class)->group(function(){
         Route::get('/dafproduk', 'farmerProducts')->name('dafproduk');
-        Route::get('products/create', 'create')->name('products.create');
+        Route::get('/products/create', 'create')->name('products.create');
         Route::post('products/Toko', 'Toko')->name('products.Toko');
         Route::get('/lapPen', 'laporanPenjualan')->name('lapPen');
         Route::view('/laporan-petani', 'PemLaporanPage')->name('laporan-petani');
@@ -99,8 +100,8 @@ Route::get('/email/verify', function () {
 
 Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
-Route::get('/DetailProductPage', function () {
-    return view('DetailProductPage');
+Route::get('/products/{product:slug}', function (Product $product) {
+    return view('DetailProductPage', compact('product'));
 })->name('DetailProductPage');
 
 Route::get('/PembayaranPage', function () {
