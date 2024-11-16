@@ -9,7 +9,7 @@
             @csrf
 
             <div>
-                <img :src="imageUrl" class="rounded-md border-2 w-[400px] h-[300px] object-contain" />
+                <img :src="imageUrl" class="rounded-md border-2 w-[400px] h-[300px] object-contain shadow-md" />
             </div>
             <div>
                 <div>
@@ -22,7 +22,7 @@
 
                 <!-- Jenis Produk Dropdown -->
                 <!-- <div class="mt-4 relative">
-                    <x-input-label for="jenis" :value="__('Jenis Produk')" />
+                    {{-- <x-input-label for="jenis" :value="__('Jenis Produk')" /> --}}
                     <button type="button" id="jenisProdukButton" onclick="toggleDropdown('jenisDropdown')"
                         class="px-4 py-2 w-full shadow-lg border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start">
                         <div class="flex items-end w-full justify-between">
@@ -41,21 +41,21 @@
                     <!-- Dropdown menu untuk kategori -->
                     <!-- <ul id="jenisDropdown"
                         class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[99] w-full max-w-[full] divide-y max-h-96 overflow-auto rounded-lg mt-1">
-                        @foreach ($categories as $category)
-                            <li onclick="selectJenis('{{ $category->category }}')"
+                        {{-- @foreach ($categories as $category) --}}
+                            {{-- <li onclick="selectJenis('{{ $category->category }}')" --}}
                                 class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                                {{ $category->category }}
+                                {{-- {{ $category->category }} --}}
                             </li>
-                        @endforeach
+                        {{-- @endforeach --}}
                     </ul>
                     <input type="hidden" id="jenis" name="jenis" />
 
-                    <x-input-error :messages="$errors->get('jenis')" class="mt-2 " />
+                    {{-- <x-input-error :messages="$errors->get('jenis')" class="mt-2 " /> --}}
                 </div> -->
 
                 <!-- Nama Produk Dropdown -->
                 <!-- <div class="mt-4 relative">
-                    <x-input-label for="nama" :value="__('Nama Produk')" />
+                    {{-- <x-input-label for="nama" :value="__('Nama Produk')" /> --}}
                     <button type="button" id="namaProdukButton" onclick="toggleDropdown('namaDropdown')"
                         class="px-4 py-2 w-full shadow-lg border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start">
                         <div class="flex items-end w-full justify-between">
@@ -78,16 +78,16 @@
                     <!-- </ul>
                     <input type="hidden" id="nama" name="nama" />
 
-                    <x-input-error :messages="$errors->get('nama')" class="mt-2 " />
+                    {{-- <x-input-error :messages="$errors->get('nama')" class="mt-2 " /> --}}
                 </div> -->
                 
             <!-- Jenis Produk Dropdown -->
-             <div class="mt-4 relative">
+            <div class="mt-4 relative">
                 <x-input-label for="jenis" :value="__('Jenis Produk')" />
-                <select id="categoryDropdown" name="jenis" class="block mt-1 w-full border-gray-300 focus:border-green-600 rounded-lg" required>
-                    <option disabled selected>Pilih Jenis Produk</option>
+                <select id="categoryDropdown" name="jenis" class="block mt-1 w-full pl-3 pr-3 py-2  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md" required>
+                    <option disabled selected class="hover:bg-green-600">Pilih Jenis Produk</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->category }}">{{ $category->category }}</option>
+                        <option class="bg-white hover:bg-green-600" value="{{ $category->category }}">{{ $category->category }}</option>
                     @endforeach
                 </select>
             </div> 
@@ -95,14 +95,14 @@
             <!-- Nama Produk Dropdown -->
              <div class="mt-4 relative">
                 <x-input-label for="namaProduk" :value="__('Nama Produk')" />
-                <select id="productDropdown" name="nama" class="block mt-1 w-full border-gray-300 focus:border-green-600 rounded-lg" required>
+                <select id="productDropdown" name="nama" class="block mt-1 w-full pl-3 py-2  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md" required>
                     <option disabled selected>Pilih Nama Produk</option>
                     <!-- Nama produk akan diisi secara dinamis melalui JavaScript -->
                  </select>
             </div>
 
 
-                <div class="mt-4">
+                <div class="mt-4 ">
                     <x-input-label for="Stok" :value="__('Jumlah Stok')" />
                     <x-text-input id="Stok" class="block mt-1  border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full" type="number" name="stok"
                         :value="old('Stok')" x-mask:dynamic="$Stok($input, ',')" required />
