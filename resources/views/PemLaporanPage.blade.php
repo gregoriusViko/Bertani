@@ -13,37 +13,41 @@
     </div> -->
 
     <div>
-        <button class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab1">Laporan</button>
-        <button class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab2">Daftar Laporan</button>
+        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab1">Laporan</button>
+        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab2">Daftar Laporan</button>
     </div>
 
-    <div id="tab1" class="tab-content border border-black p-8 rounded-md w-full h-auto">
-        <p class="text-3xl font-bold mb-4">Laporan Sistem</p>
-        
-        <div class="mb-4">
-            <label for="message" class="block text-xl font-normal mb-4">Deskripsi Laporan</label>
-            <textarea id="message" rows="3" placeholder="" class="w-full h-60 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
-        </div>
-
-        <p class="text-2xl font-bold mb-4">Foto Bukti Laporan</p>
-
-        <div class="mb-4">
-            <input type="file" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
-            file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
-            file:text-white hover:file:bg-blue-500 active:scale-95">
-        </div>
-
-        <p class="block text-base font-normal mb-4">Saya dengan ini menyatakan bahwa segala informasi yang dilaporkan memang benar</p>
+    <div id="tab1" class="tab-content border border-black rounded-md w-full h-auto">
+        <form class="p-8 w-full h-auto">
+            <p class="text-3xl font-bold mb-4">Laporan Sistem</p>
             
-        <div class="flex justify-end space-x-4">
-            <button class="px-4 py-2 bg-white rounded-lg border border-black">Batal</button>
-            <button class="px-4 py-2 bg-white-300 rounded-lg border border-black">Kirim</button>
-        </div>
+            <div class="mb-4">
+                <label for="message" class="block text-xl font-normal mb-4">Deskripsi Laporan</label>
+                <textarea id="message" rows="3" placeholder="" class="w-full h-60 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+            </div>
+
+            <p class="text-2xl font-bold mb-4">Foto Bukti Laporan</p>
+
+            <div class="mb-4">
+                <input type="file" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
+                file:text-white hover:file:bg-blue-500 active:scale-95">
+            </div>
+
+            <p class="block text-base font-normal mb-4">Saya dengan ini menyatakan bahwa segala informasi yang dilaporkan memang benar</p>
+                
+            <div class="flex justify-end space-x-4">
+                <button type="button" id="cancelButton" class="inline-flex gap-x-2 px-4 py-2 bg-white rounded-lg border border-black  shadow hover:shadow-md transition-shadow">
+                <img src="/img/laporanbatal.png" alt="icon_batal" class="w-5 h-5">Batal</button>
+                <button type="submit" class="inline-flex gap-x-2 px-4 py-2 bg-white-300 rounded-lg border border-black  shadow hover:shadow-md transition-shadow">
+                <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan</button>
+            </div>
+        </form>
     </div>
 
     <div>
         <div>
-            <div id="tab2" class="tab-content border border-black p-8 w-full h-auto">
+            <div id="tab2" class="tab-content border border-black p-8 w-full h-auto hidden">
                 <p class="text-3xl font-bold mb-4">Daftar Laporan</p>
 
                 <div class="border border-green-600 p-8 w-full h-auto">
@@ -61,9 +65,12 @@
                         <li>Baik, akan kami tindak lanjutin. Terimakasih </li>
                     </ul>
 
-                    <p class="py-4"></p>
-                    <p class="text-xl font-medium">Balas Tanggapan?</p>
-                    <textarea id="message" rows="3" placeholder="" class="w-4/5 h-10 p-2 mt-1 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                    <form>
+                        <p class="py-4"></p>
+                        <p class="text-xl font-medium">Balas Tanggapan?</p>
+                        <textarea id="replyMessage" rows="3" placeholder="" class="w-4/5 h-10 p-2 mt-1 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                        <button onclick=""><img src="/img/paperplane.png" alt="icon_teruskan" class="w-9 h-9"></button>
+                    </form>
                 </div>
 
             </div>
@@ -73,29 +80,39 @@
     <script>
         const tabs = document.querySelectorAll('[data-tab-target]');
         const activeClass = "bg-gray-200";
+        const cancelButton = document.getElementById('cancelButton');
+        const form = document.querySelector('#tab1 form')
 
         //tab default
-        tabs[0].classList.add(activeClass)
+        tabs[0].classList.add(activeClass);
         document.querySelector('#tab1').classList.remove('hidden');
 
         //eventlistener tiap tab
         tabs.forEach(tab => {
-            tab.addEventListener('click', ()=>{
+            tab.addEventListener('click', () => {
                 const targetContent = document.querySelector(tab.dataset.tabTarget);
                 //console.log(targetContent)
 
                 //menambah hidden class untuk menambah tab-content div
                 document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-                //menghapus hidden class dari clicked tab-content
-                targetContent.classList.remove('hidden');
 
                 //menghapus class aktif ie bg-indigo-200 dari semua tab button
                 tabs.forEach(activeTab => activeTab.classList.remove(activeClass));
                 //document.querySelectorAll('.tab-content').forEach(activeTab => activeTab.classList.remove(activeClass));
+                //menghapus hidden class dari clicked tab-content
+                targetContent.classList.remove('hidden');
                 //menambah class aktif ke click tab button
                 tab.classList.add(activeClass)
-            })
-        })
+            });
+        });
+
+        cancelButton.addEventListener('click', () => {
+            form.reset();
+            document.querySelector('#tab1').classList.remove('hidden');
+            document.querySelector('#tab2').classList.add('hidden');
+            tabs[0].classList.add(activeClass);
+            tabs[1].classList.remove(activeClass);
+        });
 
     </script>
 </x-layout>
