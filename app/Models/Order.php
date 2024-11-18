@@ -14,14 +14,14 @@ class Order extends Model
     const CREATED_AT = 'order_time';
 
     protected $guarded = ['id','order_time'];
-    protected $with = ['buyer'];
+    protected $with = ['buyer', 'product'];
     public function buyer(): BelongsTo{
         return $this->belongsTo(Buyer::class);
     }
-    public function orderDetails(): HasMany{
-        return $this->hasMany(OrderDetail::class);
+    public function product(): BelongsTo{
+        return $this->belongsTo(Product::class);
     }
-    public function report(): HasMany{
+    public function reports(): HasMany{
         return $this->hasMany(Report::class);
     }
 }
