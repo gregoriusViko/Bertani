@@ -13,7 +13,7 @@ use illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     function home(){
-        $products = Product::with('farmer')->paginate(12);
+        $products = Product::with(['farmer', 'type'])->paginate(12);
         return view('HomePageDefault', compact('products'));
     }
 
@@ -117,4 +117,10 @@ class ProductController extends Controller
         return redirect('')->with('Sukses', 'Berhasil Hapus Produk');
     }
 
+    public function laporanPenjualan(){
+        $farmer = Auth::guard('farmer')->user();
+        $orders = $farmer->products()->with('orders')->latest()->get()->pluck('orders')->flatten();
+        $orders = $orders->where('order_status', 'selesai');
+        return view('petani.PetLaporanPenjualanPage', compact('orders'));
+    }
 }
