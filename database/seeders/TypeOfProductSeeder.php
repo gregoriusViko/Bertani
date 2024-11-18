@@ -30,10 +30,6 @@ class TypeOfProductSeeder extends Seeder
             'category' => 'sayuran'
         ]);
         TypeOfProduct::create([
-            'name' => 'melon',
-            'category' => 'buah'
-        ]);
-        TypeOfProduct::create([
             'name' => 'gabah',
             'category' => 'biji-bijian'
         ]);
