@@ -119,8 +119,8 @@ Route::get('/DafPesananPembeli', function () {
 
 Route::get('/PemLaporanPage', function () {
     return view('PemLaporanPage');
-
 })->name('PemLaporanPage');
+
 Route::get('/PetLaporanPage', function () {
     return view('PetLaporanPage');
 })->name('PetLaporanPage');
