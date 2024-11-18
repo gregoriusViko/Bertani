@@ -11,7 +11,7 @@ class ReportDetail extends Model
     use HasFactory;
     public $updated_at = false;
     const CREATED_AT = 'report_time';
-    protected $guarded = ['report_time'];
+    protected $guarded = ['id', 'report_time'];
     protected $with = ['report', 'responder'];
     public function responder(): BelongsTo{
         return $this->belongsTo(Admin::class);
