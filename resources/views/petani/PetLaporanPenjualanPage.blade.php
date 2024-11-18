@@ -37,7 +37,7 @@
             <div class="text-center">
                 <h1 class="font-libre-franklin font-normal text-lg">Produk Terlaku</h1>
                 <h4 class="font-libre-franklin text-2xl font-bold">
-                    {{ $product ? $product->type->category : 'Tidak Ada' }}</h4>
+                    {{ $product ? $product->type->name : 'Tidak Ada' }}</h4>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
                                 {{ $order->order_time->isoFormat('dddd D/MM/YYYY - HH.mm') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                {{ $order->product->type->category }}
+                                {{ $order->product->type->name }}
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 {{ Number::currency($order->price, in: 'idr') }}
