@@ -7,6 +7,8 @@ use App\Models\TypeOfProduct;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use illuminate\Support\Facades\Storage;
 
 
@@ -62,9 +64,10 @@ class ProductController extends Controller
         if (!$typeOfProduct)  {
             return back()->withErrors(['Nama'=>'nama produk tidak ditemukan.']);
         }
-
+        $farmer = Auth::guard('farmer')->user();
         Product::create([
-            'farmer_id' => Auth::guard('farmer')->user()->id,
+            'slug' => Str::slug($farmer->email.'-'.$typeOfProduct->name),
+            'farmer_id' => $farmer->id,
             'type_of_product_id' => $typeOfProduct->id,
             'name' => $request->nama,
             'price' => $request->harga,
@@ -90,22 +93,15 @@ class ProductController extends Controller
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
        
-        if($request->has('delete_photo')){
-            if ($product->foto && $product->foto !== 'noimage.png') {
-                Storage::disk('public')->delete($product->foto);
-                $product->foto = null;
-            }
-        } else if($request->file('foto')) {
-            if ($product->foto && $product->foto !== 'noimage.png'){
-                Storage::disk('public')->delete($product->foto);
-            }
+        if($request->file('foto')) {
+            File::delete(public_path($product->img_link));
             $foto = $request->file('foto');
             $foto->store('products', 'public');
-            $product->foto = '/storage/products/' . $foto->hashName();
+            $product->img_link = '/storage/products/' . $foto->hashName();
         }
         
-        $product->price = $request->price;
-        $product->description = $request->description;
+        $product->price = $request->harga;
+        $product->description = $request->deskripsi;
         $product->stock_kg = $request->stok;
 
         $product->update();
@@ -114,12 +110,12 @@ class ProductController extends Controller
     }
 
     public function destroy(Product $product){
-        if($product->foto !== "noimage.png") {
-        Storage::disk('local')->delete('public/'. $product->foto);
+        if($product->img_link !== "noimage.png") {
+        File::delete(public_path($product->img_link));
         }
-
+        
         $product->delete();
-        return redirect('')->with('Sukses', 'Berhasil Hapus Produk');
+        return redirect('dafproduk')->with('Sukses', 'Berhasil Hapus Produk');
     }
 
     public function laporanPenjualan(){
