@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
             'stock_kg'=>fake()->randomFloat(2, 0, 10000),
             'price' => fake()->randomFloat(0, 1000, 1000000),
             'slug' => fake()->slug(),
-            'img_link' => 'tidaktau'
+            'img_link' => '/img/logo3.jpg'
         ]);
         Product::factory(count: 100)->recycle([
             Farmer::all(),
