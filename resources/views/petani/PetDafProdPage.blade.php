@@ -44,9 +44,14 @@
                 </div>
                 <!-- Tombol Aksi -->
                 <div class="sm:col-span-2 md:row-start-5 md:col-start-7 md:col-span-2 lg:col-start-7 lg:col-span-2 lg:row-start-5 md:flex md:justify-end space-x-2 sm:text-sm md:text-base lg:text-lg  ">
-                    <button class="rounded-md hover:text-blue-500"><ion-icon name="create-outline" class="transition ease-in duration-100 text-2xl"></ion-icon></button>
-                    <button onclick="toggleComponent()" class="rounded-md  hover:text-red-500"><ion-icon name="trash-outline"
-                            class="transition ease-in duration-100 text-xl"></ion-icon></button>
+                    <!--Tombol Edit-->
+                    <a href="{{ route('product.edit', $product->id) }}" class="rounded-md hover:text-blue-500">
+                        <ion-icon name="create-outline" class="transition ease-in duration-100 text-2xl"></ion-icon>
+                    </a>
+                    <!-- Tombol Hapus -->
+                    <button onclick="toggleComponent()" class="rounded-md hover:text-red-500">
+                        <ion-icon name="trash-outline" class="transition ease-in duration-100 text-xl"></ion-icon>
+                    </button>
                 </div>
             </div>
         @endforeach
