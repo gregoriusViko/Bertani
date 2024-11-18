@@ -27,9 +27,10 @@ Route::middleware('auth:admin,buyer,farmer')->group(function(){
 Route::middleware('auth:admin')->group(
     function(){
         Route::prefix('admin')->group(function(){
-            Route::resource('/laporan', ReportController::class);
+            Route::get('/laporan', [ReportController::class, 'index']);
             Route::get('detail-petani/{farmer:slug}', [AuthController::class, 'detailAkun']);
             Route::get('delete/{farmer:slug}', [AuthController::class, 'deleteAkun']);
+            Route::get('showImage/{id}', [ReportController::class, 'showImage']);
         });
     }
 );
@@ -41,7 +42,6 @@ Route::middleware(['auth:farmer','verified'])->group(function(){
         Route::get('/products/create', 'create')->name('products.create');
         Route::post('products/Toko', 'Toko')->name('products.Toko');
         Route::get('/lapPen', 'laporanPenjualan')->name('lapPen');
-        Route::view('/laporan-petani', 'PemLaporanPage')->name('laporan-petani');
     });
 
     Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
@@ -53,6 +53,12 @@ Route::middleware(['auth:buyer', 'verified'])->group(function(){
         return 'berhasil pembeli';
     });
     Route::view('/laporan-pembeli', 'PemLaporanPage')->name('laporan-pembeli');
+});
+
+//rute untuk pembeli dan petani
+Route::middleware(['auth:farmer,buyer', 'verified'])->group(function(){
+    Route::view('/laporan/sistem', 'PemLaporanPage')->name('laporan-sistem');
+    Route::post('/laporan/sistem-create', [ReportController::class, 'createForSystem']);
 });
 
 // rute untuk orang yang belum login
@@ -97,7 +103,6 @@ Route::get('/email/verify', function () {
     return 'verifikasi dulu dong';
 })->middleware('auth:buyer,farmer')->name('verification.notice');
 
-
 Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
 Route::get('/products/{product:slug}', function (Product $product) {
@@ -114,11 +119,18 @@ Route::get('/DafPesananPembeli', function () {
 
 Route::get('/PemLaporanPage', function () {
     return view('PemLaporanPage');
-
 })->name('PemLaporanPage');
+
 Route::get('/PetLaporanPage', function () {
     return view('PetLaporanPage');
 })->name('PetLaporanPage');
+
+// Edit Produk
+Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+
+// Hapus Produk
+Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
 
 Route::get('/DetailPembelianPage', function () {
     return view('pembeli.DetailPembelianPage');
