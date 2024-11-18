@@ -20,67 +20,6 @@
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
 
-                <!-- Jenis Produk Dropdown -->
-                <!-- <div class="mt-4 relative">
-                    {{-- <x-input-label for="jenis" :value="__('Jenis Produk')" /> --}}
-                    <button type="button" id="jenisProdukButton" onclick="toggleDropdown('jenisDropdown')"
-                        class="px-4 py-2 w-full shadow-lg border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start">
-                        <div class="flex items-end w-full justify-between">
-                            <p id="selectedJenis">Pilih Jenis Produk</p>
-                            <div class="block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3"
-                                    viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd"
-                                        d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
-                                        clip-rule="evenodd" data-original="#000000" />
-                                </svg>
-                            </div>
-                        </div>
-                    </button> -->
-
-                    <!-- Dropdown menu untuk kategori -->
-                    <!-- <ul id="jenisDropdown"
-                        class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[99] w-full max-w-[full] divide-y max-h-96 overflow-auto rounded-lg mt-1">
-                        {{-- @foreach ($categories as $category) --}}
-                            {{-- <li onclick="selectJenis('{{ $category->category }}')" --}}
-                                class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                                {{-- {{ $category->category }} --}}
-                            </li>
-                        {{-- @endforeach --}}
-                    </ul>
-                    <input type="hidden" id="jenis" name="jenis" />
-
-                    {{-- <x-input-error :messages="$errors->get('jenis')" class="mt-2 " /> --}}
-                </div> -->
-
-                <!-- Nama Produk Dropdown -->
-                <!-- <div class="mt-4 relative">
-                    {{-- <x-input-label for="nama" :value="__('Nama Produk')" /> --}}
-                    <button type="button" id="namaProdukButton" onclick="toggleDropdown('namaDropdown')"
-                        class="px-4 py-2 w-full shadow-lg border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start">
-                        <div class="flex items-end w-full justify-between">
-                            <p id="selectedNamaProduk">Pilih Nama Produk</p>
-                            <div class="block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3"
-                                    viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd"
-                                        d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
-                                        clip-rule="evenodd" data-original="#000000" />
-                                </svg>
-                            </div>
-                        </div>
-                    </button> -->
-
-                    <!-- Dropdown menu untuk nama produk -->
-                    <!-- <ul id="namaDropdown"
-                        class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[99] w-full max-w-[full] divide-y max-h-96 overflow-auto rounded-lg mt-1"> -->
-                        <!-- Nama produk akan diisi secara dinamis melalui JavaScript -->
-                    <!-- </ul>
-                    <input type="hidden" id="nama" name="nama" />
-
-                    {{-- <x-input-error :messages="$errors->get('nama')" class="mt-2 " /> --}}
-                </div> -->
-                
             <!-- Jenis Produk Dropdown -->
             <div class="mt-4 relative">
                 <x-input-label for="jenis" :value="__('Jenis Produk')" />
@@ -100,7 +39,6 @@
                     <!-- Nama produk akan diisi secara dinamis melalui JavaScript -->
                  </select>
             </div>
-
 
                 <div class="mt-4 ">
                     <x-input-label for="Stok" :value="__('Jumlah Stok')" />
