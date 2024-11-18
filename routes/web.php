@@ -119,3 +119,7 @@ Route::get('/PemLaporanPage', function () {
 Route::get('/PetLaporanPage', function () {
     return view('PetLaporanPage');
 })->name('PetLaporanPage');
+
+Route::get('/DetailPembelianPage', function () {
+    return view('pembeli.DetailPembelianPage');
+})->name('DetailPembelianPage');
