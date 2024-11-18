@@ -65,12 +65,6 @@
     </div>
 
     <div id="loading" style="display: none;">Loading...</div>
-    <script>
-        function handleClick() {
-            // Lakukan aksi di sini, misalnya:
-            window.location.href = "link-ke-halaman"; // Mengalihkan ke halaman lain
-        }
-    </script> 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="text/javascript">
