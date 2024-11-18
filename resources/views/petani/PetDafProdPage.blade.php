@@ -28,11 +28,11 @@
                 </div>
                 <!-- Nama Produk -->
                 <div class="font-libre-franklin font-semibold sm:col-span-1 md:col-span-3 lg:col-span-4 sm:text-sm md:text-base lg:text-lg lg:ml-5 md:-ml-5">
-                    {{ $product->name }}
+                    {{ $product->type->name }}
                 </div>
                 <!-- Jenis Produk -->
                 <div class="font-libre-franklin font-medium sm:col-span-1 md:row-start-3 md:col-start-4 md:col-span-3 lg:row-start-3 lg:col-start-3 md:-ml-5  lg:ml-5 lg:col-span-4 sm:text-sm md:text-base lg:text-lg text-gray-600">
-                    Jenis Produk: {{ $product->product_type }}
+                    Jenis Produk: {{ $product->type->category }}
                 </div>
                 <!-- Harga Produk -->
                 <div class="font-libre-franklin font-medium sm:col-span-1 md:col-start-7 md:col-span-2 lg:row-start-1 lg:col-start-7 lg:col-span-2 sm:text-base md:text-lg lg:text-2xl md:flex md:justify-end  text-gray-600">

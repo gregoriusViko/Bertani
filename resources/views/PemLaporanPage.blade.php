@@ -18,21 +18,25 @@
     </div>
 
     <div id="tab1" class="tab-content border border-black rounded-md w-full h-auto">
-        <form class="p-8 w-full h-auto">
+        <form class="p-8 w-full h-auto" action="/laporan/sistem-create" method="post">
+            @csrf
             <p class="text-2xl font-bold mb-4">Laporan Sistem</p>
             
             <div class="mb-4">
                 <label for="message" class="block text-xl font-normal mb-2">Deskripsi Laporan</label>
-                <textarea id="message" rows="3" placeholder="" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <textarea name="content_of_report" id="message" rows="3" placeholder="" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
             </div>
 
             <p class="text-xl font-bold mb-2">Foto Bukti Laporan</p>
 
             <div class="mb-2">
-                <input type="file" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
+                <input type="file" enctype="multipart/form-data" name="image" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
                 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
                 file:text-white hover:file:bg-blue-500 active:scale-95">
             </div>
+            @error('image')
+                {{ $message }}
+            @enderror
 
             <p class="block text-base font-normal mb-2">Saya dengan ini menyatakan bahwa segala informasi yang dilaporkan memang benar</p>
                 
