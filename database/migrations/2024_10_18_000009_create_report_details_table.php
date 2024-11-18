@@ -32,7 +32,7 @@ return new class  extends Migration
                 indexName: 'reportDetails_admin_id'
             );
             $table->text('content_of_response')->nullable();
-            $table->mediumText('img')->charset('binary');
+            $table->mediumText('img')->charset('binary')->nullable();
         });
  
     }

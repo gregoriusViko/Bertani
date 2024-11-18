@@ -32,6 +32,7 @@ return new class  extends Migration
             $table->text('description')->nullable();
             $table->decimal('stock_kg');
             $table->decimal('price')->nullable();
+            $table->string('slug')->unique();
             $table->dateTimes();
             $table->string('img_link', length: 150)->default('noimage.png');
         });
