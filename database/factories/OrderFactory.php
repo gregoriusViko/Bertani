@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Buyer;
+use App\Models\Product;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,8 +23,12 @@ class OrderFactory extends Factory
         return [
             'buyer_id' => Buyer::factory(),
             'payment_proof' => Arr::random(['COD', 'transfer']),
+            'product_id' => Product::factory(),
             'receipt_number' => $randomString,
-            'order_status' => Arr::random(['done', 'waiting for acceptance', 'request accepted', 'denied'])
+            'price' => fake()->randomFloat(2, 1000, 1000000),
+            'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
+            'order_status' => Arr::random(['selesai', 'menunggu konfirmasi', 'permintaan diterima', 'ditolak'])
         ];
+
     }
 }
