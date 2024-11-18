@@ -20,6 +20,7 @@ return new class  extends Migration
         Schema::dropIfExists('report_details');
         Schema::create('report_details', function (Blueprint $table) {
             $table->engine = 'InnoDB';
+            $table->id();
             $table->foreignId('report_id')->constrained(
                 table:'reports',
                 indexName: 'reportDetails_report_id'
@@ -32,7 +33,7 @@ return new class  extends Migration
                 indexName: 'reportDetails_admin_id'
             );
             $table->text('content_of_response')->nullable();
-            $table->mediumText('img')->charset('binary');
+            $table->mediumText('img')->charset('binary')->nullable();
         });
  
     }
