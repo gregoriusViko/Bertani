@@ -18,7 +18,7 @@
     </div>
 
     <div id="tab1" class="tab-content border border-black rounded-md w-full h-auto">
-        <form class="p-8 w-full h-auto" action="/laporan/sistem-create" method="post">
+        <form enctype="multipart/form-data" class="p-8 w-full h-auto" action="/laporan/sistem-create" method="post">
             @csrf
             <p class="text-2xl font-bold mb-4">Laporan Sistem</p>
             
@@ -30,7 +30,7 @@
             <p class="text-xl font-bold mb-2">Foto Bukti Laporan</p>
 
             <div class="mb-2">
-                <input type="file" enctype="multipart/form-data" name="image" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
+                <input type="file" name="image" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
                 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
                 file:text-white hover:file:bg-blue-500 active:scale-95">
             </div>

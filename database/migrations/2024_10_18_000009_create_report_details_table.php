@@ -20,6 +20,7 @@ return new class  extends Migration
         Schema::dropIfExists('report_details');
         Schema::create('report_details', function (Blueprint $table) {
             $table->engine = 'InnoDB';
+            $table->id();
             $table->foreignId('report_id')->constrained(
                 table:'reports',
                 indexName: 'reportDetails_report_id'
