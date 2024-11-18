@@ -7,63 +7,34 @@
     </div>
     
     <div class="mt-4 px-7 mx-auto max-w-screen-lg" x-data="{ imageUrl: '/img/noimage.png' }">
-        <form enctype="multipart/form-data" method="POST" action="{{route('products.edit')}}" class="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto max-w-full">
+        <form enctype="multipart/form-data" method="POST" action="{{route('product.update', $product->id)}}" class="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto max-w-full">
             @csrf
+            @method('PUT')
 
             <div>
-                <img :src="imageUrl" class="rounded-md border-2 w-[400px] h-[300px] object-contain" />
-            </div>
-            <div>
-                <div>
-                    <x-input-label for="foto" :value="__('Foto')" />
-                    <x-text-input accept="image/*" id="foto" class="block mt-1 w-full border p-2" type="file"
-                        name="foto" :value="old('foto')" required
-                        @change="imageUrl = URL.createObjectURL($event.target.files[0])" />
+                <img src="{{ $product->foto ? asset($product->foto) : '/img/noimage.png' }}" class="rounded-md border-2 w-[400px] h-[300px] object-contain" alt="Foto Produk">
+                <div class="mt-4">
+                    <x-input-label for="foto" :value="__('Ganti Foto (opsional)')" />
+                    <input id="foto" name="foto" type="file" accept="image/*" class="block mt-1 w-full border p-2 rounded-md">
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 </div>
-
-                <div class="mt-4">
-                    <x-input-label for="nama" :value="__('Nama')" />
-                    <x-text-input id="nama" class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50" type="text" name="nama"
-                        :value="old('nama')" required />
-                    <x-input-error :messages="$errors->get('nama')" class="mt-2" />
+                <div class="mt-2">
+                    <button type="submit" name="delete_photo" value="1" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-400">Hapus Foto</button>
                 </div>
+            </div>
 
-                <div class="mt-4 relative">
+            <!-- Jenis Produk Dropdown Hanya tampilan-->
+            <div class="mt-4">
                     <x-input-label for="jenis" :value="__('Jenis Produk')" />
-                    <button type="button" id="peran" onclick="toggleDropdown()"
-                        class="px-4 py-2 w-full shadow-lg border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start">
-                        <div class="flex items-end w-full justify-between">
-                            <p id="selectedOption">Jenis</p>
-                            <!-- Element ini akan diupdate dengan teks opsi terpilih -->
-                            <div class="block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3"
-                                    viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd"
-                                        d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
-                                        clip-rule="evenodd" data-original="#000000" />
-                                </svg>
-                            </div>
-                        </div>
-                    </button>
+                    <x-text-input id="jenis" class="block mt-1 w-full border-gray-300 rounded-lg bg-gray-100" 
+                        value="{{ $product->type->category }}" readonly />
+            </div>
 
-                    <!-- Dropdown menu -->
-                    <ul id="dropdownMenu"
-                        class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[99] w-full max-w-[full] divide-y max-h-96 overflow-auto rounded-lg mt-1">
-                        <li onclick="selectOption('Gabah')"
-                            class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                            Gabah</li>
-                        <li onclick="selectOption('Buah')"
-                            class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                            Buah</li>
-                        <li onclick="selectOption('Sayuran')"
-                            class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                            Sayuran</li>
-                    </ul>
-
-                    <input type="hidden" id="jenis" name="jenis"/>
-
-                    <x-input-error :messages="$errors->get('jenis')" class="mt-2 " />
+            <!-- Nama Produk Dropdown Hanya Tampilan-->
+                <div class="mt-4">
+                    <x-input-label for="nama" :value="__('Nama Produk')" />
+                    <x-text-input id="nama" class="block mt-1 w-full border-gray-300 rounded-lg bg-gray-100" 
+                        value="{{ $product->type->name }}" readonly />
                 </div>
 
                 <div class="mt-4">
@@ -88,7 +59,7 @@
                 </div>
                 <div class="mt-4 flex space-x-2 justify-end">
                     <button class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2" type="button" id="cancel-button">BATAL</button>
-                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400" type="submit" id="add-button" >TAMBAH</button>
+                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400" type="submit" id="save-button" >SIMPAN</button>
                 </div>
                 {{-- <x-primary-button class="justify-center w-full mt-4">
                     {{ __('Submit') }}
@@ -97,56 +68,5 @@
 
         </form>
     </div>
-
-    <script>
-        function toggleDropdown() {
-            const dropdownMenu = document.getElementById("dropdownMenu");
-            dropdownMenu.classList.toggle("hidden");
-        }
-
-        // Fungsi untuk memilih opsi dan menutup dropdown
-        function selectOption(option) {
-            
-            const selectedOptionElement = document.getElementById("selectedOption");
-            selectedOptionElement.innerText = option;
-            selectedOptionElement.classList.add("text-gray-800");
-
-            document.getElementById("selectedOption").innerText = option; // Tampilkan teks opsi terpilih di button
-            
-            document.getElementById("peran").value = option;
-            
-            document.getElementById("jenis").value = option;
-            
-            toggleDropdown(); // Tutup dropdown setelah memilih opsi
-        }
-
-        // Tutup dropdown jika klik di luar area dropdown atau button
-        document.addEventListener('click', function(event) {
-            const dropdown = document.getElementById("dropdownMenu");
-            const button = document.getElementById("peran");
-
-            if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-                dropdown.classList.add("hidden");
-            }
-        });
-
-        // function checkFormValidity() {
-        //     const foto = document.getElementById("foto").files.length > 0;
-        //     const nama = document.getElementById("nama").value.trim() !== "";
-        //     const jenis = document.getElementById("jenis").value.trim() !== "";
-        //     const stok = document.getElementById("Stok").value.trim() !== "";
-        //     const harga = document.getElementById("harga").value.trim() !== "";
-
-        //     const addButton = document.getElementById("add-button");
-        //     addButton.disabled = !(foto && nama && jenis && stok && harga);
-        // }
-
-        // document.querySelectorAll('#foto, #nama, #jenis, #Stok, #harga').forEach((input) => {
-        //     input.addEventListener('input', checkFormValidity);
-        //     input.addEventListener('change', checkFormValidity);
-        // });
-
-    </script>
-
 
 </x-layout>

@@ -56,7 +56,6 @@ class ProductController extends Controller
         ]);
 
         
-
         $foto = $request->file('foto');
         $foto->store('products', 'public');
         $typeOfProduct = TypeOfProduct::find($request->nama);
@@ -79,33 +78,39 @@ class ProductController extends Controller
     }
 
     public function edit(Product $product) {
-        return view('product.edit', compact('product'));
+        return view('petani.editProduct', compact('product'));
     }
 
     public function update(Request $request, Product $product) {
+       
         $request->validate([
-            'nama' => 'required|string|max:50',
             'harga' => 'required|numeric',
             'deskripsi' => 'required',
             'stok' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
-
-        $product->name = $request->name;
+       
+        if($request->has('delete_photo')){
+            if ($product->foto && $product->foto !== 'noimage.png') {
+                Storage::disk('public')->delete($product->foto);
+                $product->foto = null;
+            }
+        } else if($request->file('foto')) {
+            if ($product->foto && $product->foto !== 'noimage.png'){
+                Storage::disk('public')->delete($product->foto);
+            }
+            $foto = $request->file('foto');
+            $foto->store('products', 'public');
+            $product->foto = '/storage/products/' . $foto->hashName();
+        }
+        
         $product->price = $request->price;
         $product->description = $request->description;
-        $product->stock_kg = $request->stock_kg;
-
-        if  ($request->file('foto')) {
-
-            Storage::disk('local')->delete('public/'. $product->foto);
-            $foto = $request->file('foto');
-            $foto->storeAs('public', $foto->hashName());
-            $product->foto = '/storage/products'.$foto->hashName();
-        }
+        $product->stock_kg = $request->stok;
 
         $product->update();
 
-        return redirect()->route('')->with('Sukses', 'Berhasil update produk');
+        return redirect()->route('dafproduk')->with('Sukses', 'Berhasil update produk');
     }
 
     public function destroy(Product $product){
