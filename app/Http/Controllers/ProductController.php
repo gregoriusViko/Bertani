@@ -54,15 +54,24 @@ class ProductController extends Controller
             'jenis' => 'required',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
+        
+
         $foto = $request->file('foto');
         $foto->store('products', 'public');
+        $typeOfProduct = TypeOfProduct::find($request->nama);
+        if (!$typeOfProduct)  {
+            return back()->withErrors(['Nama'=>'nama produk tidak ditemukan.']);
+        }
+
         Product::create([
             'farmer_id' => Auth::guard('farmer')->user()->id,
+            'type_of_product_id' => $typeOfProduct->id,
             'name' => $request->nama,
             'price' => $request->harga,
             'description' => $request->deskripsi,
             'stock_kg' => $request->stok,
-            'product_type' => $request->jenis,
+            'category' => $request->jenis,
             'img_link' => '/storage/products/'.$foto->hashName(),
         ]);
 
@@ -79,14 +88,12 @@ class ProductController extends Controller
             'harga' => 'required|numeric',
             'deskripsi' => 'required',
             'stok' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
-            'selling_unit_kg' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
         ]);
 
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
         $product->stock_kg = $request->stock_kg;
-        $product->selling_unit_kg = $request->selling_unit_kg;
 
         if  ($request->file('foto')) {
 
