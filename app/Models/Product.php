@@ -19,7 +19,7 @@ class Product extends Model
     public function type(): BelongsTo{
         return $this->belongsTo(TypeOfProduct::class, 'type_of_product_id');
     }
-    public function orders(): HasMany{
-        return $this->hasMany(Order::class);
+    public function orderDetails(): HasMany{
+        return $this->hasMany(OrderDetail::class);
     }
 }
