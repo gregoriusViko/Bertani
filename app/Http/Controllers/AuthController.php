@@ -50,11 +50,10 @@ class AuthController extends Controller
     }
 
     function submitLogin(Request $request){
-
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'email' => 'required|email|max:45',
-            'password' => 'required|min:6']);
-
+            'password' => 'required|min:6'
+        ]);
         $data = [
         'email' => $request->input('email'),
         'password' => $request->input('password')
