@@ -10,18 +10,18 @@
                 <div class="rounded-md w-full">
                     <div class="  rounded-md grid grid-flow-col ">
                         <div class="w 1/2">
-                            <h1 class="font-inter font-bold text-base md:text-2xl mb-1">"Nama Produk"</h1>
+                            <h1 class="font-inter font-bold text-base md:text-2xl mb-1">{{ ucwords($product->type->name) }}</h1>
                             <div class="flex items-center">
                                 <ion-icon name="person-circle-outline" class="text-nd"></ion-icon>
-                                <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">"Nama Petani"</h4>
+                                <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">{{ $product->farmer->name }}</h4>
                                 
                             </div>
                             <div class="flex items-center">
                                 <ion-icon name="location-outline" class="text"></ion-icon>
-                                <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">"Alamat lengkap petani"
+                                <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">{{ $product->farmer->home_address }}
                                 </h4>
                             </div>
-                            <h1 class="mt-2 font-inter font-bold text-sm md:text-xl">"Rp XX.XXX"</h1>
+                            <h1 class="mt-2 font-inter font-bold text-sm md:text-xl">{{ Number::currency($product->price, in: 'idr') }}</h1>
                         </div>
                         <div class="w 1/2 ">
                             <div class="flex justify-end">
@@ -45,7 +45,7 @@
                 <div class="border border-black rounded-md w-full">
                     <h1 class="font-inter font-normal text-sm md:text-md lg:text-lg">Deskripsi</h1>
                     <x-text-area id="deskripsi" class="block mt-1 w-full rounded-lg border border-black" type="text"
-                        name="deskripsi">testing ini kalimat deskripsi Lorem ipsum dolor, sit amet consectetur adipisicin elit. Cum ex, vel quisharum illo non mollitia dicta placeat consectetur officia molestias consequatur assumenda a ut fugit totam modi corporis alias.</x-text-area>
+                        name="deskripsi">{{ $product->description }}</x-text-area>
                 </div>
                 <div class="mt-4">
                     <h1 class="font-inter font-normal text-sm md:text-md lg:text-lg">Pesan Sekarang</h1>
