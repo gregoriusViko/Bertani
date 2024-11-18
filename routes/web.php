@@ -103,7 +103,6 @@ Route::get('/email/verify', function () {
     return 'verifikasi dulu dong';
 })->middleware('auth:buyer,farmer')->name('verification.notice');
 
-
 Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
 Route::get('/products/{product:slug}', function (Product $product) {
@@ -125,3 +124,10 @@ Route::get('/PemLaporanPage', function () {
 Route::get('/PetLaporanPage', function () {
     return view('PetLaporanPage');
 })->name('PetLaporanPage');
+
+// Edit Produk
+Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+
+// Hapus Produk
+Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');

@@ -16,7 +16,7 @@
                 <div
                     class="col-start-1 row-start-1 col-span-10  md:col-span-3 md:row-span-4 lg:col-span-3 lg:row-span-4 rounded-lg">
                     <img src="./img/logo3.jpg" alt="profile"
-                        class="thumbnail md:w-full md:h-full lg:w-full lg:h-full sm:w-1/2 sm:h-1/2 object-contain">
+                        class="thumbnail md:w-full md:h-full lg:w-full lg:h-full sm:w-1/2 sm:h-1/2 object-contain rounded-md">
                 </div>
                 {{-- nama produk --}}
                 <div
