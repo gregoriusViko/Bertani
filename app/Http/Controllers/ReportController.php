@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use finfo;
 use App\Models\Report;
 use App\Models\ReportDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class ReportController extends Controller
 {
     function index()
     {
-        $reportDetails = ReportDetail::with(['report'])->paginate(10);
+        $reportDetails = ReportDetail::all();
         return view('admin.LaporanPage', compact('reportDetails'));
     }
     function createForSystem(Request $request)
@@ -20,7 +22,6 @@ class ReportController extends Controller
             'content_of_report' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-        dd('dkfjf');
 
         if (Auth::guard('buyer')->check()) {
             $data = [
@@ -34,14 +35,15 @@ class ReportController extends Controller
             ];
         }
 
-        // if($request->hasFile('img')){
-        //     $image = $request->file('img');
-        //     $imageData = file_get_contents($image->getRealPath());
+        $imageData = null;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageData = file_get_contents($image->getRealPath());
 
-        // }
+        }
 
         $report = Report::create($data);
-        $request->merge(['report_id' => $report->id]);
+        $request->merge(['report_id' => $report->id, 'img'=>$imageData]);
         ReportDetail::create($request->all());
 
         session()->flash('success', 'Laporan anda telah kami terima, terimakasih!');
@@ -49,4 +51,17 @@ class ReportController extends Controller
     }
 
     function createForUser() {}
+
+    function showImage(ReportDetail $id){
+        $imageData = $id->img;
+
+    // Menggunakan finfo untuk mendeteksi MIME type
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mimeType = $finfo->buffer($imageData);
+
+    return Response::make($imageData, 200, [
+        'Content-Type' => $mimeType,
+        'Content-Length' => strlen($imageData)
+    ]);
+    }
 }
