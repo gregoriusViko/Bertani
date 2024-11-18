@@ -7,6 +7,8 @@ use App\Models\TypeOfProduct;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use illuminate\Support\Facades\Storage;
 
 
@@ -56,16 +58,16 @@ class ProductController extends Controller
         ]);
 
         
-
         $foto = $request->file('foto');
         $foto->store('products', 'public');
         $typeOfProduct = TypeOfProduct::find($request->nama);
         if (!$typeOfProduct)  {
             return back()->withErrors(['Nama'=>'nama produk tidak ditemukan.']);
         }
-
+        $farmer = Auth::guard('farmer')->user();
         Product::create([
-            'farmer_id' => Auth::guard('farmer')->user()->id,
+            'slug' => Str::slug($farmer->email.'-'.$typeOfProduct->name),
+            'farmer_id' => $farmer->id,
             'type_of_product_id' => $typeOfProduct->id,
             'name' => $request->nama,
             'price' => $request->harga,
@@ -79,42 +81,41 @@ class ProductController extends Controller
     }
 
     public function edit(Product $product) {
-        return view('product.edit', compact('product'));
+        return view('petani.editProduct', compact('product'));
     }
 
     public function update(Request $request, Product $product) {
+       
         $request->validate([
-            'nama' => 'required|string|max:50',
             'harga' => 'required|numeric',
             'deskripsi' => 'required',
             'stok' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
-
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->description = $request->description;
-        $product->stock_kg = $request->stock_kg;
-
-        if  ($request->file('foto')) {
-
-            Storage::disk('local')->delete('public/'. $product->foto);
+       
+        if($request->file('foto')) {
+            File::delete(public_path($product->img_link));
             $foto = $request->file('foto');
-            $foto->storeAs('public', $foto->hashName());
-            $product->foto = '/storage/products'.$foto->hashName();
+            $foto->store('products', 'public');
+            $product->img_link = '/storage/products/' . $foto->hashName();
         }
+        
+        $product->price = $request->harga;
+        $product->description = $request->deskripsi;
+        $product->stock_kg = $request->stok;
 
         $product->update();
 
-        return redirect()->route('')->with('Sukses', 'Berhasil update produk');
+        return redirect()->route('dafproduk')->with('Sukses', 'Berhasil update produk');
     }
 
     public function destroy(Product $product){
-        if($product->foto !== "noimage.png") {
-        Storage::disk('local')->delete('public/'. $product->foto);
+        if($product->img_link !== "noimage.png") {
+        File::delete(public_path($product->img_link));
         }
-
+        
         $product->delete();
-        return redirect('')->with('Sukses', 'Berhasil Hapus Produk');
+        return redirect('dafproduk')->with('Sukses', 'Berhasil Hapus Produk');
     }
 
     public function laporanPenjualan(){
