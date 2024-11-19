@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     function tampilRegister() {
-        return view('register');
+        return view('auth.register');
     }
 
     function submitRegister(Request $request){
@@ -46,7 +46,7 @@ class AuthController extends Controller
     }
 
     function tampilLogin(){
-        return view('login');
+        return view('auth.login');
     }
 
     function submitLogin(Request $request){
