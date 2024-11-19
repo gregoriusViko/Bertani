@@ -33,7 +33,7 @@
                     YA
                 </button>
                 <button type="button" data-behavior="cancel" onclick="closeModal()" class="mt-3 w-full sm:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:text-sm">
-                    TIDAK
+                     TIDAK
                 </button>
             </div>
         </div>
