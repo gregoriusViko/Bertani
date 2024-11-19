@@ -11,6 +11,6 @@
     <x-nav-dropdown>
         <x-slot:title>Lainnya</x-slot:title>
         <x-dropdown-list href="/chat" :active="request()->is('chat')">Chat</x-dropdown-list>
-        <x-dropdown-list href="/laporan/sistem" :active="request()->is('laporan-sistem')">Laporan</x-dropdown-list>
+        <x-dropdown-list href="/laporan-sistem" :active="request()->is('laporan-sistem')">Laporan</x-dropdown-list>
     </x-nav-dropdown>
 </x-navbar>
