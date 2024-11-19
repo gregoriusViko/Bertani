@@ -20,10 +20,6 @@ Route::get('/produk', function () {
     return view('ProdukPage');
 })->name('produk');
 
-Route::get('/pesanan', function () {
-    return view('PesananPage');
-})->name('pesanan');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout');
 
 Route::get('/addProduct', function () {
