@@ -7,5 +7,8 @@ Route::middleware(['auth:buyer', 'verified'])->group(function(){
         Route::get('/DafPesananPembeli', function () {
             return view('pembeli.PemDafPesananPage');
         })->name('PemDafPesananPage');
+        Route::get('/pesanan', function () {
+            return view('pembeli.PemDafPesananPage');
+        })->name('pesanan');
     });
 });
