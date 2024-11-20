@@ -42,28 +42,33 @@
                 {{-- jumlah stok --}}
                 <div class="mt-4 ">
                     <x-input-label for="Stok" :value="__('Jumlah Stok')" />
-                    <x-text-input id="Stok" class="block mt-1  border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full" type="number" name="stok"
-                        :value="old('Stok')" x-mask:dynamic="$Stok($input, ',')" required />
+                    <x-text-input id="Stok"
+                        class="block mt-1  border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full"
+                        type="number" name="stok" :value="old('Stok')" x-mask:dynamic="$Stok($input, ',')" required />
                     <x-input-error :messages="$errors->get('Stok')" class="mt-2 " />
                 </div>
                 {{-- harga --}}
                 <div class="mt-4">
                     <x-input-label for="harga" :value="__('Harga')" />
-                    <x-text-input id="harga" class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50" type="text" name="harga"
-                        :value="old('harga')" required />
+                    <x-text-input id="harga"
+                        class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50"
+                        type="text" name="harga" :value="old('harga')" required />
                     <x-input-error :messages="$errors->get('harga')" class="mt-2" />
                 </div>
                 {{-- deskripsi --}}
                 <div class="mt-4">
                     <x-input-label for="deskripsi" :value="__('Deskripsi')" />
-                    <x-text-area id="deskripsi" class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50" type="text"
-                        name="deskripsi">{{ old('deskripsi') }}</x-text-area>
+                    <x-text-area id="deskripsi"
+                        class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50"
+                        type="text" name="deskripsi">{{ old('deskripsi') }}</x-text-area>
                     <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                 </div>
                 {{-- button --}}
                 <div class="mt-4 flex space-x-2 justify-end">
-                    <button class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2" type="button" id="cancel-button">BATAL</button>
-                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400" type="submit" id="add-button" >TAMBAH</button>
+                    <button class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2"
+                        type="button" id="cancel-button">BATAL</button>
+                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400"
+                        type="submit" id="add-button">TAMBAH</button>
                 </div>
             </div>
 
@@ -71,33 +76,31 @@
     </div>
 
     <script>
-
         function toggleDropdown() {
             const dropdownMenu = document.getElementById(id);
             dropdownMenu.classList.toggle("hidden");
         }
 
         document.getElementById("categoryDropdown").addEventListener("change", function() {
-                    const selectedCategory = this.value;
+            const selectedCategory = this.value;
 
-                    // Mengambil data produk berdasarkan kategori melalui AJAX
-                    fetch(`/products/get-by-category/${selectedCategory}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            const productDropdown = document.getElementById("productDropdown");
-                            productDropdown.innerHTML = '<option disabled selected>Pilih Nama Produk</option>';
+            // Mengambil data produk berdasarkan kategori melalui AJAX
+            fetch(`/products/get-by-category/${selectedCategory}`)
+                .then(response => response.json())
+                .then(data => {
+                    const productDropdown = document.getElementById("productDropdown");
+                    productDropdown.innerHTML = '<option disabled selected>Pilih Nama Produk</option>';
 
-                            // Tambahkan produk ke dropdown nama produk
-                            for (const [id, name] of Object.entries(data)) {
-                                const option = document.createElement("option");
-                                option.value = id;
-                                option.textContent = name;
-                                productDropdown.appendChild(option);
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                });
-
+                    // Tambahkan produk ke dropdown nama produk
+                    for (const [id, name] of Object.entries(data)) {
+                        const option = document.createElement("option");
+                        option.value = id;
+                        option.textContent = name;
+                        productDropdown.appendChild(option);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
     </script>
 
 </x-layout>
