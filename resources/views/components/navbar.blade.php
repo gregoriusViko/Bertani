@@ -26,15 +26,15 @@
                 @endphp
                 <a href="{{ $user ? route('profile') : '/login' }}">
                     <button
-                        class="bg-green-600 text-white px-4 py-1 relative font-hind text-1xl font-semibold rounded-full hover:bg-white hover:text-green-600 flex items-center justify-center space-x-2"
+                        class="bg-white text-green-600 px-4 py-1 relative font-hind text-1xl font-semibold rounded-full hover:bg-green-300 hover:text-white hover:scale-105 transition-transform duration-200 ease-in-out flex items-center justify-center space-x-2"
                         type="button">
                         <span class="group-hover:text-green-600 relative font-hind text-1xl text-base font-semibold">
-                            {{ $user ? $user->email : 'Belum Login' }}
+                            {{ $user ? $user->email : 'Login' }}
                         </span>
                         @if ($user && $user->profile_img_link)
                             <img src="{{ $user->profile_img_link }}" alt=""
-                                class="w-10 h-10 rounded-full object-cover group-hover:text-green-600">
-                        @else
+                                class="w-8 h-8 rounded-full object-cover group-hover:text-green-600">
+                        @elseif ($user)
                             <ion-icon name="person-circle-outline"
                                 class="text-2xl group-hover:text-green-600"></ion-icon>
                         @endif
