@@ -26,7 +26,7 @@
                         <div class="w 1/2 ">
                             <div class="flex justify-end">
                                 <button
-                                    class="w-1/2 text-black text-sm md:text-base border border-opacity-90 border-black bg-white py-1 rounded-lg hover:bg-green-400 hover:text-white flex items-center justify-center"
+                                    class="relative p-2 text-black text-sm md:text-base border border-opacity-90 border-black bg-white py-1 rounded-lg hover:bg-green-400 hover:text-white flex items-center justify-center"
                                     type="submit"
                                     id="chat-button"
                                 >
