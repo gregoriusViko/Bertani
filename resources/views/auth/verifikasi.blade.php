@@ -5,4 +5,8 @@
         @csrf
         <button type="submit">Kirim ulang</button>
     </form>
+    <h1>Ganti email</h1>
+    <form action="post" method="post">
+        <input type="text">
+    </form>
 </x-layout>
