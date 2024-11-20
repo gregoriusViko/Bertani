@@ -48,7 +48,7 @@ Route::get('/email/verify', function () {
 })->middleware('auth:buyer,farmer')->name('verification.notice');
 
 Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
+    auth()->user()->sendEmailVerificationNotification();
  
     return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+})->middleware(['auth:buyer,farmer', 'throttle:5,1440'])->name('verification.send');
