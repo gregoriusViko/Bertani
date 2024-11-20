@@ -30,8 +30,10 @@ class AuthController extends Controller
 
         if ($request->peran == 'Petani') {
             $user = new Farmer();
+            $guard = 'farmer';
         } else {
             $user = new Buyer();
+            $guard = 'buyer';
         }
         // Data Berdasar Kolom
         $user->email = $request->email;
@@ -41,8 +43,8 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->save();
         event(new Registered($user));
-        
-        return redirect('login');
+        Auth::guard($guard)->login($user);
+        return redirect('/');
     }
 
     function tampilLogin(){
