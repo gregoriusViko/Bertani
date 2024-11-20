@@ -39,10 +39,10 @@ class Buyer extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(FarmerChat::class);
     }
 
-    public function order(): HasMany{
+    public function orders(): HasMany{
         return $this->hasMany(Order::class);
     }
-    public function report(): HasMany{
+    public function reports(): HasMany{
         return $this->hasMany(Report::class);
     }
 }
