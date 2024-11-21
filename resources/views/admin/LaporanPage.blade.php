@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot:title>Laporan-Bertani.com</x-slot:title>
+    <x-slot:title>Admin-Laporan-Bertani.com</x-slot:title>
 
     <div class="bg-gray-200 rounded-lg mb-4 mx-auto max-w-7xl px-4 mt-5 sm:px-6 lg:px-8">
         <section class="py-7 bg-gray-200">
