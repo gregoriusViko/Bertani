@@ -7,9 +7,9 @@
                 <img class="w-26 h-20" src="/img/logo1.png" alt="Your Company">
             </div>
             <div
-                class="nav-links transition ease-in duration-200 md:static absolute bg-green-600 md:min-h-fit left-0 top-[-100%] md:w-auto  w-full flex items-center px-5 py-4">
+                class="nav-links transition ease-in duration-200 absolute bg-green-600 md:min-h-fit left-0 top-[-100%] lg:static lg:top-0 lg:w-auto w-full flex items-center px-5 py-4">
                 <ul
-                    class="relative font-hind flex flex-col md:flex-row md:items-center md:gap-[2vw] md:text-base text-lg">
+                    class="relative font-hind flex flex-col lg:flex-row lg:items-center gap-[2vw] md:text-base text-lg">
                     {{ $slot }}
                 </ul>
             </div>
@@ -41,7 +41,7 @@
                     </button>
                 </a>
                 <ion-icon onclick="onToggleMenu(this)" name="menu"
-                    class="text-1xl cursor-pointer md:hidden text-white"></ion-icon>
+                    class="text-1xl cursor-pointer text-white lg:hidden"></ion-icon>
             </div>
         </nav>
     </div>
