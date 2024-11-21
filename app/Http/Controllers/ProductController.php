@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use illuminate\Support\Facades\Storage;
+use illuminate\Support\Facades\DB;
+use illuminate\Support\Facades\Log;
 
 
 class ProductController extends Controller
@@ -109,13 +111,28 @@ class ProductController extends Controller
         return redirect()->route('dafproduk')->with('Sukses', 'Berhasil update produk');
     }
 
+
     public function destroy(Product $product){
-        if($product->img_link !== "noimage.png") {
-        File::delete(public_path($product->img_link));
+        try {
+            DB::beginTransaction();
+
+            // Hapus file gambar jika bukan default
+            if($product->img_link !== "noimage.png"){
+               $imagePath = public_path($product->img_link);
+               if  (File::exists($imagePath)) {
+                    File::delete($imagePath);
+               } 
+            } 
+
+            $product->delete();
+            DB::commit();
+
+            return redirect('dafproduk')->with('Sukses','Produk berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollBack();-
+            Log::error('Error deleting product: ' . $e->getMessage());//+
+            return redirect()->back()->with('Gagal','Produk gagal dihapus' . $e->getMessage());
         }
-        
-        $product->delete();
-        return redirect('dafproduk')->with('Sukses', 'Berhasil Hapus Produk');
     }
 
     public function laporanPenjualan(){
