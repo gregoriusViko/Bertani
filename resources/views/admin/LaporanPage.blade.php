@@ -1,10 +1,10 @@
 <x-layout>
     <x-slot:title>Laporan-Bertani.com</x-slot:title>
 
-    <div class="bg-gray-200 min-h-screen">
-        <section class="py-10 bg-gray-200">
-            <form class="mb-10 max-lg:max-w-xl max-lg:mx-auto flex">
-                <label for="urutkan_laporan" class="text-sm text-black px-4 font-semibold">Tampilkan Berdasarkan</label>
+    <div class="bg-gray-200 rounded-lg mb-4 mx-auto max-w-7xl px-4 mt-5 sm:px-6 lg:px-8">
+        <section class="py-7 bg-gray-200">
+            <form class="mb-4 max-lg:max-w-xl max-lg:mx-auto flex">
+                <label for="urutkan_laporan" class="text-sm md:text-base lg:text-md text-black px-4 font-semibold">Tampilkan Berdasarkan</label>
                 <select id="urutkan_laporan"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-1 px-4">
                     <option selected>Semua</option>
@@ -24,20 +24,21 @@
                     $person = $reporter == 'buyer' ? $report->buyer : $report->farmer;
                 @endphp
                     <div
-                        class="box p-8 rounded-3xl bg-white mb-7 transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex relative">
+                        class="box p-4 rounded-3xl bg-white mb-7 transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex relative">
                         <input type="checkbox" class="self-center mr-4">
-                        <div class="w-20 flex-shrink-0 mr-4">
+                        {{-- gambar produk --}}
+                        <div class="w-20 flex-shrink-0 mr-4 flex items-center">
                             <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="earbuds image"
-                                class="rounded-xl object-cover">
+                                class="rounded-md object-cover">
                         </div>
                         <div class="flex flex-col justify-start items-start space-y-4 flex-grow">
                             <div class="flex items-center space-x-4">
-                                <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">{{ $person->name }}</h3>
-                                <p class="text-lg font-medium text-gray-400">{{ $reporter == 'buyer' ? 'PEMBELI' : 'PETANI' }}</p>
+                                <h3 class="text-sm md:text-lg lg:text-xl font-semibold leading-6 text-gray-800">{{ $person->name }}</h3>
+                                <p class="text-xs md:text-sm lg:text-base font-medium text-gray-400">{{ $reporter == 'buyer' ? 'PEMBELI' : 'PETANI' }}</p>
                             </div>
-                            <div class="flex flex-col space-y-2 w-full" style="padding-right: 2rem;">
-                                <p class="text-lg leading-none text-black font-semibold">Laporan : {{ Str::limit($reportDetail->content_of_report, 100) }}</p>
-                                <p class="text-base leading-none text-black">Dilaporkan pada {{ $reportDetail->report_time->diffForHumans() }}
+                            <div class="flex flex-col space-y-2 w-full" style="padding-right: 4rem;">
+                                <p class="text-sm md:text-md lg:text-lg leading-none text-black font-bold">Laporan : {{ Str::limit($reportDetail->content_of_report, 100) }}</p>
+                                <p class="text-xs md:text-sm lg:text-base leading-none text-black font-normal">Dilaporkan pada {{ $reportDetail->report_time->diffForHumans() }}
                                 </p>
                             </div>
                         </div>
@@ -45,9 +46,9 @@
                         <!-- Kontainer ikon di pojok kanan bawah dari kotak putih -->
                         <div class="absolute bottom-4 right-4 flex space-x-2">
                             <button onclick="showPopup('teruskan')"><img src="/img/paperplane.png" alt="icon_teruskan"
-                                    class="w-10 h-10"></button>
+                                    class="w-5 h-5 md:w-8 md:h-8"></button>
                             <button onclick=""><img src="/img/trash.png" alt="icon_sampah"
-                                    class="w-10 h-10"></button>
+                                    class="w-5 h-5 md:w-8 md:h-8"></button>
                         </div>
                     </div>
                 @endforeach
