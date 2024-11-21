@@ -6,22 +6,23 @@
         </div>
     </div>
 
-    <div class="grid grid-rows-8 grid-flow-col gap-4">
-        @php
-            $index = 1;
-            $product = null;
-            $total = 0;
-            if ($orders->count() > 0) {
-                $maxQuantityOrder = $orders->sortByDesc('quantity_kg')->first();
+    @php
+        $index = 1;
+        $product = null;
+        $total = 0;
+        if ($orders->count() > 0) {
+            $maxQuantityOrder = $orders->sortByDesc('quantity_kg')->first();
 
-                // Mengakses produk terkait
-                $product = $maxQuantityOrder->product;
-                $total = $orders->sum(function ($order) {
-                    return $order->price * $order->quantity_kg; // Mengalikan harga dengan jumlah
-                });
-            }
-        @endphp
-        <div class=" row-span-8  flex justify-center items-center">
+            // Mengakses produk terkait
+            $product = $maxQuantityOrder->product;
+            $total = $orders->sum(function ($order) {
+                return $order->price * $order->quantity_kg; // Mengalikan harga dengan jumlah
+            });
+        }
+    @endphp
+    {{-- <div class="grid grid-rows-8 grid-flow-col gap-4"> --}}
+
+    {{-- <div class=" row-span-8  flex justify-center items-center">
             <div class="text-center">
                 <h1 class="font-libre-franklin text-lg font-normal">Total Produk Terjual</h1>
                 <h4 class="font-libre-franklin text-2xl font-bold">{{ $orders->count() }}</h4>
@@ -39,26 +40,44 @@
                 <h4 class="font-libre-franklin text-2xl font-bold">
                     {{ $product ? $product->type->name : 'Tidak Ada' }}</h4>
             </div>
-        </div>
+        </div> --}}
     </div>
+
     {{-- button parent --}}
     <div class="mt-4">
-        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-            data-tab-target="#tab1">Laporan Bulanan</button>
-        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-            data-tab-target="#tab2">Daftar Laporan</button>
+        <button type="button" class="px-4 py-3 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
+            data-tab-target="#tab1">Grafik Laporan</button>
+        <button type="button" class="px-4 py-3 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
+            data-tab-target="#tab2">Laporan Bulanan</button>
     </div>
 
     <div id="tab1"
         class="tab-content border rounded-md border-black overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
+        <div class="p-3">
+            <div class="p-4  rounded-lg">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Monthly Report</h2>
+                <div id="chart-container" class="w-full"></div>
+            </div>
+            <div id="diagram">
+                <canvas id="barChart" class="w-full h-96"></canvas>
+            </div>
+            {{-- niatnya diagram batang --}}
+        </div>
+
+    </div>
+
+    {{-- Laporan --}}
+    <div id="tab2"
+        class="tab-content border border-black p-8 w-full h-auto hidden rounded-md overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
+        {{-- <p class="text-2xl font-bold">Daftar Laporan</p> --}}
         {{-- button child laporan bulanan --}}
         <div class="pl-3">
             <button type="button" class="px-4 py-2 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-            data-nested-tab-target="#tab1bulan">1 Bulan</button>
+                data-nested-tab-target="#tab1bulan">1 Bulan</button>
             <button type="button" class="px-4 py-2  rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-            data-nested-tab-target="#tab3bulan">3 Bulan</button>
+                data-nested-tab-target="#tab3bulan">3 Bulan</button>
             <button type="button" class="px-4 py-2 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-            data-nested-tab-target="#tab6bulan">6 Bulan</button>
+                data-nested-tab-target="#tab6bulan">6 Bulan</button>
         </div>
         {{-- 1bulan --}}
         <div id="tab1bulan"
@@ -75,57 +94,9 @@
                 </select>
                 <button class="text-white bg-blue-600 hover:bg-orange-400 rounded-md px-4 py-2">OK</button>
             </div>
-
-            <div class="m-3">
-                @if ($product)
-                    <table class="rounded-md w-full text-sm text-left rtl:text-right text-black border border-black">
-                        <thead class="text-xs text-white uppercase bg-blue-600">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">ID</th>
-                                <th scope="col" class="px-6 py-3">Tanggal-Waktu</th>
-                                <th scope="col" class="px-6 py-3">Nama Produk</th>
-                                <th scope="col" class="px-6 py-3">Harga Produk</th>
-                                <th scope="col" class="px-6 py-3">Jumlah</th>
-                                <th scope="col" class="px-6 py-3">Total Pembelian</th>
-                                <th scope="col" class="px-6 py-3">Metode Pembelian</th>
-                                <th scope="col" class="px-6 py-3">Nama Pembeli</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($orders as $order)
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $index }}
-                                        @php
-                                            $index += 1;
-                                        @endphp
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $order->order_time->isoFormat('dddd D/MM/YYYY - HH.mm') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $order->product->type->name }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ Number::currency($order->price, in: 'idr') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ WeightConverter::convert($order->quantity_kg) }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ Number::currency($order->price * $order->quantity_kg, in: 'idr') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ ucwords($order->payment_proof) }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ strtok($order->buyer->name, ' ') }}
-                                    </th>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
+            {{-- tabel --}}
+            <div class="m-3 overflow-x-auto">
+                <x-report-table id="tab1bulan" :orders="$orders" :product="$product" />
             </div>
         </div>
 
@@ -144,56 +115,9 @@
                 </select>
                 <button class="text-white bg-blue-600 rounded-md px-4 py-2">OK</button>
             </div>
-            <div class="m-3">
-                @if ($product)
-                    <table class="rounded-md w-full text-sm text-left rtl:text-right text-black border border-black">
-                        <thead class="text-xs text-white uppercase bg-blue-600">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">ID</th>
-                                <th scope="col" class="px-6 py-3">Tanggal-Waktu</th>
-                                <th scope="col" class="px-6 py-3">Nama Produk</th>
-                                <th scope="col" class="px-6 py-3">Harga Produk</th>
-                                <th scope="col" class="px-6 py-3">Jumlah</th>
-                                <th scope="col" class="px-6 py-3">Total Pembelian</th>
-                                <th scope="col" class="px-6 py-3">Metode Pembelian</th>
-                                <th scope="col" class="px-6 py-3">Nama Pembeli</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($orders as $order)
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $index }}
-                                        @php
-                                            $index += 1;
-                                        @endphp
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $order->order_time->isoFormat('dddd D/MM/YYYY - HH.mm') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $order->product->type->name }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ Number::currency($order->price, in: 'idr') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ WeightConverter::convert($order->quantity_kg) }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ Number::currency($order->price * $order->quantity_kg, in: 'idr') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ ucwords($order->payment_proof) }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ strtok($order->buyer->name, ' ') }}
-                                    </th>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
+            {{-- tabel --}}
+            <div class="m-3 overflow-x-auto">
+                <x-report-table id="tab3bulan" class="" :orders="$orders" :product="$product" />
             </div>
         </div>
         {{-- 6bulan --}}
@@ -211,95 +135,17 @@
                 </select>
                 <button class="text-white bg-blue-600 rounded-md px-4 py-2">OK</button>
             </div>
-            <div class="m-3">
-                @if ($product)
-                    <table class="rounded-md w-full text-sm text-left rtl:text-right text-black border border-black">
-                        <thead class="text-xs text-white uppercase bg-blue-600">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">ID</th>
-                                <th scope="col" class="px-6 py-3">Tanggal-Waktu</th>
-                                <th scope="col" class="px-6 py-3">Nama Produk</th>
-                                <th scope="col" class="px-6 py-3">Harga Produk</th>
-                                <th scope="col" class="px-6 py-3">Jumlah</th>
-                                <th scope="col" class="px-6 py-3">Total Pembelian</th>
-                                <th scope="col" class="px-6 py-3">Metode Pembelian</th>
-                                <th scope="col" class="px-6 py-3">Nama Pembeli</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($orders as $order)
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $index }}
-                                        @php
-                                            $index += 1;
-                                        @endphp
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $order->order_time->isoFormat('dddd D/MM/YYYY - HH.mm') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $order->product->type->name }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ Number::currency($order->price, in: 'idr') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ WeightConverter::convert($order->quantity_kg) }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ Number::currency($order->price * $order->quantity_kg, in: 'idr') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ ucwords($order->payment_proof) }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ strtok($order->buyer->name, ' ') }}
-                                    </th>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
+            {{-- tabel --}}
+            <div class="m-3 overflow-x-auto">
+                <x-report-table id="tab6bulan" :orders="$orders" :product="$product" />
             </div>
         </div>
-
     </div>
 
-    <div id="tab2" class="tab-content border border-black p-8 w-full h-auto hidden rounded-md">
-        <p class="text-2xl font-bold mb-4">Daftar Laporan</p>
-
-        {{-- kotak perlaporan --}}
-        <div class="border border-green-600 p-5 w-full h-auto rounded-md">
-            <p class="text-sm mb-2">1 Oktober 2024 - 15.40 WIB || 12345 - Purnomo </p>
-
-            {{-- <p class="py-4"></p> --}}
-            <p class="text-xl font-medium py-2">Laporan Pesanan</p>
-            <ul class="ml-4 list-disc text-lg font-medium">
-                <li>Berat produk tidak sesuai pesanan</li>
-            </ul>
-
-            {{-- <p class="py-4"></p> --}}
-            <p class="text-xl font-medium mt-2 py-2">Tanggapan</p>
-            <ul class="ml-4 list-disc text-lg font-medium">
-                <li>Baik, akan kami tindak lanjutin. Terimakasih </li>
-            </ul>
-
-            <form>
-                {{-- <p class="py-4"></p> --}}
-                <p class="text-xl font-medium mt-5">Balas Tanggapan?</p>
-                <textarea id="replyMessage" rows="3" placeholder=""
-                    class="w-4/5 h-10 p-2 mt-1 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
-                <button onclick=""><img src="/img/paperplane.png" alt="icon_teruskan" class="w-9 h-9"></button>
-            </form>
-        </div>
-
-
-    </div>
 
     <script>
         const tabs = document.querySelectorAll('[data-tab-target]');
-        const activeClass = "bg-gray-200";
+        const activeClass = "bg-green-500";
         const cancelButton = document.getElementById('cancelButton');
         const form = document.querySelector('#tab1 form')
 
@@ -327,33 +173,39 @@
             });
         });
 
-        // Script untuk nested tabs di dalam #tab1
-        const nestedTabs = document.querySelectorAll('#tab1 [data-nested-tab-target]');
+        const nestedTabs = document.querySelectorAll('#tab2 [data-nested-tab-target]');
         const nestedActiveClass = "bg-green-500";
 
-        // Tab default untuk nested tabs
-        nestedTabs[0]?.classList.add(nestedActiveClass); // Pastikan ada nestedTabs
-        document.querySelector('#tab1bulan')?.classList.remove('hidden');
+        // Pastikan ada nested tabs
+        if (nestedTabs.length > 0) {
+            // Tab default untuk nested tabs
+            const defaultTab = nestedTabs[0];
+            const defaultContent = document.querySelector(defaultTab.dataset.nestedTabTarget);
 
-        // Event listener untuk nested tabs
-        nestedTabs.forEach(nestedTab => {
-            nestedTab.addEventListener('click', () => {
-                const targetNestedContent = document.querySelector(nestedTab.dataset.nestedTabTarget);
+            defaultTab.classList.add(nestedActiveClass); // Tambahkan class aktif pada tab pertama
+            defaultContent?.classList.remove('hidden'); // Tampilkan konten tab pertama
 
-                // Menambah hidden class untuk semua nested tab-content di dalam #tab1
-                document.querySelectorAll('#tab1 .nested-tab-content').forEach(content => content.classList
-                    .add('hidden'));
+            // Event listener untuk nested tabs
+            nestedTabs.forEach(nestedTab => {
+                nestedTab.addEventListener('click', () => {
+                    const targetNestedContent = document.querySelector(nestedTab.dataset.nestedTabTarget);
 
-                // Menghapus active class dari semua nested tabs
-                nestedTabs.forEach(activeNestedTab => activeNestedTab.classList.remove(nestedActiveClass));
+                    // Sembunyikan semua konten nested tabs di dalam #tab2
+                    document.querySelectorAll('#tab2 .nested-tab-content').forEach(content => content
+                        .classList.add('hidden'));
 
-                // Menghapus hidden class dari nested tab-content yang diklik
-                targetNestedContent.classList.remove('hidden');
+                    // Hilangkan active class dari semua nested tabs
+                    nestedTabs.forEach(tab => tab.classList.remove(nestedActiveClass));
 
-                // Menambah active class ke nested tab yang diklik
-                nestedTab.classList.add(nestedActiveClass);
+                    // Tampilkan konten tab yang diklik
+                    targetNestedContent?.classList.remove('hidden');
+
+                    // Tambahkan active class ke nested tab yang diklik
+                    nestedTab.classList.add(nestedActiveClass);
+                });
             });
-        });
+        }
+
 
         cancelButton.addEventListener('click', () => {
             form.reset();
@@ -361,6 +213,32 @@
             document.querySelector('#tab2').classList.add('hidden');
             tabs[0].classList.add(activeClass);
             tabs[1].classList.remove(activeClass);
+        });
+    </script>
+
+    <script src="path/to/chartjs/dist/chart.umd.js"></script>
+
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     </script>
 
