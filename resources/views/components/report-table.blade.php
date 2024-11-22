@@ -17,10 +17,10 @@
 
     <div class="flex justify-center gap-6 items-center mb-3">
         <div class="">
-            <h1 class="font-libre-franklin font-normal text-lg">Total Pemasukan</h1>
+            <h1 class="font-libre-franklin font-normal text-sm md:text-lg">Total Pemasukan</h1>
             
         </div>
-        <h4 class="font-libre-franklin text-lg font-bold">{{ Number::currency($total, in: 'idr') }}</h4>
+        <h4 class="font-libre-franklin text-sm md:text-lg font-bold">{{ Number::currency($total, in: 'idr') }}</h4>
     </div>
     @if ($product)
         <table class="rounded-md w-full text-sm text-left rtl:text-right text-black border border-black">
