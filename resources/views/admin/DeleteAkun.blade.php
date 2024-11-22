@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>Admin-Delete Akun User-Bertani.com</x-slot:title>
     <div class="rounded-lg mt-8 px-7 mx-auto max-w-screen-lg">
-        <form class="mb-4 max-lg:max-w-xl max-lg:mx-auto flex justify-center mt-4 gap-3">
+        <form class="mb-4 max-lg:max-w-xl max-lg:mx-auto flex justify-center mt-4 gap-3" method="get">
             <label for="cariAkun" class="text-xs md:text-base lg:text-lg text-black px-4 font-semibold">Cari Akun</label>
             <input type="text" id="cariAkun"
                 class="pl-3 border border-black rounded-md w-1/2 block font-libre-franklin font-medium text-xs md:text-base lg:text-lg text-black">

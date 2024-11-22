@@ -21,14 +21,15 @@ class Admin extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+        'id',
+        'remember_token',
+        'created_at',
+        'updated_at'
     ];
     use HasFactory, Notifiable;
 
     public function reports(): HasMany{
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(ReportDetail::class);
     }
 }
