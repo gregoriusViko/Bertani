@@ -18,7 +18,7 @@
                     <h2 class="text-xs md:text-base font-libre-franklin font-bold text-black">nama pengguna</h2>
                     <h4 class="font-libre-franklin font-normal text-sm text-gray-700">role</h4>
                 </div>
-                <div class="md:w-1/2">
+                <div class="w-full md:w-1/2">
                     <label for="nama-input"
                         class="block mb-1 text-xs md:text-base font-libre-franklin font-semibold  text-black">Nama
                         Pengguna</label>
@@ -26,14 +26,14 @@
                         class="bg-gray-50 border mb-2 border-gray-300 text-black text-xs md:text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         value="" required readonly />
                 </div>
-                <div class="md:w-1/2">
+                <div class="w-full md:w-1/2">
                     <label for="alamat-input"
                         class="block mb-1 text-xs md:text-base font-libre-franklin font-semibold  text-black">Alamat</label>
                     <input type="text" id="alamat-input" name="home_address"
                         class="bg-gray-50 border mb-2 border-gray-300 text-black text-xs md:text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         value="" required readonly />
                 </div>
-                <div class="md:w-1/2">
+                <div class="w-full md:w-1/2">
                     <label for="notelp-input"
                         class="block mb-1 text-xs md:text-base font-libre-franklin font-semibold  text-black">No
                         Telepon</label>
