@@ -41,9 +41,5 @@ class TypeOfProductSeeder extends Seeder
             'name' => 'jagung',
             'category' => 'biji-bijian'
         ]);
-        TypeOfProduct::create([
-            'name' => 'cabai merah',
-            'category' => 'sayuran'
-        ]);
     }
 }

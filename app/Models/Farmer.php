@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Farmer extends Authenticatable implements MustVerifyEmail
 {
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'home_address',
-        'phone_number',
+    protected $guarded = [
+        'id',
+        'remember_token',
+        'created_at',
+        'updated_at'
     ];
     /** @use HasFactory<\Database\Factories\FarmerFactory> */
     use HasFactory, Notifiable;
