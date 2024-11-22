@@ -1,4 +1,6 @@
 import './bootstrap';
+import ApexCharts from 'apexcharts';
+window.ApexCharts = ApexCharts;
 
 let dropdownToggle = document.getElementById('dropdownToggle');
 let dropdownMenu = document.getElementById('dropdownMenu');
@@ -38,3 +40,4 @@ document.addEventListener('DOMContentLoaded', () => {
 dropdownToggle.addEventListener('click', handleClick);
 
 import './dropdown';
+
