@@ -138,7 +138,21 @@ class ProductController extends Controller
     public function laporanPenjualan(){
         $farmer = Auth::guard('farmer')->user();
         $orders = $farmer->products()->with('orders')->latest()->get()->pluck('orders')->flatten();
-        $orders = $orders->where('order_status', 'selesai');
+        $orders = $orders->where('order_status', 'selesai')->whereBetween('order_time', [now()->subMonth(), now()]);
         return view('petani.PetLaporanPenjualanPage', compact('orders'));
     }
+
+    public function rentangPenjualan(Request $request){
+        $bulan = $request->input('bulan');
+        $farmer = Auth::guard('farmer')->user();
+        $orders = $farmer->products()->with('orders')->latest()->get()->pluck('orders')->flatten();
+        $orders = $orders->where('order_status', 'selesai')->whereBetween('order_time', [now()->subMonth($bulan), now()]);
+        return view('partials.data', compact('orders'));
+    }
+
+    // public function loadMoreProducts(Request $request)
+    // {
+    //     $products = Product::with('farmer')->paginate(perPage: 8);
+    //     return view('partials.product', compact('products'))->render();
+    // }
 }
