@@ -45,7 +45,7 @@
                 <div class="border border-black rounded-md w-full">
                     <h1 class="font-inter font-normal text-sm md:text-md lg:text-lg">Deskripsi</h1>
                     <x-text-area id="deskripsi" class="block mt-1 w-full rounded-lg border border-black" type="text"
-                        name="deskripsi">{{ $product->description }}</x-text-area>
+                        name="deskripsi" readonly>{{ $product->description }} </x-text-area>
                 </div>
                 <div class="mt-4">
                     <h1 class="font-inter font-normal text-sm md:text-md lg:text-lg">Pesan Sekarang</h1>
