@@ -11,6 +11,7 @@ require base_path('routes/auth.php');
 
 Route::get('/', [ProductController::class, 'home'])->name('HomePageDefault');
 Route::get('/products/load', [ProductController::class, 'loadMoreProducts']);
+Route::get('data-penjualan/load', [ProductController::class, 'rentangPenjualan']);
 
 Route::get('/hargapasar', function () {
     return view('HargaPasarPage');
