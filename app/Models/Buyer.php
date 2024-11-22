@@ -11,12 +11,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Buyer extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'home_address',
-        'phone_number',
+    protected $guarded = [
+        'id',
+        'remember_token',
+        'created_at',
+        'updated_at'
     ];
     protected $hidden = [
         'password',

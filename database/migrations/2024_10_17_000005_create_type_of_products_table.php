@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('category');
-            $table->decimal('market price');
+            $table->decimal('market_price')->default(0);
             $table->dateTimes();
         });
     }

@@ -31,7 +31,7 @@ return new class  extends Migration
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->dateTimes();
-            $table->string('status', 10)->default('active');
+            $table->softDeletes();
         });
  
     }
