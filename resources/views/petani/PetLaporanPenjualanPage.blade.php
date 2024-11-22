@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout mb-4>
     <x-slot:title>Laporan Penjualan-Bertani.com</x-slot:title>
     <div dir="ltr">
         <div class="mb-4 mx-auto max-w-7xl px-4 mt-5 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -43,168 +43,175 @@
         </div> --}}
     </div>
 
-    {{-- button parent --}}
     <div class="mt-4">
-        <button type="button" class="px-4 py-3 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-            data-tab-target="#tab1">Grafik Laporan</button>
-        <button type="button" class="px-4 py-3 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-            data-tab-target="#tab2">Laporan Bulanan</button>
+        <button class="tab-btn px-4 py-2 active rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
+            data-tab-target="#tab1">1 Bulan</button>
+        <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200" data-tab-target="#tab2">3
+            Bulan</button>
+        <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200" data-tab-target="#tab3">6
+            Bulan</button>
     </div>
 
-    <div id="tab1"
-        class="tab-content border rounded-md border-black overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
-        <div class="p-3">
-            <div class="p-4  rounded-lg">
-                <h2 class="text-lg font-semibold text-gray-800 mb-4">Monthly Report</h2>
-                <div id="chart-container" class="w-full"></div>
+    <!-- Konten untuk Tab Utama -->
+    <div class="tabs-content  border border-black rounded-md p-2">
+        <!-- Konten Tab 1 -->
+        <div id="tab1" class="tab-content">
+            <!-- Sub-tab Header -->
+            <div class="sub-tabs-header flex border-b border-gray-300">
+                <button class="sub-tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200 active"
+                    data-sub-tab-target="#sub-tab1-1">Diagram</button>
+                <button class="sub-tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
+                    data-sub-tab-target="#sub-tab1-2">Tabel</button>
             </div>
-            <div id="diagram">
-                <canvas id="barChart" class="w-full h-96"></canvas>
-            </div>
-            {{-- niatnya diagram batang --}}
-        </div>
 
-    </div>
+            <!-- Sub-tab Content -->
+            <div class="sub-tabs-content mt-4 ">
+                <div id="sub-tab1-1" class="sub-tab-content p-3">
+                    <h2 class=" font-semibold mb-3 text-sm md:text-lg">Visualisasi Pemasukan</h2>
+                    <x-chart-line></x-chart-line>
+                    <h2 class=" font-semibold mt-4 mb-3 text-sm md:text-lg">Visualisasi Stok Barang Terjual</h2>
+                    <x-chart-batang></x-chart-batang>
+                </div>
+                <div id="sub-tab1-2" class="sub-tab-content hidden ">
+                    <div class="m-3 overflow-x-auto">
+                        <x-report-table id="tab3bulan" class="" :orders="$orders" :product="$product" />
+                    </div>
 
-    {{-- Laporan --}}
-    <div id="tab2"
-        class="tab-content border border-black p-8 w-full h-auto hidden rounded-md overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
-        {{-- <p class="text-2xl font-bold">Daftar Laporan</p> --}}
-        {{-- button child laporan bulanan --}}
-        <div class="pl-3">
-            <button type="button" class="px-4 py-2 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-                data-nested-tab-target="#tab1bulan">1 Bulan</button>
-            <button type="button" class="px-4 py-2  rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-                data-nested-tab-target="#tab3bulan">3 Bulan</button>
-            <button type="button" class="px-4 py-2 rounded-lg text-black font-medium flex-grow hover:bg-gray-200"
-                data-nested-tab-target="#tab6bulan">6 Bulan</button>
-        </div>
-        {{-- 1bulan --}}
-        <div id="tab1bulan"
-            class="nested-tab-content hidden border-t  border-black overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
-            <x-input-label for="jenis" class="mt-3 ml-24" :value="__('Laporan Bulanan')" />
-            <div class="flex justify-center items-center">
-                <select id="categoryDropdown" name="jenis"
-                    class="justify-center block m-3 w-3/4 pl-3 pr-3 py-2  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md"
-                    required>
-                    <option disabled selected class="hover:bg-green-600">Pilih Bulan </option>
-                    {{-- @foreach ($categories as $category) --}}
-                    <option class="bg-white hover:bg-green-600" value=" "> </option>
-                    {{-- @endforeach --}}
-                </select>
-                <button class="text-white bg-blue-600 hover:bg-orange-400 rounded-md px-4 py-2">OK</button>
-            </div>
-            {{-- tabel --}}
-            <div class="m-3 overflow-x-auto">
-                <x-report-table id="tab1bulan" :orders="$orders" :product="$product" />
+                </div>
             </div>
         </div>
 
-        {{-- 3bulan --}}
-        <div id="tab3bulan"
-            class="nested-tab-content hidden border-t  border-black overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
-            <x-input-label for="jenis" class="mt-3 ml-24" :value="__('Laporan 3 Bulanan')" />
-            <div class="flex justify-center items-center">
-                <select id="categoryDropdown" name="jenis"
-                    class="justify-center block m-3 w-3/4 pl-3 pr-3 py-2  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md"
-                    required>
-                    <option disabled selected class="hover:bg-green-600">Pilih Awal Bulan </option>
-                    {{-- @foreach ($categories as $category) --}}
-                    <option class="bg-white hover:bg-green-600" value=" "> </option>
-                    {{-- @endforeach --}}
-                </select>
-                <button class="text-white bg-blue-600 rounded-md px-4 py-2">OK</button>
+        <!-- Konten Tab 2 -->
+        <div id="tab2" class="tab-content hidden">
+            <!-- Sub-tab Header -->
+            <div class="sub-tabs-header flex border-b border-gray-300">
+                <button class="sub-tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200 active"
+                    data-sub-tab-target="#sub-tab2-1">Diagram</button>
+                <button class="sub-tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
+                    data-sub-tab-target="#sub-tab2-2">Tabel</button>
             </div>
-            {{-- tabel --}}
-            <div class="m-3 overflow-x-auto">
-                <x-report-table id="tab3bulan" class="" :orders="$orders" :product="$product" />
+
+            <!-- Sub-tab Content -->
+            <div class="sub-tabs-content mt-4">
+                <div id="sub-tab2-1" class="sub-tab-content">
+                    <h2 class=" font-semibold mb-3 text-sm md:text-lg">Visualisasi Pemasukan</h2>
+                    <x-chart-line></x-chart-line>
+                    <h2 class=" font-semibold mt-4 mb-3 text-sm md:text-lg">Visualisasi Stok Barang Terjual</h2>
+                    <x-chart-batang></x-chart-batang>
+                </div>
+                <div id="sub-tab2-2" class="sub-tab-content hidden">
+                    <div class="m-3 overflow-x-auto">
+                        <x-report-table id="tab3bulan" class="" :orders="$orders" :product="$product" />
+                    </div>
+                </div>
             </div>
         </div>
-        {{-- 6bulan --}}
-        <div id="tab6bulan"
-            class="nested-tab-content hidden border-t  border-black overflow-x-auto overflow-y-auto max-h-[400px] md:max-h-none md:overflow-hidden">
-            <x-input-label for="jenis" class="mt-3 ml-24" :value="__('Laporan 6 Bulanan')" />
-            <div class="flex justify-center items-center">
-                <select id="categoryDropdown" name="jenis"
-                    class="justify-center block m-3 w-3/4 pl-3 pr-3 py-2  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md"
-                    required>
-                    <option disabled selected class="hover:bg-green-600">Pilih Awal Bulan </option>
-                    {{-- @foreach ($categories as $category) --}}
-                    <option class="bg-white hover:bg-green-600" value=" "> </option>
-                    {{-- @endforeach --}}
-                </select>
-                <button class="text-white bg-blue-600 rounded-md px-4 py-2">OK</button>
+
+        <!-- Konten Tab 3 -->
+        <div id="tab3" class="tab-content hidden">
+            <!-- Sub-tab Header -->
+            <div class="sub-tabs-header flex border-b border-gray-300">
+                <button class="sub-tab-btn px-4 py-2 rounded-lg text-sm md:text-lg  text-black font-medium hover:bg-gray-200 active"
+                    data-sub-tab-target="#sub-tab3-1">Diagram</button>
+                <button class="sub-tab-btn px-4 py-2 rounded-lg text-sm md:text-lg  text-black font-medium hover:bg-gray-200"
+                    data-sub-tab-target="#sub-tab3-2">Tabel</button>
             </div>
-            {{-- tabel --}}
-            <div class="m-3 overflow-x-auto">
-                <x-report-table id="tab6bulan" :orders="$orders" :product="$product" />
+
+            <!-- Sub-tab Content -->
+            <div class="sub-tabs-content mt-4">
+                <div id="sub-tab3-1" class="sub-tab-content">
+                    <h2 class=" font-semibold mb-3 text-sm md:text-lg">Visualisasi Pemasukan</h2>
+                    <x-chart-line></x-chart-line>
+                    <h2 class=" font-semibold mt-4 mb-3 text-sm md:text-lg">Visualisasi Stok Barang Terjual</h2>
+                    <x-chart-batang></x-chart-batang>
+                </div>
+                <div id="sub-tab3-2" class="sub-tab-content hidden">
+                    <div class="m-3 overflow-x-auto">
+                        <x-report-table id="tab3bulan" class="" :orders="$orders" :product="$product" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+
 
 
     <script>
-        const tabs = document.querySelectorAll('[data-tab-target]');
-        const activeClass = "bg-green-500";
         const cancelButton = document.getElementById('cancelButton');
-        const form = document.querySelector('#tab1 form')
 
-        //tab default
-        tabs[0].classList.add(activeClass);
-        document.querySelector('#tab1').classList.remove('hidden');
+        
+        const activeClass = "bg-green-500"; // Kelas aktif untuk tab utama
+        const nestedActiveClass = "bg-blue-500"; // Kelas aktif untuk sub-tab
 
-        //eventlistener tiap tab
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetContent = document.querySelector(tab.dataset.tabTarget);
-                //console.log(targetContent)
+        document.addEventListener("DOMContentLoaded", () => {
+            // Mengatur tab utama
+            const tabs = document.querySelectorAll(".tab-btn");
+            const tabContents = document.querySelectorAll(".tab-content");
 
-                //menambah hidden class untuk menambah tab-content div
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.add(
-                    'hidden'));
+            // Set tab utama pertama sebagai aktif saat halaman dimuat
+            tabs[0].classList.add(activeClass);
+            tabContents[0].classList.remove("hidden");
 
-                //menghapus class aktif ie bg-indigo-200 dari semua tab button
-                tabs.forEach(activeTab => activeTab.classList.remove(activeClass));
-                //document.querySelectorAll('.tab-content').forEach(activeTab => activeTab.classList.remove(activeClass));
-                //menghapus hidden class dari clicked tab-content
-                targetContent.classList.remove('hidden');
-                //menambah class aktif ke click tab button
-                tab.classList.add(activeClass)
+            // Set sub-tab pertama dalam tab utama pertama sebagai aktif
+            const firstSubTabs = tabContents[0].querySelectorAll(".sub-tab-btn");
+            const firstSubTabContents = tabContents[0].querySelectorAll(".sub-tab-content");
+
+            firstSubTabs[0].classList.add(nestedActiveClass);
+            firstSubTabContents[0].classList.remove("hidden");
+
+            // Event listener untuk tab utama
+            tabs.forEach(tab => {
+                tab.addEventListener("click", () => {
+                    const target = document.querySelector(tab.dataset.tabTarget);
+
+                    // Reset semua tab utama
+                    tabs.forEach(btn => btn.classList.remove(activeClass));
+                    tabContents.forEach(content => content.classList.add("hidden"));
+
+                    // Aktifkan tab utama yang diklik
+                    tab.classList.add(activeClass);
+                    target.classList.remove("hidden");
+
+                    // Reset sub-tab di dalam tab utama yang baru diaktifkan
+                    const subTabs = target.querySelectorAll(".sub-tab-btn");
+                    const subTabContents = target.querySelectorAll(".sub-tab-content");
+
+                    subTabs.forEach((subTab, index) => {
+                        if (index === 0) {
+                            subTab.classList.add(nestedActiveClass);
+                            subTabContents[index].classList.remove("hidden");
+                        } else {
+                            subTab.classList.remove(nestedActiveClass);
+                            subTabContents[index].classList.add("hidden");
+                        }
+                    });
+                });
+            });
+
+            // Event listener untuk sub-tab
+            const allSubTabs = document.querySelectorAll(".sub-tab-btn");
+            allSubTabs.forEach(subTab => {
+                subTab.addEventListener("click", () => {
+                    const target = document.querySelector(subTab.dataset.subTabTarget);
+                    const subTabContainer = subTab.closest(".tab-content");
+
+                    // Reset semua sub-tab dalam tab utama yang aktif
+                    const subTabs = subTabContainer.querySelectorAll(".sub-tab-btn");
+                    const subTabContents = subTabContainer.querySelectorAll(".sub-tab-content");
+
+                    subTabs.forEach(btn => btn.classList.remove(nestedActiveClass));
+                    subTabContents.forEach(content => content.classList.add("hidden"));
+
+                    // Aktifkan sub-tab yang diklik
+                    subTab.classList.add(nestedActiveClass);
+                    target.classList.remove("hidden");
+                });
             });
         });
 
-        const nestedTabs = document.querySelectorAll('#tab2 [data-nested-tab-target]');
-        const nestedActiveClass = "bg-green-500";
 
-        // Pastikan ada nested tabs
-        if (nestedTabs.length > 0) {
-            // Tab default untuk nested tabs
-            const defaultTab = nestedTabs[0];
-            const defaultContent = document.querySelector(defaultTab.dataset.nestedTabTarget);
 
-            defaultTab.classList.add(nestedActiveClass); // Tambahkan class aktif pada tab pertama
-            defaultContent?.classList.remove('hidden'); // Tampilkan konten tab pertama
-
-            // Event listener untuk nested tabs
-            nestedTabs.forEach(nestedTab => {
-                nestedTab.addEventListener('click', () => {
-                    const targetNestedContent = document.querySelector(nestedTab.dataset.nestedTabTarget);
-
-                    // Sembunyikan semua konten nested tabs di dalam #tab2
-                    document.querySelectorAll('#tab2 .nested-tab-content').forEach(content => content
-                        .classList.add('hidden'));
-
-                    // Hilangkan active class dari semua nested tabs
-                    nestedTabs.forEach(tab => tab.classList.remove(nestedActiveClass));
-
-                    // Tampilkan konten tab yang diklik
-                    targetNestedContent?.classList.remove('hidden');
-
-                    // Tambahkan active class ke nested tab yang diklik
-                    nestedTab.classList.add(nestedActiveClass);
-                });
-            });
-        }
 
 
         cancelButton.addEventListener('click', () => {
@@ -216,31 +223,12 @@
         });
     </script>
 
-    <script src="path/to/chartjs/dist/chart.umd.js"></script>
+    {{-- <script src="path/to/chartjs/dist/chart.umd.js"></script>
 
 
     <script>
-        const ctx = document.getElementById('myChart');
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
+        
+    </script> --}}
 
 
 </x-layout>
