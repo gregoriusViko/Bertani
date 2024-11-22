@@ -12,6 +12,7 @@ Route::middleware('auth:admin')->group(
             Route::get('detail-petani/{farmer:slug}', [AuthController::class, 'detailAkun']);
             Route::get('delete/{farmer:slug}', [AuthController::class, 'deleteAkun']);
             Route::get('showImage/{id}', [ReportController::class, 'showImage']);
+            Route::view('/delete-akun', 'admin.DeleteAkun')->name('DeleteAkun');
         });
     }
 );
