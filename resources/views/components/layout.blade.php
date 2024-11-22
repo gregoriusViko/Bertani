@@ -11,6 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/dropdown.js','resources/js/carousel.js'])
     {{-- <link rel="preload" as="style" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><link rel="modulepreload" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js" /><link rel="stylesheet" href="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-CyBUqrvq.css" /><script type="module" src="https://4wmc4bxr-8000.asse.devtunnels.ms/build/assets/app-5jqjzOR5.js"></script>     --}}
     {{-- <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -38,15 +39,16 @@
     <main class="px-7 mx-auto max-w-screen-lg">
         {{ $slot }}
     </main>
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 
 <script>
     const navLinks = document.querySelector('.nav-links')
-    function onToggleMenu(e){
-        e.name = e.name === 'menu' ? 'close' : 'menu'
-        navLinks.classList.toggle('top-[9%]')
-        main(z-[99])
-    }
+    function onToggleMenu(e) {
+    e.name = e.name === 'menu' ? 'close' : 'menu';
+    navLinks.classList.toggle('top-[9%]');
+    navLinks.style.zIndex = '99';
+}
 </script>
 
 </html>
