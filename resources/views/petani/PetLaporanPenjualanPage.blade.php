@@ -56,7 +56,59 @@
 
     <!-- Konten untuk Tab Utama -->
     <div class="tabs-content  border border-black rounded-md p-2">
-        <!-- Konten Tab 1 -->
+        <!-- Konten Tab parent -->
+
+        {{-- input bulan --}}
+        <div class="my-3">
+            {{-- jika tab[0] --}}
+            <div class="grid grid-flow-col gap-x-2">
+                <div class="">
+                    <x-input-label for="awalBulan" :value="__('Pilih Awal Bulan')" />
+                    <select id="categoryDropdown" name="awalBulan"
+                        class="block w-full  pl-3 pr-3 py-1  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md"
+                        required>
+                        <option disabled selected class="hover:bg-green-600">Bulan</option>
+                        {{-- @foreach ($categories as $category) --}}
+                        <option class="bg-white hover:bg-green-600" value=""></option>
+                        {{-- @endforeach --}}
+                    </select>
+                </div>
+                <div class="flex mt-5 mr-9">
+                    <button class="w-full md:w-3/6 h-8 bg-blue-400 text-white hover:bg-green-500 rounded-md text-sm py-1 px-1 md:px-1">OK</button>
+                </div>
+            </div>
+           
+
+            {{-- jika tab[1] && tab[2] --}}
+            {{-- <div class="grid grid-flow-col gap-x-2">
+                <div class="">
+                    <x-input-label for="awalBulan" :value="__('Pilih Awal Bulan')" />
+                    <select id="categoryDropdown" name="awalBulan"
+                        class="block w-full  pl-3 pr-3 py-1  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md"
+                        required>
+                        <option disabled selected class="hover:bg-green-600">Bulan</option> --}}
+                        {{-- @foreach ($categories as $category) --}}
+                        {{-- <option class="bg-white hover:bg-green-600" value=""></option> --}}
+                        {{-- @endforeach --}}
+                    {{-- </select>
+                </div>
+                <div class="">
+                    <x-input-label for="akhirBulan" :value="__('Pilih Akhir Bulan')" />
+                    <select id="categoryDropdown" name="akhirBulan"
+                        class="block w-full pl-3 pr-3 py-1  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md"
+                        required>
+                        <option disabled selected class="hover:bg-green-600">Bulan</option> --}}
+                        {{-- @foreach ($categories as $category) --}}
+                        {{-- <option class="bg-white hover:bg-green-600" value=""></option> --}}
+                        {{-- @endforeach --}}
+                    {{-- </select>
+                </div>
+                <div class="flex mt-5">
+                    <button class="w-full md:w-3/4 h-8 bg-blue-400 text-white hover:bg-green-500 rounded-md text-sm py-1 px-2 md:px-1">OK</button>
+                </div> --}}
+            {{-- </div> --}}
+
+        </div>
         <div id="tab" class="tab-content">
             <!-- Sub-tab Header -->
             <div class="sub-tabs-header flex border-b border-gray-300">
@@ -106,6 +158,10 @@
             subTabs[1].classList.add(nestedActiveClass);
             document.getElementById('sub-tab1-1').classList.add('hidden');
             document.getElementById('sub-tab1-2').classList.remove('hidden');
+        });
+
+        document.getElementById("categoryDropdown").addEventListener("change", function() {
+            const selectedCategory = this.value;
         });
         // document.addEventListener("DOMContentLoaded", () => {
         //     // Mengatur tab utama
@@ -185,32 +241,32 @@
         // });
     </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-    function loadOtherData(bulan) {
-        $.ajax({
-            url: '/data-penjualan/load?bulan=' + bulan,
-            type: "get",
-            beforeSend: function() {
-                // $('#loading').show();
-                console.log('sfsdf')
-            }
-        }).done(function(data) {
-            if (data == "") {
-                $('#dataContainer').html("No more records found");
-                return;
-            }
-            $("#dataContainer").html(data);
-            $("#dataContainer script").each(function() {
-                eval($(this).text());
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        function loadOtherData(bulan) {
+            $.ajax({
+                url: '/data-penjualan/load?bulan=' + bulan,
+                type: "get",
+                beforeSend: function() {
+                    // $('#loading').show();
+                    console.log('sfsdf')
+                }
+            }).done(function(data) {
+                if (data == "") {
+                    $('#dataContainer').html("No more records found");
+                    return;
+                }
+                $("#dataContainer").html(data);
+                $("#dataContainer script").each(function() {
+                    eval($(this).text());
+                });
+
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                $('#dataContainer').html("Sedang ada gangguan");
             });
-            
-        }).fail(function(jqXHR, ajaxOptions, thrownError) {
-            $('#dataContainer').html("Sedang ada gangguan");
-        });
-    }
-</script>
-    
+        }
+    </script>
+
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="text/javascript">
             let page = 1;
