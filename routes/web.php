@@ -39,10 +39,10 @@ Route::get('/PembayaranPage', function () {
 
 // Edit Produk
 Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+Route::put('/product/update/{product}', [ProductController::class, 'update'])->name('product.update');
 
 // Hapus Produk
-Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('product.destroy');
 
 Route::get('/DetailPembelianPage', function () {
     return view('pembeli.DetailPembelianPage');
