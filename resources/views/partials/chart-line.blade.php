@@ -13,7 +13,7 @@
         })
 @endphp
 
-<div id="chartline" class="border border-blue-100" style="height: 300px;"></div>
+<div id="chartline" class=" rounded-md border border-blue-500" style="height: 300px;"></div>
 
 <script>
         var options = {
