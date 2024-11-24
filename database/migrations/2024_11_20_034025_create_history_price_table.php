@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('history_price', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_id')->constrained(
+                table:'products',
+                indexName: 'product_id'
+            );
             $table->timestamps();
             $table->decimal('price');
         });
