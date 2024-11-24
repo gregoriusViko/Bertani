@@ -57,7 +57,7 @@
                     <a href="{{ route('product.edit', $product->id) }}" class="rounded-md hover:text-blue-500">
                         <ion-icon name="create-outline" class="transition ease-in duration-100 text-2xl"></ion-icon>
                     </a>
-                    <button onclick="toggleComponent()" class="rounded-md  hover:text-red-500"><ion-icon name="trash-outline"
+                    <button onclick="toggleComponent('{{ $product->id }}')" class="rounded-md  hover:text-red-500"><ion-icon name="trash-outline"
                             class="transition ease-in duration-100 text-xl"></ion-icon>
                     </button>
                 </div>
@@ -65,23 +65,28 @@
         @endforeach
     </div>
 
-    <div id="componentContainer" class="hidden mt-4">
-    <form id="deleteForm" action="{{ route('product.destroy', $product->id) }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <div class="flex justify-between">
-            <p>Apakah anda yakin ingin menghapus produk ini?</p>
-            <button type="submit" class="bg-red-500 text-white p-2 rounded-md">Delete</button>
-            <button type="button" onclick="toggleComponent()" class="bg-gray-300 text-black p-2 rounded-md">Cancel</button>
+    <!-- Form Konfirmasi Hapus -->
+    @foreach ($products as $product)
+        <div id="deleteConfirm-{{ $product->id }}" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-xl w-96">
+                <form action="{{ route('product.destroy') }}" method="POST" class="space-y-4">
+                    @csrf
+                    @method('DELETE')
+                    <p class="text-gray-700 font-medium text-center">Apakah Anda yakin ingin menghapus produk ini?</p>
+                    <div class="flex justify-center space-x-4">
+                        <input type="hidden" name="product" value="{{ $product->id }}">
+                        <button type="submit"  class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition duration-200">Hapus</button>
+                        <button type="button" onclick="toggleComponent('{{ $product->id }}')" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">Batal</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
-</div>
+    @endforeach
 
     <script>
-        function toggleComponent() {
-            console.log("Button clicked!");
-            const container = document.getElementById('componentContainer');
-            container.classList.toggle('hidden');
+        function toggleComponent(productId) {
+            const confirmDialog = document.getElementById(`deleteConfirm-${productId}`);
+            confirmDialog.classList.toggle('hidden');
         }
     </script>
 
