@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\TypeOfProduct;
+use Hamcrest\Description;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use illuminate\Support\Facades\Storage;
-use illuminate\Support\Facades\DB;
-use illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class ProductController extends Controller
@@ -112,10 +113,10 @@ class ProductController extends Controller
     }
 
 
-    public function destroy(Product $product){
+    public function destroy(Request $request){
+        
+        $product = Product::find($request->product);
         try {
-            DB::beginTransaction();
-
             // Hapus file gambar jika bukan default
             if($product->img_link !== "noimage.png"){
                $imagePath = public_path($product->img_link);
@@ -123,10 +124,9 @@ class ProductController extends Controller
                     File::delete($imagePath);
                } 
             } 
-
+            
             $product->delete();
             DB::commit();
-
             return redirect('dafproduk')->with('Sukses','Produk berhasil dihapus');
         } catch (\Exception $e) {
             DB::rollBack();-
