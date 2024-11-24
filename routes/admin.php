@@ -13,7 +13,7 @@ Route::middleware('auth:admin')->group(
             Route::prefix('delete-akun')->group(function () {
                 Route::view('/', 'admin.DeleteAkun')->name('DeleteAkun');
                 Route::get('/detail', [AuthController::class, 'detailAkun']);
-                Route::get('/destroy/{email}', [AuthController::class, 'deleteAkun']);
+                Route::delete('/destroy/{role}', [AuthController::class, 'deleteAkun']);
             });
         });
     }

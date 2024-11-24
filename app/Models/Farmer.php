@@ -18,7 +18,7 @@ class Farmer extends Authenticatable implements MustVerifyEmail
         'updated_at'
     ];
     /** @use HasFactory<\Database\Factories\FarmerFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $hidden = [
         'password' => 'hashed',
@@ -44,7 +44,7 @@ class Farmer extends Authenticatable implements MustVerifyEmail
     public function products(): HasMany{
         return $this->hasMany(Product::class);
     }
-    public function report(): HasMany{
+    public function reports(): HasMany{
         return $this->hasMany(Report::class);
     }
 }
