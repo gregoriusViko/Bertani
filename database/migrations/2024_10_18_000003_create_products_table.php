@@ -29,16 +29,13 @@ return new class  extends Migration
                 table:'type_of_products',
                 indexName: 'products_type_id'
             );
-            $table->foreignId('history_price_id')->constrained(
-                table:'history_price',
-                indexName: 'history_price_id'
-            );
             $table->text('description')->nullable();
             $table->decimal('stock_kg');
             $table->decimal('price')->nullable();
             $table->string('slug')->unique();
             $table->dateTimes();
             $table->string('img_link', length: 150)->default('noimage.png');
+            $table->softDeletes();
         });
  
     }
