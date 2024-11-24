@@ -47,3 +47,7 @@ Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('pro
 Route::get('/DetailPembelianPage', function () {
     return view('pembeli.DetailPembelianPage');
 })->name('DetailPembelianPage');
+
+Route::get('/chat', function () {
+    return view('ChatPage');
+})->name('ChatPage');
