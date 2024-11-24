@@ -86,8 +86,11 @@ class AuthController extends Controller
     }
 
     // fungsi untuk admin
-    function detailAkun(Farmer $farmer){
-        dd($farmer->name);
+    function detailAkun(Request $request){
+        $user = Farmer::where('email', $request->email)->get()->first();
+        $role = $user ? 'Petani' : 'Pembeli';
+        $user = $user ? $user : Buyer::where('email', $request->email)->get()->first();
+        return view('admin.DeleteAkun', compact(['user', 'role']));
     }
     function deleteAkun(Farmer $farmer){
         $farmer->status = 'blocked';
