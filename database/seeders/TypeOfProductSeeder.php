@@ -15,31 +15,38 @@ class TypeOfProductSeeder extends Seeder
     {
         TypeOfProduct::create([
             'name' => 'semangka',
-            'category' => 'buah'
+            'category' => 'buah',
+            'market_price' => 7000
         ]);
         TypeOfProduct::create([
             'name' => 'melon',
-            'category' => 'buah'
+            'category' => 'buah',
+            'market_price' => 8000
         ]);
         TypeOfProduct::create([
             'name' => 'terong',
-            'category' => 'sayuran'
+            'category' => 'sayuran',
+            'market_price' => 9300
         ]);
         TypeOfProduct::create([
             'name' => 'tomat',
-            'category' => 'sayuran'
+            'category' => 'sayuran',
+            'market_price' => 17000
         ]);
         TypeOfProduct::create([
             'name' => 'gabah',
-            'category' => 'biji-bijian'
+            'category' => 'biji-bijian',
+            'market_price' => 7500
         ]);
         TypeOfProduct::create([
             'name' => 'cabai merah',
-            'category' => 'sayuran'
+            'category' => 'sayuran',
+            'market_price' => 20000
         ]);
         TypeOfProduct::create([
             'name' => 'jagung',
-            'category' => 'biji-bijian'
+            'category' => 'biji-bijian',
+            'market_price' => 7000
         ]);
     }
 }
