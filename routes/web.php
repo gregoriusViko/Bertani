@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SearchController;
 use App\Models\Product;
 
 require base_path('routes/admin.php');
@@ -47,3 +48,5 @@ Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('p
 Route::get('/DetailPembelianPage', function () {
     return view('pembeli.DetailPembelianPage');
 })->name('DetailPembelianPage');
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
