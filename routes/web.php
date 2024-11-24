@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Livewire\Counter;
 use App\Models\Product;
 
 require base_path('routes/admin.php');
@@ -51,3 +52,5 @@ Route::get('/DetailPembelianPage', function () {
 Route::get('/chat', function () {
     return view('ChatPage');
 })->name('ChatPage');
+
+Route::view('/coba', 'coba');

@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>Admin-Delete Akun User-Bertani.com</x-slot:title>
     <div class="rounded-lg mt-8 px-7 mx-auto max-w-screen-lg">
-        <form class="mb-4 max-lg:max-w-xl max-lg:mx-auto flex justify-center mt-4 gap-3" action="./delete-akun/detail" method="get">
+        <form class="mb-4 max-lg:max-w-xl max-lg:mx-auto flex justify-center mt-4 gap-3" action="/admin/delete-akun/detail" method="get">
             <label for="cariAkun" class="text-xs md:text-base lg:text-lg text-black px-4 font-semibold">Cari Akun</label>
             <input type="text" id="cariAkun" name="email"
                 class="pl-3 border border-black rounded-md w-1/2 block font-libre-franklin font-medium text-xs md:text-base lg:text-lg text-black">
@@ -17,7 +17,7 @@
 
                     </div>
                     <h2 class="text-xs md:text-base font-libre-franklin font-bold text-black">{{ $user->email }}</h2>
-                    <h4 class="font-libre-franklin font-normal text-sm text-gray-700">{{ $role }}</h4>
+                    <h4 class="font-libre-franklin font-normal text-sm text-gray-700">{{ $role == 'farmer' ? 'Petani' : 'Pembeli' }}</h4>
                 </div>
                 <div class="w-full md:w-1/2">
                     <label for="nama-input"
@@ -46,14 +46,21 @@
                     <div class="flex items-end space-x-2 justify-between">
                         <button onclick="showPopup('teruskan')"
                             class="rounded-md text-xs md:text-base bg-gray-400 hover:bg-gray-600 text-white px-2 py-1">BATALKAN</button>
-                        <button onclick="showPopup('teruskan')"
+                        <form action="./destroy/{{ $role }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button onclick="showPopup('teruskan')" type="submit" name="id" value="{{ $user->id }}"
                             class="rounded-md text-xs md:text-base bg-gray-400 text-white hover:bg-red-600 px-2 py-1">HAPUS
                             AKUN</button>
+                        </form>
                     </div>
                 </div>
             </div>
 
         </div>
         @endisset
+        @error('email')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
     </div>
 </x-layout>
