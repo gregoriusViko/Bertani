@@ -96,13 +96,18 @@ class AuthController extends Controller
         return view('admin.DeleteAkun', compact(['user', 'role']));
     }
     function deleteAkun($role, Request $request){
-        $user = $role == 'farmer' ? Farmer::findOrFail($request->id) : Buyer::findOrFail($request->id);
-        $user->delete();
-        if('role' == 'farmer'){
+        if($role == 'farmer'){
             $farmer = Farmer::findOrFail($request->id);
-            $farmer->products->delete();
-            $farmer->farmerChats->delete();
-            $farmer->reports->delete();
+            $farmer->products->each(function($product) {
+                // Menghapus setiap produk
+                $product->delete();
+            });
+            $farmer->farmerChats->each(function($chat){
+                $chat->delete();
+            });
+            $farmer->reports->each(function($report){
+                $report->delete();
+            });
             $farmer->delete();
         }else{
 
