@@ -64,3 +64,7 @@ Route::get('/EditHargaPasar', function () {
 Route::get('/MelihatHargaPasar', function () {
     return view('petani.MelihatHargaPasar');
 })->name('MelihatHargaPasar');
+
+Route::get('/chatroom', function () {
+    return view('ChatPage');
+})->name('ChatPage');
