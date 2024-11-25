@@ -38,10 +38,6 @@ Route::get('/PembayaranPage', function () {
     return view('pembeli.PembayaranPage');
 })->name('PembayaranPage');
 
-// Edit Produk
-Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-Route::put('/product/update/{product}', [ProductController::class, 'update'])->name('product.update');
-
 // Hapus Produk
 Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('product.destroy');
 
