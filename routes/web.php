@@ -47,3 +47,30 @@ Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('pro
 Route::get('/DetailPembelianPage', function () {
     return view('pembeli.DetailPembelianPage');
 })->name('DetailPembelianPage');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/EditHargaPasar', function () {
+    return view('admin.EditHargaPasar');
+})->name('EditHargaPasar');
+
+Route::get('/MelihatHargaPasar', function () {
+    return view('petani.MelihatHargaPasar');
+})->name('MelihatHargaPasar');
