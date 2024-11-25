@@ -54,7 +54,7 @@
                 <!-- Tombol Aksi -->
                 <div class="sm:col-span-2 md:row-start-4 md:col-start-7 md:col-span-2 lg:col-start-7 lg:col-span-2 lg:row-start-4 md:flex md:justify-end space-x-2 sm:text-sm md:text-base lg:text-lg  ">
                     <!--Tombol Edit-->
-                    <a href="{{ route('product.edit', $product->id) }}" class="rounded-md hover:text-blue-500">
+                    <a href="{{ route('product.edit', $product->slug) }}" class="rounded-md hover:text-blue-500">
                         <ion-icon name="create-outline" class="transition ease-in duration-100 text-2xl"></ion-icon>
                     </a>
                     <button onclick="toggleComponent('{{ $product->id }}')" class="rounded-md  hover:text-red-500"><ion-icon name="trash-outline"
