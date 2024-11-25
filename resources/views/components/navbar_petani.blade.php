@@ -4,9 +4,9 @@
     <x-nav-link href="/produk" :active="request()->is('produk')">Produk</x-nav-link>
     <x-nav-dropdown>
         <x-slot:title>Toko</x-slot:title>
-        <x-dropdown-list href="/dafproduk" :active="request()->is('dafproduk')">Daftar Produk</x-dropdown-list>
-        <x-dropdown-list href="/dafpesanan" :active="request()->is('dafpesanan')">Daftar Pesanan</x-dropdown-list>
-        <x-dropdown-list href="/lapPen" :active="request()->is('lapPen')">Laporan Penjualan</x-dropdown-list>
+        <x-dropdown-list href="{{ route('dafproduk') }}" :active="request()->is('petani/dafproduk')">Daftar Produk</x-dropdown-list>
+        <x-dropdown-list href="{{ route('dafpesanan') }}" :active="request()->is('petani/dafpesanan')">Daftar Pesanan</x-dropdown-list>
+        <x-dropdown-list href="{{ route('lapPen') }}" :active="request()->is('petani/lapPen')">Laporan Penjualan</x-dropdown-list>
     </x-nav-dropdown>
     <x-nav-dropdown>
         <x-slot:title>Lainnya</x-slot:title>
