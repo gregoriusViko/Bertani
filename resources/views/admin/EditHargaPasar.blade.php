@@ -46,8 +46,8 @@
     </div>
 
     <div class="mb-6">
-    <label for="harga_terendah" class="block mb-2 text-xl font-medium text-black">Harga</label>
-        <input type="text" placeholder="Harga Terendah" name="harga_terendah"
+    <label for="harga" class="block mb-2 text-xl font-medium text-black">Harga</label>
+        <input type="text" placeholder="Harga" name="harga"
         class="px-4 py-3 bg-white text-black w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
     </div>
 
