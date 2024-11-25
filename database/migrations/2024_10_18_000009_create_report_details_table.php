@@ -24,7 +24,7 @@ return new class  extends Migration
             $table->foreignId('report_id')->constrained(
                 table:'reports',
                 indexName: 'reportDetails_report_id'
-            );
+            )->onDelete('cascade');
             $table->dateTime('report_time');
             $table->dateTime('respose_time')->nullable();
             $table->text('content_of_report');
