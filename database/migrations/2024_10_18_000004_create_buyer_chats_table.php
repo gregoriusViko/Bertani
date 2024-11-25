@@ -20,6 +20,7 @@ return new class  extends Migration
         Schema::dropIfExists('buyer_chats');
         Schema::create('buyer_chats', function (Blueprint $table) {
             $table->engine = 'InnoDB';
+            $table->id();
             $table->foreignId('buyer_id')->constrained(
                 table:'buyers',
                 indexName: 'buyer_chats_buyer_id'
