@@ -11,7 +11,7 @@
                     {{ Number::currency($product->price, in: 'idr') }}
                 </div>
                 <div class="text-sm font-mono font-light">
-                    {{ Str::before($product->farmer->name, ' ') }} - "asal"
+                    {{ Str::before($product->farmer->email, ' ') }} - "asal"
                 </div>
                 <div class="text-sm font-mono font-light">
                     Terjual : {{ WeightConverter::convert($product->orders->sum('quantity_kg')) }}
