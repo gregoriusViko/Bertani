@@ -50,3 +50,21 @@ Route::get('/DetailPembelianPage', function () {
 })->name('DetailPembelianPage');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+Route::get('/chat', function () {
+    return view('ChatPage');
+})->name('ChatPage');
+
+Route::view('/coba', 'coba');
+
+Route::get('/EditHargaPasar', function () {
+    return view('admin.EditHargaPasar');
+})->name('EditHargaPasar');
+
+Route::get('/MelihatHargaPasar', function () {
+    return view('petani.MelihatHargaPasar');
+})->name('MelihatHargaPasar');
+
+Route::get('/chatroom', function () {
+    return view('ChatPage');
+})->name('ChatPage');
