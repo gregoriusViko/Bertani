@@ -7,7 +7,7 @@
     </div>
     
     <div class="mt-4 px-7 mx-auto max-w-screen-lg" x-data="{ imageUrl: '/img/noimage.png' }">
-        <form enctype="multipart/form-data" method="POST" action="{{route('product.update', $product->id)}}" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-7 mx-auto max-w-full">
+        <form enctype="multipart/form-data" method="POST" action="{{route('product.update', $product->slug)}}" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-7 mx-auto max-w-full">
             @csrf
             @method('PUT')
             {{-- kiri gambar --}}
