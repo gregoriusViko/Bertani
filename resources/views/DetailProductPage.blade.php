@@ -56,12 +56,13 @@
                             <div class="font-inter font-normal text-sm md:text-md lg:text-lg">
                                 <h3 class="ml-2">Jumlah</h3>
                                 <div class="mt-2 grid grid-cols-2 grid-auto-columns:auto">
-                                    <input type="number" min="0" class=" w-3/4 md:w-1/2 ml-2 border border-black rounded-md">
-                                    <h3 class="text-sm font-inter md:w-1/2">Sisa stok : xx </h3>
+                                    <input type="number" id="stokInput" min="0" class=" w-3/4 md:w-1/2 ml-2 border border-black rounded-md"
+                                    placeholder="" data-price="{{$product->price}}" data-max-stock="{{ $product->stock_kg }}" oninput="calculateSubtotal()"/>
+                                    <h3 class="text-sm font-inter md:w-1/2">Sisa stok : {{ $product->stock_kg }} </h3>
                                 </div>
                                 <div class="mt-2 grid grid-cols-2 grid-auto-columns:auto">
                                     <h3 class="mt-2 ml-2 w-full md:w-1/2">Subtotal</h3>
-                                    <h3 class="mt-2 font-inter font-bold text-sm md:text-md lg:text-lg">Rp xxx.xxx</h3>
+                                    <h3 id="subtotalDisplay" class="mt-2 font-inter font-bold text-sm md:text-md lg:text-lg">Rp 0</h3>
                                 </div>
                             </div>
                         </div>
@@ -145,6 +146,30 @@
                 dropdown.classList.add("hidden");
             }
         });
+
+        function calculateSubtotal() {
+            const stokInput = document.getElementById("stokInput");
+            const subtotalDisplay = document.getElementById("subtotalDisplay");
+            const price = parseFloat(stokInput.getAttribute("data-Price"));
+            const maxStock =parseInt(stokInput.getAttribute("data-max-stock")) || 0;
+
+            // Ambil nilai stok, jika kosong ya 0
+            let stok = parseInt(stokInput.value) || 0;
+
+            if (stok > maxStock){
+                stok = maxStock;
+                stokInput.value =maxStock;
+                alert(`Jumlah tidak boleh lebih dari stok yang tersedia (${maxStock}).`);
+            }
+
+            // Hitung subtotal
+            const subtotal = stok * price;
+
+            // format total
+            subtotalDisplay.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+        }
+
+
     </script>
 
 </x-layout>
