@@ -52,3 +52,15 @@ Route::get('/chat', function () {
 })->name('ChatPage');
 
 Route::view('/coba', 'coba');
+
+Route::get('/EditHargaPasar', function () {
+    return view('admin.EditHargaPasar');
+})->name('EditHargaPasar');
+
+Route::get('/MelihatHargaPasar', function () {
+    return view('petani.MelihatHargaPasar');
+})->name('MelihatHargaPasar');
+
+Route::get('/chatroom', function () {
+    return view('ChatPage');
+})->name('ChatPage');
