@@ -57,25 +57,6 @@ Route::get('/chat', function () {
 
 Route::view('/coba', 'coba');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::get('/EditHargaPasar', function () {
     return view('admin.EditHargaPasar');
 })->name('EditHargaPasar');
