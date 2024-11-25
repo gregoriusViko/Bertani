@@ -1,28 +1,6 @@
-<div class="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
-    <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
-        <div class="relative flex items-center space-x-4">
-            <div class="relative">
-                <span class="absolute text-green-500 right-0 bottom-0">
-                    <svg width="20" height="20">
-                        <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
-                    </svg>
-                </span>
-                <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-                    alt="" class="w-10 sm:w-16 h-10 sm:h-16 rounded-full">
-            </div>
-            <div class="flex flex-col leading-tight">
-                {{-- nama --}}
-                <div class="text-2xl mt-1 flex items-center">
-                    <span class="text-gray-700 mr-3">Anderson Vanhron</span>
-                </div>
-                {{-- role --}}
-                <span class="text-lg text-gray-600">Junior Developer</span>
-            </div>
-        </div>
-
-    </div>
+<div class="pl-4 pt-2 pb-4 justify-between flex flex-col h-screen">
     <div id="messages"
-        class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+        class="flex flex-col space-y-4  overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         <div class="chat-message">
             <div class="flex items-end">
                 <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
@@ -172,13 +150,13 @@
 
     .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
         --bg-opacity: 1;
-        background-color: #f7fafc;
+        background-color: #1d2124;
         background-color: rgba(247, 250, 252, var(--bg-opacity));
     }
 
     .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
         --bg-opacity: 1;
-        background-color: #edf2f7;
+        background-color: #539de8;
         background-color: rgba(237, 242, 247, var(--bg-opacity));
     }
 
