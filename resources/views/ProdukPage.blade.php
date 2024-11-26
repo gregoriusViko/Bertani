@@ -20,15 +20,33 @@
     </form>
 
     <!-- Hasil pencarian -->
-    <div id="results" class="mt-8 w-1/2 mx-auto">
+    <div id="results" class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
         @if(isset($products) && $products->count() > 0)
             @foreach($products as $product)
-                <div class="p-4 border rounded-md shadow-md mb-4">
-                    <img src="{{ $product->img_link }}" alt="Gambar Produk" class="w-full h-32 object-cover mb-2">
-                    <h2 class="font-bold text-lg">{{ $product->type->name }}</h2>
-                    <p>{{ $product->description ?: 'Deskripsi tidak tersedia' }}</p>
-                    <p>Stok: {{ $product->stock_kg }} kg</p>
-                    <p>Harga: Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                <div class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer">
+                    <img src="{{ $product->img_link }}" alt="Gambar Produk" class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1">
+                    <div class="p-2 grid-cols-2">
+                        <div class="col-span-2 text-base font-mono">
+                            {{ ucwords($product->type->name) }}
+                        </div>
+                        <div class="text-xl font-mono font-bold">
+                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                        </div>
+                        <div class="text-sm font-mono font-light">
+                            {{ Str::before($product->farmer->name, ' ') }} - "asal"
+                        </div>
+                        <div class="text-sm font-mono font-light">
+                            {{ $product->description ?: 'Deskripsi tidak tersedia' }}
+                        </div>
+                        <div class="text-sm font-mono font-light">
+                            Terjual : {{ WeightConverter::convert($product->orders->sum('quantity_kg')) }}
+                        </div>
+                        <div class="text-sm font-mono font-light">
+                            Stok : {{ WeightConverter::convert($product->stock_kg) }}
+                        </div>
+            
+                    </div>
+                   {{-- $product->price, 0, ',', '.') }}</p> --}}
                 </div>
             @endforeach
         @else
