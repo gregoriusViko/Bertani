@@ -29,11 +29,14 @@ return new class  extends Migration
                 table:'products',
                 indexName: 'order_product_id'
             );
-            $table->decimal('price');
+            $table->foreignId('price_id')->constrained(
+                table:'history_prices',
+                indexName: 'order_history_price_id'
+            );
             $table->decimal('quantity_kg');
             $table->dateTime('order_time');
             $table->string('payment_proof', 150)->nullable();
-            $table->string('receipt_number', 15)->unique();
+            $table->string('receipt_number', 50)->unique();
             $table->string('order_status', 30)->nullable();
         });
  
