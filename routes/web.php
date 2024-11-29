@@ -48,10 +48,6 @@ Route::get('/DetailPembelianPage', function () {
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/chat', function () {
-    return view('ChatPage');
-})->name('ChatPage');
-
 Route::view('/coba', 'coba');
 
 Route::get('/EditHargaPasar', function () {
@@ -65,6 +61,10 @@ Route::get('/MelihatHargaPasar', function () {
 Route::get('/chatroom', function () {
     return view('ChatPage');
 })->name('ChatPage');
+
+Route::get('/GantiPassword', function () {
+    return view('auth.GantiPassword');
+})->name('GantiPassword');
 
 
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
