@@ -9,7 +9,7 @@
         class="mx-auto m2ax-w-7xl px-4 py-2 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
 
         {{-- kotak produk --}}
-        <a href="/halaman-baru" class="block">
+        <a href="/DetailPembelianPage" class="block">
             <div
                 class="hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer shadown-lg border rounded-lg p-4 sm:px-6 md:px-7 lg:px-8 grid grid-cols-10 gap-2 md:gap-6 lg:gap-6">
                 {{-- gambar produk --}}
