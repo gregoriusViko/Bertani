@@ -23,8 +23,11 @@
                 </div>
 
                 <div class="relative flex items-center">
-                    <input type="password" placeholder="Password" name="password"
+                    <input type="password" placeholder="Password" name="password" id="password"
                     class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                    <button type="button" id="togglePassword" class="absolute right-4 bg-transparent focus:outline-none">
+                        <img id="eye" src="./img/eyeclosed.png" alt="Toggle Password" class="w-5 h-5">
+                    </button>
                 </div>
 
                 <button type="submit"
@@ -48,5 +51,21 @@
             @endif
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.querySelector("#togglePassword");
+        const passwordField = document.querySelector("#password");
+        const eye = document.querySelector("#eye");
+
+        togglePassword.addEventListener("click", () => {
+            // Toggle tipe attribute
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+
+            // Mengganti ikon eye 
+            eye.src = type === "password" ? "./img/eyeclosed.png" : "./img/eyeopen.png";
+        });
+    </script>
+
 </body>
 </html>
