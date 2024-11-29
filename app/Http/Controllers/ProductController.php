@@ -89,7 +89,7 @@ class ProductController extends Controller
             ]
         );
 
-        return redirect('petani/dafproduk')->with('Sukses', 'Produk Baru Berhasil Ditambahkan');
+        return redirect('petani/dafproduk')->with('SuksesTambah', 'Berhasil');
     }
 
     public function edit(Product $product)
@@ -124,7 +124,7 @@ class ProductController extends Controller
 
         $product->update();
 
-        return redirect()->route('dafproduk')->with('Sukses', 'Produk Berhasil Diperbarui');
+        return redirect()->route('dafproduk')->with('SuksesUpdate', 'Berhasil');
     }
 
 
