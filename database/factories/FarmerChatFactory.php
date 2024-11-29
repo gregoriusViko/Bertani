@@ -22,7 +22,7 @@ class FarmerChatFactory extends Factory
         return [
             'buyer_id' => Buyer::factory(),
             'farmer_id' => Farmer::factory(),
-            'role_of_farmer' => Arr::random(['receiver', 'sender']),
+            'role' => Arr::random(['receiver', 'sender']),
             'is_read' => rand(0, 1),
             'content' => fake()->realText()
         ];
