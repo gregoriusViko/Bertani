@@ -5,7 +5,7 @@
     </div>
     <h2 class=" font-semibold mt-4 mb-3 text-sm md:text-lg">Visualisasi Stok Barang Terjual</h2>
     <div id="barContainer">
-        @include('partials.chart-batang')
+        @include('partials.chart-pie')
     </div>
 </div>
 <div id="sub-tab1-2" class="sub-tab-content hidden ">
