@@ -25,7 +25,6 @@ class BuyerFactory extends Factory
             'name' => fake()->unique()->name(),
             'phone_number' => fake()->unique()->phoneNumber(),
             'slug' => Str::slug($email),
-            'profile_img_link' => fake()->imageUrl(),
             'home_address' => fake()->url()
         ];
     }

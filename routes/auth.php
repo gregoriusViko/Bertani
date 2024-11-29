@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Chat;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\AuthController;
@@ -8,10 +9,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // rute yang bisa diakses pengguna yang telah login
 Route::middleware('auth:admin,buyer,farmer')->group(function () {
-    Route::get('/chat', function () {
-        return view('ChatPage');
-    })->name('chat');
-
     // Rute untuk menampilkan halaman profil
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 
@@ -24,6 +21,8 @@ Route::middleware(['auth:farmer,buyer', 'verified'])->group(function () {
     Route::view('/laporan/sistem', 'PemLaporanPage')->name('laporan-sistem');
     Route::view('/laporan/pengguna', 'PetLaporanPage')->name('laporan-pengguna');
     Route::post('/laporan/sistem-create', [ReportController::class, 'createForSystem']);
+    // Route::get('/chat', Chat::class)->name('ChatPage');
+    Route::get('/chat/{slug?}', Chat::class)->name('chat');
 });
 
 // rute untuk orang yang belum login
