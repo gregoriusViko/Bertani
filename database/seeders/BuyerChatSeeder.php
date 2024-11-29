@@ -18,7 +18,7 @@ class BuyerChatSeeder extends Seeder
         BuyerChat::create([
             'buyer_id' => Buyer::first()->id,
             'farmer_id' => 5,
-            'role_of_buyer' => 'sender',
+            'role' => 'sender',
             'is_read' => 1,
             // 'send_time' => now(),
             'content' => 'semoga berhasil'
