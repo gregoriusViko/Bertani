@@ -2,14 +2,10 @@
     <x-slot:title>Produk-Bertani.com</x-slot:title>
 
     <!-- Form pencarian -->
-    <form action="{{ route('search') }}" method="GET" class="flex rounded-md my-8 overflow-hidden max-w-full font-[sans-serif] w-1/2 mx-auto">
-        <input 
-            type="text" 
-            name="query" 
-            value="{{ request('query') }}" 
-            placeholder="Cari Produk"
-            class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3"
-        />
+    <form action="{{ route('search') }}" method="GET"
+        class="flex rounded-md my-8 overflow-hidden max-w-full font-[sans-serif] w-1/2 mx-auto">
+        <input type="text" name="query" value="{{ request('query') }}" placeholder="Cari Produk"
+            class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3" />
         <button type="submit" class="flex items-center justify-center bg-green-600 px-5">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-white">
                 <path
@@ -19,12 +15,15 @@
         </button>
     </form>
 
+
+
     <!-- Hasil pencarian -->
     <div id="results" class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
-        @if(isset($products) && $products->count() > 0)
-            @foreach($products as $product)
+        @if (isset($products) && $products->count() > 0)
+            @foreach ($products as $product)
                 <div class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer">
-                    <img src="{{ $product->img_link }}" alt="Gambar Produk" class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1">
+                    <img src="{{ $product->img_link }}" alt="Gambar Produk"
+                        class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1">
                     <div class="p-2 grid-cols-2">
                         <div class="col-span-2 text-base font-mono">
                             {{ ucwords($product->type->name) }}
@@ -44,14 +43,21 @@
                         <div class="text-sm font-mono font-light">
                             Stok : {{ WeightConverter::convert($product->stock_kg) }}
                         </div>
-            
+
                     </div>
-                   {{-- $product->price, 0, ',', '.') }}</p> --}}
+                    {{-- $product->price, 0, ',', '.') }}</p> --}}
                 </div>
             @endforeach
+        @elseif(request('query'))
+            <div class="col-span-4">
+                <x-message-info>Produk tidak ditemukan. Silahkan cari kembali.</x-message-info>
+            </div>
+            {{-- <p class="text-center"></p> --}}
         @else
-            <p class="text-center">Produk tidak ditemukan. Silahkan cari kembali</p>
-        @endif
+            <!-- Pesan saat halaman pertama kali dibuka -->
+            <div class="col-span-4">
+                <x-message-info>Silahkan cari produk yang Anda inginkan.</x-message-info>
+            </div>
+        @endif  
     </div>
 </x-layout>
-
