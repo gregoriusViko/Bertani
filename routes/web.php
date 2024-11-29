@@ -64,3 +64,7 @@ Route::get('/MelihatHargaPasar', function () {
 Route::get('/chatroom', function () {
     return view('ChatPage');
 })->name('ChatPage');
+
+Route::get('/GantiPassword', function () {
+    return view('auth.GantiPassword');
+})->name('GantiPassword');
