@@ -112,6 +112,6 @@ class AuthController extends Controller
         }else{
 
         }
-        return redirect('admin/delete-akun');
+        return redirect('admin/delete-akun')->with('success', 'Berhasil');
     }
 }    
