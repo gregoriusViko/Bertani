@@ -67,7 +67,7 @@
     </div>
 
 
-    <div id="popup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div id="popup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full flex flex-col items-center gap-6 gap-x-10">
             <h2 class="text-xl font-semibold mb-4">Pembatalan Pesanan</h2>
             <p class="text-sm">Tuliskan keterangan alasan pembatalan</p>
