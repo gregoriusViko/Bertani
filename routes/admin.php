@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReportController;
+use App\Livewire\Counter;
 
 // rute yang hanya diakses admin
 Route::middleware('auth:admin')->group(

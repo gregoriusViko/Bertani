@@ -10,12 +10,13 @@
         <div id="cardContainer"
             class="mx-auto m2ax-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 md:gap-2 lg:gap-6">
 
-            <div
-                class="m-3 hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer shadow-lg border rounded-lg p-4 sm:px-6 md:px-7 lg:px-8 grid sm:grid-cols-10 md:grid-cols-11 lg:grid-cols-10 gap-2 md:gap-6 lg:gap-6">
+            <div {{-- hover:scale-105 transition-transform duration-300 ease-in-ou --}}
+                class="m-3 t cursor-pointer shadow-lg border rounded-lg p-4 sm:px-6 md:px-7 lg:px-8 grid sm:grid-cols-10 md:grid-cols-11 lg:grid-cols-10 gap-2 md:gap-6 lg:gap-6">
                 <!-- Gambar Produk -->
                 <div
                     class="col-start-1 row-start-1 col-span-11  md:col-span-3 md:row-span-4 lg:col-span-3 lg:row-span-4 rounded-lg flex justify-center items-center border overflow-hidden">
-                    <img src="{{ $order->product->img_link }}" alt="hasil_tani" class="thumbnail md:w-full md:h-full lg:w-full lg:h-full w-1/2 h-1/2 object-cover md:object-fill">
+                    <img src="{{ $order->product->img_link }}" alt="hasil_tani"
+                        class="thumbnail md:w-full md:h-full lg:w-full lg:h-full w-1/2 h-1/2 object-cover md:object-fill">
                     {{-- <img src="{{ $order->product->img_link }}" alt="profile"
                         class="thumbnail md:w-full md:h-full lg:w-full lg:h-full w-1/2 h-1/2 object-contain"> --}}
                 </div>
@@ -45,15 +46,25 @@
                     @if ($order->payment_proof == 'transfer')
                         <h4 class="font-libre-franklin font-normal">Transfer</h4>
                     @else
-                    <h4 class="font-libre-franklin font-normal">COD</h4>
+                        <h4 class="font-libre-franklin font-normal">COD</h4>
                     @endif
                     {{-- <h4 class="font-libre-franklin font-normal">{{ $order->payment_proof }}</h4> --}}
                     @if ($order->payment_proof == 'transfer')
                         <button
-                            class=" bg-blue-500 rounded-md p-1 flex items-center text-white font-libre-franklin font-light text-sm hover:bg-blue-900 transition ease-in duration-100"><ion-icon
-                                name="document-outline"class="mr-2"></ion-icon>
+                            class="bg-blue-500 rounded-md p-1 flex items-center text-white font-libre-franklin font-light text-sm hover:bg-blue-900 transition ease-in duration-100"
+                            onclick="toggleModal('modal-{{ $order->id }}')">
+                            <ion-icon name="document-outline" class="mr-2"></ion-icon>
                             <span class="mt-0.5">Bukti Transfer</span>
                         </button>
+                        {{-- gagal menampilkan modal (Modal.blade.php) --}}
+                        <div id="modal-{{ $order->id }}"
+                            class="hs-overlay-animation-target scale-95 opacity-0 transition-all duration-200 sm:max-w-lg sm:w-full mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+
+                            <x-Modal modalId="modal-{{ $order->id }}" title="Bukti Transfer">
+                                <p>INI GAMBAR</p>
+                                <p>This is the content for the Bukti Transfer modal.</p>
+                            </x-Modal>
+                        </div>
                     @endif
 
 
@@ -62,7 +73,14 @@
                 <div
                     class="font-libre-franklin font-normal row-start-6 col-span-6 col-start-6 md:row-start-3 md:col-start-9 md:col-span-3 md:row-span-2 ">
                     @if ($order->order_status == 'menunggu konfirmasi')
-                        <h4 class="bg-yellow-200 text-sm rounded-md p-1 mb-1 flex justify-center">Butuh Konfirmasi
+                        <h4 class="bg-yellow-200 text-sm rounded-md p-1 mb-1 flex justify-center relative">
+                            Butuh Konfirmasi
+                            <span
+                                class="absolute top-1 right-0 transform translate-x-1/2 -translate-y-1/2 flex h-3 w-3">
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                            </span>
                         </h4>
                     @elseif ($order->order_status == 'permintaan diterima')
                         <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Diterima</h4>
@@ -83,6 +101,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     @endforeach
     <div id="componentContainer" class="hidden mt-4">
@@ -92,6 +111,16 @@
         function toggleComponent() {
             const container = document.getElementById('componentContainer');
             container.classList.toggle('hidden');
+        }
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            console.log("Modal ID:", modalId); // Pastikan ID modal benar
+            if (modal) {
+                console.log("Toggling modal visibility");
+                modal.classList.toggle('hidden'); // Menyembunyikan/menampilkan modal
+                modal.classList.toggle('pointer-events-none'); // Menonaktifkan pointer events
+            }
         }
     </script>
 
