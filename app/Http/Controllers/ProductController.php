@@ -89,7 +89,7 @@ class ProductController extends Controller
             ]
         );
 
-        return redirect('dafproduk')->with('Sukses', 'Berhasil menambahkan produk');
+        return redirect('petani/dafproduk')->with('Sukses', 'Produk Baru Berhasil Ditambahkan');
     }
 
     public function edit(Product $product)
@@ -124,7 +124,7 @@ class ProductController extends Controller
 
         $product->update();
 
-        return redirect()->route('dafproduk')->with('Sukses', 'Berhasil update produk');
+        return redirect()->route('dafproduk')->with('Sukses', 'Produk Berhasil Diperbarui');
     }
 
 
@@ -143,11 +143,11 @@ class ProductController extends Controller
 
             $product->delete();
             DB::commit();
-            return redirect('dafproduk')->with('Sukses', 'Produk berhasil dihapus');
+            return redirect('petani/dafproduk')->with('SuksesHapus', 'Berhasil');
         } catch (\Exception $e) {
             DB::rollBack();
             -Log::error('Error deleting product: ' . $e->getMessage()); //+
-            return redirect()->back()->with('Gagal', 'Produk gagal dihapus' . $e->getMessage());
+            return redirect()->back()->with('GagalHapus', 'Gagal' . $e->getMessage());
         }
     }
 
