@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Models\Product;
@@ -36,7 +37,7 @@ Route::get('/products/{product:slug}', function (Product $product) {
 
 Route::get('/PembayaranPage', function () {
     return view('pembeli.PembayaranPage');
-})->name('PembayaranPage');
+})->name('pembeli.PembayaranPage');
 
 // Hapus Produk
 Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('product.destroy');
@@ -64,3 +65,7 @@ Route::get('/chatroom', function () {
 Route::get('/GantiPassword', function () {
     return view('auth.GantiPassword');
 })->name('GantiPassword');
+
+
+Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order/{orderId}/pembayaran',[OrderController::class, 'showPaymentPage'])->name('pembeli.PembayaranPage');

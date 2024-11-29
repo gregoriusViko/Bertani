@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Buyer;
 use App\Models\Product;
+use App\Models\HistoryPrice;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,7 +26,7 @@ class OrderFactory extends Factory
             'payment_proof' => Arr::random(['COD', 'transfer']),
             'product_id' => Product::factory(),
             'receipt_number' => $randomString,
-            'price' => fake()->randomFloat(2, 1000, 1000000),
+            'price_id'=> HistoryPrice::factory(),
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
             'order_status' => Arr::random(['selesai', 'menunggu konfirmasi', 'permintaan diterima', 'ditolak'])
         ];
