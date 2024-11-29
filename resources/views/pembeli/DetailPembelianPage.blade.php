@@ -1,11 +1,17 @@
 <x-layout>
     <x-slot:title>Pembayaran Product-Bertani.com</x-slot:title>
 
-    <div class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-4 sm:px-6 lg:px-8 flex justify-between items-center">
+    <div class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-2 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pembelian</h1>
+        <a href="{{ route('PemDafPesananPage') }}">
+            <button onclick="kembali" type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
+                Kembali
+            </button>
+        </a>
+        
     </div>
 
-    <div class="border border-gray-300 max-w-4xl mx-auto mt-10 bg-white p-6">
+    <div class="border border-gray-300 max-w-4xl mx-auto mt-8 bg-white p-6 rounded-lg">
         <div class="flex flex-col grid-cols-2 md:flex-row gap-x-10">
             <div class="flex-shrink-0 md:pr-16">
                 <p class="text-xl md:text-2xl font-libre-franklin font-bold tracking-tight text-gray-900 py-2">Jagung Manis</p>
@@ -57,11 +63,11 @@
     </div>
 
     <div class="px-8 py-4 font-libre-franklin font-semibold flex flex-col items-center space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
-        <button onclick="" type="button" id="chat" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md transition-shadow hover:bg-green-500 sm:w-auto">
+        <button onclick="" type="button" id="chat" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-green-500 sm:w-auto">
             <img src="/img/chat.png" alt="icon_chat" class="w-5 h-5">Chat
         </button>
 
-        <button onclick="showPopup('batalkanPesanan')" type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-red-500 sm:w-auto mt-2 sm:mt-0">
+        <button onclick="showPopup('batalkanPesanan')" type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto mt-2 sm:mt-0">
             Batalkan Pesanan
         </button>
     </div>
