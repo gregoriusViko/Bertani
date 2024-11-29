@@ -50,7 +50,7 @@
                 </div>
             @endforeach
         @else
-            <p class="text-center">Produk tidak ditemukan.</p>
+            <p class="text-center">Produk tidak ditemukan. Silahkan cari kembali</p>
         @endif
     </div>
 </x-layout>
