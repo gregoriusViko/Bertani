@@ -19,6 +19,6 @@ class FarmerChat extends Model
         return $this->belongsTo(Buyer::class);
     }
     public function farmer(): BelongsTo{
-        return $this->belongsTo(related: Farmer::class);
+        return $this->belongsTo(Farmer::class);
     }
 }

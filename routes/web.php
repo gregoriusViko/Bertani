@@ -47,10 +47,6 @@ Route::get('/DetailPembelianPage', function () {
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/chat', function () {
-    return view('ChatPage');
-})->name('ChatPage');
-
 Route::view('/coba', 'coba');
 
 Route::get('/EditHargaPasar', function () {

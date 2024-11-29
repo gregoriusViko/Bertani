@@ -29,7 +29,7 @@ return new class  extends Migration
                 table:'buyers',
                 indexName: 'farmerChats_buyer_id'
             );
-            $table->string('role_of_farmer', 16);
+            $table->string('role', 16);
             $table->tinyInteger('is_read')->default(0);
             $table->dateTime('send_time');
             $table->text('content');
