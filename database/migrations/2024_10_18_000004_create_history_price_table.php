@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('history_price', function (Blueprint $table) {
+        Schema::create('history_prices', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->foreignId('product_id')->constrained(
                 table:'products',
