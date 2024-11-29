@@ -44,6 +44,10 @@
                         <img id="eye" src="./img/eyeclosed.png" alt="Toggle Password" class="w-5 h-5">
                     </button>
                 </div>
+                <div class="relative flex justify-end">
+                    <label> <a href="{{ route('GantiPassword') }}"
+                        style="color: blue;hover:text-white" class="font-bold hover:text-white">Lupa Password</a></label>
+                </div>
 
                 <button type="submit"
                     class="mb-4 px-5 py-2.5 w-full bg-black text-white text-sm rounded-lg tracking-wide">LOGIN
