@@ -61,6 +61,38 @@
                     </ul>
                 </div>
 
+                <!-- tambahan untuk bank dan no. rekening untuk petani -->
+                <div id="additionalFields" class="hidden space-y-4 mt-4">
+                    <div class="relative flex w-full mb-4">
+                        <!-- Dropdown untuk memilih bank -->
+                        <button type="button" id="bankDropdown" onclick="toggleDropdownBank()"
+                            class="px-4 py-3 border bg-white text-gray-800 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full flex justify-between items-center">
+                            <span id="selectedBank">Pilih Bank</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
+                                    clip-rule="evenodd" data-original="#000000" />
+                            </svg>
+                        </button>
+                        <ul id="pilihBank"
+                            class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[1000] w-full divide-y max-h-96 overflow-auto rounded-lg mt-2">
+                            <li onclick="selectBank('BRI', 15)"
+                                class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">BRI</li>
+                            <li onclick="selectBank('BNI', 10)"
+                                class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">BNI</li>
+                            <li onclick="selectBank('MANDIRI', 13)"
+                                class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">MANDIRI</li>
+                            <li onclick="selectBank('BCA', 10)"
+                                class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">BCA</li>
+                        </ul>
+                    </div>
+
+                    <div class="relative flex items-center">
+                        <input type="text" placeholder="Nomor Rekening" name="nomor_rekening" id="nomor_rekening"
+                            class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                    </div>
+                </div>
+
                 <!-- input tersembunyi -->
                 <input type="hidden" id="peranValue" name="peran" required />
 
@@ -136,7 +168,64 @@
             document.getElementById("selectedOption").innerText = option; // Tampilkan teks opsi terpilih di button
             document.getElementById("peranValue").value = option;
             toggleDropdown(); // Tutup dropdown setelah memilih opsi
+
+            if (option === "Petani") {
+                additionalFields.classList.remove("hidden");
+                additionalFields.classList.add("block");
+            } else {
+                additionalFields.classList.add("hidden");
+                additionalFields.classList.remove("block");
+            }
         }
+
+        const nomorRekening = document.getElementById('nomor_rekening');
+        nomorRekening.addEventListener('input', function () {
+        // Menghapus karakter non-angka secara otomatis
+        this.value = this.value.replace(/\D/g, '');
+    })
+
+    // Penyesuaian untuk nomor rekening sesuai ketentuan bank
+    let maxDigits = 15; // Default batas digit
+
+    // Fungsi untuk membuka/tutup dropdown
+    function toggleDropdownBank() {
+        const dropdownMenu = document.getElementById('pilihBank');
+        dropdownMenu.classList.toggle('hidden');
+    }
+
+    // Fungsi untuk memilih bank
+    function selectBank(bank, digits) {
+        document.getElementById('selectedBank').textContent = bank; // Tampilkan nama bank
+        maxDigits = digits; // Set batas digit sesuai bank
+        document.getElementById('nomor_rekening').setAttribute('maxlength', digits); // Set batas input
+        document.getElementById('nomor_rekening').value = ''; // Reset input nomor rekening
+        toggleDropdownBank(); // Tutup dropdown
+    }
+
+    // Validasi input nomor rekening
+    function validateAccountNumber() {
+        const input = document.getElementById('nomor_rekening');
+        const error = document.getElementById('rekeningError');
+        
+        if (input.value.length > maxDigits) {
+            error.textContent = `Nomor rekening harus ${maxDigits} digit.`;
+            error.classList.remove('hidden');
+        } else if (input.value.length < maxDigits) {
+            error.textContent = `Nomor rekening harus ${maxDigits} digit.`;
+            error.classList.remove('hidden');
+        } else {
+            error.classList.add('hidden');
+        }
+    }
+
+        // Tutup dropdown jika klik di luar area
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('bankDropdown');
+            const menu = document.getElementById('pilihBank');
+            if (!dropdown.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        })
 
         // Tutup dropdown jika klik di luar area dropdown atau button
         document.addEventListener('click', function(event) {
