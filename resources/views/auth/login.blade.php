@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]"
+    <div class="fixed inset-0 flex flex-wrap justify-center items-center w-screen h-screen bg-no-repeat bg-cover bg-center bg-fixed m-0 p-0 z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]"
         style="background-image: url('/img/bglogin.jpg');">
         <div class="w-full max-w-lg bg-green-400 shadow-lg rounded-lg p-8 relative opacity-80">
             <div class="my-2 text-center items-center">
@@ -33,16 +33,20 @@
                 @csrf
                 <div class="relative flex items-center">
                     <input type="email" placeholder="Email" name="email"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" required />
                 </div>
 
                 <div class="relative flex items-center">
                     <input type="password" placeholder="Password" name="password" id="password"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" required/>
                     <button type="button" id="togglePassword"
                         class="absolute right-4 bg-transparent focus:outline-none">
                         <img id="eye" src="./img/eyeclosed.png" alt="Toggle Password" class="w-5 h-5">
                     </button>
+                </div>
+                <div class="relative flex justify-end hover:underline">
+                    <label> <a href="{{ route('GantiPassword') }}"
+                        style="color: blue;hover:text-white" class="font-normal hover:text-white">Lupa Password</a></label>
                 </div>
 
                 <button type="submit"
@@ -50,9 +54,8 @@
                 </button>
 
                 <div class="relative flex justify-center">
-                    <p>Belum punya akun? <label> <a href="{{ route('register.tampil') }}"
-                                style="color: blue;hover:text-white" class="font-bold hover:text-white">Sign
-                                Up</a></label></p>
+                    <p>Belum punya akun? <label><a href="{{ route('register.tampil') }}" style="color: blue;hover:white">
+                        <span class="hover:underline hover:text-white font-semibold">Daftar Sekarang</span></label></p>
                 </div>
 
             </form>
