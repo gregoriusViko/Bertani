@@ -52,19 +52,19 @@
                     @if ($order->payment_proof == 'transfer')
                         <button
                             class="bg-blue-500 rounded-md p-1 flex items-center text-white font-libre-franklin font-light text-sm hover:bg-blue-900 transition ease-in duration-100"
-                            onclick="toggleModal('modal-{{ $order->id }}')">
+                            onclick="showTFModal()">
                             <ion-icon name="document-outline" class="mr-2"></ion-icon>
                             <span class="mt-0.5">Bukti Transfer</span>
                         </button>
                         {{-- gagal menampilkan modal (Modal.blade.php) --}}
-                        <div id="modal-{{ $order->id }}"
+                        {{-- <div id="modal-{{ $order->id }}"
                             class="hs-overlay-animation-target scale-95 opacity-0 transition-all duration-200 sm:max-w-lg sm:w-full mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
 
                             <x-Modal modalId="modal-{{ $order->id }}" title="Bukti Transfer">
                                 <p>INI GAMBAR</p>
                                 <p>This is the content for the Bukti Transfer modal.</p>
                             </x-Modal>
-                        </div>
+                        </div> --}}
                     @endif
 
 
@@ -104,25 +104,47 @@
 
         </div>
     @endforeach
-    <div id="componentContainer" class="hidden mt-4">
+
+    {{-- modal bukti tf --}}
+    <x-modal id="showTF-modal">
+        <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
+        <div class="flex justify-center">
+            <img class="md:h-80" src="\img\cthBuktiTF.png" alt="bukti">
+        </div>
+        <div class="text-sm md:text-base font-libre-franklin font-bold">
+            <p class="text-sm md:text-base">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
+            <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a href="" class="hover:underline hover:text-red-500 text-sm md:text-base">Disini</a></p>
+        </div>
+        <div class="mt-4 flex justify-end space-x-2">
+            <button class="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-gray-400"
+                onclick="closeModal('showTF-modal')">
+                TUTUP
+            </button>
+        </div>
+    </x-modal>
+
+    {{-- <div id="componentContainer" class="hidden mt-4">
         @include('components.delete_confirm')
-    </div>
+    </div> --}}
+
     <script>
         function toggleComponent() {
             const container = document.getElementById('componentContainer');
             container.classList.toggle('hidden');
         }
 
-        function toggleModal(modalId) {
-            const modal = document.getElementById(modalId);
-            console.log("Modal ID:", modalId); // Pastikan ID modal benar
+        function showTFModal() {
+            const modal = document.getElementById('showTF-modal');
             if (modal) {
-                console.log("Toggling modal visibility");
-                modal.classList.toggle('hidden'); // Menyembunyikan/menampilkan modal
-                modal.classList.toggle('pointer-events-none'); // Menonaktifkan pointer events
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
             }
         }
     </script>
-
-
 </x-layout>
