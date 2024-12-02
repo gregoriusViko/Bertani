@@ -33,12 +33,12 @@
                 @csrf
                 <div class="relative flex items-center">
                     <input type="email" placeholder="Email" name="email"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" required />
                 </div>
 
                 <div class="relative flex items-center">
                     <input type="password" placeholder="Password" name="password" id="password"
-                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" required/>
                     <button type="button" id="togglePassword"
                         class="absolute right-4 bg-transparent focus:outline-none">
                         <img id="eye" src="./img/eyeclosed.png" alt="Toggle Password" class="w-5 h-5">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="relative flex justify-end">
                     <label> <a href="{{ route('GantiPassword') }}"
-                        style="color: blue;hover:text-white" class="font-bold hover:text-white">Lupa Password</a></label>
+                        style="color: blue;hover:text-white" class="font-normal hover:text-white">Lupa Password</a></label>
                 </div>
 
                 <button type="submit"
@@ -54,9 +54,8 @@
                 </button>
 
                 <div class="relative flex justify-center">
-                    <p>Belum punya akun? <label> <a href="{{ route('register.tampil') }}"
-                                style="color: blue;hover:text-white" class="font-bold hover:text-white">Sign
-                                Up</a></label></p>
+                    <p>Belum punya akun? <label><a href="{{ route('register.tampil') }}" style="color: blue;hover:white">
+                        <span class="hover:underline hover:text-white font-semibold">Daftar Sekarang</span></label></p>
                 </div>
 
             </form>
