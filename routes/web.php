@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\HargaPasarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
@@ -54,9 +55,9 @@ Route::get('/EditHargaPasar', function () {
     return view('admin.EditHargaPasar');
 })->name('EditHargaPasar');
 
-Route::get('/MelihatHargaPasar', function () {
-    return view('petani.MelihatHargaPasar');
-})->name('MelihatHargaPasar');
+Route::get('/hargapasar', function () {
+    return view('MelihatHargaPasar');
+})->name('hargapasar');
 
 Route::get('/chatroom', function () {
     return view('ChatPage');
@@ -69,3 +70,16 @@ Route::get('/GantiPassword', function () {
 
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order/{orderId}/pembayaran',[OrderController::class, 'showPaymentPage'])->name('pembeli.PembayaranPage');
+
+// Halaman untuk mengedit harga pasar
+Route::get('/edit-harga-pasar', [HargaPasarController::class, 'editHargaPasar'])
+    ->name('admin.editHargaPasar');
+
+// Endpoint untuk memperbarui harga pasar
+Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPasar'])
+    ->name('admin.updateHargaPasar');
+
+// Endpoint untuk mengambil produk berdasarkan kategori
+Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
+
+Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
