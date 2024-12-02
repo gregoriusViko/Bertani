@@ -10,7 +10,7 @@ class HargaPasarController extends Controller
     
     public function editHargaPasar()
     {
-    // Mengambil kategori unik dari tabel type_of_products
+        // Mengambil kategori unik dari tabel type_of_products
     // Mengambil semua kategori beserta produk dan harga pasar
     $categories = TypeOfProduct::select('category')
         ->distinct()
@@ -46,7 +46,17 @@ class HargaPasarController extends Controller
             'market_price'=>$request->harga,
         ]);
 
-        return view('MelihatHargaPasar');
+        return redirect()->back()->with('success', 'Harga pasar berhasil diperbarui!');
+    }
+
+    public function melihatHargaPasar(){
+        // Ambil semua produk dengan kategori dan harga pasar
+        $categories = TypeOfProduct::select('name', 'category', 'market_price', 'updated_at')
+        ->orderBy('category')
+        ->orderBy('name')
+        ->get();
+        // Mengirimkan data ke view
+        return view('MelihatHargaPasar', compact('categories'));
     }
 
 }

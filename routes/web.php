@@ -82,4 +82,4 @@ Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPas
 // Endpoint untuk mengambil produk berdasarkan kategori
 Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
 
-Route::get('/harga-pasar', [HargaPasarController::class, 'editHargaPasar']);
+Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
