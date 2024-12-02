@@ -95,6 +95,7 @@
 
                 <!-- input tersembunyi -->
                 <input type="hidden" id="peranValue" name="peran" required />
+                <input type="hidden" id="bankValue" name="bank" required />
 
                 <div class="relative flex items-center">
                     <input type="tel" placeholder="08xxxxxxxxx" pattern="^08[0-9]{8,10}$" name="telepon"
@@ -116,7 +117,7 @@
                     class="px-5 py-2.5 w-full bg-black text-white text-sm font-inter font-medium rounded-lg tracking-wide hover:bg-green-500">Register
                 </button>
 
-                <p>Sudah punya akun? <a href="{{ route('login') }}" style="color: blue;hover:white">
+                <p>Sudah punya akun? <a href="{{ route('login') }}" style="color: blue; hover:white">
                         <span class="hover:underline hover:text-white">Login disini</span>
                     </a>
                 </p>
@@ -196,6 +197,7 @@
     // Fungsi untuk memilih bank
     function selectBank(bank, digits) {
         document.getElementById('selectedBank').textContent = bank; // Tampilkan nama bank
+        document.getElementById('bankValue').value = bank; // Hapus isi nomor rekening
         maxDigits = digits; // Set batas digit sesuai bank
         document.getElementById('nomor_rekening').setAttribute('maxlength', digits); // Set batas input
         document.getElementById('nomor_rekening').value = ''; // Reset input nomor rekening
