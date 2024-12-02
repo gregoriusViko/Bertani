@@ -101,9 +101,23 @@
     @endforeach
 
     {{-- message ketika sukses untuk menambah dan atau mengupdate produk --}}
-    @if (session('Sukses'))
+    @if (session('SuksesTambah'))
         <div id="successMessage" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
             <x-Message-success message="{{ session('Sukses') }}">
+                Produk Baru Berhasil Ditambahkan
+                <button onclick="closeMessage('successMessage')"
+                    class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                    <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+                </button>
+            </x-Message-success>
+        </div>
+    @endif
+
+    {{-- message ketika sukses untuk menambah dan atau mengupdate produk --}}
+    @if (session('SuksesUpdate'))
+        <div id="successMessage" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+            <x-Message-success message="{{ session('SuksesUpdate') }}">
+                Data Produk Berhasil Diperbaharui
                 <button onclick="closeMessage('successMessage')"
                     class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
                     <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
@@ -158,7 +172,7 @@
             if (messageElement) {
                 setTimeout(() => {
                     closeMessage('successMessage');
-                }, 3000); // 5000 ms = 5 detik
+                }, 4000); // 5000 ms = 5 detik
             }
 
             // Hilangkan pesan error setelah 5 detik
@@ -166,7 +180,7 @@
             if (errorMessage) {
                 setTimeout(() => {
                     closeMessage('errorMessage');
-                }, 3000); // 5000 ms = 5 detik
+                }, 4000); // 5000 ms = 5 detik
             }
         };
     </script>
