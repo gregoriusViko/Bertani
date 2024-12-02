@@ -12,6 +12,7 @@ use App\Models\Report;
 use App\Models\Product;
 use App\Models\BuyerChat;
 use App\Models\FarmerChat;
+use App\Models\HistoryPrice;
 use App\Models\OrderDetail;
 use Illuminate\Support\Str;
 use App\Models\ReportDetail;
@@ -35,7 +36,16 @@ class DatabaseSeeder extends Seeder
             Farmer::all()
         ])->create();
 
-        $this->call([TypeOfProductSeeder::class, ProductSeeder::class, OrderSeeder::class]);
+
+        $this->call([TypeOfProductSeeder::class, ProductSeeder::class, HistoryPriceSeeder::class]);
+
+        HistoryPrice::factory(100)->recycle([
+            Product::all()
+        ])->create();
+
+        $this->call([OrderSeeder::class]);
+
+
 
         $this->call(ReportSeeder::class);
 
