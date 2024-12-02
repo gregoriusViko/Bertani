@@ -31,7 +31,7 @@
             <div class="w-full">
                 <input type="text" id="messageInput" placeholder="Write your message!"
                     class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-8 pr-36 bg-gray-200 rounded-md py-3 resize-none overflow-auto"
-                    oninput="autoResize(this)" wire:model="message">
+                    oninput="autoResize(this); sendTypingEvent();" wire:model.lazy="message">
 
             </div>
 
@@ -46,6 +46,9 @@
                     </path>
                 </svg>
             </button>
+            <small id="typing" class="text-gray-700"  hidden>
+                is typing...
+            </small>
         </div>
     </div>
 
@@ -73,16 +76,41 @@
         border-radius: 0.25rem;
     }
 </style>
-
 <script>
-    const el = document.getElementById('messages')
-    el.scrollTop = el.scrollHeight
+    function sendTypingEvent(){
+        Echo.private(`chat.{{ $role == 'farmer' ? 'buyer' : 'farmer' }}.{{ $interlocutor->id }}`).whisper("typing", {
+            userID: {{ $user->id }},
+        });
+    }
+
+    let typingTimer;
+
+    Echo.private(`chat.{{ $role == 'farmer' ? 'farmer' : 'buyer' }}.{{ $user->id }}`)
+        .listen("MessageSent", (response) => {
+            // Pastikan cara menambah pesan sesuai framework Anda
+            // Misalnya dengan Livewire: @this.call('appendMessage', response.message)
+        })
+        .listenForWhisper("typing", (response) => {
+            const typingIndicator = document.getElementById('typing');
+            
+            if (response.userID !== {{ $interlocutor->id }}) {
+                typingIndicator.hidden = true;
+                return;
+            }
+
+            typingIndicator.hidden = false;
+            
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => {
+                typingIndicator.hidden = true;
+            }, 1000);
+        });
+
+    const el = document.getElementById('messages');
+    el.scrollTop = el.scrollHeight;
 
     function autoResize(input) {
-        // Reset input height to auto to calculate new height
         input.style.height = 'auto';
-
-        // Set the height based on scrollHeight
         input.style.height = input.scrollHeight + 'px';
     }
 </script>
