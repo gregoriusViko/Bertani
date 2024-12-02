@@ -21,7 +21,7 @@ class OrderSeeder extends Seeder
             'product_id' => 1,
             'payment_proof' => Arr::random(['COD', 'transfer']),
             'receipt_number' => strtoupper(fake()->lexify('???')) . '-' . fake()->randomNumber(3, true),
-            'price' => fake()->randomFloat(2, 1000, 1000000),
+            'price_id' => 1,
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
             'order_status' => 'selesai'
         ]);
@@ -30,7 +30,7 @@ class OrderSeeder extends Seeder
             'product_id' => 1,
             'payment_proof' => Arr::random(['COD', 'transfer']),
             'receipt_number' => strtoupper(fake()->lexify('???')) . '-' . fake()->randomNumber(3, true),
-            'price' => fake()->randomFloat(2, 1000, 1000000),
+            'price_id' => 1,
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
             'order_status' => 'menunggu konfirmasi'
         ]);
@@ -39,7 +39,7 @@ class OrderSeeder extends Seeder
             'product_id' => 1,
             'payment_proof' => Arr::random(['COD', 'transfer']),
             'receipt_number' => strtoupper(fake()->lexify('???')) . '-' . fake()->randomNumber(3, true),
-            'price' => fake()->randomFloat(2, 1000, 1000000),
+            'price_id' => 1,
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
             'order_status' => 'permintaan diterima'
         ]);
@@ -48,7 +48,7 @@ class OrderSeeder extends Seeder
             'product_id' => 1,
             'payment_proof' => Arr::random(['COD', 'transfer']),
             'receipt_number' => strtoupper(fake()->lexify('???')) . '-' . fake()->randomNumber(3, true),
-            'price' => fake()->randomFloat(2, 1000, 1000000),
+            'price_id' => 1,
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
             'order_status' => 'ditolak'
         ]);
