@@ -15,8 +15,7 @@ Route::middleware('auth:admin')->group(
             Route::prefix('delete-akun')->group(function () {
                 Route::view('/', 'admin.DeleteAkun')->name('DeleteAkun');
                 Route::get('/detail', [AuthController::class, 'detailAkun']);
-                Route::delete('/destroy/{role}', [AuthController::class, 'deleteAkun']);
-
+                Route::delete('/destroy/{role}', [AuthController::class, 'deleteAkun'])->name('deleteAkun');
             });
             // Rute untuk edit harga pasar
             Route::get('/edit-harga-pasar', [HargaPasarController::class, 'editHargaPasar'])->name('admin.editHargaPasar');
