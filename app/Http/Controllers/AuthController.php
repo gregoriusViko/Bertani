@@ -41,10 +41,15 @@ class AuthController extends Controller
         $user->password = $request->password;
         $user->slug = Str::slug($request->email);
         $user->name = $request->name;
+
+        if ($request->peran == 'Petani'){
+            $user->bank = $request->bank;
+            $user->nomor_rekening = $request->nomor_rekening;
+        }
         $user->save();
         event(new Registered($user));
-        Auth::guard($guard)->login($user);
-        return redirect('/');
+        // Auth::guard($guard)->login($user);
+        return redirect('login');
     }
 
     function tampilLogin(){
