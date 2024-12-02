@@ -135,15 +135,35 @@
                     onclick="closeModal('showACC-modal')">
                     TUTUP
                 </button>
+                {{-- jika di klik setuju, maka status berubah pesanan siap --}}
                 <button
                     class="border border-black bg-green-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-green-400"
-                    onclick="setuju('showACC-modal')">
+                    onclick="setujuTerima('showACC-modal')">
                     SETUJU
                 </button>
             </div>
         </div>
     </x-modal>
-
+    <x-modal id="showDecline-modal">
+        <div class="grid grid-flow-row">
+            <div class="text-xl">Konfirmasi Pesanan</div>
+            <div class="text-lg">Yakin anda menolak pesanan</div>
+            <div class="mt-4 flex justify-end space-x-2">
+                <button
+                    class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
+                    onclick="closeModal('showDecline-modal')">
+                    TIDAK
+                </button>
+                {{-- jika di klik setuju, maka status berubah pesanan siap --}}
+                <button
+                    class=" bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400"
+                    onclick="setujuTolak('showDecline-modal')">
+                    YA
+                </button>
+            </div>
+        </div>
+    </x-modal>
+    
 
 
     {{-- <div id="componentContainer" class="hidden mt-4">
@@ -163,6 +183,13 @@
             }
         }
 
+        function showDecline() {
+            const modal = document.getElementById('showDecline-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
         function showACC() {
             const modal = document.getElementById('showACC-modal');
             if (modal) {
@@ -170,7 +197,7 @@
             }
         }
 
-        function setuju() {
+        function setujuTerima() {
             const modal = document.getElementById('showACC-modal');
             if (modal) {
                 modal.classList.remove('hidden');
