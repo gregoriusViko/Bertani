@@ -32,8 +32,8 @@ return new class  extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->dateTimes();
             $table->softDeletes();
-            $table->String('no_rek', 20)->nullable();
-            $table->String('Bank', 8)->nullable();
+            $table->String('nomor_rekening', 20)->nullable();
+            $table->String('bank', 8)->nullable();
         });
     }
 
