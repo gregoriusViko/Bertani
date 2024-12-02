@@ -1,6 +1,6 @@
 <x-navbar>
     <x-nav-link href="/" :active="request()->is('/')">Beranda</x-nav-link>
-    <x-nav-link href="{{ route('hargapasar') }}" :active="request()->routeIs('hargapasar')">Harga Pasar</x-nav-link>
+    <x-nav-link href="{{ route('MelihatHargaPasar') }}" :active="request()->is('')">Harga Pasar</x-nav-link>
     <x-nav-link href="/produk" :active="request()->is('produk')">Produk</x-nav-link>
     <x-nav-link href="/pembeli/pesanan" :active="request()->is('pesanan')">Pesanan</x-nav-link>
     <x-nav-dropdown>
