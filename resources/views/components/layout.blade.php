@@ -27,7 +27,8 @@
                 opacity: 1;
                 filter: blur(0px);
                 background-color: transparent;
-                transition: opacity 5s ease-in-out, filter 5s ease-in-out, background-color 5s ease-in-out; /* Menggunakan ease-in-out */
+                transition: opacity 5s ease-in-out, filter 5s ease-out, background-color 5s ease-out; 
+                /* Menggunakan ease-in-out */
             }
 
             /* Efek blur dan warna hijau muda saat keluar */
