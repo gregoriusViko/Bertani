@@ -16,7 +16,7 @@
 
             <p class="text-black text-3xl font-bold py-8 text-center">Ganti Password</p>
 
-            <form class="max-w-md mt-4 space-y-4 lg:mt-5 md:space-y-5">
+            <form action="" method="post" class="max-w-md mt-4 space-y-4 lg:mt-5 md:space-y-5">
 
                 <label for="password" class="block mb-2 text-2xl font-semibold text-black">Masukkan Email</label>
                 <div class="relative flex items-center">
