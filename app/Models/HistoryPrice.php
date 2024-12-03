@@ -21,4 +21,7 @@ class HistoryPrice extends Model
     public function product(): BelongsTo{
         return $this->belongsTo(Product::class);
     }
+    public function orders(): HasMany{
+        return $this->hasMany(Order::class);
+    }
 }
