@@ -90,6 +90,13 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    function lupaPassword(Request $request){
+        $request->validate([
+            'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
+            'password' => 'required|min:6|max:45'
+        ]);
+    }
+
     // fungsi untuk admin
     function detailAkun(Request $request){
         $user = Farmer::where('email', $request->email)->get()->first();
