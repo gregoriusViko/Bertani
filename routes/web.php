@@ -83,3 +83,7 @@ Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPas
 Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
 
 Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
+
+Route::get('/LupaPassword', function () {
+    return view('auth.LupaPassword');
+})->name('LupaPassword');
