@@ -24,7 +24,8 @@ class Order extends Model
     public function reports(): HasMany{
         return $this->hasMany(Report::class);
     }
+
     public function historyPrice(): BelongsTo{
-        return $this->belongsTo(HistoryPrice::class);
+        return $this->belongsTo(HistoryPrice::class, 'price_id');
     }
 }
