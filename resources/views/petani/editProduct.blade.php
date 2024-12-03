@@ -81,7 +81,7 @@
         </form>
 
         <!-- Include Modal Component -->
-        <x-modal id="cancel-modal">
+        <x-Modal id="cancel-modal">
             <p class="text-gray-700">Data tidak ada yang terupdate. Apakah Anda yakin ingin kembali ke daftar produk?
             </p>
             <div class="mt-4 flex justify-end space-x-2">
