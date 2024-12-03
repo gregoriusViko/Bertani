@@ -5,7 +5,7 @@
             <h1 class="text-3xl font-libre-franklin font-bold tracking-tight text-gray-900">Daftar Pesanan</h1>
         </div>
     </div>
-    @foreach ($orders as $order)
+    @forelse ($orders as $order)
         <!-- bawah ini adalah component untuk produk -->
         <div id="cardContainer"
             class="mx-auto m2ax-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 md:gap-2 lg:gap-6">
@@ -100,7 +100,9 @@
             </div>
 
         </div>
-    @endforeach
+    @empty
+        <x-message-info>Belum ada pesanan masuk.</x-message-info>
+    @endforelse
 
     {{-- modal bukti tf --}}
     <x-modal id="showTF-modal">
@@ -149,21 +151,19 @@
             <div class="text-xl">Konfirmasi Pesanan</div>
             <div class="text-lg">Yakin anda menolak pesanan</div>
             <div class="mt-4 flex justify-end space-x-2">
-                <button
-                    class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
+                <button class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
                     onclick="closeModal('showDecline-modal')">
                     TIDAK
                 </button>
                 {{-- jika di klik setuju, maka status berubah pesanan siap --}}
-                <button
-                    class=" bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400"
+                <button class=" bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400"
                     onclick="setujuTolak('showDecline-modal')">
                     YA
                 </button>
             </div>
         </div>
     </x-modal>
-    
+
 
 
     {{-- <div id="componentContainer" class="hidden mt-4">
