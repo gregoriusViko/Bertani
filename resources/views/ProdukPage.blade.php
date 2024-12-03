@@ -50,13 +50,13 @@
             @endforeach
         @elseif(request('query'))
             <div class="col-span-4">
-                <x-message-info>Produk tidak ditemukan. Silahkan cari kembali.</x-message-info>
+                <x-Message-info>Produk tidak ditemukan. Silahkan cari kembali.</x-Message-info>
             </div>
             {{-- <p class="text-center"></p> --}}
         @else
             <!-- Pesan saat halaman pertama kali dibuka -->
             <div class="col-span-4">
-                <x-message-info>Silahkan cari produk yang Anda inginkan.</x-message-info>
+                <x-Message-info>Silahkan cari produk yang Anda inginkan.</x-Message-info>
             </div>
         @endif  
     </div>
