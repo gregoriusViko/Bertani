@@ -11,7 +11,7 @@
             class="mx-auto m2ax-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 md:gap-2 lg:gap-6">
 
             <div {{-- hover:scale-105 transition-transform duration-300 ease-in-ou --}}
-                class="m-3 t cursor-pointer shadow-lg border rounded-lg p-4 sm:px-6 md:px-7 lg:px-8 grid sm:grid-cols-10 md:grid-cols-11 lg:grid-cols-10 gap-2 md:gap-6 lg:gap-6">
+                class="m-3 t shadow-lg border rounded-lg p-4 sm:px-6 md:px-7 lg:px-8 grid sm:grid-cols-10 md:grid-cols-11 lg:grid-cols-10 gap-2 md:gap-6 lg:gap-6">
                 <!-- Gambar Produk -->
                 <div
                     class="col-start-1 row-start-1 col-span-11  md:col-span-3 md:row-span-4 lg:col-span-3 lg:row-span-4 rounded-lg flex justify-center items-center border overflow-hidden">
@@ -56,20 +56,10 @@
                             <ion-icon name="document-outline" class="mr-2"></ion-icon>
                             <span class="mt-0.5">Bukti Transfer</span>
                         </button>
-                        {{-- gagal menampilkan modal (Modal.blade.php) --}}
-                        {{-- <div id="modal-{{ $order->id }}"
-                            class="hs-overlay-animation-target scale-95 opacity-0 transition-all duration-200 sm:max-w-lg sm:w-full mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-
-                            <x-Modal modalId="modal-{{ $order->id }}" title="Bukti Transfer">
-                                <p>INI GAMBAR</p>
-                                <p>This is the content for the Bukti Transfer modal.</p>
-                            </x-Modal>
-                        </div> --}}
                     @endif
 
-
                 </div>
-                <!-- Tombol Aksi -->
+
                 <div
                     class="font-libre-franklin font-normal row-start-6 col-span-6 col-start-6 md:row-start-3 md:col-start-9 md:col-span-3 md:row-span-2 ">
                     @if ($order->order_status == 'menunggu konfirmasi')
@@ -82,23 +72,30 @@
                                 <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                             </span>
                         </h4>
+                        <div class="flex justify-center">
+                            <button class="hover:text-red-500 " onclick="showDecline()"><ion-icon
+                                    name="close-circle-outline"
+                                    class="transition ease-in duration-100 text-3xl"></ion-icon></button>
+                            <button class="hover:text-green-500" onclick="showACC()"><ion-icon
+                                    name="checkmark-circle-outline"
+                                    class="transition ease-in duration-100 text-3xl"></ion-icon></button>
+                        </div>
                     @elseif ($order->order_status == 'permintaan diterima')
                         <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Diterima</h4>
                     @elseif ($order->order_status == 'selesai')
-                        <h4 class="bg-[#00D115] text-sm rounded-md p-1 mb-1 flex justify-center">Selesai</h4>
+                        <h4 class="bg-[#00D115] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Selesai</h4>
                     @elseif ($order->order_status == 'ditolak')
                         <h4 class="bg-[#f44747] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Ditolak</h4>
                     @else
                         <h4 class="bg-[#FF0000] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Dibatalkan</h4>
                     @endif
-
-                    {{-- button --}}
-                    <div class="flex justify-center">
-                        <button class="hover:text-red-500 "><ion-icon name="close-circle-outline"
+                    <!-- Tombol Aksi -->
+                    {{-- <div class="flex justify-center">
+                        <button class="hover:text-red-500 " onclick="showACC()"><ion-icon name="close-circle-outline"
                                 class="transition ease-in duration-100 text-3xl"></ion-icon></button>
-                        <button class="hover:text-green-500"><ion-icon name="checkmark-circle-outline"
+                        <button class="hover:text-green-500" onclick="showDecline()"><ion-icon name="checkmark-circle-outline"
                                 class="transition ease-in duration-100 text-3xl"></ion-icon></button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -113,7 +110,8 @@
         </div>
         <div class="text-sm md:text-base font-libre-franklin font-bold">
             <p class="text-sm md:text-base">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
-            <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a href="" class="hover:underline hover:text-red-500 text-sm md:text-base">Disini</a></p>
+            <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a href=""
+                    class="hover:underline hover:text-red-500 text-sm md:text-base">Disini</a></p>
         </div>
         <div class="mt-4 flex justify-end space-x-2">
             <button class="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-gray-400"
@@ -122,6 +120,51 @@
             </button>
         </div>
     </x-modal>
+
+    {{-- modal terima konfirmasi pesanan --}}
+    <x-modal id="showACC-modal">
+        <div class="grid grid-flow-row">
+            <div class="text-xl">Konfirmasi Pesanan</div>
+            <div class="text-base">Nama Produk - xx kg</div>
+            <div class="text-base">Nama Pembeli - No Telp</div>
+            <div class="text-base">Metode Pembayaran</div>
+            <div class="text-xl">Rp xx.xxx</div>
+            <div class="mt-4 flex justify-end space-x-2">
+                <button
+                    class="border border-black bg-white text-black px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
+                    onclick="closeModal('showACC-modal')">
+                    TUTUP
+                </button>
+                {{-- jika di klik setuju, maka status berubah pesanan siap --}}
+                <button
+                    class="border border-black bg-green-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-green-400"
+                    onclick="setujuTerima('showACC-modal')">
+                    SETUJU
+                </button>
+            </div>
+        </div>
+    </x-modal>
+    <x-modal id="showDecline-modal">
+        <div class="grid grid-flow-row">
+            <div class="text-xl">Konfirmasi Pesanan</div>
+            <div class="text-lg">Yakin anda menolak pesanan</div>
+            <div class="mt-4 flex justify-end space-x-2">
+                <button
+                    class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
+                    onclick="closeModal('showDecline-modal')">
+                    TIDAK
+                </button>
+                {{-- jika di klik setuju, maka status berubah pesanan siap --}}
+                <button
+                    class=" bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400"
+                    onclick="setujuTolak('showDecline-modal')">
+                    YA
+                </button>
+            </div>
+        </div>
+    </x-modal>
+    
+
 
     {{-- <div id="componentContainer" class="hidden mt-4">
         @include('components.delete_confirm')
@@ -135,6 +178,27 @@
 
         function showTFModal() {
             const modal = document.getElementById('showTF-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function showDecline() {
+            const modal = document.getElementById('showDecline-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function showACC() {
+            const modal = document.getElementById('showACC-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function setujuTerima() {
+            const modal = document.getElementById('showACC-modal');
             if (modal) {
                 modal.classList.remove('hidden');
             }
