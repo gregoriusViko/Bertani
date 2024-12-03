@@ -37,7 +37,7 @@
 
                 <div
                     class="font-libre-franklin text-lg md:text-lg lg:text-2xl font-semibold row-start-5 col-span-8 col-start-1 md:row-start-2 md:col-start-8 md:col-span-4 md:flex md:justify-end">
-                    <h2>{{ Number::currency($order->price, in: 'idr') }}</h2>
+                    <h2>{{ Number::currency($order->historyPrice, in: 'idr') }}</h2>
                 </div>
 
                 <!-- metode pembayaran -->
