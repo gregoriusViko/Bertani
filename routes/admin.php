@@ -18,6 +18,7 @@ Route::middleware('auth:admin')->group(
                 Route::delete('/destroy/{role}', [AuthController::class, 'deleteAkun'])->name('deleteAkun');
             });
             // Rute untuk edit harga pasar
+            Route::get('/harga-pasar', [HargaPasarController::class, 'HargaPasar'])->name('admin.HargaPasar');
             Route::get('/edit-harga-pasar', [HargaPasarController::class, 'editHargaPasar'])->name('admin.editHargaPasar');
             Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPasar'])->name('admin.updateHargaPasar');
             Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
