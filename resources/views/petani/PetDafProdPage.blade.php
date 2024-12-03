@@ -8,7 +8,7 @@
             <div dir="rtl">
                 <a href="{{ route('products.create') }}">
                     <button
-                        class="font-libre-franklin font-light flex items-center justify-center text-white bg-green-300 px-4 py-1 rounded-lg hover:bg-green-600"
+                        class="font-libre-franklin font-light flex items-center justify-center text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-300"
                         type="button" id="addProduct-button">
                         <span class="text-base md:text-lg"><ion-icon name="add-circle-outline"
                                 class="ml-2 mt-1.5 text-base md:text-lg"></ion-icon></span>
@@ -172,7 +172,7 @@
             if (messageElement) {
                 setTimeout(() => {
                     closeMessage('successMessage');
-                }, 4000); // 5000 ms = 5 detik
+                }, 3000); // 5000 ms = 5 detik
             }
 
             // Hilangkan pesan error setelah 5 detik
@@ -180,7 +180,7 @@
             if (errorMessage) {
                 setTimeout(() => {
                     closeMessage('errorMessage');
-                }, 4000); // 5000 ms = 5 detik
+                }, 3000); // 5000 ms = 5 detik
             }
         };
     </script>
