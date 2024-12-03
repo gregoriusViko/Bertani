@@ -14,7 +14,7 @@ class Order extends Model
     const CREATED_AT = 'order_time';
 
     protected $guarded = ['id','order_time'];
-    protected $with = ['buyer', 'product'];
+    protected $with = ['buyer', 'product', 'historyPrice'];
     public function buyer(): BelongsTo{
         return $this->belongsTo(Buyer::class);
     }
@@ -23,5 +23,8 @@ class Order extends Model
     }
     public function reports(): HasMany{
         return $this->hasMany(Report::class);
+    }
+    public function historyPrice(): BelongsTo{
+        return $this->belongsTo(HistoryPrice::class);
     }
 }
