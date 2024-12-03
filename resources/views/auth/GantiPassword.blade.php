@@ -16,8 +16,14 @@
 
             <p class="text-black text-3xl font-bold py-8 text-center">Ganti Password</p>
 
-            <form class="max-w-md mt-4 space-y-4 lg:mt-5 md:space-y-5 text-center">
+            <form class="max-w-md mt-4 space-y-4 lg:mt-5 md:space-y-5">
 
+                <label for="password" class="block mb-2 text-2xl font-semibold text-black">Masukkan Email</label>
+                <div class="relative flex items-center">
+                    <input type="email" placeholder="Masukkan email" name="email" id="email"
+                        class="px-4 py-2 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+                    
+                </div>
                 <label for="password" class="block mb-2 text-2xl font-semibold text-black">Ganti Password</label>
                 <div class="relative flex items-center">
                     <input type="password" placeholder="Masukkan password baru" name="password" id="password"
@@ -33,7 +39,8 @@
                 <label for="confirm_password" class="block mb-2 text-2xl font-semibold text-black">Konfirmasi
                     Password</label>
                 <div class="relative flex items-center">
-                    <input type="password" placeholder="Masukkan password kembali" name="confrim_password" id="confirm_password"
+                    <input type="password" placeholder="Masukkan password kembali" name="confrim_password"
+                        id="confirm_password"
                         class="px-4 py-2 bg-white text-gray-800 w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
                     <button type="button" id="toggleConfirmPassword"
                         class="absolute right-4 bg-transparent focus:outline-none">
@@ -46,7 +53,7 @@
                         <button type="button"
                             class="mb-4 px-5 py-2.5 w-48 bg-black text-white text-sm rounded-lg tracking-wide mx-auto">Kembali
                         </button></a>
-                        
+
                     <button type="submit"
                         class="mb-4 px-5 py-2.5 w-48 bg-black text-white text-sm rounded-lg tracking-wide mx-auto">Simpan
                     </button>
