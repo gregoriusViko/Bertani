@@ -46,7 +46,7 @@ class HargaPasarController extends Controller
             'market_price'=>$request->harga,
         ]);
 
-        return redirect()->back()->with('success', 'Harga pasar berhasil diperbarui!');
+        return redirect()->route('admin.HargaPasar')->with('successUpdatePasar', 'Sukses');
     }
 
     public function melihatHargaPasar(){
@@ -57,6 +57,16 @@ class HargaPasarController extends Controller
         ->get();
         // Mengirimkan data ke view
         return view('MelihatHargaPasar', compact('categories'));
+    }
+
+    public function HargaPasar(){
+        // Ambil semua produk dengan kategori dan harga pasar
+        $categories = TypeOfProduct::select('name', 'category', 'market_price', 'updated_at')
+        ->orderBy('category')
+        ->orderBy('name')
+        ->get();
+        // Mengirimkan data ke view
+        return view('admin.HargaPasar', compact('categories'));
     }
 
 }
