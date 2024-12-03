@@ -37,7 +37,7 @@
 
                 <div
                     class="font-libre-franklin text-lg md:text-lg lg:text-2xl font-semibold row-start-5 col-span-8 col-start-1 md:row-start-2 md:col-start-8 md:col-span-4 md:flex md:justify-end">
-                    <h2>{{ Number::currency($order->price, in: 'idr') }}</h2>
+                    <h2>{{ Number::currency($order->historyPrice->price, in: 'idr') }}</h2>
                 </div>
 
                 <!-- metode pembayaran -->
@@ -101,11 +101,11 @@
 
         </div>
     @empty
-        <x-message-info>Belum ada pesanan masuk.</x-message-info>
+        <x-Message-info>Belum ada pesanan masuk.</x-Message-info>
     @endforelse
 
     {{-- modal bukti tf --}}
-    <x-modal id="showTF-modal">
+    <x-Modal id="showTF-modal">
         <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
         <div class="flex justify-center">
             <img class="md:h-80" src="\img\cthBuktiTF.png" alt="bukti">
@@ -124,7 +124,7 @@
     </x-modal>
 
     {{-- modal terima konfirmasi pesanan --}}
-    <x-modal id="showACC-modal">
+    <x-Modal id="showACC-modal">
         <div class="grid grid-flow-row">
             <div class="text-xl">Konfirmasi Pesanan</div>
             <div class="text-base">Nama Produk - xx kg</div>
@@ -146,7 +146,7 @@
             </div>
         </div>
     </x-modal>
-    <x-modal id="showDecline-modal">
+    <x-Modal id="showDecline-modal">
         <div class="grid grid-flow-row">
             <div class="text-xl">Konfirmasi Pesanan</div>
             <div class="text-lg">Yakin anda menolak pesanan</div>
