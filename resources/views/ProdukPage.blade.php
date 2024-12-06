@@ -21,7 +21,8 @@
     <div id="results" class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
         @if (isset($products) && $products->count() > 0)
             @foreach ($products as $product)
-                <div class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer">
+                <a href="{{ route('product.show', $product->id)}}" >
+                <div class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer transition ease-in-out hover:scale-105">
                     <img src="{{ $product->img_link }}" alt="Gambar Produk"
                         class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1">
                     <div class="p-2 grid-cols-2">
@@ -47,6 +48,7 @@
                     </div>
                     {{-- $product->price, 0, ',', '.') }}</p> --}}
                 </div>
+                
             @endforeach
         @elseif(request('query'))
             <div class="col-span-4">
