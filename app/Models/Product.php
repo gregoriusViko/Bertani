@@ -24,7 +24,7 @@ class Product extends Model
         return $this->hasMany(Order::class);
     }
     public function historyprice(): HasMany{
-        return $this->hasMany(HistoryPrice::class);
+        return $this->hasMany(HistoryPrice::class, 'product_id');
     }
     
 }
