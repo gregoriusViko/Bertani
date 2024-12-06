@@ -19,7 +19,7 @@
     {{--Dropdown Jenis Produk--}}
 
     <label for="jenis" class="block mb-2 text-xl font-medium text-black">Jenis Produk</label>
-        <select name="categoryDropdown" id="jenis" class="block w-full p-2 mb-6 text-sm text-black border border-gray-300 rounded-lg bg-white focus:border-green-600">
+        <select name="categoryDropdown" id="jenis" class="block w-full p-2 mb-6 text-sm text-black border border-gray-300 rounded-lg bg-white focus:border-green-600" required>
             <option disabled selected>Pilih Jenis Produk</option>
             @if(isset($categories) && $categories->count() > 0)
     @foreach ($categories as $category)
@@ -34,7 +34,7 @@
 
         {{-- Dropdown Nama Produk --}}
         <label for="namaProduk" class="block mb-2 text-xl font-medium text-black">Nama Produk</label>
-        <select name="nama" id="productDropdown" class="block w-full p-2 mb-6 text-sm text-black border border-gray-300 rounded-lg bg-white focus:border-green-600">
+        <select name="nama" id="productDropdown" class="block w-full p-2 mb-6 text-sm text-black border border-gray-300 rounded-lg bg-white focus:border-green-600" required>
             <option selected disabled>Pilih Nama Produk</option>
             <!-- Nama produk akan diisi secara dinamis melalui JavaScript -->
         </select>
@@ -43,11 +43,11 @@
         {{-- Input Harga --}}
         <label for="harga" class="block mb-2 text-xl font-medium text-black">Harga</label>
         <input type="text" name="harga" id="harga" placeholder="Masukkan harga baru"
-            class="px-4 py-3 bg-white text-black w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" />
+            class="px-4 py-3 bg-white text-black w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" required />
 
         {{-- Tombol Submit --}}
         <button type="submit"
-            class="mb-8 px-5 py-3 w-auto bg-green-500 text-white font-bold text-sm rounded-lg tracking-wide">Perbarui Harga</button>
+            class="mt-5 mb-8 px-5 py-3 w-auto bg-green-500 hover:bg-green-300 text-white font-bold text-sm rounded-lg tracking-wide">Perbarui Harga</button>
     </form>
 
     <script>
