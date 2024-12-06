@@ -5,7 +5,7 @@
             <h1 class="text-3xl font-libre-franklin font-bold tracking-tight text-gray-900">Daftar Pesanan</h1>
         </div>
     </div>
-    @foreach ($orders as $order)
+    @forelse ($orders as $order)
         <!-- bawah ini adalah component untuk produk -->
         <div id="cardContainer"
             class="mx-auto m2ax-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 md:gap-2 lg:gap-6">
@@ -37,7 +37,7 @@
 
                 <div
                     class="font-libre-franklin text-lg md:text-lg lg:text-2xl font-semibold row-start-5 col-span-8 col-start-1 md:row-start-2 md:col-start-8 md:col-span-4 md:flex md:justify-end">
-                    <h2>{{ Number::currency($order->price, in: 'idr') }}</h2>
+                    <h2>{{ Number::currency($order->historyPrice->price, in: 'idr') }}</h2>
                 </div>
 
                 <!-- metode pembayaran -->
@@ -100,10 +100,12 @@
             </div>
 
         </div>
-    @endforeach
+    @empty
+        <x-Message-info>Belum ada pesanan masuk.</x-Message-info>
+    @endforelse
 
     {{-- modal bukti tf --}}
-    <x-modal id="showTF-modal">
+    <x-Modal id="showTF-modal">
         <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
         <div class="flex justify-center">
             <img class="md:h-80" src="\img\cthBuktiTF.png" alt="bukti">
@@ -122,7 +124,7 @@
     </x-modal>
 
     {{-- modal terima konfirmasi pesanan --}}
-    <x-modal id="showACC-modal">
+    <x-Modal id="showACC-modal">
         <div class="grid grid-flow-row">
             <div class="text-xl">Konfirmasi Pesanan</div>
             <div class="text-base">Nama Produk - xx kg</div>
@@ -144,26 +146,24 @@
             </div>
         </div>
     </x-modal>
-    <x-modal id="showDecline-modal">
+    <x-Modal id="showDecline-modal">
         <div class="grid grid-flow-row">
             <div class="text-xl">Konfirmasi Pesanan</div>
             <div class="text-lg">Yakin anda menolak pesanan</div>
             <div class="mt-4 flex justify-end space-x-2">
-                <button
-                    class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
+                <button class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
                     onclick="closeModal('showDecline-modal')">
                     TIDAK
                 </button>
                 {{-- jika di klik setuju, maka status berubah pesanan siap --}}
-                <button
-                    class=" bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400"
+                <button class=" bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400"
                     onclick="setujuTolak('showDecline-modal')">
                     YA
                 </button>
             </div>
         </div>
     </x-modal>
-    
+
 
 
     {{-- <div id="componentContainer" class="hidden mt-4">

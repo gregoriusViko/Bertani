@@ -8,20 +8,19 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Typing implements ShouldBroadcast
+class Typing implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
     /**
      * Create a new event instance.
      */
-    public function __construct(FarmerChat $message)
+    public function __construct()
     {
-        $this->message = $message;
     }
 
     /**
@@ -32,7 +31,7 @@ class Typing implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('App.Models.Farmer'.$this->message->farmer_id),
+            new PrivateChannel('coba-ketik.1'),
         ];
     }
 }
