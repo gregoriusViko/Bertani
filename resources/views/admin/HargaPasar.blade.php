@@ -5,7 +5,8 @@
         <h1 class="text-3xl font-bold text-black py-6 text-center">Harga Pasar Terbaru</h1>
         <div class="flex justify-end place-items-end mb-5">
             <a href="{{ route('admin.editHargaPasar') }}">
-                <button class="px-4 py-1 shadow-md bg-blue-500 text-white hover:bg-black rounded-lg">Edit</button>
+                <button id="buttonEdit"
+                    class="px-4 py-1 shadow-md bg-blue-500 text-white hover:bg-black rounded-lg">Edit</button>
             </a>
         </div>
 
@@ -61,7 +62,7 @@
     </div> <!-- Close the last category's card -->
     @endif
 
-    @if (session('successUpdatePasar') || true)
+    @if (session('successUpdatePasar'))
         <div id="successMessage" class="fixed inset-0  bg-opacity-50 flex justify-center items-center z-50">
             <x-Message-success message="{{ session('successUpdatePasar') }}">
                 Harga Produk telah diupdate dengan sukses.
@@ -88,30 +89,32 @@
 
     <script>
         // Function to close the message component
-        function closeMessage(id) {
-            const messageElement = document.getElementById(id);
+        function closeMessage(elementId) {
+            const messageElement = document.getElementById(elementId);
             if (messageElement) {
                 messageElement.style.display = 'none';
+                document.body.style.overflow = '';
             }
-            document.body.style.overflow = 'auto'; // Pulihkan scroll
         }
 
-        // Hilangkan pesan secara otomatis setelah 5 detik
+
+        // Hilangkan pesan secara otomatis setelah 3 detik
         window.onload = function() {
             const messageElement = document.getElementById('successMessage');
-            document.body.style.overflow = 'hidden'; // Nonaktifkan scroll
             if (messageElement) {
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => {
                     closeMessage('successMessage');
-                }, 3000); // 5000 ms = 5 detik
+                }, 3000); 
             }
 
-            // Hilangkan pesan error setelah 5 detik
+            // Hilangkan pesan error setelah 3 detik
             const errorMessage = document.getElementById('errorMessage');
             if (errorMessage) {
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => {
                     closeMessage('errorMessage');
-                }, 3000); // 5000 ms = 5 detik
+                }, 3000); 
             }
         };
     </script>

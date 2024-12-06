@@ -72,9 +72,9 @@
                 </div>
                 {{-- button --}}
                 <div class="mt-4 flex space-x-2 justify-end">
-                    <button class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2"
+                    <button id="batalSimpan" class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2"
                         type="button" id="cancel-button" onclick="showCancelModal()">BATAL</button>
-                    <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400"
+                    <button id="SimpanEdit" class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400"
                         type="submit" id="save-button">SIMPAN</button>
                 </div>
             </div>
@@ -85,12 +85,12 @@
             <p class="text-gray-700">Data tidak ada yang terupdate. Apakah Anda yakin ingin kembali ke daftar produk?
             </p>
             <div class="mt-4 flex justify-end space-x-2">
-                <button class="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-gray-400"
+                <button id="tutupModal" class="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-gray-400"
                     onclick="closeModal('cancel-modal')">
                     TUTUP
                 </button>
                 <a href="{{ route('dafproduk') }}">
-                    <button class="bg-gray-500 text-white px-4 py-1 rounded-lg hover:bg-red-400">
+                    <button id="setujuHapus" class="bg-gray-500 text-white px-4 py-1 rounded-lg hover:bg-red-400">
                         YA
                     </button>
                 </a>
