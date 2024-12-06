@@ -89,10 +89,3 @@ Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPas
 Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
 
 Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
-
-Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-
-Route::patch('/order/{orderId}/cancel', [OrderController::class, 'cancelOrder'])
-    ->name('order.cancel');
-
-Route::get('/order/detail/{orderId}', [OrderController::class, 'showDetailPembelian'])->name('order.detail');

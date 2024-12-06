@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Broadcast;
 class Chat extends Component
 {
     public $user, $role, $chats, $content, $contacts, $interlocutor, $message;
-
     public function getListeners(){
         return [
-            "echo-private:chat.{$this->role}.{$this->user->id},client-typing" => 'getTyping'
+            // "echo-private:chat.{$this->role}.{$this->user->id},client-typing" => 'getTyping'
+            'echo-private:coba-ketik.1,Typing' => 'getTyping'
         ];
     }
 
@@ -61,7 +61,7 @@ class Chat extends Component
     }
 
     public function getTyping(){
-        dd('dsfdsf');
+        dd('dfds');
     }
 
     public function kirimPesan()
@@ -82,6 +82,8 @@ class Chat extends Component
         $newMessage = FarmerChat::create($message + ['role' => $this->role == 'farmer' ? 'sender' : 'receiver']);
         BuyerChat::create($message + ['role' => $this->role == 'buyer' ? 'sender' : 'receiver']);
 
-        broadcast(new MessageSent($newMessage))->toOthers();
+        // broadcast(new MessageSent($message, $this->role == 'farmer' ? 'buyer' : 'farmer', $this->interlocutor))->toOthers();
+        // broadcast(new Typing($message, $this->role == 'farmer' ? 'buyer' : 'farmer', $this->interlocutor))->toOthers();
+        broadcast(new Typing);
     }
 }
