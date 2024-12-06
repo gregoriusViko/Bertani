@@ -4,24 +4,22 @@ namespace App\Events;
 
 use App\Models\FarmerChat;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class MessageSent implements ShouldBroadcast
+class MessageSent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $message;
     /**
      * Create a new event instance.
      */
-    public function __construct(FarmerChat $message)
+    public function __construct(public $message, public $role, public $user)
     {
-        $this->message = $message;
     }
 
     /**
@@ -32,12 +30,12 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('App.Models.Farmer'.$this->message->farmer_id),
+            new PrivateChannel("chat.{$this->role}.{$this->user->id}"),
         ];
     }
-    public function broadcastWith(){
-        return [
-            'message' => $this->message,
-        ];
-    }
+    // public function broadcastWith(){
+    //     return [
+    //         'message' => $this->message,
+    //     ];
+    // }
 }
