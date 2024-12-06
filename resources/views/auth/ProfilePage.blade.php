@@ -49,6 +49,25 @@
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     value="{{ $user->email }}" required readonly />
             </div>
+
+            @if (Auth::guard('farmer')->check())
+            <div class="mb-5">
+                <label for="bank-input"
+                    class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Bank</label>
+                <input type="text" id="bank-input" name="bank"
+                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    value="{{ $user->bank }}" required readonly />
+            </div>
+
+            <div class="mb-5">
+                <label for="rekening-input"
+                    class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nomor Rekening</label>
+                <input type="text" id="rekening-input" name="nomor_rekening"
+                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    value="{{ $user->nomor_rekening }}" required readonly />
+            </div>
+            @endif
+            
         </form>
         {{-- button group --}}
         <div class="flex items-center justify-between mt-4">
