@@ -67,10 +67,11 @@
                 <div
                     class="sm:col-span-2 md:row-start-4 md:col-start-7 md:col-span-2 lg:col-start-7 lg:col-span-2 lg:row-start-4 md:flex md:justify-end space-x-2 sm:text-sm md:text-base lg:text-lg  ">
                     <!--Tombol Edit-->
-                    <a href="{{ route('product.edit', $product->slug) }}" class="rounded-md hover:text-blue-500">
+                    <a href="{{ route('product.edit', $product->slug) }}" id="editProduk" class="rounded-md hover:text-blue-500">
                         <ion-icon name="create-outline" class="transition ease-in duration-100 text-2xl"></ion-icon>
                     </a>
-                    <button onclick="toggleComponent('{{ $product->id }}')"
+                    <!--Tombol hapus-->
+                    <button id="buttonHapusProduk" onclick="toggleComponent('{{ $product->id }}')"
                         class="rounded-md  hover:text-red-500"><ion-icon name="trash-outline"
                             class="transition ease-in duration-100 text-xl"></ion-icon>
                     </button>
@@ -82,7 +83,7 @@
     <!-- Form Konfirmasi Hapus -->
     @foreach ($products as $product)
         <div id="deleteConfirm-{{ $product->id }}"
-            class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+            class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 w-screen h-screen">
             <div class="bg-white p-6 rounded-lg shadow-xl w-96">
                 <form action="{{ route('product.destroy') }}" method="POST" class="space-y-4">
                     @csrf
@@ -102,7 +103,8 @@
 
     {{-- message ketika sukses untuk menambah dan atau mengupdate produk --}}
     @if (session('SuksesTambah'))
-        <div id="successMessage" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+        <div id="successMessage"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
             <x-Message-success message="{{ session('Sukses') }}">
                 Produk Baru Berhasil Ditambahkan
                 <button onclick="closeMessage('successMessage')"
@@ -115,7 +117,8 @@
 
     {{-- message ketika sukses untuk menambah dan atau mengupdate produk --}}
     @if (session('SuksesUpdate'))
-        <div id="successMessage" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+        <div id="successMessage"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
             <x-Message-success message="{{ session('SuksesUpdate') }}">
                 Data Produk Berhasil Diperbaharui
                 <button onclick="closeMessage('successMessage')"
@@ -128,7 +131,8 @@
 
     {{-- message ketika sukses untuk menghapus produk --}}
     @if (session('SuksesHapus'))
-        <div id="successMessage" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+        <div id="successMessage"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
             <x-Message-success message="{{ session('SuksesHapus') }}">
                 Produk telah dihapus dengan sukses.
                 <button onclick="closeMessage('successMessage')"
@@ -141,7 +145,8 @@
 
     {{-- message ketika gagal menghapus produk --}}
     @if (session('GagalHapus'))
-        <div id="errorMessage" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+        <div id="errorMessage"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
             <x-Message-error message="{{ session('error') }}">
                 Terjadi kesalahan saat menghapus produk.
                 <button onclick="closeMessage('error')"
@@ -155,14 +160,23 @@
 
     <script>
         function toggleComponent(productId) {
-            const confirmDialog = document.getElementById(`deleteConfirm-${productId}`);
-            confirmDialog.classList.toggle('hidden');
+            const modal = document.getElementById(`deleteConfirm-${productId}`);
+            const body = document.body;
+
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden'); // Tampilkan modal
+                body.style.overflow = 'hidden'; // Kunci scroll
+            } else {
+                modal.classList.add('hidden'); // Sembunyikan modal
+                body.style.overflow = ''; // Aktifkan scroll
+            }
         }
         // Function to close the message component
         function closeMessage(elementId) {
             const messageElement = document.getElementById(elementId);
             if (messageElement) {
                 messageElement.style.display = 'none';
+                document.body.style.overflow = '';
             }
         }
 
@@ -170,6 +184,7 @@
         window.onload = function() {
             const messageElement = document.getElementById('successMessage');
             if (messageElement) {
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => {
                     closeMessage('successMessage');
                 }, 3000); // 5000 ms = 5 detik
@@ -178,6 +193,7 @@
             // Hilangkan pesan error setelah 5 detik
             const errorMessage = document.getElementById('errorMessage');
             if (errorMessage) {
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => {
                     closeMessage('errorMessage');
                 }, 3000); // 5000 ms = 5 detik
