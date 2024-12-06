@@ -77,11 +77,11 @@
     }
 </style>
 <script>
-    function sendTypingEvent(){
-        Echo.private(`chat.{{ $role == 'farmer' ? 'buyer' : 'farmer' }}.{{ $interlocutor->id }}`).whisper("typing", {
-            userID: {{ $user->id }},
-        });
-    }
+    // function sendTypingEvent(){
+    //     Echo.private(`chat.{{ $role == 'farmer' ? 'buyer' : 'farmer' }}.{{ $interlocutor->id }}`).whisper("typing", {
+    //         userID: {{ $user->id }},
+    //     });
+    // }
 
     let typingTimer;
 
