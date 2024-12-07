@@ -97,7 +97,10 @@ class AuthController extends Controller
         $role = $user ? 'farmer' : 'buyer';
         $user = $user ? $user : Buyer::where('email', $request->email)->get()->first();
         if(!$user){
-            abort(404);
+            // abort(404);
+            // 
+            // return view('admin.DeleteAkun')->with('error', 'Informasi');
+            return redirect('admin/delete-akun')->with('error', 'Informasi');
         }
         return view('admin.DeleteAkun', compact(['user', 'role']));
     }

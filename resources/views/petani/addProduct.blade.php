@@ -60,22 +60,52 @@
                     <x-input-label for="deskripsi" :value="__('Deskripsi')" />
                     <x-text-area id="deskripsi"
                         class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50"
-                        type="text" name="deskripsi">{{ old('deskripsi') }}</x-text-area>
+                        type="text" name="deskripsi" required>{{ old('deskripsi') }}</x-text-area>
                     <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                 </div>
                 {{-- button --}}
                 <div class="mt-4 flex space-x-2 justify-end">
                     <button class="items-end text-white bg-red-600 px-4 py-1 rounded-lg hover:bg-red-400 mr-2"
-                        type="button" id="cancel-button">BATAL</button>
+                        type="button" id="cancel-button" onclick="showCancelModal()">BATAL</button>
                     <button class="item-end text-white bg-green-600 px-4 py-1 rounded-lg hover:bg-green-400"
                         type="submit" id="add-button">TAMBAH</button>
                 </div>
             </div>
-
         </form>
+
+        <!-- Include Modal Component -->
+        <x-Modal id="cancel-modal">
+            <p class="text-gray-700">Data tidak tersimpan. Apakah Anda yakin ingin meninggalkan halaman?
+            </p>
+            <div class="mt-4 flex justify-end space-x-2">
+                <button id="tutupModal" class="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-gray-400"
+                    onclick="closeModal('cancel-modal')">
+                    TUTUP
+                </button>
+                <a href="{{ route('dafproduk') }}">
+                    <button id="setujuHapus" class="bg-gray-500 text-white px-4 py-1 rounded-lg hover:bg-red-400">
+                        YA
+                    </button>
+                </a>
+            </div>
+        </x-modal>
+
     </div>
 
     <script>
+        function showCancelModal() {
+            const modal = document.getElementById('cancel-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
         function toggleDropdown() {
             const dropdownMenu = document.getElementById(id);
             dropdownMenu.classList.toggle("hidden");

@@ -5,8 +5,9 @@
             action="/admin/delete-akun/detail" method="get">
             <label for="cariAkun" class="text-xs md:text-base lg:text-lg text-black px-4 font-semibold">Cari Akun</label>
             <input type="text" id="cariAkun" name="email"
-                class="pl-3 border border-black rounded-md w-1/2 block font-libre-franklin font-medium text-xs md:text-base text-black" required>
-            <button type="submit"
+                class="pl-3 border border-black rounded-md w-1/2 block font-libre-franklin font-medium text-xs md:text-base text-black"
+                required>
+            <button id="buttonCari" type="submit"
                 class="text-xs md:text-base lg:text-lg rounded-md bg-blue-500 text-white hover:bg-blue-700 px-3 ">OK</button>
         </form>
 
@@ -47,15 +48,15 @@
                     </div>
                     <div id="button" class="my-3 flex place-items-end ">
                         <div class="flex items-end space-x-2 justify-between">
-                            <a href="{{ route ('DeleteAkun') }}">
-                                <button onclick="showPopup('teruskan')"
+                            <a href="{{ route('DeleteAkun') }}">
+                                <button onclick="showPopup('teruskan')" id="buttonBatal"
                                     class="rounded-md text-xs md:text-base bg-gray-400 hover:bg-gray-600 text-white px-2 py-1">BATALKAN</button>
                             </a>
 
                             <form action="{{ route('deleteAkun', ['role' => $role]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button onclick="showPopup('teruskan')" type="submit" name="id"
+                                <button onclick="showPopup('teruskan')" type="submit" name="id" id="buttonDelete"
                                     value="{{ $user->id }}"
                                     class="rounded-md text-xs md:text-base bg-gray-400 text-white hover:bg-red-600 px-2 py-1">HAPUS
                                     AKUN</button>
@@ -80,6 +81,18 @@
                 </x-Message-success>
             </div>
         @endif
+        @if (session('error'))
+            <div id="errorMessage"
+                class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
+                <x-Message-error message="{{ session('error') }}">
+                    Akun tidak ditemukan.
+                    <button onclick="closeMessage('error')"
+                        class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                        <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+                    </button>
+                </x-Message-error>
+            </div>
+        @endif
         @error('email')
             <span class="text-danger">{{ $message }}</span>
         @enderror
@@ -89,14 +102,24 @@
             const messageElement = document.getElementById(elementId);
             if (messageElement) {
                 messageElement.style.display = 'none';
+                document.body.style.overflow = '';
             }
         }
+
         window.onload = function() {
             const notification = document.getElementById('successMessage');
             if (notification) {
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => {
                     notification.style.display = 'none';
                 }, 5000); // Notifikasi akan hilang setelah 5 detik
+            }  // Hilangkan pesan error setelah 3 detik
+            const errorMessage = document.getElementById('errorMessage');
+            if (errorMessage) {
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    closeMessage('errorMessage');
+                }, 3000); 
             }
         };
     </Script>
