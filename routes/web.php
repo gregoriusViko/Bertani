@@ -44,9 +44,9 @@ Route::get('/PembayaranPage', function () {
 // Hapus Produk
 Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('product.destroy');
 
-Route::get('/DetailPembelianPage/{id}', function (Order $id) {
-    return view('pembeli.DetailPembelianPage');
-})->name('DetailPembelianPage');
+// Route::get('/DetailPembelianPage/{id}', function (Order $id) {
+//     return view('pembeli.DetailPembelianPage');
+// })->name('DetailPembelianPage');
 
 
 Route::get('/PemDafPesananPage', function () {
@@ -89,3 +89,9 @@ Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPas
 Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
 
 Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
+
+Route::get('/order/{order}/detail', [OrderController::class, 'showDetailPembelian'])->name('DetailPembelianPage');
+
+Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder'])->name('order.cancel');
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
