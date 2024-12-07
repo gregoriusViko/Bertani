@@ -1,11 +1,13 @@
 <?php
-use App\Http\Controllers\HargaPasarController;
+use App\Events\Typing;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
-use App\Models\Product;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HargaPasarController;
+use App\Models\Farmer;
 
 require base_path('routes/admin.php');
 require base_path('routes/buyer.php');
@@ -63,10 +65,6 @@ Route::get('/chatroom', function () {
     return view('ChatPage');
 })->name('ChatPage');
 
-Route::get('/GantiPassword', function () {
-    return view('auth.GantiPassword');
-})->name('GantiPassword');
-
 
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order/{orderId}/pembayaran',[OrderController::class, 'showPaymentPage'])->name('pembeli.PembayaranPage');
@@ -83,7 +81,3 @@ Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPas
 Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
 
 Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
-
-Route::get('/LupaPassword', function () {
-    return view('auth.LupaPassword');
-})->name('LupaPassword');
