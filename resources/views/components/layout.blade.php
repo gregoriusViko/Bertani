@@ -50,6 +50,7 @@
     </head>
 
 <body class="bg-white min-h-screen">
+    
     <header class="bg-green-600 font-hind">
         @if (Auth::guard('admin')->check())
             <x-navbar_admin></x-navbar_admin>
@@ -75,25 +76,34 @@
 </body>
 
 <script>
-    // document.addEventListener('DOMContentLoaded', () => {
-    //     // Tambahkan event listener untuk semua link
-    //     const links = document.querySelectorAll('a');
-    //     links.forEach(link => {
-    //         link.addEventListener('click', function(event) {
-    //             const href = link.getAttribute('href');
-    //             if (href && !href.startsWith('#')) {
-    //                 event.preventDefault();
-    //                 document.body.classList.add('page-exit');
-    //                 setTimeout(() => {
-    //                     document.body.classList.add('page-exit-active');
-    //                     setTimeout(() => {
-    //                         window.location.href = href;
-    //                     }, 400);
-    //                 }, 30);
-    //             }
-    //         });
-    //     });
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     const loadingElement = document.getElementById("loading");
+    //     loadingElement.style.display = "flex"; // Tampilkan elemen loading
+
+    //     window.onload = () => {
+    //         // Sembunyikan elemen loading setelah halaman selesai dimuat
+    //         loadingElement.style.display = "none";
+    //     };
     // });
+
+    window.addEventListener("beforeunload", function() {
+        <x-loadingIcon />
+        document.getElementById("loading").style.display = "flex";
+    });
+
+    document.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.getElementById("loading").style.display = "flex";
+        });
+    });
+
+    document.querySelectorAll('form').forEach(function(form) {
+        form.addEventListener('submit', function() {
+            document.getElementById("loading").style.display = "flex";
+        });
+    });
+
+
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
     // Tampilkan tombol saat pengguna scroll ke bawah
@@ -123,3 +133,22 @@
 </script>
 
 </html>
+{{-- // document.addEventListener('DOMContentLoaded', () => {
+    //     // Tambahkan event listener untuk semua link
+    //     const links = document.querySelectorAll('a');
+    //     links.forEach(link => {
+    //         link.addEventListener('click', function(event) {
+    //             const href = link.getAttribute('href');
+    //                event.preventDefault();
+    //                 document.body.classList.add('page-exit');
+    //                 setTimeout(() => {
+    //                     document.body.classList.add('page-exit-active');
+    //                     setTimeout(() => {
+    //                         window.location.href = href;
+    //                     }, 400);
+    //                 }, 30);
+    //             }
+    //         });
+    //     });
+    // });             if (href && !href.startsWith('#')) {
+    //  --}}
