@@ -38,6 +38,7 @@ return new class  extends Migration
             $table->string('payment_proof', 150)->nullable();
             $table->string('receipt_number', 50)->unique();
             $table->string('order_status', 30)->nullable();
+            $table->text('cancellation_reason')->nullable();
         });
  
     }

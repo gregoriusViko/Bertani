@@ -18,6 +18,12 @@ class OrderController extends Controller
         return view('petani.PetDafPesananPage', compact('orders'));
     }
 
+    function daftarOrderPem(){
+        $buyer = Auth::guard('buyer')->user();
+        $orders = $buyer->orders()->with(['product', 'product.farmer', 'price'])->get();
+        return view ('pembeli.PemDafPesananPage', compact('orders'));
+    }
+
     public function showPaymentPage($orderId){
         
     // Ambil order berdasarkan ID yang diteruskan
@@ -27,10 +33,27 @@ class OrderController extends Controller
     $product = $order->product;
     
     // Ambil data harga yang terkait dengan order
-    $price = $product->historyprice()->latest()->first();
+    $price = $order->price;
 
     return view('pembeli.PembayaranPage', compact('order', 'product','price'));
     }
+
+    public function cancelOrder(Request $request, $orderId){
+        $order = Order::findOrFail($orderId);
+
+        $validated = $request->validate([
+            'cancellation_reason' => 'required|string|max:500'
+        ]);
+
+        $order->update([
+            'order_status' => 'cancelled',
+            'cancellation_reason' => $validated['cancellation_reason']
+        ]);
+
+        return redirect()->route('pembeli.PemDafPesananPage')->with('success','order has been cancelled');
+    }
+
+    
 
     // Simpan order setelah pembayaran dikonfirmasi
     public function store(Request $request)
@@ -56,7 +79,25 @@ class OrderController extends Controller
             'order_status' => 'pending',
         ]);
         
-        return redirect()->route('pembeli.PembayaranPage', ['orderId' => $order->id])->with('success', 'Order created successfully!');
+        return redirect()->route('DetailPembelianPage', ['order' => $order->id])->with('success', 'Order created successfully!');
+    }
+
+    public function getStatusColor(){
+        $colors = [
+            'pending' => 'text-yellow-600',
+            'permintaan diterima' => 'text-green-600',
+            'ditolak' => 'text-red-600',
+            'selesai' => 'text-blue-600'
+        ];
+
+        return $colors[$this->order_status] ?? 'text-grey-600';
+    }
+
+
+    public function showDetailPembelian($orderId){
+        // dd('order');
+        $order = Order::findOrFail($orderId);
+        return view('pembeli.DetailPembelianPage', compact('order'));
     }
 
 }

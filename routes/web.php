@@ -8,6 +8,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HargaPasarController;
 use App\Models\Farmer;
+use App\Models\Order;
 
 require base_path('routes/admin.php');
 require base_path('routes/buyer.php');
@@ -45,9 +46,14 @@ Route::get('/PembayaranPage', function () {
 // Hapus Produk
 Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('product.destroy');
 
-Route::get('/DetailPembelianPage', function () {
-    return view('pembeli.DetailPembelianPage');
-})->name('DetailPembelianPage');
+// Route::get('/DetailPembelianPage/{id}', function (Order $id) {
+//     return view('pembeli.DetailPembelianPage');
+// })->name('DetailPembelianPage');
+
+
+Route::get('/PemDafPesananPage', function () {
+    return view('pembeli.PemDafPesananPage');
+})->name('PemDafPesananPage');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
@@ -81,3 +87,9 @@ Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPas
 Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
 
 Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
+
+Route::get('/order/{order}/detail', [OrderController::class, 'showDetailPembelian'])->name('DetailPembelianPage');
+
+Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder'])->name('order.cancel');
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
