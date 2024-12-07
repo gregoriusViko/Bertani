@@ -3,7 +3,7 @@
 
     <div class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-2 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pembelian</h1>
-        <a href="{{ route('order.detail', ['order'=>$order]) }}">
+        <a href="{{ route('order.store', ['order'=>$order]) }}">
             <button  type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
                 Kembali
             </button>
@@ -14,11 +14,11 @@
         <div class="flex flex-col grid-cols-2 md:flex-row gap-x-10">
             <div class="flex-shrink-0 md:pr-16">
                 <p class="text-xl md:text-2xl font-libre-franklin font-bold tracking-tight text-gray-900 py-2">{{ $order->product->type->name}}</p>
-                <img src="{{ $product->img_link }}" alt="{{ $order->product->type->name}}" class="w-40 h-48 object-cover rounded-md shadow-md py-12"/>
+                <img src="{{ $order->product->img_link }}" alt="{{ $order->product->type->name}}" class="w-40 h-48 object-cover rounded-md shadow-md py-12"/>
                     
                 <p class="text-base md:text-lg font-libre-franklin font-bold tracking-tight text-gray-900 py-2">Petani</p>
-                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$product->farmer->name}}</p>
-                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$product->farmer->phone_number}}</p>
+                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$order->product->farmer->name}}</p>
+                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$order->product->farmer->phone_number}}</p>
             </div>
 
             <div class="flex-1">
@@ -33,7 +33,7 @@
                     </div>
                     <div>
                         <p class="font-bold">Jenis Produk</p>
-                        <p class="italic">{{$product->type->category}}/p>
+                        <p class="italic">{{$order->product->type->category}}</p>
                     </div>
                     <div>
                         <p class="font-bold">Status</p>
@@ -49,11 +49,11 @@
                     </div>
                     <div>
                         <p class="font-bold">Harga</p>
-                        <p class="italic">Rp {{number_format($price->price * $order->quantity_kg, 0, ',', '.')}}</p>
+                        <p class="italic">Rp {{number_format($order->historyPrice->price * $order->quantity_kg, 0, ',', '.')}}</p>
                     </div>
                     <div>
                         <p class="font-bold whitespace-nowrap">Alamat Pengambilan Barang</p>
-                        <p class="italic whitespace-normal">{{$product->farmer->home_address}}
+                        <p class="italic whitespace-normal">{{$order->product->farmer->home_address}}
                         </p>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full flex flex-col items-center gap-6 gap-x-10">
             <h2 class="text-xl font-semibold mb-4">Pembatalan Pesanan</h2>
             <p class="text-sm">Tuliskan keterangan alasan pembatalan</p>
-            <form action="{{route('order.cancel', ['orderId'=>$order->id])}}" method="POST">
+            <form action="{{route('order.cancel', ['order'=>$order->id])}}" method="POST">
                 @csrf
                 @method('PATCH')
             <textarea id="cancellation_reason" class="w-full border border-gray-500 rounded-lg p-2 mb-4 resize-none" rows="4" placeholder="Masukkan alasan pembatalan"></textarea>
