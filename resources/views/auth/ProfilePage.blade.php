@@ -51,23 +51,29 @@
             </div>
 
             @if (Auth::guard('farmer')->check())
-            <div class="mb-5">
-                <label for="bank-input"
-                    class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Bank</label>
-                <input type="text" id="bank-input" name="bank"
-                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{ $user->bank }}" required readonly />
-            </div>
+                <div class="mb-5">
+                    <label for="bank-input"
+                        class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Bank</label>
+                    <select id="bank-input" name="bank"
+                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        required readonly disabled>
+                        <option value="BRI" {{ $user->bank === 'BRI' ? 'selected' : '' }}>BRI</option>
+                        <option value="BNI" {{ $user->bank === 'BNI' ? 'selected' : '' }}>BNI</option>
+                        <option value="Mandiri" {{ $user->bank === 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                        <option value="BCA" {{ $user->bank === 'BCA' ? 'selected' : '' }}>BCA</option>
+                    </select>
+                </div>
 
-            <div class="mb-5">
-                <label for="rekening-input"
-                    class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nomor Rekening</label>
-                <input type="text" id="rekening-input" name="nomor_rekening"
-                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{ $user->nomor_rekening }}" required readonly />
-            </div>
+                <div class="mb-5">
+                    <label for="rekening-input"
+                        class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nomor
+                        Rekening</label>
+                    <input type="text" id="rekening-input" name="nomor_rekening"
+                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        value="{{ $user->nomor_rekening }}" required readonly />
+                </div>
             @endif
-            
+
         </form>
         {{-- button group --}}
         <div class="flex items-center justify-between mt-4">
@@ -108,30 +114,51 @@
                 </x-Message-success>
             </div>
         @endif
+        {{-- message ketika gagal menghapus produk --}}
+        @if (session('Gagal'))
+            <div id="errorMessage"
+                class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
+                <x-Message-error message="{{ session('error') }}">
+                    Terjadi kesalahan dalam update profile.
+                    <button onclick="closeMessage('error')"
+                        class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                        <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+                    </button>
+                </x-Message-error>
+            </div>
+        @endif
 
     </div>
 </x-layout>
 <script>
     function toggleAllInputs() {
-        var inputs = document.querySelectorAll('input[readonly]');
+        var inputs = document.querySelectorAll('input[readonly], select[disabled]');
         var isEditMode = !inputs[0].hasAttribute('readonly');
 
         // Tampilkan notif-message ketika tombol edit diaktifkan
         var notifMessage = document.getElementById('notif-message');
-        notifMessage.style.display = isEditMode ? 'none' : 'block'; // Munculkan jika edit mode aktif
+        notifMessage.style.display = isEditMode ? 'none' : 'block';
 
-        // Mengaktifkan atau menonaktifkan readonly pada input
+        // Mengaktifkan atau menonaktifkan readonly dan disabled pada input dan select
         inputs.forEach(input => {
             if (isEditMode) {
-                input.setAttribute('readonly', true); // Nonaktifkan input
+                if (input.tagName === 'SELECT') {
+                    input.setAttribute('disabled', true); // Nonaktifkan select
+                } else {
+                    input.setAttribute('readonly', true); // Nonaktifkan input
+                }
                 input.value = input.getAttribute('data-original'); // Kembalikan ke nilai asli
             } else {
-                input.removeAttribute('readonly'); // Aktifkan input
+                if (input.tagName === 'SELECT') {
+                    input.removeAttribute('disabled'); // Aktifkan select
+                } else {
+                    input.removeAttribute('readonly'); // Aktifkan input
+                }
                 input.setAttribute('data-original', input.value); // Simpan nilai asli
             }
 
-            // Set warna border menjadi hitam saat input aktif
-            if (!input.hasAttribute('readonly')) {
+            // Set warna border menjadi hitam saat aktif
+            if (!input.hasAttribute('readonly') && !input.hasAttribute('disabled')) {
                 input.style.borderColor = 'black';
             }
         });
@@ -139,6 +166,8 @@
         // Aktifkan atau nonaktifkan tombol simpan
         document.getElementById('save-button').disabled = isEditMode;
     }
+
+
 
 
     // Function to close the message component
