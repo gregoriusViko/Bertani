@@ -8,5 +8,6 @@
 </head>
 <body>
     @livewire('counter')
+    {{ $test }}
 </body>
 </html>

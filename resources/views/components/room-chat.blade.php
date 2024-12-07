@@ -31,12 +31,12 @@
             <div class="w-full">
                 <input type="text" id="messageInput" placeholder="Write your message!"
                     class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-8 pr-36 bg-gray-200 rounded-md py-3 resize-none overflow-auto"
-                    oninput="autoResize(this); sendTypingEvent();" wire:model.lazy="message">
+                    oninput="autoResize(this);" wire:model.lazy="message">
 
             </div>
 
             <!-- Send Button -->
-            <button type="button" wire:click="kirimPesan"
+            <button type="button" wire:click="kirimPesan" onclick="getElementById('messageInput').value = ''"
                 class="absolute right-0 inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
                 <span class="font-bold">Send</span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -85,26 +85,26 @@
 
     let typingTimer;
 
-    Echo.private(`chat.{{ $role == 'farmer' ? 'farmer' : 'buyer' }}.{{ $user->id }}`)
-        .listen("MessageSent", (response) => {
-            // Pastikan cara menambah pesan sesuai framework Anda
-            // Misalnya dengan Livewire: @this.call('appendMessage', response.message)
-        })
-        .listenForWhisper("typing", (response) => {
-            const typingIndicator = document.getElementById('typing');
+    // Echo.private(`chat.{{ $role == 'farmer' ? 'farmer' : 'buyer' }}.{{ $user->id }}`)
+    //     .listen("MessageSent", (response) => {
+    //         // Pastikan cara menambah pesan sesuai framework Anda
+    //         // Misalnya dengan Livewire: @this.call('appendMessage', response.message)
+    //     })
+    //     .listenForWhisper("typing", (response) => {
+    //         const typingIndicator = document.getElementById('typing');
             
-            if (response.userID !== {{ $interlocutor->id }}) {
-                typingIndicator.hidden = true;
-                return;
-            }
+    //         if (response.userID !== {{ $interlocutor->id }}) {
+    //             typingIndicator.hidden = true;
+    //             return;
+    //         }
 
-            typingIndicator.hidden = false;
+    //         typingIndicator.hidden = false;
             
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(() => {
-                typingIndicator.hidden = true;
-            }, 1000);
-        });
+    //         clearTimeout(typingTimer);
+    //         typingTimer = setTimeout(() => {
+    //             typingIndicator.hidden = true;
+    //         }, 1000);
+    //     });
 
     const el = document.getElementById('messages');
     el.scrollTop = el.scrollHeight;
