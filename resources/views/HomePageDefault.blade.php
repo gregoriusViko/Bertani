@@ -45,14 +45,10 @@
         </script> --}}
 
     {{-- form searching --}}
-        <form action="{{ route('search') }}" method="GET" class="flex rounded-md my-5 overflow-hidden max-w-full font-[sans-serif]">
-        <input 
-            type="text" 
-            name="query" 
-            value="{{ request('query') }}" 
-            placeholder="Cari Produk"
-            class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3"
-        />
+    <form action="{{ route('search') }}" method="GET"
+        class="flex rounded-md my-5 overflow-hidden max-w-full font-[sans-serif]">
+        <input type="text" name="query" value="{{ request('query') }}" placeholder="Cari Produk"
+            class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3" />
         <button type="submit" class="flex items-center justify-center bg-green-600 px-5">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-white">
                 <path
@@ -67,38 +63,58 @@
     <div id="cardContainer"
         class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
         {{-- @foreach ($products as $product) --}}
-        @include('partials.product')      
+        @include('partials.product')
     </div>
 
-    <div id="loading" style="display: none;">Loading...</div>
+    {{-- <div style="display: none;" class="flex justify-center">Loading...</div> --}}
+
+    <div style="display: none;" id="loading" class="fixed inset-0 flex justify-center items-center w-full h-[100vh]">
+        <div class="relative flex justify-center items-center">
+            <div class="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-green-600"></div>
+            {{-- <img src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg" class="rounded-full h-28 w-28"> --}}
+            <img src="/img/logokecil.png" class="rounded-full h-28 w-28">
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript">
-            let page = 1;
-    
-            $(window).scroll(function() {
-                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 15) {
-                    loadMoreData(++page);
+    <script type="text/javascript">
+        let page = 1;
+        let isLoading = false; // Tambahkan flag untuk mencegah panggilan berulang
+
+        $(window).scroll(function() {
+            // Cek jika halaman sudah mencapai bagian bawah
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 15) {
+                if (!isLoading) { // Cek apakah data sedang dimuat
+                    $('#loading').show(); // Tampilkan elemen loading
+                    loadMoreData(++page); // Panggil halaman berikutnya
                 }
-            });
-    
-            function loadMoreData(page) {
-                $.ajax({
-                    url: '/products/load?page=' + page,
-                    type: "get",
-                    beforeSend: function() {
-                        $('#loading').show();
-                    }
-                }).done(function(data) {
-                    if (data == "") {
-                        $('#loading').html("No more records found");
-                        return;
-                    }
-                    $('#loading').hide();
-                    $("#cardContainer").append(data);
-                }).fail(function(jqXHR, ajaxOptions, thrownError) {
-                    $('#loading').html("Sedang ada gangguan");
-                });
             }
-        </script>
+        });
+
+
+        function loadMoreData(page) {
+            isLoading = true; // Set flag untuk mencegah pemanggilan berulang
+
+            $.ajax({
+                url: '/products/load?page=' + page,
+                type: "get",
+                beforeSend: function() {
+                    $('#loading').show(); // Tampilkan elemen loading sebelum data dimuat
+                }
+            }).done(function(data) {
+                if (data == "") {
+                    $('#loading').html("No more records found");
+                    isLoading = false; // Izinkan pemanggilan ulang jika diperlukan
+                    return;
+                }
+                $('#loading').hide(); // Sembunyikan elemen loading setelah data berhasil dimuat
+                $("#cardContainer").append(data); // Tambahkan data baru ke kontainer
+                isLoading = false; // Reset flag
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                $('#loading').html("Sedang ada gangguan");
+                isLoading = false; // Reset flag
+            });
+        }
+    </script>
 </x-layout>
