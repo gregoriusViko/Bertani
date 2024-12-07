@@ -18,7 +18,7 @@ class MessageSent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct(public $message, public $role, public $user)
+    public function __construct(public $role, public $userId)
     {
     }
 
@@ -30,7 +30,7 @@ class MessageSent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("chat.{$this->role}.{$this->user->id}"),
+            new Channel("chat.{$this->role}.{$this->userId}"),
         ];
     }
     // public function broadcastWith(){
