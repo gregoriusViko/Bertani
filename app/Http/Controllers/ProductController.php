@@ -26,7 +26,7 @@ class ProductController extends Controller
     function show($id)
     {
         $product = Product::findOrFail($id); // Mencari produk berdasarkan ID, atau mengembalikan 404 jika tidak ditemukan
-        return view('products.show', compact('product'));
+        return view('DetailProductPage', compact('product'));
     }
 
     public function loadMoreProducts(Request $request)

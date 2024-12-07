@@ -32,7 +32,7 @@ class OrderSeeder extends Seeder
             'receipt_number' => strtoupper(fake()->lexify('???')) . '-' . fake()->randomNumber(3, true),
             'price_id' => 1,
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
-            'order_status' => 'menunggu konfirmasi'
+            'order_status' => 'pending'
         ]);
         Order::create([
             'buyer_id' => 1,
@@ -41,7 +41,7 @@ class OrderSeeder extends Seeder
             'receipt_number' => strtoupper(fake()->lexify('???')) . '-' . fake()->randomNumber(3, true),
             'price_id' => 1,
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
-            'order_status' => 'permintaan diterima'
+            'order_status' => 'diterima'
         ]);
         Order::create([
             'buyer_id' => 1,
