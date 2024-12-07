@@ -50,7 +50,7 @@ class OrderController extends Controller
             'cancellation_reason' => $validated['cancellation_reason']
         ]);
 
-        return redirect()->route('PemDafPesananPage')->with('success','order has been cancelled');
+        return redirect()->route('pembeli.PemDafPesananPage')->with('success','order has been cancelled');
     }
 
     
@@ -95,8 +95,9 @@ class OrderController extends Controller
 
 
     public function showDetailPembelian($orderId){
+        // dd('order');
         $order = Order::findOrFail($orderId);
-        return view('DetailPembelianPage', compact('order'));
+        return view('pembeli.DetailPembelianPage', compact('order'));
     }
 
 }
