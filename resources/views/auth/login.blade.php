@@ -45,7 +45,7 @@
                     </button>
                 </div>
                 <div class="relative flex justify-end hover:underline">
-                    <label> <a href="{{ route('GantiPassword') }}"
+                    <label> <a href="{{ route('LupaPassword') }}"
                         style="color: blue;hover:text-white" class="font-normal hover:text-white">Lupa Password</a></label>
                 </div>
 
