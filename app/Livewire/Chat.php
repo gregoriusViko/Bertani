@@ -16,17 +16,29 @@ use Illuminate\Support\Facades\Broadcast;
 class Chat extends Component
 {
     public $user, $role, $chats, $content, $contacts, $interlocutor, $message;
-    public function getListeners(){
+    public function getListeners()
+    {
         return [
-            // "echo-private:chat.{$this->role}.{$this->user->id},client-typing" => 'getTyping'
-            'echo-private:coba-ketik.1,Typing' => 'getTyping'
+            "echo:chat.{$this->role}.{$this->user->id},MessageSent" => "updateMessage"
         ];
     }
 
-    public function receiveMessage($payload)
+    public function updateMessage()
     {
-        $this->chats->push($payload['message']);
-        $this->content = $this->chats->where('buyer_id', $this->interlocutor->id);
+        if($this->user->id == Auth::guard($this->role)->user()->id){
+            if($this->role == 'farmer'){
+                $newChat = $this->user->farmerChats()->latest()->first();
+                $interlocutor = $newChat->buyer;
+            }else{
+                $newChat = $this->user->buyerChats()->latest()->first();
+                $interlocutor = $newChat->farmer;
+            }
+    
+            if($this->interlocutor->id == $interlocutor->id){
+                $this->content->push($newChat);
+            }
+            $this->chats->push($newChat);
+        }
     }
 
     public function mount($slug = null)
@@ -60,7 +72,8 @@ class Chat extends Component
         return view('livewire.chat')->layout('components.layout');
     }
 
-    public function getTyping(){
+    public function getTyping()
+    {
         dd('dfds');
     }
 
@@ -79,11 +92,12 @@ class Chat extends Component
             'farmer_id' => $farmer_id,
             'buyer_id' => $buyer_id
         ];
-        $newMessage = FarmerChat::create($message + ['role' => $this->role == 'farmer' ? 'sender' : 'receiver']);
+        FarmerChat::create($message + ['role' => $this->role == 'farmer' ? 'sender' : 'receiver']);
         BuyerChat::create($message + ['role' => $this->role == 'buyer' ? 'sender' : 'receiver']);
 
-        // broadcast(new MessageSent($message, $this->role == 'farmer' ? 'buyer' : 'farmer', $this->interlocutor))->toOthers();
-        // broadcast(new Typing($message, $this->role == 'farmer' ? 'buyer' : 'farmer', $this->interlocutor))->toOthers();
-        broadcast(new Typing);
+        $this->message = '';
+
+        broadcast(new MessageSent($this->role == 'farmer' ? 'buyer' : 'farmer', $this->interlocutor->id))->toOthers();
+        $this->updateMessage();
     }
 }

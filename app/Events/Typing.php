@@ -19,7 +19,7 @@ class Typing implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public $user)
     {
     }
 
@@ -31,7 +31,7 @@ class Typing implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('coba-ketik.1'),
+            new PrivateChannel("coba-ketik.{$this->user}"),
         ];
     }
 }

@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Buyer;
 use App\Models\Farmer;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -90,13 +91,6 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    function lupaPassword(Request $request){
-        $request->validate([
-            'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
-            'password' => 'required|min:6|max:45'
-        ]);
-    }
-
     // fungsi untuk admin
     function detailAkun(Request $request){
         $user = Farmer::where('email', $request->email)->get()->first();
@@ -125,5 +119,50 @@ class AuthController extends Controller
 
         }
         return redirect('admin/delete-akun')->with('success', 'Berhasil');
+    }
+
+    public function sendResetLink(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        $user = Farmer::where('email', $request->email)->first();
+        $role = $user ? 'farmers' : 'buyers';
+        $status = Password::broker($role)->sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+                    ? back()->with(['status' => __($status)])
+                    : back()->withErrors(['email' => __($status)]);
+    }
+
+    public function showResetPasswordForm(Request $request, $token)
+    {
+        $email = $request->email;
+        return view('auth.GantiPassword', compact(['email', 'token']));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed'
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, string $password) {
+                $temp = Farmer::find($user);
+                $user = $temp ? $temp : Buyer::find($user);
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60)
+                ])->save();
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+                    ? redirect()->route('login')->with('status', __($status))
+                    : back()->withErrors(['email' => [__($status)]]);
     }
 }    
