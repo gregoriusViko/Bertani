@@ -41,7 +41,7 @@ class Buyer extends Authenticatable implements MustVerifyEmail, CanResetPassword
     }
 
     public function orders(): HasMany{
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'buyer_id');
     }
     public function reports(): HasMany{
         return $this->hasMany(Report::class);
