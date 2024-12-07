@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    function profile(){
+    function profile()
+    {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
             $role = 'admin';
@@ -22,40 +23,65 @@ class ProfileController extends Controller
         } else {
             $user = Auth::guard('farmer')->user();
             $role = 'farmer';
-        }        
+        }
         return view('auth.ProfilePage', compact('user', 'role'));
     }
 
-    function updates(Request $request){
+    function updates(Request $request)
+    {
         $request->validate([
             'name' => 'required|string|max:50',
             'home_address' => 'required|string|max:150',
             'phone_number' => 'required|string|regex:/^\d{10,13}$/',
             'email' => 'required|string|max:45',
+            'bank' => 'string|in:BRI,BNI,MANDIRI,BCA', // Bank harus valid
+            'nomor_rekening' => 'string|max:45', 
+            // [
+            //     'required',
+            //     'string',
+            //     function ($attribute, $value, $fail) use ($request) {
+            //         // Validasi nomor rekening berdasarkan bank yang dipilih
+            //         $bankMaxDigits = [
+            //             'BRI' => 15,
+            //             'BNI' => 10,
+            //             'MANDIRI' => 13,
+            //             'BCA' => 10,
+            //         ];
+
+            //         $selectedBank = $request->input('selected_bank');
+            //         if (isset($bankMaxDigits[$selectedBank]) && strlen($value) !== $bankMaxDigits[$selectedBank]) {
+            //             $fail("Nomor rekening untuk $selectedBank harus tepat {$bankMaxDigits[$selectedBank]} digit.");
+            //         }
+            //     },
+            // ],
         ]);
 
         // Dapat user
         // Dapatkan user berdasarkan jenis pengguna
-                if (Auth::guard('buyer')->check()) {
-                    $user = Auth::guard('buyer')->user();
-                } elseif (Auth::guard('farmer')->check()) {
-                    $user = Auth::guard('farmer')->user();
-                } elseif (Auth::guard('admin')->check()){
-                    $user = Auth::guard('admin')->user();
-                } else {
-                    return redirect()->route('ProfilePage');
-                }
+        if (Auth::guard('buyer')->check()) {
+            $user = Auth::guard('buyer')->user();
+        } elseif (Auth::guard('farmer')->check()) {
+            $user = Auth::guard('farmer')->user();
+        } elseif (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+        } else {
+            return redirect()->route('ProfilePage');
+        }
 
         // Update data pengguna
         $user->name = $request->input('name');
         $user->home_address = $request->input('home_address');
         $user->phone_number = $request->input('phone_number');
         $user->email = $request->input('email');
+        $user->bank = $request->input('bank'); 
+        $user->nomor_rekening = $request->input('nomor_rekening');
 
 
-        $user->save();
-
-        return redirect()->route('profile')->with('Sukses','Berhasil');
+        if($user->save()){
+            return redirect()->route('profile')->with('Sukses', 'Berhasil');
+        } 
+        return redirect()->back()->with('Gagal', 'Kesalahan');
+        
     }
 
 }
