@@ -21,7 +21,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap"
             rel="stylesheet">
-        <style>
+        {{-- <style>
             /* Efek awal halaman */
             .page-exit {
                 opacity: 1;
@@ -40,7 +40,7 @@
                 background-color: rgba(144, 238, 144, 0.5);
                 /* Hijau muda dengan transparansi */
             }
-        </style>
+        </style> --}}
         <script>
             @if (session('error-permission'))
                 alert("{{ session('error-permission') }}");
@@ -49,7 +49,7 @@
         <title>{{ $title }}</title>
     </head>
 
-<body class="bg-white min-h-screen page-exit">
+<body class="bg-white min-h-screen">
     <header class="bg-green-600 font-hind">
         @if (Auth::guard('admin')->check())
             <x-navbar_admin></x-navbar_admin>
@@ -75,25 +75,25 @@
 </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Tambahkan event listener untuk semua link
-        const links = document.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', function(event) {
-                const href = link.getAttribute('href');
-                if (href && !href.startsWith('#')) {
-                    event.preventDefault();
-                    document.body.classList.add('page-exit');
-                    setTimeout(() => {
-                        document.body.classList.add('page-exit-active');
-                        setTimeout(() => {
-                            window.location.href = href;
-                        }, 400);
-                    }, 30);
-                }
-            });
-        });
-    });
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     // Tambahkan event listener untuk semua link
+    //     const links = document.querySelectorAll('a');
+    //     links.forEach(link => {
+    //         link.addEventListener('click', function(event) {
+    //             const href = link.getAttribute('href');
+    //             if (href && !href.startsWith('#')) {
+    //                 event.preventDefault();
+    //                 document.body.classList.add('page-exit');
+    //                 setTimeout(() => {
+    //                     document.body.classList.add('page-exit-active');
+    //                     setTimeout(() => {
+    //                         window.location.href = href;
+    //                     }, 400);
+    //                 }, 30);
+    //             }
+    //         });
+    //     });
+    // });
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
     // Tampilkan tombol saat pengguna scroll ke bawah
