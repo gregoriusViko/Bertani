@@ -18,6 +18,13 @@ class OrderController extends Controller
         return view('petani.PetDafPesananPage', compact('orders'));
     }
 
+    function detailOrder(){
+        $farmer = Auth::guard('farmer')->user();
+        $orders = $farmer->products()->with('orders')->get()->pluck('orders')->flatten();
+        $orders = $orders->where('order_status', '!=', 'selesai');
+        return view('petani.PetDetailPesanan', compact('orders'));
+    }
+
     function daftarOrderPem(){
         $buyer = Auth::guard('buyer')->user();
         $orders = $buyer->orders;
