@@ -80,7 +80,7 @@ class ProfileController extends Controller
         if($user->save()){
             return redirect()->route('profile')->with('Sukses', 'Berhasil');
         } 
-        return redirect()->back()->with('Gagal', 'Kesalahan');
+        return redirect()->route('profile')->with('Gagal', 'Kesalahan');
         
     }
 
