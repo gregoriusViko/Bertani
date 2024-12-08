@@ -20,7 +20,7 @@ class OrderController extends Controller
 
     function daftarOrderPem(){
         $buyer = Auth::guard('buyer')->user();
-        $orders = $buyer->orders()->with(['product', 'product.farmer', 'price'])->get();
+        $orders = $buyer->orders;
         return view ('pembeli.PemDafPesananPage', compact('orders'));
     }
 
@@ -40,17 +40,18 @@ class OrderController extends Controller
 
     public function cancelOrder(Request $request, $orderId){
         $order = Order::findOrFail($orderId);
+       
 
         $validated = $request->validate([
-            'cancellation_reason' => 'required|string|max:500'
+            'cancellation_reason' => 'required'
         ]);
 
         $order->update([
-            'order_status' => 'cancelled',
+            'order_status' => 'dibatalkan',
             'cancellation_reason' => $validated['cancellation_reason']
         ]);
 
-        return redirect()->route('pembeli.PemDafPesananPage')->with('success','order has been cancelled');
+        return redirect()->route('DafPesananPembeli')->with('success','order has been cancelled');
     }
 
     
@@ -82,16 +83,16 @@ class OrderController extends Controller
         return redirect()->route('DetailPembelianPage', ['order' => $order->id])->with('success', 'Order created successfully!');
     }
 
-    public function getStatusColor(){
-        $colors = [
-            'pending' => 'text-yellow-600',
-            'permintaan diterima' => 'text-green-600',
-            'ditolak' => 'text-red-600',
-            'selesai' => 'text-blue-600'
-        ];
+    // public function getStatusColor(){
+    //     $colors = [
+    //         'pending' => 'text-yellow-600',
+    //         'permintaan diterima' => 'text-green-600',
+    //         'ditolak' => 'text-red-600',
+    //         'selesai' => 'text-blue-600'
+    //     ];
 
-        return $colors[$this->order_status] ?? 'text-grey-600';
-    }
+    //     return $colors[$this->order_status] ?? 'text-grey-600';
+    // }
 
 
     public function showDetailPembelian($orderId){
