@@ -49,9 +49,9 @@ Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('p
 // })->name('DetailPembelianPage');
 
 
-Route::get('/PemDafPesananPage', function () {
-    return view('pembeli.PemDafPesananPage');
-})->name('PemDafPesananPage');
+// Route::get('/PemDafPesananPage', function () {
+//     return view('pembeli.PemDafPesananPage');
+// })->name('PemDafPesananPage');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
