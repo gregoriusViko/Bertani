@@ -46,12 +46,14 @@
             </div>
         </div>
 
+        @if (!empty($order->product->farmer->nomor_rekening))
         <div class="border border-b-black border-l-black">
             <div class="ml-4 grid grid-flow-row font-inter  my-3 mx-2">
                 <h2 class="font-semibold">Transfer ke rekening :</h2>
-                <h3 class="font-normal">"BANK - NOREK || NAMA"</h3>
+                <h3 class="font-normal">"{{$order->product->farmer->bank}} - {{$order->product->farmer->nomor_rekening}} || {{ $order->product->farmer->name }}"</h3>
             </div>
         </div>
+        @endif
 
         <div class="">
             <div class="grid grid-flow-row font-inter my-3 mx-2">
@@ -62,13 +64,17 @@
             </div>
         </div>
 
+        @if (empty($order->product->farmer->nomor_rekening))
         <div class="border border-l-black">
             <div class="ml-4 grid grid-flow-row font-inter font-normal my-3 mx-2">
-                <label for="bukti-transfer" class="block text-sm font-medium text-gray-700 mb-2">Upload Bukti Transfer Pembayaran</label>
+                <label for="bukti-transfer" class="block text-sm font-medium text-gray-700 mb-2">
+                    Upload Bukti Transfer Pembayaran
+                </label>
                 <input type="file" id="bukti-transfer" name="bukti_transfer" accept="image/*" class="block lg:w-3/4 w-3/4 text-sm text-gray-500 border border-gray-300 rounded-r-md cursor-pointer bg-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                 <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                 <button class="my-2 lg:w-3/4 w-3/4 text-white text-sm md:text-md bg-green-600 py-1 rounded-md hover:bg-green-400" type="submit">Konfirmasi Pesanan</button>
             </div>
         </div>
+        @endif
     </form>
 </x-layout>
