@@ -8,8 +8,7 @@
             </div>
             <div
                 class="nav-links transition ease-in duration-200 absolute bg-green-600 md:min-h-fit left-0 top-[-100%] lg:static lg:top-0 lg:w-auto w-full flex items-center px-5 py-4">
-                <ul
-                    class="relative font-hind flex flex-col lg:flex-row lg:items-center gap-[2vw] md:text-base text-lg">
+                <ul class="relative font-hind flex flex-col lg:flex-row lg:items-center gap-[2vw] md:text-base text-lg">
                     {{ $slot }}
                 </ul>
             </div>
@@ -50,6 +49,14 @@
         function toggleDropdownMenu() {
             const dropdown = document.getElementById("lainnyaDropdownMenu");
             dropdown.classList.toggle("hidden");
+        }
+
+        const navLinks = document.querySelector('.nav-links')
+
+        function onToggleMenu(e) {
+            e.name = e.name === 'menu' ? 'close' : 'menu';
+            navLinks.classList.toggle('top-[9%]');
+            navLinks.style.zIndex = '99';
         }
     </script>
 </div>
