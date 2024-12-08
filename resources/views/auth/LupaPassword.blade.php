@@ -16,8 +16,8 @@
 
             <p class="text-black text-3xl font-bold py-8 text-center">Lupa Password</p>
 
-            <form class="max-w-md mt-4 space-y-4 lg:mt-5 md:space-y-5">
-
+            <form class="max-w-md mt-4 space-y-4 lg:mt-5 md:space-y-5" action="{{ route('password.email') }}" method="post">
+                @csrf
                 <label for="password" class="block mb-2 text-2xl font-semibold text-black">Masukkan Email</label>
                 <div class="relative flex items-center">
                     <input type="email" placeholder="Masukkan Email" name="email" id="email"

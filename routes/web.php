@@ -1,11 +1,13 @@
 <?php
-use App\Http\Controllers\HargaPasarController;
+use App\Events\Typing;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
-use App\Models\Product;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HargaPasarController;
+use App\Models\Farmer;
 use App\Models\Order;
 
 require base_path('routes/admin.php');
@@ -68,10 +70,6 @@ Route::get('/hargapasar', function () {
 Route::get('/chatroom', function () {
     return view('ChatPage');
 })->name('ChatPage');
-
-Route::get('/GantiPassword', function () {
-    return view('auth.GantiPassword');
-})->name('GantiPassword');
 
 
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
