@@ -102,9 +102,11 @@
                                         <li onclick="selectOption('Cash')"
                                             class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
                                             Cash</li>
-                                        <li onclick="selectOption('Transfer')"
+                                            @if (!empty($order->product->farmer->nomor_rekening))
+                                            <li onclick="selectOption('Transfer')"
                                             class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
                                             Transfer</li>
+                                            @endif
                                     </ul>
                                     <input type="hidden" name="payment_method" id="paymentMethod" value="">
                                     <div class="justify-end">
