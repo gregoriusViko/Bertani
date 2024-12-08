@@ -9,7 +9,7 @@
         class="mx-auto m2ax-w-7xl px-4 py-2 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
         @forelse($orders as $order)
         {{-- kotak produk --}}
-        <a href="{{route('order.store', ['order' => $order->id]) }}" class="block">
+        <a href="{{route('DetailPembelianPage', ['order' => $order->id]) }}" class="block">
             <div class="hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer shadown-lg border rounded-lg p-4 sm:px-6 md:px-7 lg:px-8 grid grid-cols-10 gap-2 md:gap-6 lg:gap-6">
                 {{-- gambar produk --}}
                 <div class="col-start-1 row-start-1 col-span-10  md:col-span-3 md:row-span-4 lg:col-span-3 lg:row-span-4 rounded-lg">
@@ -44,9 +44,9 @@
                 {{-- status pesanan --}}
                 <div
                     class="font-libre-franklin font-normal row-start-6 col-span-6 col-start-6 md:row-start-3 md:col-start-9 md:col-span-3 md:row-span-2 ">
-                    @if ($order->order_status == 'menunggu konfirmasi')
+                    @if ($order->order_status == 'pending')
                         <h4 class="bg-yellow-200 text-sm rounded-md p-1 mb-1 flex justify-center relative">
-                            Butuh Konfirmasi
+                            Menunggu Konfirmasi
                             <span
                                 class="absolute top-1 right-0 transform translate-x-1/2 -translate-y-1/2 flex h-3 w-3">
                                 <span
