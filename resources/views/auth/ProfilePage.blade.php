@@ -3,15 +3,39 @@
     <!-- Kotak dengan konten -->
     <div class="bg-amber-100 text-white p-6 rounded-lg shadow-md max-w-xl items-center mx-auto mt-6">
         {{-- avatar --}}
-        <div class="flex flex-col items-center">
-            <div class="avatar mb-3 w-24 h-24">
+        {{-- <img :src="imageUrl" class="rounded-md border-2 md:w-full w-[400px] h-[300px] object-contain shadow-md" />
+                <div class="mt-4">
+                    <x-input-label for="foto" :value="__('Foto')" />
+                    <x-text-input accept="image/*" id="foto" class="block mt-1 w-full border p-2" type="file"
+                        name="foto" :value="old('foto')" required
+                        @change="imageUrl = URL.createObjectURL($event.target.files[0])" />
+                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+                </div> --}}
+
+        <div class="flex flex-col items-center relative">
+            <div class="avatar mb-3 w-24 h-24 relative">
                 {{-- <div class="size-16 rounded-full border border-black"> --}}
-                <img class="rounded-full object-cover w-24 h-24"
+                <img id="avatar" class="rounded-full object-cover w-24 h-24"
                     src="{{ $user->profile_img_link ? $user->profile_img_link : './img/orang.jpeg.jpg' }}" alt="avatar">
                 {{-- </div> --}}
+                <button id="editGbr"
+                    class="hidden absolute bottom-1 right-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                    title="Edit Gambar">
+                    <ion-icon name="pencil-outline"></ion-icon>
+                </button>
+                <!-- Tombol Hapus -->
+                <button id="hapusGbr"
+                    class="hidden absolute bottom-1 left-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+                    title="Hapus Gambar">
+                    <ion-icon name="trash-outline"></ion-icon>
+                </button>
+
+                <!-- Input File (Tersembunyi) -->
+                <input id="fileInput" type="file" accept="image/*" class="hidden">
             </div>
             <h2 class="text-base font-libre-franklin font-bold text-black">{{ $user->email }}</h2>
             <h4 class="font-libre-franklin font-normal text-sm text-gray-700">{{ $role }}</h4>
+
         </div>
 
         <div id="notif-message" class="notif-message hidden">
@@ -22,6 +46,7 @@
         <form class="mt-6 max-w-sm mx-auto " id="profile-form" action="{{ route('profile.update') }}" method="POST">
             @csrf
             <div class="mb-5">
+                <input id="fileInput" type="file" accept="image/*" name="profile_img" class="hidden">
                 <label for="nama-input" class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nama
                     Pengguna</label>
                 <input type="text" id="nama-input" name="name"
@@ -138,6 +163,42 @@
         // Tampilkan notif-message ketika tombol edit diaktifkan
         var notifMessage = document.getElementById('notif-message');
         notifMessage.style.display = isEditMode ? 'none' : 'block';
+        var editProf = document.getElementById('editGbr');
+        const fileInput = document.getElementById('fileInput');
+        const avatar = document.getElementById('avatar');
+
+        var hapusProf = document.getElementById('hapusGbr');
+
+        editProf.style.display = isEditMode ? 'hidden' : 'block';
+        // Ketika tombol edit diklik, buka input file
+        editGbr.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Ketika file dipilih, ganti gambar avatar
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // Buat URL sementara untuk pratinjau gambar
+                const imageUrl = URL.createObjectURL(file);
+                avatar.src = imageUrl;
+
+                // Anda juga bisa mengirim file ke server menggunakan FormData dan AJAX jika diperlukan
+                console.log('File yang dipilih:', file.name);
+            }
+        });
+
+        // Tambahkan event listener untuk tombol hapus
+        hapusProf.addEventListener('click', () => {
+            const defaultImage = './img/orang.jpeg.jpg'; // Path ke gambar default
+            avatar.src = defaultImage; // Set gambar kembali ke default
+            fileInput.value = ''; // Reset file input jika sebelumnya ada file terpilih
+
+        });
+
+
+        hapusProf.style.display = isEditMode ? 'hidden' : 'block';
+
 
         // Mengaktifkan atau menonaktifkan readonly dan disabled pada input dan select
         inputs.forEach(input => {
