@@ -18,5 +18,6 @@ Route::middleware(['auth:farmer', 'verified'])->group(function () {
         });
     
         Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
+        Route::get('/detailpesanan', [OrderController::class, 'detailOrder'])->name('detailpesanan');
     });
 });
