@@ -39,6 +39,7 @@ return new class  extends Migration
             $table->string('receipt_number', 50)->unique();
             $table->string('order_status', 30)->nullable();
             $table->text('cancellation_reason')->nullable();
+            $table->timestamp('updated_at');
         });
  
     }
