@@ -1,9 +1,9 @@
 <x-layout>
-    <x-slot:title>Pembayaran Product-Bertani.com</x-slot:title>
+    <x-slot:title>Detail Pesanan-Bertani.com</x-slot:title>
 
     <div class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-2 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pembelian</h1>
-        <a href="{{ route('DafPesananPembeli', ['order'=>$order]) }}">
+        <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pesanan</h1>
+        <a href="{{ route('order.store', ['order'=>$order]) }}">
             <button  type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
                 Kembali
             </button>
@@ -71,12 +71,6 @@
             Batalkan Pesanan
         </button>
         @endif
-
-        @if($order->order_status == 'diterima')
-        <a href="{{route('order.showPaymentPage', ['order' => $order->id] ) }}" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-blue-500 sm:w-auto mt-2 sm:mt-0">
-            Pembayaran
-        </a>
-        @endif
     </div>
 
 
@@ -87,7 +81,7 @@
             <form action="{{route('order.cancel', ['order'=>$order->id])}}" method="POST">
                 @csrf
                 @method('PATCH')
-            <textarea id="cancellation_reason" name="cancellation_reason" class="w-full border border-gray-500 rounded-lg p-2 mb-4 resize-none" rows="4" placeholder="Masukkan alasan pembatalan"></textarea>
+            <textarea id="cancellation_reason" class="w-full border border-gray-500 rounded-lg p-2 mb-4 resize-none" rows="4" placeholder="Masukkan alasan pembatalan"></textarea>
             <div class="flex justify-end gap-4">
                 <button type="button" onclick="closePopup()" class="border border-black inline-flex px-4 py-2 bg-white rounded-lg gap-x-2 hover:bg-gray-200">
                 <img src="/img/laporanbatal.png" alt="batalkanPesanan" class="w-5 h-5">BATAL</button>
