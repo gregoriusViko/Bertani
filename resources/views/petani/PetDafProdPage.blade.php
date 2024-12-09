@@ -159,10 +159,9 @@
 
 
     <script>
+        const body = document.body;
         function toggleComponent(productId) {
             const modal = document.getElementById(`deleteConfirm-${productId}`);
-            const body = document.body;
-
             if (modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden'); // Tampilkan modal
                 body.style.overflow = 'hidden'; // Kunci scroll
@@ -177,14 +176,17 @@
             if (messageElement) {
                 messageElement.style.display = 'none';
                 document.body.style.overflow = '';
+                body.style.overflow = ''; // Aktifkan scroll
             }
         }
 
         // Hilangkan pesan secara otomatis setelah 5 detik
         window.onload = function() {
             const messageElement = document.getElementById('successMessage');
+            body.style.overflow = 'hidden'; // Kunci scroll
             if (messageElement) {
                 document.body.style.overflow = 'hidden';
+                body.style.overflow = 'hidden'; // Kunci scroll
                 setTimeout(() => {
                     closeMessage('successMessage');
                 }, 3000); // 5000 ms = 5 detik
