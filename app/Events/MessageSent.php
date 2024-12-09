@@ -12,6 +12,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Support\Facades\Auth;
 
 class MessageSent implements ShouldBroadcastNow
 {
@@ -19,9 +20,12 @@ class MessageSent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
+
+    private $userSlug;
     
-    public function __construct(public $userSlug, public $role, public $message, public $sender)
+    public function __construct(public $friendSlug, public $friendRole, public $idMessage, public $role)
     {
+        $this->userSlug = Auth::guard($this->role)->user()->slug;
     }
 
     /**
@@ -32,13 +36,13 @@ class MessageSent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("chat.{$this->role}.{$this->userSlug}"),
+            new PrivateChannel("chat.{$this->friendRole}.{$this->friendSlug}"),
         ];
     }
     public function broadcastWith(){
         return [
-            'message' => $this->message->id,
-            'sender' => $this->sender
+            'message' => $this->idMessage,
+            'sender' => $this->userSlug
         ];
     }
 }
