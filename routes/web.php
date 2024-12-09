@@ -92,29 +92,4 @@ Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
-Route::get('cobacoba', function(){
-    $user = Auth::guard('farmer')->user();
-
-    // Ambil semua farmerChats dan urutkan berdasarkan created_at terbaru
-    $chats = $user->farmerChats->sortByDesc('send_time');
-
-    // Group berdasarkan buyer_id
-    $contacts = $chats->groupBy('buyer_id');
-
-    // Ubah ke format yang dapat dicetak
-    $sortedContacts = $contacts->map(function ($chatGroup) {
-        // Ambil chat terbaru di setiap grup
-        return $chatGroup->first();
-    });
-
-    // Urutkan kembali berdasarkan tanggal terbaru
-    $sortedContacts = $sortedContacts->sortByDesc('send_time');
-
-    // Cetak kontak
-    dd($sortedContacts);
-
-    $user = Auth::guard('farmer')->user();
-    $chats = $user->farmerChats;
-    $contact = $chats->groupBy('buyer_id');
-    dd($contact->get(44));
-});
+Route::get('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
