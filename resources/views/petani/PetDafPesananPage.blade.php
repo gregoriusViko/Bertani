@@ -27,7 +27,7 @@
                     </div>
                     <div
                         class="font-libre-franklin text-xs md:text-sm lg:text-base font-light row-start-2 col-span-8 col-start-1 md:col-start-8 md:row-start-1 md:col-span-4 md:flex md:justify-end ">
-                        <h4 class="text-sm">"dd-mm-yyyy - 13.20 WIB"</h4>
+                        <h4 class="text-sm">{{$order->order_time->format('d F Y, H:i')}}</h4>
                     </div>
                     <!-- namapembeli -->
                     <div
@@ -62,7 +62,7 @@
 
                     <div
                         class="font-libre-franklin font-normal row-start-6 col-span-6 col-start-6 md:row-start-3 md:col-start-9 md:col-span-3 md:row-span-2 ">
-                        @if ($order->order_status == 'menunggu konfirmasi')
+                        @if ($order->order_status == 'pending')
                             <h4 class="bg-yellow-200 text-sm rounded-md p-1 mb-1 flex justify-center relative">
                                 Butuh Konfirmasi
                                 <span
@@ -80,6 +80,22 @@
                                         name="checkmark-circle-outline"
                                         class="transition ease-in duration-100 text-3xl"></ion-icon></button>
                             </div>
+
+                        <!-- Form Penolakan Pesanan -->
+                         <!-- <div id="declineForm" class="hidden mt-4">
+                            <form action="{{route('orders.reject', $order->id)}}" method="POST">
+                                @csrf
+                                <label for="reason" class="block text-sm font-medium text-gray-700">Alasan Penolakan</label>
+                                <textarea id="reason" name="reason" rows="3" required
+                                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                                <div class="flex justify-end mt-2">
+                                    <button type="button" onclick="hideDeclineForm()"
+                                        class="mr-2 px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">Batal</button>
+                                    <button type="submit"
+                                        class="px-4 py-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600">Kirim</button>
+                                </div>
+                            </form>
+                         </div> -->
                         @elseif ($order->order_status == 'permintaan diterima')
                             <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Diterima
                             </h4>
@@ -151,21 +167,32 @@
         </div>
     </x-modal>
     <x-Modal id="showDecline-modal">
-        <div class="grid grid-flow-row">
-            <div class="text-xl">Konfirmasi Pesanan</div>
-            <div class="text-lg">Yakin anda menolak pesanan</div>
-            <div class="mt-4 flex justify-end space-x-2">
-                <button class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
-                    onclick="closeModal('showDecline-modal')">
-                    TIDAK
-                </button>
-                {{-- jika di klik setuju, maka status berubah pesanan siap --}}
-                <button class=" bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400"
-                    onclick="setujuTolak('showDecline-modal')">
-                    YA
-                </button>
-            </div>
+            <form method="POST" action="{{route('orders.reject', $order->id)}}"  class="grid grid-flow-row">
+                @csrf
+                @method('POST')
+                <div class="text-xl">Konfirmasi Pesanan</div>
+                <div class="text-lg">Yakin anda menolak pesanan</div>
+
+        <!-- Form alasan penolakan -->
+        <div class="mt-4">
+            <label for="rejection_reason" class="block text-sm font-medium text-gray-700">Alasan Penolakan</label>
+            <textarea id="rejection_reason" name="rejection_reason" rows="4" required
+                class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
         </div>
+
+        <div class="mt-4 flex justify-end space-x-2">
+            <!-- Tombol Batal -->
+            <button type="button" class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
+                onclick="closeModal('showDecline-modal')">
+                TIDAK
+            </button>
+
+            <!-- Tombol Setuju -->
+            <button type="submit" class="bg-blue-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-blue-400">
+                YA
+            </button>
+                </div>                 
+            </form>
     </x-modal>
 
 
@@ -213,6 +240,14 @@
             if (modal) {
                 modal.classList.add('hidden');
             }
+        }
+
+        function showDeclineForm() {
+                document.getElementById('declineForm').classList.remove('hidden');
+        }
+
+        function hideDeclineForm() {
+            document.getElementById('declineForm').classList.add('hidden');
         }
     </script>
 </x-layout>
