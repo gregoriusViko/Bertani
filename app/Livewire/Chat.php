@@ -19,25 +19,53 @@ class Chat extends Component
     public function getListeners()
     {
         return [
-            "echo-private:chat.{$this->role}.{$this->user->id},MessageSent" => "updateMessage"
+            "echo-private:chat.{$this->role}.{$this->user->slug},MessageSent" => "updateMessage"
         ];
     }
 
-    public function updateMessage()
+    public function updateMessage($responce)
     {
-        if($this->user->id == Auth::guard($this->role)->user()->id){
             if($this->role == 'farmer'){
-                $newChat = $this->user->farmerChats()->latest()->first();
-                $friend = $newChat->buyer;
+                $newChat = FarmerChat::find($responce['message']);
+                $user = $newChat->farmer;
             }else{
-                $newChat = $this->user->buyerChats()->latest()->first();
-                $friend = $newChat->farmer;
+                $newChat = BuyerChat::find($responce['message']);
+                $user = $newChat->buyer;
             }
     
-            if($this->friend->id == $friend->id){
+            if($this->user->id === $user->id){
                 $this->content->push($newChat);
+                $this->chats->push($newChat);
             }
-            $this->chats->push($newChat);
+            if($this->friend->slug == $responce['sender']){
+                $this->readed();
+            }
+            $this->updateContact();
+    }
+
+    public function updateContact(){
+        if($this->role == 'farmer'){
+            $this->contacts = $this->chats->sortByDesc('send_time')->groupBy('buyer_id')->map(function($contact){
+                return [
+                    'name' => $contact->first()->buyer->name,
+                    'slug' => $contact->first()->buyer->slug,
+                    'profile_img_link' => $contact->first()->buyer->profile_img_link,
+                    'not_read' => $contact->sum(function($pesan){
+                        return $pesan->role == 'receiver' && $pesan->is_read == 0 ? 1 : 0;
+                    })
+                ];
+            });
+        }else{
+            $this->contacts = $this->chats->sortByDesc('send_time')->groupBy('farmer_id')->map(function($contact){
+                return [
+                    'name' => $contact->first()->farmer->name,
+                    'slug' => $contact->first()->farmer->slug,
+                    'profile_img_link' => $contact->first()->farmer->profile_img_link,
+                    'not_read' => $contact->sum(function($pesan){
+                        return $pesan->role == 'receiver' && $pesan->is_read == 0 ? 1 : 0;
+                    })
+                ];
+            });
         }
     }
 
@@ -46,13 +74,7 @@ class Chat extends Component
         $this->role = Auth::guard('farmer')->check() ? 'farmer' : 'buyer';
         $this->user = Auth::guard($this->role)->user();
         if ($this->role == 'farmer') {
-            $this->chats = $this->user->farmerChats;
-            $this->contacts = $this->chats->unique('buyer_id')->latest('send_time')->get()->map(function($chat){
-                return [
-                    'name' => $chat->farmer->name,
-                    'not_read' => $chat
-                ];
-            });
+            $this->chats = $this->user->farmerChats()->get();
             $buyer = $slug ? Buyer::where('slug', $slug)->first() : null;
             if ($buyer) {
                 $this->friend = $buyer;
@@ -62,16 +84,27 @@ class Chat extends Component
             }
         } else {
             $this->chats = $this->user->buyerChats;
-            $this->contacts = $this->chats->unique('farmer_id')->pluck('farmer');
             $farmer = $slug ? Farmer::where('slug', $slug)->first() : null;
             if ($farmer) {
                 $this->friend = $farmer;
-                $this->content = $this->chats->where('buyer_id', $farmer->id);
+                $this->content = $this->chats->where('farmer_id', $farmer->id);
             } elseif ($slug) {
                 abort(404);
             }
         }
+        $this->readed();
+        $this->updateContact();
     }
+
+    public function readed(){
+        if($this->content){
+            foreach($this->content as $message){
+                $message->is_read = 1;
+                $message->save();
+            }
+        }
+    }
+
     public function render()
     {
         return view('livewire.chat')->layout('components.layout');
@@ -84,6 +117,7 @@ class Chat extends Component
 
     public function kirimPesan()
     {
+
         if ($this->role == 'farmer') {
             $farmer_id = $this->user->id;
             $buyer_id = $this->friend->id;
@@ -97,12 +131,16 @@ class Chat extends Component
             'farmer_id' => $farmer_id,
             'buyer_id' => $buyer_id
         ];
-        FarmerChat::create($message + ['role' => $this->role == 'farmer' ? 'sender' : 'receiver']);
-        BuyerChat::create($message + ['role' => $this->role == 'buyer' ? 'sender' : 'receiver']);
+        $chatFarmer = FarmerChat::create($message + ['role' => $this->role == 'farmer' ? 'sender' : 'receiver']);
+        $chatBuyer = BuyerChat::create($message + ['role' => $this->role == 'buyer' ? 'sender' : 'receiver']);
 
         $this->message = '';
 
-        broadcast(new MessageSent($this->role == 'farmer' ? 'buyer' : 'farmer', $this->friend->id))->toOthers();
-        $this->updateMessage();
+        $newChat = $this->role == 'farmer' ? $chatFarmer : $chatBuyer;
+
+        $friendRole = $this->role == 'farmer' ? 'buyer' : 'farmer';
+
+        broadcast(new MessageSent($this->friend->slug, $friendRole, $newChat->id, $this->role));
+        $this->content->push($newChat);
     }
 }
