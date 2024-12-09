@@ -61,6 +61,21 @@ class OrderController extends Controller
         return redirect()->route('DafPesananPembeli')->with('success','order has been cancelled');
     }
 
+    public function reject(Request $request, $orderId){
+        $order = Order::findOrFail($orderId);
+
+        $validated = $request->validate([
+            'rejection_reason' => 'required|string',
+        ]);
+
+        $order->update([
+            'order_status' => 'ditolak',
+            'rejection_reason' => $validated['rejection_reason']
+        ]);
+
+        return redirect()->back()->with('success', 'Pesanan berhasil ditolak.');
+    }
+
     
 
     // Simpan order setelah pembayaran dikonfirmasi
