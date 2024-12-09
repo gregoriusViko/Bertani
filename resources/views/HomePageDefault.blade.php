@@ -76,6 +76,15 @@
         </div>
     </div>
 
+    <button id="scrollToTopBtn"
+        class="fixed bottom-8 right-8 bg-green-500 text-white px-3 pt-3 pb-2 rounded-full shadow-lg place-content-center hover:bg-indigo-600 transition duration-300 hidden"
+        onclick="scrollToTop()">
+        {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg> --}}
+        <ion-icon name="arrow-up-circle-outline" class="h-6 w-6"></ion-icon>
+    </button>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
@@ -104,7 +113,7 @@
                 }
             }).done(function(data) {
                 if (data == "") {
-                    $('#loading').html("No more records found");
+                    $('#loading').html("");
                     isLoading = false; // Izinkan pemanggilan ulang jika diperlukan
                     return;
                 }
@@ -114,6 +123,26 @@
             }).fail(function(jqXHR, ajaxOptions, thrownError) {
                 $('#loading').html("Sedang ada gangguan");
                 isLoading = false; // Reset flag
+            });
+        }
+    </script>
+    <script>
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // Tampilkan tombol saat pengguna scroll ke bawah
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.remove("hidden");
+            } else {
+                scrollToTopBtn.classList.add("hidden");
+            }
+        });
+
+        // Fungsi untuk scroll ke atas
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
             });
         }
     </script>

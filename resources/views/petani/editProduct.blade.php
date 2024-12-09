@@ -51,7 +51,7 @@
                     <x-input-label for="Stok" :value="__('Jumlah Stok')" />
                     <x-text-input id="Stok"
                         class="block mt-1  border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full"
-                        type="number" name="stok" :value="old('Stok')" x-mask:dynamic="$Stok($input, ',')" required />
+                        type="number" min="0" name="stok" :value="old('Stok')" x-mask:dynamic="$Stok($input, ',')" required />
                     <x-input-error :messages="$errors->get('Stok')" class="mt-2 " />
                 </div>
                 {{-- harga --}}
@@ -59,7 +59,7 @@
                     <x-input-label for="harga" :value="__('Harga')" />
                     <x-text-input id="harga"
                         class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50"
-                        type="text" name="harga" :value="old('harga')" required />
+                        type="text" min="0" name="harga" :value="old('harga')" required />
                     <x-input-error :messages="$errors->get('harga')" class="mt-2" />
                 </div>
                 {{-- deskripsi --}}
