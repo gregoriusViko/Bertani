@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Broadcast;
 
 class Chat extends Component
 {
-    public $user, $role, $chats, $content, $contacts, $interlocutor, $message;
+    public $user, $role, $chats, $content, $contacts, $friend, $message;
     public function getListeners()
     {
         return [
-            "echo:chat.{$this->role}.{$this->user->id},MessageSent" => "updateMessage"
+            "echo-private:chat.{$this->role}.{$this->user->id},MessageSent" => "updateMessage"
         ];
     }
 
@@ -28,13 +28,13 @@ class Chat extends Component
         if($this->user->id == Auth::guard($this->role)->user()->id){
             if($this->role == 'farmer'){
                 $newChat = $this->user->farmerChats()->latest()->first();
-                $interlocutor = $newChat->buyer;
+                $friend = $newChat->buyer;
             }else{
                 $newChat = $this->user->buyerChats()->latest()->first();
-                $interlocutor = $newChat->farmer;
+                $friend = $newChat->farmer;
             }
     
-            if($this->interlocutor->id == $interlocutor->id){
+            if($this->friend->id == $friend->id){
                 $this->content->push($newChat);
             }
             $this->chats->push($newChat);
@@ -47,10 +47,15 @@ class Chat extends Component
         $this->user = Auth::guard($this->role)->user();
         if ($this->role == 'farmer') {
             $this->chats = $this->user->farmerChats;
-            $this->contacts = $this->chats->unique('buyer_id')->pluck('buyer');
+            $this->contacts = $this->chats->unique('buyer_id')->latest('send_time')->get()->map(function($chat){
+                return [
+                    'name' => $chat->farmer->name,
+                    'not_read' => $chat
+                ];
+            });
             $buyer = $slug ? Buyer::where('slug', $slug)->first() : null;
             if ($buyer) {
-                $this->interlocutor = $buyer;
+                $this->friend = $buyer;
                 $this->content = $this->chats->where('buyer_id', $buyer->id);
             } elseif ($slug) {
                 abort(404);
@@ -60,7 +65,7 @@ class Chat extends Component
             $this->contacts = $this->chats->unique('farmer_id')->pluck('farmer');
             $farmer = $slug ? Farmer::where('slug', $slug)->first() : null;
             if ($farmer) {
-                $this->interlocutor = $farmer;
+                $this->friend = $farmer;
                 $this->content = $this->chats->where('buyer_id', $farmer->id);
             } elseif ($slug) {
                 abort(404);
@@ -81,10 +86,10 @@ class Chat extends Component
     {
         if ($this->role == 'farmer') {
             $farmer_id = $this->user->id;
-            $buyer_id = $this->interlocutor->id;
+            $buyer_id = $this->friend->id;
         } else {
             $buyer_id = $this->user->id;
-            $farmer_id = $this->interlocutor->id;
+            $farmer_id = $this->friend->id;
         }
         $message = [
             'is_read' => 0,
@@ -97,7 +102,7 @@ class Chat extends Component
 
         $this->message = '';
 
-        broadcast(new MessageSent($this->role == 'farmer' ? 'buyer' : 'farmer', $this->interlocutor->id))->toOthers();
+        broadcast(new MessageSent($this->role == 'farmer' ? 'buyer' : 'farmer', $this->friend->id))->toOthers();
         $this->updateMessage();
     }
 }
