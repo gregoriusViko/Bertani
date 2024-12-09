@@ -18,7 +18,7 @@ return new class extends Migration
                 table:'products',
                 indexName: 'product_id'
             );
-            $table->timestamps();
+            $table->datetimes();
             $table->decimal('price');
         });
     }

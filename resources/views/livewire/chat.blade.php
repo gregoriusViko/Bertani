@@ -15,24 +15,30 @@
                     {{-- container nama kontak --}}
                     <div class="h-auto min-h-[10rem] md:min-h-[25rem] lg:min-h-[32rem] overflow-y-auto">
                         @foreach ($contacts as $contact)
-                            <a href="{{ route('chat', $contact->slug) }}" wire:navigate>
+                            <a href="{{ route('chat', $contact['slug']) }}" wire:navigate>
                                 <button
-                                    class="py-1 w-full pl-1 md:pl-4 pt-4 pb-4 flex items-center justify-start gap-x-1 md:gap-x-0 text-xs md:text-xl font-hind font-medium {{ request()->is(route('chat', $contact->slug)) ? 'bg-green-400' : 'hover:bg-green-300' }}">
+                                    class="py-1 w-full pl-1 md:pl-4 pt-4 pb-4 flex items-center justify-start gap-x-1 md:gap-x-0 text-xs md:text-xl font-hind font-medium {{ request()->is(route('chat', $contact['slug'])) ? 'bg-green-400' : 'hover:bg-green-300' }}">
                                     <span>
                                         {{-- @if ($user && $user->profile_img_link) --}}
                                         {{-- <img src="./img/bglogin.jpg" alt=""
                                 class="w-4 h-4 md:w-8 md:h-8 md:mr-5 rounded-full object-cover group-hover:text-green-600"> --}}
                                         {{-- @elseif ($user) --}}
-                                        @if ($contact->profile_img_link)
-                                            {{-- tambahkan gambar --}}
-                                            <ion-icon name="person-circle-outline"
-                                                class="w-4 h-4 md:w-8 md:h-8 md:pr-5 flex justify-center"></ion-icon>
+                                        @if ($contact['profile_img_link'])
+                                            <img src="{{ $contact['profile_img_link']}}" alt="profile"
+                                            class="w-4 h-4 md:w-8 md:h-8 md:pr-5 flex justify-center">
                                         @else
                                             <ion-icon name="person-circle-outline"
                                                 class="w-4 h-4 md:w-8 md:h-8 md:pr-5 flex justify-center"></ion-icon>
                                         @endif
                                     </span>
-                                    {{ $contact->name }}
+                                    @if ($contact['not_read'] > 0)
+                                    {{ Str::limit($contact['name'], 15) }}
+                                    <div class="inline-block ml-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center justify-end">
+                                        {{ $contact['not_read'] }}
+                                    </div>
+                                    @else
+                                    {{ Str::limit($contact['name'], 20) }}
+                                    @endif
                                 </button>
                             </a>
                         @endforeach
@@ -64,10 +70,10 @@
                                 <div class="flex flex-col leading-tight">
                                     {{-- nama --}}
                                     <div class="text-xs md:text-xl font-hind font-bold mt-1 flex items-center">
-                                        <span class="text-gray-700 mr-3">{{ $interlocutor->name }}</span>
+                                        <span class="text-gray-700 mr-3">{{ $friend->name }}</span>
                                     </div>
                                     {{-- role --}}
-                                    <span class="text-xs md:text-lg font-hind font-medium text-gray-600">{{ $interlocutor->email }}</span>
+                                    <span class="text-xs md:text-lg font-hind font-medium text-gray-600">{{ $friend->email }}</span>
                                 </div>
                             </div>
                         </div>
