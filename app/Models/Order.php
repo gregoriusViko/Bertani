@@ -10,10 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Order extends Model
 {
     use HasFactory;
-    public $updated_at = false;
     const CREATED_AT = 'order_time';
 
-    protected $guarded = ['id','order_time'];
+    protected $guarded = ['id'];
     protected $with = ['buyer', 'product', 'historyPrice'];
     public function buyer(): BelongsTo{
         return $this->belongsTo(Buyer::class);

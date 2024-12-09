@@ -24,7 +24,7 @@ class ProductSeeder extends Seeder
             'slug' => fake()->slug(),
             'img_link' => '/img/logo3.jpg'
         ]);
-        Product::factory(count: 100)->recycle([
+        Product::factory(count: 200)->recycle([
             Farmer::all(),
             TypeOfProduct::all(),
         ])->create();
