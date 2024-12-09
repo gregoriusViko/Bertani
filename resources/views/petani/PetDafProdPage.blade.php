@@ -164,7 +164,7 @@
             const modal = document.getElementById(`deleteConfirm-${productId}`);
             if (modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden'); // Tampilkan modal
-                body.style.overflow = 'hidden'; // Kunci scroll
+                body.style.overflow = 'hidden'; // Kunci scroll/
             } else {
                 modal.classList.add('hidden'); // Sembunyikan modal
                 body.style.overflow = ''; // Aktifkan scroll
@@ -175,7 +175,6 @@
             const messageElement = document.getElementById(elementId);
             if (messageElement) {
                 messageElement.style.display = 'none';
-                document.body.style.overflow = '';
                 body.style.overflow = ''; // Aktifkan scroll
             }
         }
@@ -183,9 +182,8 @@
         // Hilangkan pesan secara otomatis setelah 5 detik
         window.onload = function() {
             const messageElement = document.getElementById('successMessage');
-            body.style.overflow = 'hidden'; // Kunci scroll
             if (messageElement) {
-                document.body.style.overflow = 'hidden';
+                // document.body.style.overflow = 'hidden';
                 body.style.overflow = 'hidden'; // Kunci scroll
                 setTimeout(() => {
                     closeMessage('successMessage');
@@ -195,7 +193,7 @@
             // Hilangkan pesan error setelah 5 detik
             const errorMessage = document.getElementById('errorMessage');
             if (errorMessage) {
-                document.body.style.overflow = 'hidden';
+                body.style.overflow = 'hidden';
                 setTimeout(() => {
                     closeMessage('errorMessage');
                 }, 3000); // 5000 ms = 5 detik
