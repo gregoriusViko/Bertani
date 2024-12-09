@@ -3,15 +3,39 @@
     <!-- Kotak dengan konten -->
     <div class="bg-amber-100 text-white p-6 rounded-lg shadow-md max-w-xl items-center mx-auto mt-6">
         {{-- avatar --}}
-        <div class="flex flex-col items-center">
-            <div class="avatar mb-3 w-24 h-24">
+        {{-- <img :src="imageUrl" class="rounded-md border-2 md:w-full w-[400px] h-[300px] object-contain shadow-md" />
+                <div class="mt-4">
+                    <x-input-label for="foto" :value="__('Foto')" />
+                    <x-text-input accept="image/*" id="foto" class="block mt-1 w-full border p-2" type="file"
+                        name="foto" :value="old('foto')" required
+                        @change="imageUrl = URL.createObjectURL($event.target.files[0])" />
+                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+                </div> --}}
+
+        <div class="flex flex-col items-center relative">
+            <div class="avatar mb-3 w-24 h-24 relative">
                 {{-- <div class="size-16 rounded-full border border-black"> --}}
-                <img class="rounded-full object-cover w-24 h-24"
+                <img id="avatar" class="rounded-full object-cover w-24 h-24"
                     src="{{ $user->profile_img_link ? $user->profile_img_link : './img/orang.jpeg.jpg' }}" alt="avatar">
                 {{-- </div> --}}
+                <button id="editGbr"
+                    class="hidden absolute bottom-1 right-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                    title="Edit Gambar">
+                    <ion-icon name="pencil-outline"></ion-icon>
+                </button>
+                <!-- Tombol Hapus -->
+                <button id="hapusGbr"
+                    class="hidden absolute bottom-1 left-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+                    title="Hapus Gambar">
+                    <ion-icon name="trash-outline"></ion-icon>
+                </button>
+
+                <!-- Input File (Tersembunyi) -->
+                <input id="fileInput" type="file" accept="image/*" class="hidden">
             </div>
             <h2 class="text-base font-libre-franklin font-bold text-black">{{ $user->email }}</h2>
             <h4 class="font-libre-franklin font-normal text-sm text-gray-700">{{ $role }}</h4>
+
         </div>
 
         <div id="notif-message" class="notif-message hidden">
@@ -22,6 +46,7 @@
         <form class="mt-6 max-w-sm mx-auto " id="profile-form" action="{{ route('profile.update') }}" method="POST">
             @csrf
             <div class="mb-5">
+                <input id="fileInput" type="file" accept="image/*" name="profile_img" class="hidden">
                 <label for="nama-input" class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nama
                     Pengguna</label>
                 <input type="text" id="nama-input" name="name"
@@ -51,23 +76,29 @@
             </div>
 
             @if (Auth::guard('farmer')->check())
-            <div class="mb-5">
-                <label for="bank-input"
-                    class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Bank</label>
-                <input type="text" id="bank-input" name="bank"
-                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{ $user->bank }}" required readonly />
-            </div>
+                <div class="mb-5">
+                    <label for="bank-input"
+                        class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Bank</label>
+                    <select id="bank-input" name="bank"
+                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        required readonly disabled>
+                        <option value="BRI" {{ $user->bank === 'BRI' ? 'selected' : '' }}>BRI</option>
+                        <option value="BNI" {{ $user->bank === 'BNI' ? 'selected' : '' }}>BNI</option>
+                        <option value="Mandiri" {{ $user->bank === 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                        <option value="BCA" {{ $user->bank === 'BCA' ? 'selected' : '' }}>BCA</option>
+                    </select>
+                </div>
 
-            <div class="mb-5">
-                <label for="rekening-input"
-                    class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nomor Rekening</label>
-                <input type="text" id="rekening-input" name="nomor_rekening"
-                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{ $user->nomor_rekening }}" required readonly />
-            </div>
+                <div class="mb-5">
+                    <label for="rekening-input"
+                        class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nomor
+                        Rekening</label>
+                    <input type="text" id="rekening-input" name="nomor_rekening"
+                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        value="{{ $user->nomor_rekening }}" required readonly />
+                </div>
             @endif
-            
+
         </form>
         {{-- button group --}}
         <div class="flex items-center justify-between mt-4">
@@ -108,30 +139,87 @@
                 </x-Message-success>
             </div>
         @endif
+        {{-- message ketika gagal menghapus produk --}}
+        @if (session('Gagal'))
+            <div id="errorMessage"
+                class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
+                <x-Message-error message="{{ session('error') }}">
+                    Terjadi kesalahan dalam update profile.
+                    <button onclick="closeMessage('error')"
+                        class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                        <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+                    </button>
+                </x-Message-error>
+            </div>
+        @endif
 
     </div>
 </x-layout>
 <script>
     function toggleAllInputs() {
-        var inputs = document.querySelectorAll('input[readonly]');
+        var inputs = document.querySelectorAll('input[readonly], select[disabled]');
         var isEditMode = !inputs[0].hasAttribute('readonly');
 
         // Tampilkan notif-message ketika tombol edit diaktifkan
         var notifMessage = document.getElementById('notif-message');
-        notifMessage.style.display = isEditMode ? 'none' : 'block'; // Munculkan jika edit mode aktif
+        notifMessage.style.display = isEditMode ? 'none' : 'block';
+        var editProf = document.getElementById('editGbr');
+        const fileInput = document.getElementById('fileInput');
+        const avatar = document.getElementById('avatar');
 
-        // Mengaktifkan atau menonaktifkan readonly pada input
+        var hapusProf = document.getElementById('hapusGbr');
+
+        editProf.style.display = isEditMode ? 'hidden' : 'block';
+        // Ketika tombol edit diklik, buka input file
+        editGbr.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Ketika file dipilih, ganti gambar avatar
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // Buat URL sementara untuk pratinjau gambar
+                const imageUrl = URL.createObjectURL(file);
+                avatar.src = imageUrl;
+
+                // Anda juga bisa mengirim file ke server menggunakan FormData dan AJAX jika diperlukan
+                console.log('File yang dipilih:', file.name);
+            }
+        });
+
+        // Tambahkan event listener untuk tombol hapus
+        hapusProf.addEventListener('click', () => {
+            const defaultImage = './img/orang.jpeg.jpg'; // Path ke gambar default
+            avatar.src = defaultImage; // Set gambar kembali ke default
+            fileInput.value = ''; // Reset file input jika sebelumnya ada file terpilih
+
+        });
+
+
+        hapusProf.style.display = isEditMode ? 'hidden' : 'block';
+
+
+        // Mengaktifkan atau menonaktifkan readonly dan disabled pada input dan select
         inputs.forEach(input => {
             if (isEditMode) {
-                input.setAttribute('readonly', true); // Nonaktifkan input
+                if (input.tagName === 'SELECT') {
+                    input.setAttribute('disabled', true); // Nonaktifkan select
+                } else {
+                    input.setAttribute('readonly', true); // Nonaktifkan input
+                }
                 input.value = input.getAttribute('data-original'); // Kembalikan ke nilai asli
             } else {
-                input.removeAttribute('readonly'); // Aktifkan input
+                if (input.tagName === 'SELECT') {
+                    input.removeAttribute('disabled'); // Aktifkan select
+                } else {
+                    input.removeAttribute('readonly'); // Aktifkan input
+                }
                 input.setAttribute('data-original', input.value); // Simpan nilai asli
             }
 
-            // Set warna border menjadi hitam saat input aktif
-            if (!input.hasAttribute('readonly')) {
+            // Set warna border menjadi hitam saat aktif
+            if (!input.hasAttribute('readonly') && !input.hasAttribute('disabled')) {
                 input.style.borderColor = 'black';
             }
         });
@@ -139,6 +227,8 @@
         // Aktifkan atau nonaktifkan tombol simpan
         document.getElementById('save-button').disabled = isEditMode;
     }
+
+
 
 
     // Function to close the message component
