@@ -52,7 +52,7 @@ class OrderSeeder extends Seeder
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
             'order_status' => 'ditolak'
         ]);
-        Order::factory(75)->recycle([
+        Order::factory(500)->recycle([
             Buyer::all(),
             Product::all()
         ])->create();
