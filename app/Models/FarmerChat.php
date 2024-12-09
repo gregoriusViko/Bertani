@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class FarmerChat extends Model
 {
     use HasFactory;
-    public $updated_at = false;
+    const UPDATED_AT = null;
     const CREATED_AT = 'send_time';
     protected $guarded = ['send_time'];
 

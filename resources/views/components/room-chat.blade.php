@@ -78,7 +78,7 @@
 </style>
 <script>
     // function sendTypingEvent(){
-    //     Echo.private(`chat.{{ $role == 'farmer' ? 'buyer' : 'farmer' }}.{{ $interlocutor->id }}`).whisper("typing", {
+    //     Echo.private(`chat.{{ $role == 'farmer' ? 'buyer' : 'farmer' }}.{{ $friend->id }}`).whisper("typing", {
     //         userID: {{ $user->id }},
     //     });
     // }
@@ -93,7 +93,7 @@
     //     .listenForWhisper("typing", (response) => {
     //         const typingIndicator = document.getElementById('typing');
             
-    //         if (response.userID !== {{ $interlocutor->id }}) {
+    //         if (response.userID !== {{ $friend->id }}) {
     //             typingIndicator.hidden = true;
     //             return;
     //         }
