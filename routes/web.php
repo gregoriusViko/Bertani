@@ -93,3 +93,5 @@ Route::get('/order/{order}/detail', [OrderController::class, 'showDetailPembelia
 Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder'])->name('order.cancel');
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
