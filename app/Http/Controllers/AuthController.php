@@ -141,6 +141,7 @@ class AuthController extends Controller
     public function showResetPasswordForm(Request $request, $token)
     {
         $email = $request->email;
+        $token = $request->token;
         return view('auth.GantiPassword', compact(['email', 'token']));
     }
 
@@ -149,23 +150,21 @@ class AuthController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:6|confirmed'
         ]);
-
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, string $password) {
-                $temp = Farmer::find($user);
-                $user = $temp ? $temp : Buyer::find($user);
+            function ($user, $password) {
+                // Tentukan model berdasarkan tipe user
+                $model = $user instanceof Farmer ? Farmer::class : Buyer::class;
                 $user->forceFill([
                     'password' => Hash::make($password),
                     'remember_token' => Str::random(60)
                 ])->save();
             }
         );
-
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withErrors(['email' => [__($status)]]);
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
     }
 }    

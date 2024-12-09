@@ -155,7 +155,9 @@ class ProductController extends Controller
     {
         $farmer = Auth::guard('farmer')->user();
         $orders = $farmer->products()->with('orders')->latest()->get()->pluck('orders')->flatten();
-        $orders = $orders->where('order_status', 'selesai')->whereBetween('order_time', [now()->subMonth(), now()]);
+        $start = now()->subMonth(3);
+        $until = now();
+        $orders = $orders->where('order_status', 'selesai')->whereBetween('order_time', [$start, $until]);
         return view('petani.PetLaporanPenjualanPage', compact('orders'));
     }
 
@@ -164,7 +166,9 @@ class ProductController extends Controller
         $bulan = $request->input('bulan');
         $farmer = Auth::guard('farmer')->user();
         $orders = $farmer->products()->with('orders')->latest()->get()->pluck('orders')->flatten();
-        $orders = $orders->where('order_status', 'selesai')->whereBetween('order_time', [now()->subMonth($bulan), now()]);
+        if($bulan !== 'all'){
+            $orders = $orders->where('order_status', 'selesai')->whereBetween('order_time', [now()->subMonth($bulan), now()]);
+        }
         return view('partials.data', compact('orders'));
     }
 
