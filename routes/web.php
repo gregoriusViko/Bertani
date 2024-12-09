@@ -1,14 +1,12 @@
 <?php
-use App\Events\Typing;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HargaPasarController;
-use App\Models\Farmer;
-use App\Models\Order;
 
 require base_path('routes/admin.php');
 require base_path('routes/buyer.php');
@@ -93,3 +91,30 @@ Route::get('/order/{order}/detail', [OrderController::class, 'showDetailPembelia
 Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder'])->name('order.cancel');
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('cobacoba', function(){
+    $user = Auth::guard('farmer')->user();
+
+    // Ambil semua farmerChats dan urutkan berdasarkan created_at terbaru
+    $chats = $user->farmerChats->sortByDesc('send_time');
+
+    // Group berdasarkan buyer_id
+    $contacts = $chats->groupBy('buyer_id');
+
+    // Ubah ke format yang dapat dicetak
+    $sortedContacts = $contacts->map(function ($chatGroup) {
+        // Ambil chat terbaru di setiap grup
+        return $chatGroup->first();
+    });
+
+    // Urutkan kembali berdasarkan tanggal terbaru
+    $sortedContacts = $sortedContacts->sortByDesc('send_time');
+
+    // Cetak kontak
+    dd($sortedContacts);
+
+    $user = Auth::guard('farmer')->user();
+    $chats = $user->farmerChats;
+    $contact = $chats->groupBy('buyer_id');
+    dd($contact->get(44));
+});

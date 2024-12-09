@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\BuyerChat;
 use App\Models\FarmerChat;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -18,7 +19,8 @@ class MessageSent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct(public $role, public $userId)
+    
+    public function __construct(public $userSlug, public $role, public $message, public $sender)
     {
     }
 
@@ -30,12 +32,13 @@ class MessageSent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel("chat.{$this->role}.{$this->userId}"),
+            new PrivateChannel("chat.{$this->role}.{$this->userSlug}"),
         ];
     }
-    // public function broadcastWith(){
-    //     return [
-    //         'message' => $this->message,
-    //     ];
-    // }
+    public function broadcastWith(){
+        return [
+            'message' => $this->message->id,
+            'sender' => $this->sender
+        ];
+    }
 }
