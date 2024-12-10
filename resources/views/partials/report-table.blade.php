@@ -52,7 +52,7 @@
                             {{ $order->product->type->name }}
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            {{ Number::currency($order->price, in: 'idr') }}
+                            {{ Number::currency($order->historyPrice->price, in: 'idr') }}
                         </th>
                         <th scope="col" class="px-6 py-3 whitespace-nowrap">
                             {{ WeightConverter::convert($order->quantity_kg) }}
