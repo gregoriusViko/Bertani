@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Broadcast;
 //     return Auth::guard($role)->check() && (int) $user->id === (int) $id;
 // });
 
-Broadcast::channel('coba-ketik.{id}', function ($user, $id) {
-    $user->id === $id;
-});
+Broadcast::channel('chat.farmer.{slug}', function ($user, $slug) {
+    return $user->slug === $slug;
+}, ['guards' => ['farmer']]);
+
+Broadcast::channel('chat.buyer.{slug}', function ($user, $slug) {
+    return $user->slug === $slug;
+}, ['guards' => ['buyer']]);

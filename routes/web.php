@@ -1,14 +1,12 @@
 <?php
-use App\Events\Typing;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HargaPasarController;
-use App\Models\Farmer;
-use App\Models\Order;
 
 require base_path('routes/admin.php');
 require base_path('routes/buyer.php');
