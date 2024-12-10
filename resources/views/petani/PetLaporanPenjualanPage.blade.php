@@ -45,13 +45,18 @@
 
     <div class="mt-4">
         <button class="tab-btn px-4 py-2 active rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
-            data-tab-target="#tab1" value="1">1 Bulan</button>
+            data-tab-target="#tab1" value="3">3 Bulan</button>
         <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
-            data-tab-target="#tab2" value="3">3
+            data-tab-target="#tab2" value="6">6
             Bulan</button>
         <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
-            data-tab-target="#tab3" value="6">6
+            data-tab-target="#tab3" value="9">9
             Bulan</button>
+        <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
+            data-tab-target="#tab3" value="12">12
+            Bulan</button>
+            <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-lg text-black font-medium hover:bg-gray-200"
+            data-tab-target="#tab3" value="all">Semua</button>
     </div>
 
     <!-- Konten untuk Tab Utama -->
@@ -61,22 +66,20 @@
         {{-- input bulan --}}
         <div class="my-3">
             {{-- jika tab[0] --}}
-            <div class="grid grid-flow-col gap-x-2">
+            {{-- <div class="grid grid-flow-col gap-x-2">
                 <div class="">
                     <x-input-label for="awalBulan" :value="__('Pilih Awal Bulan')" />
                     <select id="categoryDropdown" name="awalBulan"
                         class="block w-full  pl-3 pr-3 py-1  border  border-gray-300 hover:bg-gray-50 focus:border-green-600 focus:ring-green-600 rounded-md shadow-md"
                         required>
                         <option disabled selected class="hover:bg-green-600">Bulan</option>
-                        {{-- @foreach ($categories as $category) --}}
                         <option class="bg-white hover:bg-green-600" value=""></option>
-                        {{-- @endforeach --}}
                     </select>
                 </div>
                 <div class="flex mt-5 mr-9">
                     <button class="w-full md:w-3/6 h-8 bg-blue-400 text-white hover:bg-green-500 rounded-md text-sm py-1 px-1 md:px-1">OK</button>
                 </div>
-            </div>
+            </div> --}}
            
 
             {{-- jika tab[1] && tab[2] --}}

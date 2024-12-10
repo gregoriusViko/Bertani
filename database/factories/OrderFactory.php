@@ -28,6 +28,7 @@ class OrderFactory extends Factory
             'receipt_number' => $randomString,
             'price_id'=> HistoryPrice::factory(),
             'quantity_kg'=>fake()->randomFloat(2, 1, 1000),
+            'order_time'=> fake()->date('2024-m-d', 'now'),
             'order_status' => Arr::random(['selesai', 'menunggu konfirmasi', 'permintaan diterima', 'ditolak'])
         ];
 
