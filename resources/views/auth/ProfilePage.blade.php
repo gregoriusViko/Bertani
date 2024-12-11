@@ -43,10 +43,10 @@
         </div>
 
         {{-- form --}}
-        <form class="mt-6 max-w-sm mx-auto " id="profile-form" action="{{ route('profile.update') }}" method="POST">
+        <form class="mt-6 max-w-sm mx-auto " id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-5">
-                <input id="fileInput" type="file" accept="image/*" name="profile_img" class="hidden">
+                <input id="fileInputAvatar" type="file" accept="image/*" name="profile_img" class="hidden">
                 <label for="nama-input" class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nama
                     Pengguna</label>
                 <input type="text" id="nama-input" name="name"
@@ -91,11 +91,11 @@
 
                 <div class="mb-5">
                     <label for="rekening-input"
-                        class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nomor
-                        Rekening</label>
+                        class="block mb-1 text-base font-libre-franklin font-semibold text-black">Nomor Rekening</label>
                     <input type="text" id="rekening-input" name="nomor_rekening"
-                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        value="{{ $user->nomor_rekening }}" required readonly />
+                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        value="{{ $user->nomor_rekening }}" required readonly
+                        pattern="\d{10,15}" title="Nomor rekening harus terdiri dari 10 hingga 15 digit" />
                 </div>
             @endif
 
@@ -164,7 +164,7 @@
         var notifMessage = document.getElementById('notif-message');
         notifMessage.style.display = isEditMode ? 'none' : 'block';
         var editProf = document.getElementById('editGbr');
-        const fileInput = document.getElementById('fileInput');
+        const fileInput = document.getElementById('fileInputAvatar');
         const avatar = document.getElementById('avatar');
 
         var hapusProf = document.getElementById('hapusGbr');
@@ -248,4 +248,36 @@
             }, 2000); // 5000 ms = 5 detik
         }
     };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const bankInput = document.getElementById('bank-input');
+        const rekeningInput = document.getElementById('rekening-input');
+
+        // Atur panjang nomor rekening berdasarkan bank yang dipilih
+        const bankMaxDigits = {
+            BRI: 15,
+            BNI: 10,
+            MANDIRI: 13,
+            BCA: 10,
+        };
+
+        bankInput.addEventListener('change', function () {
+            const selectedBank = bankInput.value;
+
+            if (selectedBank in bankMaxDigits) {
+                const maxLength = bankMaxDigits[selectedBank];
+                rekeningInput.setAttribute('maxlength', maxLength);
+                rekeningInput.setAttribute('pattern', `\\d{${maxLength}}`);
+                rekeningInput.setAttribute(
+                    'title',
+                    `Nomor rekening untuk ${selectedBank} harus ${maxLength} digit.`
+                );
+            }
+        });
+
+        // Pastikan aturan diperbarui saat halaman dimuat
+        if (bankInput.value) {
+            bankInput.dispatchEvent(new Event('change'));
+        }
+    });
 </script>
