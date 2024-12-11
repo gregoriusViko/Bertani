@@ -1,4 +1,5 @@
 <div class="bg-gray-200 rounded-lg mb-4 mx-auto max-w-7xl px-4 mt-5 sm:px-6 lg:px-8">
+    <x-slot:title>Admin-Laporan-Bertani.com</x-slot:title>
     <section class="py-7 bg-gray-200">
         {{-- Filter Select --}}
         <div class="mb-4 max-lg:max-w-xl max-lg:mx-auto flex">
@@ -95,7 +96,7 @@
 
             <div class="mb-12 flex flex-col justify-start items-start space-y-4 flex-grow">
                 <div class="flex items-center space-x-4">
-                    <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">{{ $user }}</h3>
+                    <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">{{ $user ? $user->name : '' }}</h3>
                     <p class="text-lg font-medium text-gray-400">{{ $role }}</p>
                 </div>
                 <div class="mb-12 flex flex-col space-y-2 w-full" style="padding-right: 2rem;">
@@ -113,14 +114,14 @@
             <!-- Textbox untuk menulis pesan -->
             <div class="mb-4">
                 <label for="message" class="block text-sm font-normal text-gray-700">Tulis pesan untuk pelapor</label>
-                <textarea id="message" rows="3" placeholder=""
+                <textarea id="message" rows="3" placeholder="" wire:model.lazy="message"
                     class="w-full p-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
             </div>
 
             <!-- Tombol aksi -->
             <div class="flex justify-end space-x-4">
                 <button wire:click="tutup" class="px-4 py-2 bg-gray-300 rounded-lg">Batal</button>
-                <button class="px-4 py-2 bg-blue-500 text-white rounded-lg">Kirim</button>
+                <button wire:click="kirimTanggapan" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Kirim</button>
             </div>
         </div>
     </div>
