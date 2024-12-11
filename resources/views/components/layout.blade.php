@@ -61,7 +61,7 @@
         @endif
     </header>
 
-    <main class="px-7 mx-auto max-w-screen-lg">
+    <main class="px-7 mx-auto max-w-screen-lg pb-2">
         {{ $slot }}
     </main>
     <button id="scrollToTopBtn"
