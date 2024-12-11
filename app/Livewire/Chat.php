@@ -34,10 +34,10 @@ class Chat extends Component
             }
     
             if($this->user->id === $user->id){
-                $this->content->push($newChat);
                 $this->chats->push($newChat);
             }
-            if($this->friend->slug == $responce['sender']){
+            if($this->friend && $this->friend->slug == $responce['sender']){
+                $this->content->push($newChat);
                 $this->readed();
             }
             $this->updateContact();

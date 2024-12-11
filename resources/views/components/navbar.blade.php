@@ -32,7 +32,7 @@
                         </span>
                         @if ($user && $user->profile_img_link)
                             <img src="{{ $user->profile_img_link }}" alt=""
-                                class="w-8 h-8 rounded-full object-cover group-hover:text-green-600">
+                                class="w-6 h-6 md:w-8 md:h-8 rounded-full object-cover group-hover:text-green-600">
                         @elseif ($user)
                             <ion-icon name="person-circle-outline"
                                 class="text-2xl group-hover:text-green-600"></ion-icon>
@@ -58,5 +58,17 @@
             navLinks.classList.toggle('top-[9%]');
             navLinks.style.zIndex = '99';
         }
+
+         // Menambahkan event listener untuk klik di luar menu
+         document.addEventListener('click', function(event) {
+            const isClickInsideMenu = navLinks.contains(event.target) || event.target.closest('ion-icon');
+            if (!isClickInsideMenu) {
+                navLinks.classList.remove('top-[9%]'); // Menutup menu jika klik di luar
+                const menuIcon = document.querySelector('ion-icon[name="close"]');
+                if (menuIcon) {
+                    menuIcon.name = 'menu'; // Mengubah ikon kembali ke menu
+                }
+            }
+        });
     </script>
 </div>
