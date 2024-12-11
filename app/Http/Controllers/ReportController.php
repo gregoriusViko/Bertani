@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Response;
 
 class ReportController extends Controller
 {
-    function index()
-    {
-        $reportDetails = ReportDetail::all();
-        return view('admin.LaporanPage', compact('reportDetails'));
-    }
     function createForSystem(Request $request)
     {
         $request->validate([
