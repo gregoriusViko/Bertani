@@ -65,7 +65,7 @@
         {{ $slot }}
     </main>
     <button id="scrollToTopBtn"
-        class="fixed bottom-8 right-8 bg-green-500 text-white px-3 pt-3 pb-2 rounded-full shadow-lg place-content-center hover:bg-indigo-600 transition duration-300 hidden"
+        class="fixed bottom-8 right-8 bg-indigo-500 text-white px-3 pt-3 pb-2 rounded-full shadow-lg place-content-center hover:bg-indigo-600 transition duration-300 hidden"
         onclick="scrollToTop()">
         {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
@@ -76,24 +76,6 @@
 </body>
 
 <script>
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-    // Tampilkan tombol saat pengguna scroll ke bawah
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            scrollToTopBtn.classList.remove("hidden");
-        } else {
-            scrollToTopBtn.classList.add("hidden");
-        }
-    });
-
-    // Fungsi untuk scroll ke atas
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }
     // document.addEventListener("DOMContentLoaded", () => {
     //     const loadingElement = document.getElementById("loading");
     //     loadingElement.style.display = "flex"; // Tampilkan elemen loading
@@ -122,7 +104,24 @@
     });
 
 
-    
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    // Tampilkan tombol saat pengguna scroll ke bawah
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            scrollToTopBtn.classList.remove("hidden");
+        } else {
+            scrollToTopBtn.classList.add("hidden");
+        }
+    });
+
+    // Fungsi untuk scroll ke atas
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }
 
     const navLinks = document.querySelector('.nav-links')
 
