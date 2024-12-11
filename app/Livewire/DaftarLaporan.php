@@ -3,15 +3,17 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Mail\ReportResponse;
 use App\Models\ReportDetail;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Mail;
 
 class DaftarLaporan extends Component
 {
     use WithPagination;
     
     public $filter = 'all'; // Default filter
-    public $popup_tanggapan = 'hidden', $user = '', $role = '', $isiLaporan = '';
+    public $popup_tanggapan = 'hidden', $user, $role = '', $isiLaporan = '', $message = '';
     public $popup_hapus = 'hidden';
     
     // Listen for filter changes
@@ -57,10 +59,15 @@ class DaftarLaporan extends Component
     }
 
     public function popUpTanggapan(ReportDetail $detailLaporan){
-        $this->user = $detailLaporan->report->reporter == 'farmer' ? $detailLaporan->report->farmer->name : $detailLaporan->report->buyer->name;
+        $this->user = $detailLaporan->report->reporter == 'farmer' ? $detailLaporan->report->farmer : $detailLaporan->report->buyer;
         $this->role = $detailLaporan->report->reporter;
         $this->isiLaporan = $detailLaporan->content_of_report;
         $this->popup_tanggapan = '';
+    }
+
+    public function kirimTanggapan(){
+        Mail::to($this->user->email)->send(new ReportResponse($this->message));
+        return 'berhasil';
     }
 
     public function tutup(){
@@ -72,6 +79,6 @@ class DaftarLaporan extends Component
     {
         return view('livewire.daftar-laporan', [
             'reportDetails' => $this->getReports()
-        ]);
+        ])->layout('components.layout');
     }
 }
