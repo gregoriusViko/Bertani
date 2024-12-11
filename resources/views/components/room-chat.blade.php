@@ -1,57 +1,60 @@
 <div class="pl-4 pt-2 pb-4 justify-between flex flex-col h-screen">
     <div id="messages"
-        class="flex flex-col space-y-4  overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+        class="flex flex-col space-y-4 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex-grow pb-16">
         @foreach ($content as $message)
             @if ($message->role == 'receiver')
-            <div class="chat-message">
-                <div class="flex items-end">
-                    <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                        <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">{{ $message->content }}</span></div>
+                <div class="chat-message">
+                    <div class="flex items-end">
+                        <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                            <div><span
+                                    class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">{{ $message->content }}</span>
+                            </div>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
+                            alt="My profile" class="w-6 h-6 rounded-full order-1">
                     </div>
-                    <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-                        alt="My profile" class="w-6 h-6 rounded-full order-1">
                 </div>
-            </div>
             @else
-            <div class="chat-message">
-                <div class="flex items-end justify-end">
-                    <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-                        <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">{{ $message->content }}</span></div>
+                <div class="chat-message">
+                    <div class="flex items-end justify-end">
+                        <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+                            <div><span
+                                    class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white">{{ $message->content }}</span>
+                            </div>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
+                            alt="My profile" class="w-6 h-6 rounded-full order-2">
                     </div>
-                    <img src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-                        alt="My profile" class="w-6 h-6 rounded-full order-2">
                 </div>
-            </div>
             @endif
         @endforeach
     </div>
-    <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+
+    <div id="kotakinput" class="bottom-0 bg-white z-10 border-t-2 border-gray-700 px-4 pt-4 mb-2">
         <div class="relative flex items-center">
             <!-- Input Field -->
             <div class="w-full">
                 <input type="text" id="messageInput" placeholder="Write your message!"
-                    class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-8 pr-36 bg-gray-200 rounded-md py-3 resize-none overflow-auto"
+                    class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-3 md:pl-8 pr-12 md:pr-20 bg-gray-200 rounded-md py-3 resize-none overflow-auto text-xs md:text-lg"
                     oninput="autoResize(this);" wire:model.lazy="message">
-
             </div>
 
             <!-- Send Button -->
             <button type="button" wire:click="kirimPesan" onclick="getElementById('messageInput').value = ''"
-                class="absolute right-0 inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
-                <span class="font-bold">Send</span>
+                class="absolute right-0 inline-flex items-center justify-center rounded-lg px-2 py-1 md:px-4 md:py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none text-xs md:text-lg">
+                {{-- <span class="font-bold">Send</span> --}}
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                    class="h-6 w-6 ml-2 transform rotate-90">
+                    class="h-6 w-6 transform rotate-90">
                     <path
                         d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z">
                     </path>
                 </svg>
             </button>
-            <small id="typing" class="text-gray-700"  hidden>
+            <small id="typing" class="text-gray-700" hidden>
                 is typing...
             </small>
         </div>
     </div>
-
 </div>
 
 <style>
@@ -92,14 +95,14 @@
     //     })
     //     .listenForWhisper("typing", (response) => {
     //         const typingIndicator = document.getElementById('typing');
-            
+
     //         if (response.userID !== {{ $friend->id }}) {
     //             typingIndicator.hidden = true;
     //             return;
     //         }
 
     //         typingIndicator.hidden = false;
-            
+
     //         clearTimeout(typingTimer);
     //         typingTimer = setTimeout(() => {
     //             typingIndicator.hidden = true;
@@ -113,4 +116,5 @@
         input.style.height = 'auto';
         input.style.height = input.scrollHeight + 'px';
     }
+    
 </script>

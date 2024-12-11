@@ -134,7 +134,25 @@
 
     {{-- modal ketika tekan tombol bukti tf --}}
     <x-Modal id="showTF-modal">
-        <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
+        <div class="grid grid-flow row">
+            <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
+            <div class="flex justify-center h-20 overflow-y-auto">
+                <img class="h-30 md:h-50" src="\img\cthBuktiTF.png" alt="bukti">
+            </div>
+            <div class="text-xs md:text-base font-libre-franklin font-bold">
+                <p class="text-sm md:text-base">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
+                <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a href=""
+                        class="hover:underline hover:text-red-500 text-sm md:text-base">Disini</a></p>
+            </div>
+            <div class="mt-4 flex justify-end space-x-2">
+                <button class="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-gray-400"
+                    onclick="closeModal('showTF-modal')">
+                    TUTUP
+                </button>
+            </div>
+        </div>
+    </x-modal>
+        {{-- <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
         <div class="flex justify-center">
             <img class="md:h-80" src="\img\cthBuktiTF.png" alt="bukti">
         </div>
@@ -148,8 +166,8 @@
                 onclick="closeModal('showTF-modal')">
                 TUTUP
             </button>
-        </div>
-    </x-modal>
+        </div> --}}
+    
 
     {{-- modal ketika tekan tombol ceklis --}}
     <x-Modal id="showACC-modal">
