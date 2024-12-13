@@ -93,3 +93,13 @@ Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 Route::get('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
+
+Route::get('/orders/{orderId}/confirm', [OrderController::class, 'showConfirmModal'])->name('orders.confirm');
+
+Route::get('/order/showConfirmModal/{orderId}', [OrderController::class, 'showConfirmModal']);
+Route::post('/order/acceptOrder/{orderId}', [OrderController::class, 'acceptOrder']);
+
+
+Route::patch('/orders/{orderId}/accept', [OrderController::class, 'acceptOrder'])
+    ->name('orders.accept')
+    ->middleware('auth:farmer');
