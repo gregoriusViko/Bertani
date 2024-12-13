@@ -166,9 +166,10 @@ class AuthController extends Controller
         $status = Password::broker($role)->sendResetLink(
             $request->only('email')
         );
-
+        
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
+            // ? back()->with(['status' => __($status)])
+            ? back()->with('status','Terkirim ke Email Anda')
             : back()->withErrors(['email' => __($status)]);
     }
 
@@ -176,7 +177,7 @@ class AuthController extends Controller
     {
         $email = $request->email;
         $token = $request->token;
-        return view('auth.GantiPassword', compact(['email', 'token']));
+        return view('auth.GantiPassword', compact(['email', 'token']),);
     }
 
     public function resetPassword(Request $request)
@@ -199,6 +200,6 @@ class AuthController extends Controller
         );
         return $status === Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+            : back()->withErrors(['email' => [__($status)]])->with('error');
     }
 }
