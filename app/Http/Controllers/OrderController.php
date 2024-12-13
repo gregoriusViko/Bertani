@@ -105,22 +105,21 @@ class OrderController extends Controller
         return redirect()->route('DetailPembelianPage', ['order' => $order->id])->with('success', 'Order created successfully!');
     }
 
-    // public function getStatusColor(){
-    //     $colors = [
-    //         'pending' => 'text-yellow-600',
-    //         'permintaan diterima' => 'text-green-600',
-    //         'ditolak' => 'text-red-600',
-    //         'selesai' => 'text-blue-600'
-    //     ];
-
-    //     return $colors[$this->order_status] ?? 'text-grey-600';
-    // }
-
-
     public function showDetailPembelian($orderId){
         // dd('order');
         $order = Order::findOrFail($orderId);
         return view('pembeli.DetailPembelianPage', compact('order'));
+    }
+
+    public function acceptOrder ($orderId){
+        $order = Order::findOrFail($orderId);
+
+        // update status menjadi pesanan diterima
+        $order->update([
+            'order_status' => 'permintaan diterima'
+        ]);
+
+        return redirect()->back()->with('success', 'Pesanan berhasil diterima.');
     }
 
 }
