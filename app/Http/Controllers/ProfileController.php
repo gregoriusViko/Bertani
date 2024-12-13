@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
@@ -30,33 +31,37 @@ class ProfileController extends Controller
 
     function updates(Request $request)
     {
-        $request->validate([
+        $rules = [
             'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:50',
             'home_address' => 'required|string|max:150',
             'phone_number' => 'required|string|regex:/^\d{10,13}$/',
             'email' => 'required|string|max:45',
-            'bank' => 'string|in:BRI,BNI,MANDIRI,BCA', // Bank harus valid
-            'nomor_rekening' => 'string|max:45',
-            // [
-            //     'required',
-            //     'string',
-            //     function ($attribute, $value, $fail) use ($request) {
-            //         // Validasi nomor rekening berdasarkan bank yang dipilih
-            //         $bankMaxDigits = [
-            //             'BRI' => 15,
-            //             'BNI' => 10,
-            //             'MANDIRI' => 13,
-            //             'BCA' => 10,
-            //         ];
+        ];
 
-            //         $selectedBank = $request->input('selected_bank');
-            //         if (isset($bankMaxDigits[$selectedBank]) && strlen($value) !== $bankMaxDigits[$selectedBank]) {
-            //             $fail("Nomor rekening untuk $selectedBank harus tepat {$bankMaxDigits[$selectedBank]} digit.");
-            //         }
-            //     },
-            // ],
-        ]);
+        if (Auth::guard('farmer')->check()){
+            $rules['bank'] = 'required|string|in:BRI,BNI,Mandiri,BCA';
+            $rules['nomor_rekening'] = [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) use ($request) {
+                    $bankMaxDigits = [
+                        'BRI' => 15,
+                        'BNI' => 10,
+                        'Mandiri' => 13,
+                        'BCA' => 10,
+                    ];
+
+                    $selectedBank = $request->input('bank');
+                    if (isset($bankMaxDigits[$selectedBank]) &&
+                        strlen($value) !== $bankMaxDigits[$selectedBank]) {
+                            $fail("Nomor rekening untuk $selectedBank harus tepat {$bankMaxDigits[$selectedBank]} digit.");
+                        }
+                },
+            ];
+        }
+
+        $validatedData = $request->validate($rules);
 
         // Dapat user
         // Dapatkan user berdasarkan jenis pengguna
@@ -71,29 +76,46 @@ class ProfileController extends Controller
         }
 
         // Jika ada file gambar baru
-        if ($request->hasFile('profile_img')) {
-            $file = $request->file('profile_img');
+        
+        // // dd($request->hasFile('profile_img'));
+        // if ($user->profile_img_link) {
+        //     // Hapus gambar lama jika ada
+        //     if ($user->profile_img_link) {
+        //         File::delete(public_path($user->profile_img_link));
+        //     }
+        
+        //     // Simpan file baru
+        //     $profileImg = $request->file('profile_img');
+        //     $path = $profileImg->store('users', 'public');
+        //     $user->profile_img_link = '/storage/users/' . $path;
+        // }
 
-            // Simpan gambar ke dalam folder 'public/profile_images'
-            $path = $file->store('profile_images', 'public');
-
-            // Hapus gambar lama jika ada
-            if ($user->profile_img_link) {
-                Storage::disk('public')->delete($user->profile_img_link);
-            }
-
-            // Simpan path gambar baru ke dalam database
-            $user->profile_img_link = $path;
+            // Cek apakah ada file gambar baru
+    if ($request->hasFile('profile_img')) {
+        // Jika ada gambar lama, hapus gambar lama
+        if ($user->profile_img_link) {
+            File::delete(public_path($user->profile_img_link));
         }
 
-        // Update data pengguna
-        $user->name = $request->input('name');
-        $user->home_address = $request->input('home_address');
-        $user->phone_number = $request->input('phone_number');
-        $user->email = $request->input('email');
-        $user->bank = $request->input('bank');
-        $user->nomor_rekening = $request->input('nomor_rekening');
+        // Simpan file gambar baru
+        $profileImg = $request->file('profile_img');
+        $path = $profileImg->store('users', 'public');
+        $user->profile_img_link = '/storage/' . $path;
+    } elseif (!$user->profile_img_link) {
+        // Jika tidak ada gambar lama dan tidak ada gambar baru, kosongkan link gambar
+        $user->profile_img_link = null;
+    }
 
+        // Update data pengguna
+        $user->name = $validatedData['name'];
+        $user->home_address = $validatedData['home_address'];
+        $user->phone_number = $validatedData['phone_number'];
+        $user->email = $validatedData['email'];
+
+        if (Auth::guard('farmer')->check()){
+            $user->bank = $validatedData['bank'];
+            $user->nomor_rekening = $validatedData['nomor_rekening'];
+        }
 
         if ($user->save()) {
             return redirect()->route('profile')->with('Sukses', 'Berhasil');
