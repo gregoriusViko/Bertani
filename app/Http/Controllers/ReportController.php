@@ -33,12 +33,12 @@ class ReportController extends Controller
         $imageData = null;
         if($request->hasFile('image')){
             $image = $request->file('image');
-            $imageData = file_get_contents($image->getRealPath());
-
+            $path = $image->store('reports', 'private');
+            $request->merge(['img' => $path]);
         }
 
         $report = Report::create($data);
-        $request->merge(['report_id' => $report->id, 'img'=>$imageData]);
+        $request->merge(['report_id' => $report->id]);
         ReportDetail::create($request->all());
 
         session()->flash('success', 'Laporan anda telah kami terima, terimakasih!');
