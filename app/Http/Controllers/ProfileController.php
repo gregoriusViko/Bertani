@@ -126,32 +126,4 @@ class ProfileController extends Controller
 
     }
 
-    public function deleteProfileImage() {
-    // Tentukan user yang sedang login
-        if (Auth::guard('buyer')->check()) {
-            $user = Auth::guard('buyer')->user();
-        } elseif (Auth::guard('farmer')->check()) {
-            $user = Auth::guard('farmer')->user();
-        } elseif (Auth::guard('admin')->check()) {
-            $user = Auth::guard('admin')->user();
-        } else {
-            return redirect()->route('profile')->with('Gagal', 'Pengguna tidak ditemukan.');
-        }
-
-        // Hapus file gambar jika ada
-        if ($user->profile_img_link) {
-            $filePath = public_path($user->profile_img_link);
-            if (File::exists($filePath)) {
-                File::delete($filePath);
-            }
-            $user->profile_img_link = null;
-            $user->save();
-
-            return redirect()->route('profile')->with('Sukses', 'Gambar profil berhasil dihapus.');
-        }
-
-        return redirect()->route('profile')->with('Gagal', 'Tidak ada gambar untuk dihapus.');
-    }
-
-
 }
