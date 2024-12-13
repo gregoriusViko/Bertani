@@ -76,38 +76,14 @@
                             <button class="hover:text-red-500 " onclick="showDecline()"><ion-icon
                                     name="close-circle-outline"
                                     class="transition ease-in duration-100 text-3xl"></ion-icon></button>
-                            <button class="hover:text-green-500" onclick="showACC()"><ion-icon
-                                    name="checkmark-circle-outline"
-                                    class="transition ease-in duration-100 text-3xl"></ion-icon></button>
-                        </div>
-
-                        <!-- Form Penolakan Pesanan -->
-                        <!-- <div id="declineForm" class="hidden mt-4">
-                            <form action="{{ route('orders.reject', $order->id) }}" method="POST">
-                                @csrf
-                                <label for="reason" class="block text-sm font-medium text-gray-700">Alasan Penolakan</label>
-                                <textarea id="reason" name="reason" rows="3" required
-                                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
-                                <div class="flex justify-end mt-2">
-                                    <button type="button" onclick="hideDeclineForm()"
-                                        class="mr-2 px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">Batal</button>
-                                    <button type="submit"
-                                        class="px-4 py-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600">Kirim</button>
-                                </div>
-                            </form>
-                         </div> -->
-                    @elseif ($order->order_status == 'permintaan diterima')
-                        <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Diterima
-                        </h4>
-                        <div class="flex justify-center gap-x-4">
-                            <button class="hover:text-red-500 " onclick="showDecline()"><ion-icon
-                                    name="close-circle-outline"
-                                    class="transition ease-in duration-100 text-3xl"></ion-icon></button>
-                            <button class="hover:text-green-500" onclick="showACC()"><ion-icon
+                            <button class="hover:text-green-500" onclick="showACC({{ $order->id }})"><ion-icon
                                     name="checkmark-circle-outline"
                                     class="transition ease-in duration-100 text-3xl"></ion-icon></button>
                         </div>
                     @elseif ($order->order_status == 'selesai')
+                        <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Diterima
+                        </h4>
+                    @elseif ($order->order_status == 'permintaan diterima')
                         <h4 class="bg-[#00D115] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Selesai
                         </h4>
                     @elseif ($order->order_status == 'ditolak')
@@ -117,16 +93,35 @@
                         <h4 class="bg-[#FF0000] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Dibatalkan
                         </h4>
                     @endif
-                    <!-- Tombol Aksi -->
-                    {{-- <div class="flex justify-center">
-                        <button class="hover:text-red-500 " onclick="showACC()"><ion-icon name="close-circle-outline"
-                                class="transition ease-in duration-100 text-3xl"></ion-icon></button>
-                        <button class="hover:text-green-500" onclick="showDecline()"><ion-icon name="checkmark-circle-outline"
-                                class="transition ease-in duration-100 text-3xl"></ion-icon></button>
-                    </div> --}}
                 </div>
             </div>
-            {{-- </a> --}}
+                {{-- modal ketika tekan tombol ceklis --}}
+                <x-Modal id="showACC-modal-{{ $order->id }}" class="hidden">
+            <div class="grid grid-flow-row">
+                <div class="text-xl font-bold mb-4">Konfirmasi Pesanan</div>
+                <div class="space-y-2">
+                    <div class="text-base"><strong>Produk:</strong> {{ $order->product->type->name }} - {{ $order->quantity_kg }} kg</div>
+                    <div class="text-base"><strong>Pembeli:</strong> {{ $order->buyer->name }} - {{ $order->buyer->phone_number }}</div>
+                    <div class="text-base"><strong>Metode Pembayaran:</strong> {{ $order->payment_proof }}</div>
+                    <div class="text-xl font-semibold text-green-600">Total: {{ Number::currency($order->historyPrice->price, in: 'idr') }}</div>
+                </div>
+                <form id="acceptOrderForm" method="POST" action="{{ route('orders.accept', $order->id) }}">
+                    @csrf
+                    @method('PATCH')
+                    <div class="mt-4 flex justify-end space-x-2">
+                        <button type="button"
+                            class="border border-black bg-white text-black px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
+                            onclick="closeModal('showACC-modal')">
+                            TUTUP
+                        </button>
+                        <button type="submit"
+                            class="border border-black bg-green-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-green-400">
+                            SETUJU
+                        </button>
+                    </div>
+                </form>
+            </div>
+    </x-Modal>
         </div>
     @empty
         <x-Message-info>Belum ada pesanan masuk.</x-Message-info>
@@ -169,29 +164,7 @@
         </div> --}}
     
 
-    {{-- modal ketika tekan tombol ceklis --}}
-    <x-Modal id="showACC-modal">
-        <div class="grid grid-flow-row">
-            <div class="text-xl">Konfirmasi Pesanan</div>
-            <div class="text-base">Nama Produk - xx kg</div>
-            <div class="text-base">Nama Pembeli - No Telp</div>
-            <div class="text-base">Metode Pembayaran</div>
-            <div class="text-xl">Rp xx.xxx</div>
-            <div class="mt-4 flex justify-end space-x-2">
-                <button
-                    class="border border-black bg-white text-black px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
-                    onclick="closeModal('showACC-modal')">
-                    TUTUP
-                </button>
-                {{-- jika di klik setuju, maka status berubah pesanan siap --}}
-                <button
-                    class="border border-black bg-green-600 text-white px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-green-400"
-                    onclick=" ">
-                    SETUJU
-                </button>
-            </div>
-        </div>
-    </x-modal>
+
     {{-- modal ketika tekan tombol silang --}}
     <x-Modal id="showDecline-modal">
         <!-- Form alasan penolakan -->
@@ -253,9 +226,9 @@
                 body.style.overflow = 'hidden';
             }
         }
-        // fungsi untuk munculin modal button ceklis
-        function showACC() {
-            const modal = document.getElementById('showACC-modal');
+    
+        function showACC(orderId) {
+            const modal = document.getElementById(`showACC-modal-${orderId}`);
             if (modal) {
                 modal.classList.remove('hidden');
                 body.style.overflow = 'hidden';
@@ -270,12 +243,22 @@
             }
         }
 
-        // function showDeclineForm() {
-        //     document.getElementById('declineForm').classList.remove('hidden');
-        // }
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                body.style.overflow = 'hidden';
+            }
+        }
 
-        // function hideDeclineForm() {
-        //     document.getElementById('declineForm').classList.add('hidden');
-        // }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+                body.style.overflow = '';
+            }
+        }
+
+        
     </script>
 </x-layout>
