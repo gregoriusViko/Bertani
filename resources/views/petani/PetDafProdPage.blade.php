@@ -91,10 +91,10 @@
                     <p class="text-gray-700 font-medium text-center">Apakah Anda yakin ingin menghapus produk ini?</p>
                     <div class="flex justify-center space-x-4">
                         <input type="hidden" name="product" value="{{ $product->id }}">
-                        <button type="submit"
+                        <button type="submit" id="yesHapus"
                             class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition duration-200">Hapus</button>
                         <button type="button" onclick="toggleComponent('{{ $product->id }}')"
-                            class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">Batal</button>
+                            id="noCancel" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">Batal</button>
                     </div>
                 </form>
             </div>
