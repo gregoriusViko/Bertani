@@ -30,6 +30,10 @@
                     <ion-icon name="trash-outline"></ion-icon>
                 </button>
 
+                <form id="delete-profile-image-form" action="{{ route('delete-profile-image') }}" method="POST" class="hidden">
+                    @csrf
+                </form>
+
                 <!-- Input File (Tersembunyi) -->
                 <input id="fileInput" type="file" accept="image/*" class="hidden">
             </div>
@@ -47,6 +51,7 @@
             @csrf
             <div class="mb-5">
                 <input id="fileInputAvatar" type="file" accept="image/*" name="profile_img" class="hidden">
+                <input id="hapusProfil" name="delete_image" type="text" value="0" hidden>
                 <label for="nama-input" class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Nama
                     Pengguna</label>
                 <input type="text" id="nama-input" name="name"
@@ -156,6 +161,9 @@
     </div>
 </x-layout>
 <script>
+    // Global variable to track if profile image should be deleted
+    let shouldDeleteProfileImage = false;
+
     function toggleAllInputs() {
         var inputs = document.querySelectorAll('input[readonly], select[disabled]');
         var isEditMode = !inputs[0].hasAttribute('readonly');
@@ -183,39 +191,41 @@
                 const imageUrl = URL.createObjectURL(file);
                 avatar.src = imageUrl;
 
-                // Anda juga bisa mengirim file ke server menggunakan FormData dan AJAX jika diperlukan
                 console.log('File yang dipilih:', file.name);
+                document.getElementById('hapusProfil').value = 0;
             }
         });
 
         // Tambahkan event listener untuk tombol hapus
         hapusProf.addEventListener('click', () => {
             const defaultImage = './img/orang.jpeg.jpg'; // Path ke gambar default
-            avatar.src = defaultImage; // Set gambar kembali ke default
-            fileInput.value = ''; // Reset file input jika sebelumnya ada file terpilih
-
+            
+            // Set flag to delete profile image when save is clicked
+            shouldDeleteProfileImage = true;
+            
+            // Temporarily change avatar to default image
+            avatar.src = defaultImage;
+            document.getElementById('hapusProfil').value = 1;
         });
 
-
         hapusProf.style.display = isEditMode ? 'hidden' : 'block';
-
 
         // Mengaktifkan atau menonaktifkan readonly dan disabled pada input dan select
         inputs.forEach(input => {
             if (isEditMode) {
                 if (input.tagName === 'SELECT') {
-                    input.setAttribute('disabled', true); // Nonaktifkan select
+                    input.setAttribute('disabled', true);
                 } else {
-                    input.setAttribute('readonly', true); // Nonaktifkan input
+                    input.setAttribute('readonly', true);
                 }
-                input.value = input.getAttribute('data-original'); // Kembalikan ke nilai asli
+                input.value = input.getAttribute('data-original');
             } else {
                 if (input.tagName === 'SELECT') {
-                    input.removeAttribute('disabled'); // Aktifkan select
+                    input.removeAttribute('disabled');
                 } else {
-                    input.removeAttribute('readonly'); // Aktifkan input
+                    input.removeAttribute('readonly');
                 }
-                input.setAttribute('data-original', input.value); // Simpan nilai asli
+                input.setAttribute('data-original', input.value);
             }
 
             // Set warna border menjadi hitam saat aktif
@@ -228,8 +238,16 @@
         document.getElementById('save-button').disabled = isEditMode;
     }
 
-
-
+    // Modify the form submission to handle profile image deletion
+    document.getElementById('profile-form').addEventListener('submit', function(event) {
+        if (shouldDeleteProfileImage) {
+            // Submit the delete profile image form
+            document.getElementById('delete-profile-image-form').submit();
+            
+            // Reset the flag
+            shouldDeleteProfileImage = false;
+        }
+    });
 
     // Function to close the message component
     function closeMessage(elementId) {
@@ -245,7 +263,7 @@
         if (messageElement) {
             setTimeout(() => {
                 closeMessage('successMessage');
-            }, 2000); // 5000 ms = 5 detik
+            }, 2000);
         }
     };
 
@@ -257,7 +275,7 @@
         const bankMaxDigits = {
             BRI: 15,
             BNI: 10,
-            MANDIRI: 13,
+            Mandiri: 13,
             BCA: 10,
         };
 
