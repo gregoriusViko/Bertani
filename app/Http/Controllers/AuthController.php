@@ -16,17 +16,44 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    function tampilRegister() {
+    function tampilRegister()
+    {
         return view('auth.register');
     }
 
-    function submitRegister(Request $request){
+    function submitRegister(Request $request)
+    {
         $request->validate([
             'name' => 'required|alpha|unique:farmers,name|unique:buyers,name',
             'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
             'telepon' => 'required|unique:farmers,phone_number|unique:buyers,phone_number|regex:/^08[0-9]{8,10}$/',
             'password' => 'required|min:6|max:45',
             'peran' => 'required|in:Pembeli,Petani'
+        ], [
+            // Pesan untuk 'name'
+            'name.required' => 'Nama wajib diisi.',
+            'name.alpha' => 'Nama hanya boleh mengandung huruf.',
+            'name.unique' => 'Nama sudah digunakan. Silakan gunakan nama lain.',
+
+            // Pesan untuk 'email'
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
+            'email.max' => 'Email tidak boleh lebih dari 45 karakter.',
+
+            // Pesan untuk 'telepon'
+            'telepon.required' => 'Nomor telepon wajib diisi.',
+            'telepon.unique' => 'Nomor telepon sudah terdaftar.',
+            'telepon.regex' => 'Nomor telepon harus dimulai dengan "08" dan memiliki 10-12 digit.',
+
+            // Pesan untuk 'password'
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal harus memiliki 6 karakter.',
+            'password.max' => 'Password tidak boleh lebih dari 45 karakter.',
+
+            // Pesan untuk 'peran'
+            'peran.required' => 'Peran wajib dipilih.',
+            'peran.in' => 'Peran tidak valid. Pilih salah satu antara "Pembeli" atau "Petani".',
         ]);
 
         if ($request->peran == 'Petani') {
@@ -43,7 +70,7 @@ class AuthController extends Controller
         $user->slug = Str::slug($request->email);
         $user->name = $request->name;
 
-        if ($request->peran == 'Petani'){
+        if ($request->peran == 'Petani') {
             $user->bank = $request->bank;
             $user->nomor_rekening = $request->nomor_rekening;
         }
@@ -53,50 +80,56 @@ class AuthController extends Controller
         return redirect('login');
     }
 
-    function tampilLogin(){
+    function tampilLogin()
+    {
         return view('auth.login');
     }
 
-    function submitLogin(Request $request){
+    function submitLogin(Request $request)
+    {
         $request->validate([
             'email' => 'required|email|max:45',
             'password' => 'required|min:6'
         ]);
         $data = [
-        'email' => $request->input('email'),
-        'password' => $request->input('password')
+            'email' => $request->input('email'),
+            'password' => $request->input('password')
         ];
-        if  (Auth::guard('buyer')->attempt($data, true)) { 
+        if (Auth::guard('buyer')->attempt($data, true)) {
             // $request->session()->regenerateToken();
             return redirect()->intended('/');
-        }if  (Auth::guard('farmer')->attempt($data, true)) { 
+        }
+        if (Auth::guard('farmer')->attempt($data, true)) {
             // $request->session()->regenerateToken();
             return redirect()->intended('/');
-        }if  (Auth::guard('admin')->attempt($data, true)) { 
+        }
+        if (Auth::guard('admin')->attempt($data, true)) {
             // $request->session()->regenerateToken();
             return redirect()->intended('/admin/laporan');
         }
         return redirect()->back()->with('gagal', "Email atau password anda salah!");
     }
 
-    function logout(Request $request){
+    function logout(Request $request)
+    {
         Auth::guard('farmer')->logout();
         Auth::guard('buyer')->logout();
         Auth::guard('admin')->logout();
- 
+
         $request->session()->invalidate();
-    
+
         $request->session()->regenerateToken();
- 
+
         return redirect('/');
     }
 
     // fungsi untuk admin
-    function detailAkun(Request $request){
+    function detailAkun(Request $request)
+    {
         $user = Farmer::where('email', $request->email)->get()->first();
         $role = $user ? 'farmer' : 'buyer';
         $user = $user ? $user : Buyer::where('email', $request->email)->get()->first();
-        if(!$user){
+        if (!$user) {
             // abort(404);
             // 
             // return view('admin.DeleteAkun')->with('error', 'Informasi');
@@ -104,21 +137,22 @@ class AuthController extends Controller
         }
         return view('admin.DeleteAkun', compact(['user', 'role']));
     }
-    function deleteAkun($role, Request $request){
-        if($role == 'farmer'){
+    function deleteAkun($role, Request $request)
+    {
+        if ($role == 'farmer') {
             $farmer = Farmer::findOrFail($request->id);
-            $farmer->products->each(function($product) {
+            $farmer->products->each(function ($product) {
                 // Menghapus setiap produk
                 $product->delete();
             });
-            $farmer->farmerChats->each(function($chat){
+            $farmer->farmerChats->each(function ($chat) {
                 $chat->delete();
             });
-            $farmer->reports->each(function($report){
+            $farmer->reports->each(function ($report) {
                 $report->delete();
             });
             $farmer->delete();
-        }else{
+        } else {
 
         }
         return redirect('admin/delete-akun')->with('success', 'Berhasil');
@@ -132,17 +166,18 @@ class AuthController extends Controller
         $status = Password::broker($role)->sendResetLink(
             $request->only('email')
         );
-
+        
         return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+            // ? back()->with(['status' => __($status)])
+            ? back()->with('status','Terkirim ke Email Anda')
+            : back()->withErrors(['email' => __($status)]);
     }
 
     public function showResetPasswordForm(Request $request, $token)
     {
         $email = $request->email;
         $token = $request->token;
-        return view('auth.GantiPassword', compact(['email', 'token']));
+        return view('auth.GantiPassword', compact(['email', 'token']),);
     }
 
     public function resetPassword(Request $request)
@@ -165,6 +200,6 @@ class AuthController extends Controller
         );
         return $status === Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+            : back()->withErrors(['email' => [__($status)]])->with('error');
     }
-}    
+}
