@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Mail\ReportResponse;
 use App\Models\ReportDetail;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Mail;
 
@@ -13,7 +14,7 @@ class DaftarLaporan extends Component
     use WithPagination;
     
     public $filter = 'all'; // Default filter
-    public $popup_tanggapan = 'hidden', $user, $role = '', $isiLaporan = '', $message = '';
+    public $popup_tanggapan = 'hidden', $user, $role = '', $isiLaporan = '', $message = '', $detailLaporan;
     public $popup_hapus = 'hidden';
     
     // Listen for filter changes
@@ -25,7 +26,7 @@ class DaftarLaporan extends Component
     
     public function getReports()
     {
-        $query = ReportDetail::with(['report.buyer', 'report.farmer']);
+        $query = ReportDetail::with(['report.buyer', 'report.farmer'])->where('response_time', null);
         
         // Apply filters
         switch ($this->filter) {
@@ -59,6 +60,7 @@ class DaftarLaporan extends Component
     }
 
     public function popUpTanggapan(ReportDetail $detailLaporan){
+        $this->detailLaporan = $detailLaporan;
         $this->user = $detailLaporan->report->reporter == 'farmer' ? $detailLaporan->report->farmer : $detailLaporan->report->buyer;
         $this->role = $detailLaporan->report->reporter;
         $this->isiLaporan = $detailLaporan->content_of_report;
@@ -66,8 +68,13 @@ class DaftarLaporan extends Component
     }
 
     public function kirimTanggapan(){
+        $detailLaporan = $this->detailLaporan;
+        $detailLaporan->admin_id = Auth::guard('admin')->user()->id;
+        $detailLaporan->content_of_response = $this->message;
+        $detailLaporan->response_time = now();
+        $detailLaporan->save();
+        $this->tutup();
         Mail::to($this->user->email)->send(new ReportResponse($this->message));
-        return 'berhasil';
     }
 
     public function tutup(){

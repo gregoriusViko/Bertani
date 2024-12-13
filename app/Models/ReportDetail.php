@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ReportDetail extends Model
 {
     use HasFactory;
-    public $updated_at = false;
+    const UPDATED_AT = null;
     const CREATED_AT = 'report_time';
     protected $guarded = ['id', 'report_time'];
     protected $with = ['report', 'responder'];
