@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <style>
         /* Tambahkan efek blur pada background */
         .backdrop-blur {
@@ -22,20 +24,20 @@
 
 <body class="backdrop-blur-md bg-white/30 min-h-screen flex flex-wrap items-center justify-center bg-cover bg-center "
     style="background-image: url('img/bglogin.jpg');">
-    <div class=" max-w-lg bg-green-400 shadow-lg rounded-lg p-8 relative opacity-80 w-11/12 md:w-10/12 lg:w-w-full">
+    <div class=" max-w-lg bg-green-400 shadow-lg rounded-lg p-8 relative opacity-90 w-11/12 md:w-10/12 lg:w-w-full">
         <div class="my-2 text-center items-center">
             <h4 class="text-3xl text-black font-bold">Selamat Datang di </h4>
             <span><img class="w-auto h-auto" src="./img/logo1.png" alt="bertani"></span>
         </div>
         @if (session('gagal'))
             {{-- !-- Alert Error --> --}}
-            <div class="error-message">
-                <svg viewBox="0 0 24 24" class="error-icon">
-                    <path fill="currentColor"
-                        d="M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z">
+            <div class="error-message relative flex w-full text-white bg-red-600 rounded-md justify-start p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="h-5 w-5 mr-2 pt-1">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z">
                     </path>
-                </svg>
-                <span class="error-text">{{ session('gagal') }}</span>
+                </svg>{{ session('gagal') }}
             </div>
 
             <!-- End Alert Error -->
@@ -57,16 +59,17 @@
                 </button>
             </div>
             <div class="relative flex justify-end hover:underline">
-                <label> <a href="{{ route('LupaPassword') }}" style="color: blue;hover:text-white"
+                <label> <a href="{{ route('LupaPassword') }}" style="color: blue;hover:text-white" id="lupapwd"
                         class="font-normal hover:text-white">Lupa Password</a></label>
             </div>
 
-            <button type="submit"
+            <button id="submitLogin" type="submit"
                 class="mb-4 px-5 py-2.5 w-full bg-black hover:scale-105 transition-transform duration-300 ease-in-out text-white text-sm rounded-lg">LOGIN
             </button>
 
             <div class="relative flex justify-center">
-                <p>Belum punya akun? <label><a href="{{ route('register.tampil') }}" style="color: blue;hover:white">
+                <p>Belum punya akun? <label><a href="{{ route('register.tampil') }}" style="color: blue;hover:white"
+                            id="regisnow">
                             <span class="hover:underline hover:text-white font-semibold">Daftar Sekarang</span></label>
                 </p>
             </div>
