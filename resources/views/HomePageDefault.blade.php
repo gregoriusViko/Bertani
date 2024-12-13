@@ -47,7 +47,7 @@
     {{-- form searching --}}
     <form action="{{ route('search') }}" method="GET"
         class="flex rounded-md my-5 overflow-hidden max-w-full font-[sans-serif]">
-        <input type="text" name="query" value="{{ request('query') }}" placeholder="Cari Produk"
+        <input type="text" id="query" name="query" value="{{ request('query') }}" placeholder="Cari Produk"
             class="w-full outline-none bg-green-600 text-white placeholder-gray-200 text-sm px-4 py-3" />
         <button type="submit" class="flex items-center justify-center bg-green-600 px-5">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-white">
