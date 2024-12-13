@@ -1,17 +1,19 @@
 <x-layout>
+    <style>
+        button:disabled {
+            background-color: #9ca3af;
+            /* Warna abu-abu */
+            cursor: not-allowed;
+            /* Mengubah kursor menjadi tanda larangan */
+            opacity: 0.6;
+            /* Menambahkan efek transparan */
+        }
+    </style>
+
     <x-slot:title>Profile-Bertani.com</x-slot:title>
     <!-- Kotak dengan konten -->
     <div class="bg-amber-100 text-white p-6 rounded-lg shadow-md max-w-xl items-center mx-auto mt-6">
         {{-- avatar --}}
-        {{-- <img :src="imageUrl" class="rounded-md border-2 md:w-full w-[400px] h-[300px] object-contain shadow-md" />
-                <div class="mt-4">
-                    <x-input-label for="foto" :value="__('Foto')" />
-                    <x-text-input accept="image/*" id="foto" class="block mt-1 w-full border p-2" type="file"
-                        name="foto" :value="old('foto')" required
-                        @change="imageUrl = URL.createObjectURL($event.target.files[0])" />
-                    <x-input-error :messages="$errors->get('foto')" class="mt-2" />
-                </div> --}}
-
         <div class="flex flex-col items-center relative">
             <div class="avatar mb-3 w-24 h-24 relative">
                 {{-- <div class="size-16 rounded-full border border-black"> --}}
@@ -30,15 +32,12 @@
                     <ion-icon name="trash-outline"></ion-icon>
                 </button>
 
-                <form id="delete-profile-image-form" action="{{ route('delete-profile-image') }}" method="POST" class="hidden">
-                    @csrf
-                </form>
 
                 <!-- Input File (Tersembunyi) -->
                 <input id="fileInput" type="file" accept="image/*" class="hidden">
             </div>
-            <h2 class="text-base font-libre-franklin font-bold text-black">{{ $user->email }}</h2>
-            <h4 class="font-libre-franklin font-normal text-sm text-gray-700">{{ $role }}</h4>
+            <h2 id="emailnya" class="text-base font-libre-franklin font-bold text-black">{{ $user->email }}</h2>
+            <h4 id="perannya" class="font-libre-franklin font-normal text-sm text-gray-700">{{ $role }}</h4>
 
         </div>
 
@@ -47,7 +46,8 @@
         </div>
 
         {{-- form --}}
-        <form class="mt-6 max-w-sm mx-auto " id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+        <form class="mt-6 max-w-sm mx-auto " id="profile-form" action="{{ route('profile.update') }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             <div class="mb-5">
                 <input id="fileInputAvatar" type="file" accept="image/*" name="profile_img" class="hidden">
@@ -99,8 +99,8 @@
                         class="block mb-1 text-base font-libre-franklin font-semibold text-black">Nomor Rekening</label>
                     <input type="text" id="rekening-input" name="nomor_rekening"
                         class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        value="{{ $user->nomor_rekening }}" required readonly
-                        pattern="\d{10,15}" title="Nomor rekening harus terdiri dari 10 hingga 15 digit" />
+                        value="{{ $user->nomor_rekening }}" required readonly pattern="\d{10,15}"
+                        title="Nomor rekening harus terdiri dari 10 hingga 15 digit" />
                 </div>
             @endif
 
@@ -111,7 +111,7 @@
                 @csrf
                 <button
                     class="text-white bg-gray-600 px-4 py-1 rounded-lg hover:bg-gray-400 flex items-center justify-center space-x-2"
-                    type="submit">
+                    id="logout" type="submit">
                     <ion-icon name="log-out" class="text-2xl group-hover:text-green-600"></ion-icon>
                     <span class="group-hover:text-green-600">KELUAR</span>
                 </button>
@@ -199,10 +199,10 @@
         // Tambahkan event listener untuk tombol hapus
         hapusProf.addEventListener('click', () => {
             const defaultImage = './img/orang.jpeg.jpg'; // Path ke gambar default
-            
+
             // Set flag to delete profile image when save is clicked
             shouldDeleteProfileImage = true;
-            
+
             // Temporarily change avatar to default image
             avatar.src = defaultImage;
             document.getElementById('hapusProfil').value = 1;
@@ -238,12 +238,22 @@
         document.getElementById('save-button').disabled = isEditMode;
     }
 
+    const saveButton = document.getElementById('save-button');
+    const form = document.getElementById('profile-form');
+
+    // Simulasi: Aktifkan tombol setelah form diisi (contoh sederhana)
+    form.addEventListener('input', () => {
+        const isFormValid = form.checkValidity(); // Cek validasi form
+        saveButton.disabled = !isFormValid; // Aktifkan tombol jika valid
+    });
+
+
     // Modify the form submission to handle profile image deletion
     document.getElementById('profile-form').addEventListener('submit', function(event) {
         if (shouldDeleteProfileImage) {
             // Submit the delete profile image form
             document.getElementById('delete-profile-image-form').submit();
-            
+
             // Reset the flag
             shouldDeleteProfileImage = false;
         }
@@ -267,7 +277,7 @@
         }
     };
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const bankInput = document.getElementById('bank-input');
         const rekeningInput = document.getElementById('rekening-input');
 
@@ -279,7 +289,7 @@
             BCA: 10,
         };
 
-        bankInput.addEventListener('change', function () {
+        bankInput.addEventListener('change', function() {
             const selectedBank = bankInput.value;
 
             if (selectedBank in bankMaxDigits) {
