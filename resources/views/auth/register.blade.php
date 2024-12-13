@@ -30,46 +30,60 @@
 
         <form class="space-y-4" action="{{ route('register.submit') }}" method="post">
             @csrf
-            <div class="relative flex items-center">
-                <input type="text" placeholder="Nama" name="name"
-                    class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
-                    required />
+            <div class="relative flex flex-col items-start">
+                <div class="relative flex items-center w-full">
+                    <input type="text" placeholder="Nama" name="name"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
+                        value="{{ old('name') }}" required />
+                </div>
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
-
-            <div class="relative flex items-center">
-                <input type="email" placeholder="Email" name="email"
-                    class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
-                    required />
+            <div class="relative flex flex-col items-start">
+                <div class="relative flex items-center w-full">
+                    <input type="email" placeholder="Email" name="email"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
+                        value="{{ old('email') }}" required />
+                </div>
+                @error('email')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
-
-            <div class="relative flex w-full">
-                <!-- Button untuk membuka dropdown dan menampilkan opsi yang terpilih -->
-                <button type="button" id="peran" onclick="toggleDropdown()"
-                    class="px-4 py-3 border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start w-[450px]">
-                    <div class="flex items-end w-full justify-between">
-                        <p id="selectedOption">Peran</p>
-                        <!-- Element ini akan diupdate dengan teks opsi terpilih -->
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
-                                    clip-rule="evenodd" data-original="#000000" />
-                            </svg>
+            <div class="relative flex flex-col items-start">
+                <div class="relative flex w-full">
+                    <!-- Button untuk membuka dropdown dan menampilkan opsi yang terpilih -->
+                    <button type="button" id="peran" onclick="toggleDropdown()"
+                        class="px-4 py-3 border bg-white text-gray-400 text-sm font-inter font-normal border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 justify-start w-[450px]">
+                        <div class="flex items-end w-full justify-between">
+                            <p id="selectedOption">Peran</p>
+                            <!-- Element ini akan diupdate dengan teks opsi terpilih -->
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-gray-500 inline ml-3"
+                                    viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
+                                        clip-rule="evenodd" data-original="#000000" />
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                </button>
+                    </button>
 
-                <!-- Dropdown menu -->
-                <ul id="dropdownMenu"
-                    class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[1000] w-full divide-y max-h-96 overflow-auto rounded-lg mt-8">
-                    <li onclick="selectOption('Pembeli')"
-                        class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                        Pembeli</li>
-                    <li onclick="selectOption('Petani')"
-                        class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">
-                        Petani</li>
-                </ul>
+                    <!-- Dropdown menu -->
+                    <ul id="dropdownMenu"
+                        class="absolute hidden shadow-[0_8px_19px_-7px_rgba(6,81,237,0.2)] bg-white py-2 z-[1000] w-full divide-y max-h-96 overflow-auto rounded-lg mt-8">
+                        <li onclick="selectOption('Pembeli')"
+                            class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">
+                            Pembeli</li>
+                        <li onclick="selectOption('Petani')"
+                            class="py-3 px-5 hover:bg-gray-50 text-gray-800 text-sm font-inter font-normal cursor-pointer">
+                            Petani</li>
+                    </ul>
+                    
+                </div>
+                @error('peran')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
             </div>
 
             <!-- tambahan untuk bank dan no. rekening untuk petani -->
@@ -113,27 +127,56 @@
             <input type="hidden" id="peranValue" name="peran" required />
             <input type="hidden" id="bankValue" name="bank" required />
 
-            <div class="relative flex items-center">
-                <input type="tel" placeholder="08xxxxxxxxx" pattern="^08[0-9]{8,10}$" name="telepon"
-                    class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
-                    required />
+            <div class="relative flex flex-col items-start">
+                <div class="relative flex items-center w-full">
+                    <input id="noTelpon" type="tel" placeholder="08xxxxxxxxx" pattern="^08[0-9]{8,10}$"
+                        name="telepon"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
+                        value="{{ old('telepon') }}" required />
+
+                </div>
+                <p class="flex items-start text-xs text-red-500 mt-2 hidden" id="notelpMessage">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        class="w-5 h-5 mr-1.5 ">
+                        <path fill-rule="evenodd"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                            clip-rule="evenodd" />
+                    </svg>Nomer telepon harus berjumlah minimal 11 dan belum pernah didaftarkan sebelumnya.
+                </p>
+                @error('telepon')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="relative flex items-center">
-                <input type="password" placeholder="Password" name="password" id="password"
-                    class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
-                    required minlength="6" />
-                <button type="button" id="togglePassword"
-                    class="absolute right-4 bg-transparent focus:outline-none">
-                    <img id="eye" src="./img/eyeclosed.png" alt="Toggle Password" class="w-5 h-5">
-                </button>
+
+            <div class="relative flex flex-col items-start">
+                <div class="relative flex items-center w-full">
+                    <input type="password" placeholder="Password" name="password" id="password"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
+                        required minlength="6" />
+                    <button type="button" id="togglePassword"
+                        class="absolute right-4 bg-transparent focus:outline-none">
+                        <img id="eye" src="./img/eyeclosed.png" alt="Toggle Password" class="w-5 h-5">
+                    </button>
+                    @error('password')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <p class="flex items-start text-sm text-red-500 mt-2 hidden" id="passwordMessage">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        class="w-5 h-5 mr-1.5">
+                        <path fill-rule="evenodd"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                            clip-rule="evenodd" />
+                    </svg>Gunakan password yang kuat dengan minimal jumlah karakter 6.
+                </p>
             </div>
 
-            <button type="submit"
+            <button id="kirim" type="submit"
                 class="px-5 py-2.5 w-full bg-black  text-white text-sm font-inter font-medium rounded-lg tracking-wide hover:scale-105 transition-transform duration-300 ease-in-out">Register
             </button>
 
-            <p>Sudah punya akun? <a href="{{ route('login') }}" style="color: blue; hover:white">
+            <p>Sudah punya akun? <a href="{{ route('login') }}" style="color: blue; hover:white" id="tanya">
                     <span class="hover:underline hover:text-white">Login disini</span>
                 </a>
             </p>
@@ -169,6 +212,28 @@
             // Mengganti ikon eye 
             eye.src = type === "password" ? "./img/eyeclosed.png" : "./img/eyeopen.png";
         })
+        const passwordInput = document.getElementById('password');
+        const passwordMessage = document.getElementById('passwordMessage');
+
+        passwordInput.addEventListener('input', () => {
+            if (passwordInput.value.length > 0 && passwordInput.value.length < 6) {
+                passwordMessage.classList.remove('hidden');
+            } else {
+                passwordMessage.classList.add('hidden');
+            }
+        });
+
+        noTelpon
+        const noTelponInput = document.getElementById('noTelpon');
+        const noTelpMessage = document.getElementById('notelpMessage');
+
+        noTelponInput.addEventListener('input', () => {
+            if (noTelponInput.value.length > 0 && noTelponInput.value.length < 11) {
+                noTelpMessage.classList.remove('hidden');
+            } else {
+                noTelpMessage.classList.add('hidden');
+            }
+        });
 
         function toggleDropdown() {
             const dropdownMenu = document.getElementById("dropdownMenu");
