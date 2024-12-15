@@ -19,7 +19,7 @@ class Order extends Model
         return $this->belongsTo(Buyer::class);
     }
     public function product(): BelongsTo{
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withTrashed();
     }
     public function reports(): HasMany{
         return $this->hasMany(Report::class);
