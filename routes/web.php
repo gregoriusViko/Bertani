@@ -103,3 +103,5 @@ Route::post('/order/acceptOrder/{orderId}', [OrderController::class, 'acceptOrde
 Route::patch('/orders/{orderId}/accept', [OrderController::class, 'acceptOrder'])
     ->name('orders.accept')
     ->middleware('auth:farmer');
+
+Route::get('/order/payment/{orderId}', [OrderController::class, 'showPaymentPage'])->name('order.showPaymentPage');

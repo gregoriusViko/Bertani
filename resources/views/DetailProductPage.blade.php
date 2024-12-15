@@ -20,8 +20,10 @@
                             </div>
                             <div class="flex items-center">
                                 <ion-icon name="location-outline" class="text"></ion-icon>
-                                <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">
+                                    <a href="{{$product->farmer->home_address}}">
+                                    <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">
                                     {{ $product->farmer->home_address }}</h4>
+                                    </a>
                             </div>
                             <h1 class="mt-2 font-inter font-bold text-sm md:text-xl">
                                 {{ Number::currency($product->price, in: 'idr') }}</h1>
@@ -102,7 +104,7 @@
                                         <li onclick="selectOption('Cash')"
                                             class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
                                             Cash</li>
-                                            @if (!empty($order->product->farmer->nomor_rekening))
+                                            @if (!empty($product->farmer->nomor_rekening))
                                             <li onclick="selectOption('Transfer')"
                                             class="py-3 px-5 hover:bg-green-400 text-gray-800 text-sm font-inter font-normal cursor-pointer">
                                             Transfer</li>

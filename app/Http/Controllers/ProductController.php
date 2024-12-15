@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoryPrice;
 use App\Models\Product;
 use App\Models\TypeOfProduct;
 use Hamcrest\Description;
@@ -74,7 +75,7 @@ class ProductController extends Controller
             return back()->withErrors(['Nama' => 'nama produk tidak ditemukan.']);
         }
         $farmer = Auth::guard('farmer')->user();
-        Product::updateOrCreate(
+        $prod = Product::updateOrCreate(
             [
                 'farmer_id' => $farmer->id,
                 'type_of_product_id' => $typeOfProduct->id
@@ -88,6 +89,11 @@ class ProductController extends Controller
                 'img_link' => '/storage/products/' . $foto->hashName(),
             ]
         );
+
+        HistoryPrice::Create([
+            'price' => $request->harga,
+            'product_id' => $prod->id,
+        ]);
 
         return redirect('petani/dafproduk')->with('SuksesTambah', 'Berhasil');
     }
@@ -118,9 +124,16 @@ class ProductController extends Controller
             $product->img_link = '/storage/products/' . $foto->hashName();
         }
 
-        $product->price = $request->harga;
         $product->description = $request->deskripsi;
         $product->stock_kg = $request->stok;
+
+        if ($product->price !=  $request->harga){
+            $product->price = $request->harga;
+            HistoryPrice::Create([
+                'price' => $request->harga,
+                'product_id' => $product->id,
+            ]);
+        }
 
         $product->update();
 
