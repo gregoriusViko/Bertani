@@ -24,7 +24,7 @@
             
             <div class="mb-4">
                 <label for="message" class="block text-xl font-normal mb-2">Deskripsi Laporan</label>
-                <textarea name="content_of_report" id="message" rows="3" placeholder="" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <textarea name="content_of_report" id="message" rows="3" placeholder="" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
             </div>
 
             <p class="text-xl font-bold mb-2">Foto Bukti Laporan</p>
@@ -32,7 +32,7 @@
             <div class="mb-2">
                 <input type="file" name="image" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
                 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
-                file:text-white hover:file:bg-blue-500 active:scale-95">
+                file:text-white hover:file:bg-blue-500 active:scale-95" required>
             </div>
             @error('image')
                 {{ $message }}
@@ -83,6 +83,19 @@
         </div>
     </div>
 
+    @if (session('success'))
+        <div id="successMessage"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
+            <x-Message-success message="{{ session('success') }}">
+                Tanggapan Laporan dikirim melalui Email. Cek balasan Admin secara berkala. Terimakasih
+                <button onclick="closeMessage('successMessage')"
+                    class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                    <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+                </button>
+            </x-Message-success>
+        </div>
+    @endif
+
     <script>
         const tabs = document.querySelectorAll('[data-tab-target]');
         const activeClass = "bg-gray-200";
@@ -119,6 +132,25 @@
             tabs[0].classList.add(activeClass);
             tabs[1].classList.remove(activeClass);
         });
+
+        function closeMessage(elementId) {
+            const messageElement = document.getElementById(elementId);
+            if (messageElement) {
+                messageElement.style.display = 'none';
+                body.style.overflow = ''; // Aktifkan scroll
+            }
+        }
+
+        window.onload = function() {
+            const messageElement = document.getElementById('successMessage');
+            if (messageElement) {
+                // document.body.style.overflow = 'hidden';
+                body.style.overflow = 'hidden'; // Kunci scroll
+                setTimeout(() => {
+                    closeMessage('successMessage');
+                }, 3000); // 5000 ms = 5 detik
+            }
+        };
 
     </script>
 </x-layout>
