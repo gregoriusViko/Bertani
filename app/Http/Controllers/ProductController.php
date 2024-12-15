@@ -143,26 +143,23 @@ class ProductController extends Controller
 
     public function destroy(Request $request)
     {
-
         $product = Product::find($request->product);
+    
         try {
-            // Hapus file gambar jika bukan default
-            if ($product->img_link !== "noimage.png") {
-                $imagePath = public_path($product->img_link);
-                if (File::exists($imagePath)) {
-                    File::delete($imagePath);
-                }
-            }
-
             $product->delete();
+    
             DB::commit();
-            return redirect('petani/dafproduk')->with('SuksesHapus', 'Berhasil');
+    
+            return redirect('petani/dafproduk')->with('SuksesHapus', 'Berhasil menghapus produk.');
         } catch (\Exception $e) {
             DB::rollBack();
-            -Log::error('Error deleting product: ' . $e->getMessage()); //+
-            return redirect()->back()->with('GagalHapus', 'Gagal' . $e->getMessage());
+    
+            Log::error('Error deleting product: ' . $e->getMessage());
+    
+            return redirect()->back()->with('GagalHapus', 'Gagal menghapus produk. ' . $e->getMessage());
         }
     }
+    
 
     public function laporanPenjualan()
     {
