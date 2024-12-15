@@ -24,7 +24,7 @@
 
     <!-- New category card -->
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <h2 class="text-2xl font-semibold text-black bg-gray-100 px-6 py-4">
+        <h2 id="labelKategori" class="text-2xl font-semibold text-black bg-gray-100 px-6 py-4">
             {{ ucfirst($category->category) }}
         </h2>
         <div class="divide-y divide-gray-200">
@@ -36,10 +36,10 @@
             <!-- Category item -->
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
-                    <div class="text-gray-800 font-medium">{{ ucfirst($category->name) }}</div>
-                    <div class="text-sm text-gray-500">Terakhir diperbarui: {{ \Carbon\Carbon::parse($category->updated_at)->format('d M Y, H:i') }}</div>
+                    <div id="NamaProduk" class="text-gray-800 font-medium">{{ ucfirst($category->name) }}</div>
+                    <div id="keterangan" class="text-sm text-gray-500">Terakhir diperbarui: {{ \Carbon\Carbon::parse($category->updated_at)->format('d M Y, H:i') }}</div>
                 </div>
-                <div class="text-gray-600 font-medium">Rp {{ number_format($category->market_price, 0, ',', '.') }}</div>
+                <div id="hargaTerkini" class="text-gray-600 font-medium">Rp {{ number_format($category->market_price, 0, ',', '.') }}</div>
             </div>
         @empty
             <p class="text-center text-gray-600">Tidak ada data harga pasar.</p>
