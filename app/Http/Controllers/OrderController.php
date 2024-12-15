@@ -14,15 +14,16 @@ class OrderController extends Controller
     function daftarOrder(){
         $farmer = Auth::guard('farmer')->user();
         $orders = $farmer->products()->with('orders')->get()->pluck('orders')->flatten();
-        $orders = $orders->where('order_status', '!=', 'selesai');
         return view('petani.PetDafPesananPage', compact('orders'));
     }
 
-    function detailOrder(){
+    function detailOrder(Order $order){
         $farmer = Auth::guard('farmer')->user();
-        $orders = $farmer->products()->with('orders')->get()->pluck('orders')->flatten();
-        $orders = $orders->where('order_status', '!=', 'selesai');
-        return view('petani.PetDetailPesanan', compact('orders'));
+        if($order->product->farmer->id === $farmer->id){
+            return view('petani.PetDetailPesanan', compact('order'));
+        }else{
+            abort(404);
+        }
     }
 
     function daftarOrderPem(){
@@ -33,16 +34,44 @@ class OrderController extends Controller
 
     public function showPaymentPage($orderId){
         
-    // Ambil order berdasarkan ID yang diteruskan
-    $order = Order::findOrFail($orderId);
+        $order = Order::findOrFail($orderId);
+        $product = $order->product;
+        $price = $order->price;
 
-    // Ambil data produk yang terkait dengan order
-    $product = $order->product;
-    
-    // Ambil data harga yang terkait dengan order
-    $price = $order->price;
+        return view('pembeli.PembayaranPage', compact('order', 'product','price'));
+    }
 
-    return view('pembeli.PembayaranPage', compact('order', 'product','price'));
+    // Simpan order setelah pembayaran dikonfirmasi
+    public function store(Request $request)
+    {
+        
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required',
+            'payment_method' => 'required|string',
+        ]);
+
+        
+        $buyer = Auth::guard('buyer')->user();
+        $product = Product::findOrFail($validated['product_id']);
+
+        $order = Order::create([
+            'buyer_id' => $buyer->id,
+            'product_id' => $product->id,
+            'quantity_kg' => $validated['quantity'],
+            'receipt_number' => strtoupper(now()->format('YmdHis') . '-' . Str::random(6)),
+            'price_id' => $product->historyprice()->latest()->first()->id, 
+            'payment_proof' => $validated['payment_method'],
+            'order_status' => 'menunggu konfirmasi',
+        ]);
+        
+        return redirect()->route('DetailPembelianPage', ['order' => $order->id])->with('success', 'Order created successfully!');
+    }
+
+    public function showDetailPembelian($orderId){
+        // dd('order');
+        $order = Order::findOrFail($orderId);
+        return view('pembeli.DetailPembelianPage', compact('order'));
     }
 
     public function cancelOrder(Request $request, $orderId){
@@ -70,45 +99,10 @@ class OrderController extends Controller
 
         $order->update([
             'order_status' => 'ditolak',
-            'rejection_reason' => $validated['rejection_reason']
+            'cancellation_reason' => $validated['rejection_reason']
         ]);
 
         return redirect()->back()->with('success', 'Pesanan berhasil ditolak.');
-    }
-
-    
-
-    // Simpan order setelah pembayaran dikonfirmasi
-    public function store(Request $request)
-    {
-        
-        $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required',
-            'payment_method' => 'required|string',
-        ]);
-
-        
-        $buyer = Auth::guard('buyer')->user();
-        $product = Product::findOrFail($validated['product_id']);
-
-        $order = Order::create([
-            'buyer_id' => $buyer->id,
-            'product_id' => $product->id,
-            'quantity_kg' => $validated['quantity'],
-            'receipt_number' => strtoupper(now()->format('YmdHis') . '-' . Str::random(6)),
-            'price_id' => $product->historyprice()->latest()->first()->id, 
-            'payment_proof' => $validated['payment_method'],
-            'order_status' => 'pending',
-        ]);
-        
-        return redirect()->route('DetailPembelianPage', ['order' => $order->id])->with('success', 'Order created successfully!');
-    }
-
-    public function showDetailPembelian($orderId){
-        // dd('order');
-        $order = Order::findOrFail($orderId);
-        return view('pembeli.DetailPembelianPage', compact('order'));
     }
 
     public function acceptOrder ($orderId){
@@ -122,4 +116,13 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Pesanan berhasil diterima.');
     }
 
+    public function finishOrder ($orderId) {
+        $order = Order::findOrFail($orderId);
+        
+        $order->update([
+            'order_status' => 'selesai'
+        ]);
+
+        return redirect()->route('DafPesananPembeli')->with('success','order selesai');
+    }
 }
