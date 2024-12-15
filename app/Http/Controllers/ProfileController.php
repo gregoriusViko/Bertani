@@ -37,6 +37,7 @@ class ProfileController extends Controller
             'home_address' => 'required|string|max:150',
             'phone_number' => 'required|string|regex:/^\d{10,13}$/',
             'email' => 'required|string|max:45',
+            'delete_image' => 'required'
         ];
 
         if (Auth::guard('farmer')->check()){
@@ -75,36 +76,37 @@ class ProfileController extends Controller
             return redirect()->route('ProfilePage');
         }
 
-        // Jika ada file gambar baru
-        
-        // // dd($request->hasFile('profile_img'));
-        // if ($user->profile_img_link) {
-        //     // Hapus gambar lama jika ada
-        //     if ($user->profile_img_link) {
-        //         File::delete(public_path($user->profile_img_link));
-        //     }
-        
-        //     // Simpan file baru
-        //     $profileImg = $request->file('profile_img');
-        //     $path = $profileImg->store('users', 'public');
-        //     $user->profile_img_link = '/storage/users/' . $path;
-        // }
-
             // Cek apakah ada file gambar baru
-    if ($request->hasFile('profile_img')) {
-        // Jika ada gambar lama, hapus gambar lama
-        if ($user->profile_img_link) {
-            File::delete(public_path($user->profile_img_link));
-        }
+    // if ($request->hasFile('profile_img')) {
+    //     // Jika ada gambar lama, hapus gambar lama
+    //     if ($user->profile_img_link) {
+    //         File::delete(public_path($user->profile_img_link));
+    //     }
 
-        // Simpan file gambar baru
-        $profileImg = $request->file('profile_img');
-        $path = $profileImg->store('users', 'public');
-        $user->profile_img_link = '/storage/' . $path;
-    } elseif (!$user->profile_img_link) {
-        // Jika tidak ada gambar lama dan tidak ada gambar baru, kosongkan link gambar
-        $user->profile_img_link = null;
-    }
+    //     // Simpan file gambar baru
+    //     $profileImg = $request->file('profile_img');
+    //     $path = $profileImg->store('users', 'public');
+    //     $user->profile_img_link = '/storage/' . $path;
+
+    // } elseif (!$user->profile_img_link) {
+    //     // Jika tidak ada gambar lama dan tidak ada gambar baru, kosongkan link gambar
+    //     $user->profile_img_link = null;
+    // }
+
+            // LOGIKA GAMBAR
+            if ($request->hasFile('profile_img')) {
+                if ($user->profile_img_link) {
+                    File::delete(public_path($user->profile_img_link));
+                }
+                $profileImg = $request->file('profile_img');
+                $path = $profileImg->store('users', 'public');
+                $user->profile_img_link = '/storage/' . $path;
+            } elseif ($request->input('delete_image') == '1') {
+                if ($user->profile_img_link && File::exists(public_path($user->profile_img_link))) {
+                    File::delete(public_path($user->profile_img_link));
+                }
+                $user->profile_img_link = null;
+            }
 
         // Update data pengguna
         $user->name = $validatedData['name'];

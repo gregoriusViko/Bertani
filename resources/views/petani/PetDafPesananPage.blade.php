@@ -37,7 +37,7 @@
 
                 <div
                     class="font-libre-franklin text-lg md:text-lg lg:text-2xl font-semibold row-start-5 col-span-8 col-start-1 md:row-start-2 md:col-start-8 md:col-span-4 md:flex md:justify-end">
-                    <h2>{{ Number::currency($order->historyPrice->price, in: 'idr') }}</h2>
+                    <h2>{{ Number::currency($order->historyPrice->price * $order->quantity_kg, in: 'idr') }}</h2>
                 </div>
 
                 <!-- metode pembayaran -->
@@ -111,7 +111,7 @@
                     <div class="mt-4 flex justify-end space-x-2">
                         <button type="button"
                             class="border border-black bg-white text-black px-2 py-1 md:px-4 md:py-1 rounded-lg hover:bg-red-400"
-                            onclick="closeModal('showACC-modal')">
+                            onclick="closeModal('showACC-modal-{{ $order->id }}')">
                             TUTUP
                         </button>
                         <button type="submit"
@@ -146,23 +146,7 @@
                 </button>
             </div>
         </div>
-    </x-modal>
-        {{-- <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
-        <div class="flex justify-center">
-            <img class="md:h-80" src="\img\cthBuktiTF.png" alt="bukti">
-        </div>
-        <div class="text-sm md:text-base font-libre-franklin font-bold">
-            <p class="text-sm md:text-base">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
-            <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a href=""
-                    class="hover:underline hover:text-red-500 text-sm md:text-base">Disini</a></p>
-        </div>
-        <div class="mt-4 flex justify-end space-x-2">
-            <button class="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-gray-400"
-                onclick="closeModal('showTF-modal')">
-                TUTUP
-            </button>
-        </div> --}}
-    
+    </x-modal> 
 
 
     {{-- modal ketika tekan tombol silang --}}
@@ -171,15 +155,16 @@
         <form method="POST" action="{{ route('orders.reject', $order->id) }}" class="grid grid-flow-row">
             @csrf
             @method('POST')
-            <div class="text-xl">Konfirmasi Pesanan</div>
-            <div class="text-lg">Yakin anda menolak pesanan</div>
+            <div class="text-xl flex justify-center font-bold">Konfirmasi Pesanan</div>
+            
 
             {{-- input alasan --}}
             <div class="mt-4">
-                <label for="rejection_reason" class="block text-sm font-medium text-gray-700">Alasan Penolakan</label>
+                <label for="rejection_reason" class="font-base block text-base font-semibold">Alasan Penolakan</label>
                 <textarea id="rejection_reason" name="rejection_reason" rows="4" required
                     class="p-2 block w-full mt-1 border border-black resize-none rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
             </div>
+            <div class="text-sm font-medium">Pastikan Anda yakin menolak pesanan</div>
             {{-- tombol aksi --}}
             <div class="mt-4 flex justify-end space-x-2">
                 <!-- Tombol Batal -->
@@ -197,20 +182,8 @@
         </form>
     </x-modal>
 
-
-
-    {{-- <div id="componentContainer" class="hidden mt-4">
-        @include('components.delete_confirm')
-    </div> --}}
-
     <script>
         const body = document.body;
-        // function toggleComponent() {
-        //     const container = document.getElementById('componentContainer');
-        //     container.classList.toggle('hidden');
-        // }
-
-        // fungsi untuk button bukti transfer
         function showTFModal() {
             const modal = document.getElementById('showTF-modal');
             if (modal) {
@@ -246,7 +219,7 @@
         function showModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
-                modal.classList.remove('hidden');
+                modal.classList.add('hidden');
                 body.style.overflow = 'hidden';
             }
         }
@@ -259,6 +232,5 @@
             }
         }
 
-        
     </script>
 </x-layout>
