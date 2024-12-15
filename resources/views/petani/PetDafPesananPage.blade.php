@@ -155,15 +155,16 @@
         <form method="POST" action="{{ route('orders.reject', $order->id) }}" class="grid grid-flow-row">
             @csrf
             @method('POST')
-            <div class="text-xl">Konfirmasi Pesanan</div>
-            <div class="text-lg">Yakin anda menolak pesanan</div>
+            <div class="text-xl flex justify-center font-bold">Konfirmasi Pesanan</div>
+            
 
             {{-- input alasan --}}
             <div class="mt-4">
-                <label for="rejection_reason" class="block text-sm font-medium text-gray-700">Alasan Penolakan</label>
+                <label for="rejection_reason" class="font-base block text-base font-semibold">Alasan Penolakan</label>
                 <textarea id="rejection_reason" name="rejection_reason" rows="4" required
                     class="p-2 block w-full mt-1 border border-black resize-none rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
             </div>
+            <div class="text-sm font-medium">Pastikan Anda yakin menolak pesanan</div>
             {{-- tombol aksi --}}
             <div class="mt-4 flex justify-end space-x-2">
                 <!-- Tombol Batal -->
