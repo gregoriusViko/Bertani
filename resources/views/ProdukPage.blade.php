@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot:title>Produk-Bertani.com</x-slot:title>
+    <x-slot:title>Search Produk-Bertani.com</x-slot:title>
 
     <!-- Form pencarian -->
     <form action="{{ route('search') }}" method="GET"
@@ -18,31 +18,50 @@
 
 
     <!-- Hasil pencarian -->
-    @if (isset($products) && $products->count() > 0)
-        <div id="cardContainer"
-            class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
-            {{-- @foreach ($products as $product) --}}
-            @include('partials.product')
-        </div>
-        <div style="display: none;" id="loading"
-            class="fixed inset-0 flex justify-center items-center w-full h-[100vh]">
-            <div class="relative flex justify-center items-center">
-                <div class="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-green-600"></div>
-                {{-- <img src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg" class="rounded-full h-28 w-28"> --}}
-                <img src="/img/logokecil.png" class="rounded-full h-28 w-28">
+    <div id="results" class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
+        @if (isset($products) && $products->count() > 0)
+            @foreach ($products as $product)
+                <a href="{{ route('product.show', $product->id) }}">
+                    <div
+                        class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer transition ease-in-out hover:scale-105">
+                        <img src="{{ $product->img_link }}" alt="Gambar Produk"
+                            class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1">
+                        <div class="p-2 grid-cols-2">
+                            <div class="col-span-2 text-base font-mono">
+                                {{ ucwords($product->type->name) }}
+                            </div>
+                            <div class="text-xl font-mono font-bold">
+                                Rp {{ number_format($product->price, 0, ',', '.') }}
+                            </div>
+                            <div class="text-sm font-mono font-light capitalize flex">
+                                <img src="/img/chinese-farmer-svgrepo-com.png" alt="iconpetani" class="w-5 h-5 mr-2"> <span>{{ Str::before($product->farmer->name, ' ') }}</span>
+                            </div>
+                            {{-- <div class="text-sm font-mono font-light">
+                                {{ $product->description ?: 'Deskripsi tidak tersedia' }}
+                            </div> --}}
+                            <div class="text-sm font-mono font-light">
+                                Terjual : {{ WeightConverter::convert($product->orders->sum('quantity_kg')) }}
+                            </div>
+                            <div class="text-sm font-mono font-light">
+                                Stok : {{ WeightConverter::convert($product->stock_kg) }}
+                            </div>
+
+                        </div>
+                        {{-- $product->price, 0, ',', '.') }}</p> --}}
+                    </div>
+            @endforeach
+        @elseif(request('query'))
+            <div class="col-span-4">
+                <x-Message-info>Produk tidak ditemukan. Silahkan cari kembali.</x-Message-info>
             </div>
-        </div>
-    @elseif(request('query'))
-        <div class="col-span-4">
-            <x-Message-info>Produk tidak ditemukan. Silahkan cari kembali.</x-Message-info>
-        </div>
-        {{-- <p class="text-center"></p> --}}
-    @else
-        <!-- Pesan saat halaman pertama kali dibuka -->
-        <div class="col-span-4">
-            <x-Message-info>Silahkan cari produk yang Anda inginkan.</x-Message-info>
-        </div>
-    @endif
+            {{-- <p class="text-center"></p> --}}
+        @else
+            <!-- Pesan saat halaman pertama kali dibuka -->
+            <div class="col-span-4">
+                <x-Message-info>Silahkan cari produk yang Anda inginkan.</x-Message-info>
+            </div>
+        @endif
+    </div>
 
     <button id="scrollToTopBtn"
         class="fixed bottom-8 right-8 bg-green-500 text-white px-3 pt-3 pb-2 rounded-full shadow-lg place-content-center hover:bg-indigo-600 transition duration-300 hidden"
