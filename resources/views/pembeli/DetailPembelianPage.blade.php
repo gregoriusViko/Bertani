@@ -72,8 +72,8 @@
         </button>
         @endif
 
-        @if($order->order_status == 'diterima')
-        <a href="{{route('order.showPaymentPage', ['order' => $order->id] ) }}" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-blue-500 sm:w-auto mt-2 sm:mt-0">
+        @if($order->order_status == 'permintaan diterima')
+        <a href="{{route('order.showPaymentPage', ['orderId' => $order->id] ) }}" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-blue-500 sm:w-auto mt-2 sm:mt-0">
             Pembayaran
         </a>
         @endif
