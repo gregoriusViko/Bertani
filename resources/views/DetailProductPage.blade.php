@@ -29,6 +29,7 @@
                             <h1 class="mt-2 font-inter font-bold text-sm md:text-xl">
                                 Rp {{ number_format($product->price, 0, ',', '.') }}</h1>
                         </div>
+                        @if (Auth::guard('buyer')->check())
                         <div class="w 1/2">
                             <div class="flex justify-end">
                                 <a href="{{ route('chat', $product->farmer->slug) }}">
@@ -44,6 +45,7 @@
                                 </a>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

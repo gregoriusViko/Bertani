@@ -196,7 +196,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <p style="line-height: 100%;">&nbsp;</p>
 <p style="line-height: 100%;">&nbsp;</p>
   </div>
-
+    {{ $laporan }}
       </td>
     </tr>
   </tbody>
@@ -234,7 +234,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <p style="line-height: 140%;">&nbsp;</p>
 <p style="line-height: 140%;">&nbsp;</p>
   </div>
-
+    {{ $tanggapan }}
       </td>
     </tr>
   </tbody>

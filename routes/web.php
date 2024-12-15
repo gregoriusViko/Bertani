@@ -54,6 +54,7 @@ Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('p
 // })->name('PemDafPesananPage');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/search/load', [SearchController::class, 'loadMoreProducts'])->name('search-load');
 
 Route::view('/coba', 'coba');
 

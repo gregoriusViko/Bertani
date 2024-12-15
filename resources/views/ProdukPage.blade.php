@@ -27,14 +27,14 @@
                         <img src="{{ $product->img_link }}" alt="Gambar Produk"
                             class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1">
                         <div class="p-2 grid-cols-2">
-                            <div class="col-span-2 text-base font-mono capitalize">
+                            <div class="col-span-2 text-base font-mono">
                                 {{ ucwords($product->type->name) }}
                             </div>
                             <div class="text-xl font-mono font-bold">
                                 Rp {{ number_format($product->price, 0, ',', '.') }}
                             </div>
-                            <div class="text-sm font-mono font-light capitalize flex justify-start gap-x-2">
-                                <img src="/img/chinese-farmer-svgrepo-com.png" alt="iconPetani" id="iconPetani" class="w-5 h-5"> <span>{{ Str::before($product->farmer->name, ' ') }}</span>
+                            <div class="text-sm font-mono font-light capitalize flex">
+                                <img src="/img/chinese-farmer-svgrepo-com.png" alt="iconpetani" class="w-5 h-5 mr-2"> <span>{{ Str::before($product->farmer->name, ' ') }}</span>
                             </div>
                             {{-- <div class="text-sm font-mono font-light">
                                 {{ $product->description ?: 'Deskripsi tidak tersedia' }}
@@ -72,25 +72,64 @@
         <ion-icon name="arrow-up-circle-outline" class="h-6 w-6"></ion-icon>
     </button>
 
-    <script>
-        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+    @isset($query)
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            let page = 1;
+            let isLoading = false; // Tambahkan flag untuk mencegah panggilan berulang
 
-        // Tampilkan tombol saat pengguna scroll ke bawah
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 400) {
-                scrollToTopBtn.classList.remove("hidden");
-            } else {
-                scrollToTopBtn.classList.add("hidden");
-            }
-        });
-
-        // Fungsi untuk scroll ke atas
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
+            $(window).scroll(function() {
+                // Cek jika halaman sudah mencapai bagian bawah
+                if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height() - 15) {
+                        $('#loading').show(); // Tampilkan elemen loading
+                        loadMoreData(++page); // Panggil halaman berikutnya
+                }
             });
-        }
-    </script>
+
+
+            function loadMoreData(page) {
+                isLoading = true; // Set flag untuk mencegah pemanggilan berulang
+                $.ajax({
+                    url: '/search/load?query={{ $query }}&page=' + page,
+                    type: "get",
+                    beforeSend: function() {
+                        $('#loading').show(); // Tampilkan elemen loading sebelum data dimuat
+                    }
+                }).done(function(data) {
+                    if (data === "") {
+                        $('#loading').hide();
+                        isLoading = false; // Izinkan pemanggilan ulang jika diperlukan
+                        return;
+                    }
+                    $('#loading').hide(); // Sembunyikan elemen loading setelah data berhasil dimuat
+                    $("#cardContainer").append(data); // Tambahkan data baru ke kontainer
+                    isLoading = false; // Reset flag
+                }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                    $('#loading').hide();
+                    isLoading = false; // Reset flag
+                });
+            }
+        </script>
+        <script>
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+            // Tampilkan tombol saat pengguna scroll ke bawah
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.remove("hidden");
+                } else {
+                    scrollToTopBtn.classList.add("hidden");
+                }
+            });
+
+            // Fungsi untuk scroll ke atas
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+            }
+        </script>
+    @endisset
 
 </x-layout>

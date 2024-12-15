@@ -7,35 +7,46 @@
                     <div class="flex items-end">
                         <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
                             <div>
-                                <span
-                                    class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                                <span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white"
+                                    style="max-width: 100%; word-wrap: break-word; white-space: normal;">
                                     {{ $message->content }}
                                 </span>
-                                <span class="text-gray-400 text-[10px] ml-2">
-                                    ini jamnya
+                                <span class="text-gray-600 text-[10px] ml-2">
+                                    {{ $message->send_time->format('H:i') }}
                                 </span>
                             </div>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
+                        @if ($friend->profile_img_link)
+                            <img src="{{ $friend->profile_img_link }}"
                             alt="My profile" class="w-6 h-6 rounded-full order-1">
-                        <span class="text-gray-400 text-[10px] ml-2">
-                            ini jamnya
-                        </span>
+                        @else
+                            <ion-icon name="person-circle-outline"
+                            class="w-6 h-6 rounded-full order-1"></ion-icon>
+                        @endif
                     </div>
                 </div>
             @else
                 <div class="chat-message">
                     <div class="flex items-end justify-end">
                         <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-                            <div><span
-                                    class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white">{{ $message->content }}</span>
+                            <div>
+                                <span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white"
+                                    style="max-width: 100%; word-wrap: break-word; white-space: normal;">
+                                    {{ $message->content }}
+                                </span>
                             </div>
+                            <span class="text-gray-600 text-[10px] mt-1">
+                                {{ $message->send_time->format('H:i') }}
+                            </span>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
+
+                        @if ($user->profile_img_link)
+                            <img src="{{ $user->profile_img_link }}"
                             alt="My profile" class="w-6 h-6 rounded-full order-2">
-                        <span class="text-gray-400 text-[10px] ml-2">
-                            {{ $message->send_time->format('H:i') }}
-                        </span>
+                        @else
+                            <ion-icon name="person-circle-outline"
+                            class="w-6 h-6 rounded-full order-1"></ion-icon>
+                        @endif
                     </div>
                 </div>
             @endif
