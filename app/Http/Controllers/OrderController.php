@@ -116,7 +116,7 @@ class OrderController extends Controller
 
         // update status menjadi pesanan diterima
         $order->update([
-            'order_status' => 'permintaan diterima'
+            'order_status' => 'pesanan diterima'
         ]);
 
         return redirect()->back()->with('success', 'Pesanan berhasil diterima.');
