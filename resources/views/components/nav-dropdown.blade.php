@@ -14,6 +14,9 @@
                         clip-rule="evenodd" />
                 </svg>
             </button>
+            @isset($icon)
+                {{ $icon }}
+            @endisset
         </div>
 
         <div x-show="isOpen" x-transition:enter="transition ease-out duration-100"

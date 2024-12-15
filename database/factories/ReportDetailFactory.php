@@ -34,8 +34,6 @@ class ReportDetailFactory extends Factory
             'content_of_report' => fake()->realText(),
             'admin_id' => $admin,
             'content_of_response'=>$content,
-            // 'img' => file_get_contents(Arr::random([1,2,3,4,5,6,7,8,9,10])),
-            'img' => (Arr::random([1,2,3,4,5,6,7,8,9,10])),
             'response_time' => $response
         ];
     }

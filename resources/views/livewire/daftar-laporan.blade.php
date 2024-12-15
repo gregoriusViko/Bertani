@@ -104,12 +104,17 @@
                 </div>
             </div>
 
-            <div class="mb-4">
+            {{-- <div class="mb-4">
                 <input type="file" id="uploadImage" accept="image/*"
                     class="mt-1 block w-full text-sm text-gray-500
             file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
             file:text-white hover:file:bg-blue-500 active:scale-95">
-            </div>
+            </div> --}}
+            @if ($detailLaporan && $detailLaporan->img)
+                <a href="{{ route('image-show', $detailLaporan->id) }}" target="_blank">
+                    <button>Lihat lampiran</button>
+                </a>
+            @endif
 
             <!-- Textbox untuk menulis pesan -->
             <div class="mb-4">
