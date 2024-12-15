@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot:title>Harga Pasar Terbaru</x-slot:title>
+    <x-slot:title>Harga Pasar Terbaru-Bertani.com</x-slot:title>
 
     <div class="container mx-auto px-4">
         <h1 class="text-3xl font-bold text-black py-6 text-center">Harga Pasar Terbaru</h1>
