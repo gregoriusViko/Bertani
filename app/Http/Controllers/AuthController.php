@@ -217,4 +217,12 @@ class AuthController extends Controller
             ? redirect()->route('login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]])->with('error');
     }
+
+    public function jumlahChat(){
+        $chat = Auth::guard('farmer')->check() ? Auth::guard('farmer')->user()->farmerChats : Auth::guard('buyer')->user()->buyerChats;
+        $sum = $chat->sum(function($pesan){
+            return $pesan->role == 'receiver' && $pesan->is_read == 0 ? 1 : 0;
+        });
+        return $sum;
+    }
 }

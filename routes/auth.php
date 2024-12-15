@@ -28,6 +28,7 @@ Route::middleware(['auth:farmer,buyer', 'verified'])->group(function () {
     Route::post('/laporan/sistem-create', [ReportController::class, 'createForSystem']);
     // Route::get('/chat', Chat::class)->name('ChatPage');
     Route::get('/chat/{slug?}', Chat::class)->name('chat');
+    Route::get('/jumlah-chat', [AuthController::class, 'jumlahChat'])->name('sum-of-chat');
 });
 
 // rute untuk orang yang belum login
