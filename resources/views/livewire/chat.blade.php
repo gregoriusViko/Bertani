@@ -16,7 +16,7 @@
                     <div class="h-full md:h-[calc(100vh-10rem)] overflow-y-auto">
                         @foreach ($contacts as $contact)
                             <a href="{{ route('chat', $contact['slug']) }}" wire:navigate>
-                                <button
+                                <button id="perkontak"
                                     class="py-1 w-full pl-1 md:pl-4 pt-4 pb-4 flex items-center justify-start gap-x-1 md:gap-x-0 text-xs md:text-base lg:text-xl font-hind font-medium {{ request()->is(route('chat', $contact['slug'])) ? 'bg-green-400' : 'hover:bg-green-300' }}">
                                     <span>
                                         @if ($contact['profile_img_link'])
