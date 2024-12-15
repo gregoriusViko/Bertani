@@ -89,14 +89,14 @@
         @endif
 
 
-        @if ($order->order_status == 'pending')
+        @if ($order->order_status == 'menunggu konfirmasi')
             <button onclick="showPopup('batalkanPesanan')" type="button" id="batalkanPesanan"
                 class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto mt-2 sm:mt-0">
                 Batalkan Pesanan
             </button>
         @endif
 
-        @if ($order->order_status == 'permintaan diterima')
+        @if ($order->order_status == 'pesanan diterima')
             <a href="{{ route('order.showPaymentPage', ['orderId' => $order->id]) }}"
                 class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-blue-500 sm:w-auto mt-2 sm:mt-0">
                 Pembayaran

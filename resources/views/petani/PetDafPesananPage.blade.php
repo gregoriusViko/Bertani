@@ -37,9 +37,8 @@
 
                 <div
                     class="font-libre-franklin text-lg md:text-lg lg:text-2xl font-semibold row-start-5 col-span-8 col-start-1 md:row-start-2 md:col-start-8 md:col-span-4 md:flex md:justify-end">
-                    <h2>{{ Number::currency($order->historyPrice->price * $order->quantity_kg, in: 'idr') }}</h2>
+                    <h2>Rp {{ number_format($order->historyPrice->price * $order->quantity_kg, 0, ',', '.') }}</h2>
                 </div>
-
                 <!-- metode pembayaran -->
                 <div
                     class="font-libre-franklin text-sm md:text-base lg:text-lg font-normal row-start-6 col-span-5 col-start-1 md:row-start-3 md:col-start-4 md:col-span-4">
@@ -62,7 +61,7 @@
 
                 <div
                     class="font-libre-franklin font-normal row-start-6 col-span-6 col-start-6 md:row-start-3 md:col-start-9 md:col-span-3 md:row-span-2 ">
-                    @if ($order->order_status == 'pending')
+                    @if ($order->order_status == 'menunggu konfirmasi')
                         <h4 class="bg-yellow-200 text-sm rounded-md p-1 mb-1 flex justify-center relative">
                             Butuh Konfirmasi
                             <span
@@ -81,10 +80,10 @@
                                     class="transition ease-in duration-100 text-3xl"></ion-icon></button>
                         </div>
                     @elseif ($order->order_status == 'selesai')
-                        <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Diterima
+                        <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan selesai
                         </h4>
-                    @elseif ($order->order_status == 'permintaan diterima')
-                        <h4 class="bg-[#00D115] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Selesai
+                    @elseif ($order->order_status == 'pesanan diterima')
+                        <h4 class="bg-[#00D115] text-sm rounded-md p-1 mb-1 flex justify-center">Menunggu pembayaran
                         </h4>
                     @elseif ($order->order_status == 'ditolak')
                         <h4 class="bg-[#f44747] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Ditolak
@@ -103,7 +102,7 @@
                     <div class="text-base"><strong>Produk:</strong> {{ $order->product->type->name }} - {{ $order->quantity_kg }} kg</div>
                     <div class="text-base"><strong>Pembeli:</strong> {{ $order->buyer->name }} - {{ $order->buyer->phone_number }}</div>
                     <div class="text-base"><strong>Metode Pembayaran:</strong> {{ $order->payment_proof }}</div>
-                    <div class="text-xl font-semibold text-green-600">Total: {{ Number::currency($order->historyPrice->price, in: 'idr') }}</div>
+                    <div class="text-xl font-semibold text-green-600">Total: {{ Number::currency($order->historyPrice->price * $order->quantity_kg, in: 'idr') }}</div>
                 </div>
                 <form id="acceptOrderForm" method="POST" action="{{ route('orders.accept', $order->id) }}">
                     @csrf
@@ -156,15 +155,13 @@
             @csrf
             @method('POST')
             <div class="text-xl flex justify-center font-bold">Konfirmasi Pesanan</div>
-            
-
             {{-- input alasan --}}
             <div class="mt-4">
-                <label for="rejection_reason" class="font-base block text-base font-semibold">Alasan Penolakan</label>
+                <label for="rejection_reason" class="font-base block text-base font-semibold">Alasan Pembatalan</label>
                 <textarea id="rejection_reason" name="rejection_reason" rows="4" required
                     class="p-2 block w-full mt-1 border border-black resize-none rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
             </div>
-            <div class="text-sm font-medium">Pastikan Anda yakin menolak pesanan</div>
+            <div class="text-sm font-medium">Pastikan anda yakin membatalkan pesanan!</div>
             {{-- tombol aksi --}}
             <div class="mt-4 flex justify-end space-x-2">
                 <!-- Tombol Batal -->
