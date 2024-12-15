@@ -13,8 +13,8 @@
     </div> -->
 
     <div class="mt-4">
-        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab1">Laporan</button>
-        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab2">Daftar Laporan</button>
+        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab1">Laporan Sistem</button>
+        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab2">Laporan Transaksi</button>
     </div>
 
     <div id="tab1" class="tab-content border border-black rounded-md w-full h-auto">
@@ -24,7 +24,7 @@
             
             <div class="mb-4">
                 <label for="message" class="block text-xl font-normal mb-2">Deskripsi Laporan</label>
-                <textarea name="content_of_report" id="message" rows="3" placeholder="" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
+                <textarea name="content_of_report" id="message" rows="3" placeholder="Ketik kendala yang Anda alami" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
             </div>
 
             <p class="text-xl font-bold mb-2">Foto Bukti Laporan</p>
@@ -49,36 +49,49 @@
         </form>
     </div>
 
+    
+
     <div>
         <div>
-            <div id="tab2" class="tab-content border border-black p-8 w-full h-auto hidden rounded-md">
-                <p class="text-2xl font-bold mb-4">Daftar Laporan</p>
-
-                {{-- kotak perlaporan --}}
-                <div class="border border-green-600 p-5 w-full h-auto rounded-md">
-                    <p class="text-sm mb-2">1 Oktober 2024 -  15.40 WIB || 12345 - Purnomo </p>
-
-                    {{-- <p class="py-4"></p> --}}
-                    <p class="text-xl font-medium py-2">Laporan Pesanan</p>
-                    <ul class="ml-4 list-disc text-lg font-medium">
-                        <li>Berat produk tidak sesuai pesanan</li>
-                    </ul>
-
-                    {{-- <p class="py-4"></p> --}}
-                    <p class="text-xl font-medium mt-2 py-2">Tanggapan</p>
-                    <ul class="ml-4 list-disc text-lg font-medium">
-                        <li>Baik, akan kami tindak lanjutin. Terimakasih </li>
-                    </ul>
-
-                    <form>
-                        {{-- <p class="py-4"></p> --}}
-                        <p class="text-xl font-medium mt-5">Balas Tanggapan?</p>
-                        <textarea id="replyMessage" rows="3" placeholder="" class="w-4/5 h-10 p-2 mt-1 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
-                        <button onclick=""><img src="/img/paperplane.png" alt="icon_teruskan" class="w-9 h-9"></button>
-                    </form>
-                </div>
-
-
+            <div id="tab2" class="tab-content border border-black rounded-md w-full h-auto">
+                <form enctype="multipart/form-data" class="p-8 w-full h-auto" action="/laporan/sistem-create" method="post">
+                    @csrf
+                    <p class="text-2xl font-bold mb-4">Laporan Transaksi</p>
+                    <div class="w-10/12 md:w-5/12 lg:w-4/12">
+                        <div class="grid grid-cols-2">
+                            <p class="text-sm md:text-base lg:text-lg font-normal mb-1">Nomor Pembelian</p>
+                            <p class="text-sm md:text-base lg:text-lg font-normal mb-1 ml-5">Nomornya</p>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <p class="text-sm md:text-base lg:text-lg font-normal mb-4">Nama Petani</p>
+                            <p class="text-sm md:text-base lg:text-lg font-normal mb-4 ml-5">Namanya</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-xl font-normal mb-2">Deskripsi Laporan</label>
+                        <textarea name="content_of_report" id="message" rows="3" placeholder="Ketik kendala yang Anda alami" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
+                    </div>
+        
+                    <p class="text-xl font-bold mb-2">Foto Bukti Laporan</p>
+        
+                    <div class="mb-2">
+                        <input type="file" name="image" id="uploadImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-700 
+                        file:text-white hover:file:bg-blue-500 active:scale-95" required>
+                    </div>
+                    @error('image')
+                        {{ $message }}
+                    @enderror
+        
+                    <p class="block text-base font-normal mb-2">Saya dengan ini menyatakan bahwa segala informasi yang dilaporkan memang benar</p>
+                        
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" id="cancelButton" class="inline-flex gap-x-2 px-4 py-2 bg-white rounded-lg border border-black  shadow hover:shadow-md transition-shadow hover:bg-orange-300">
+                        <img src="/img/laporanbatal.png" alt="icon_batal" class="w-5 h-5">Batal</button>
+                        <button type="submit" class="inline-flex gap-x-2 px-4 py-2 bg-white-300 rounded-lg border border-black  shadow hover:shadow-md transition-shadow hover:bg-orange-300">
+                        <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
