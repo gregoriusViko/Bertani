@@ -26,6 +26,7 @@
                             <h1 class="mt-2 font-inter font-bold text-sm md:text-xl">
                                 {{ Number::currency($product->price, in: 'idr') }}</h1>
                         </div>
+                        @if (Auth::guard('buyer')->check())
                         <div class="w 1/2">
                             <div class="flex justify-end">
                                 <a href="{{ route('chat', $product->farmer->slug) }}">
@@ -39,6 +40,7 @@
                                 </a>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

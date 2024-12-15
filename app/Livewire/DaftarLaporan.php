@@ -74,7 +74,7 @@ class DaftarLaporan extends Component
         $detailLaporan->response_time = now();
         $detailLaporan->save();
         $this->tutup();
-        Mail::to($this->user->email)->send(new ReportResponse($this->message));
+        Mail::to($this->user->email)->send(new ReportResponse($detailLaporan->content_of_report, $detailLaporan->content_of_response));
     }
 
     public function tutup(){

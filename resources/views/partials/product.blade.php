@@ -11,7 +11,7 @@
                     Rp {{ number_format($product->price, 0, ',', '.') }}
                 </div>
                 <div class="text-sm font-mono font-light">
-                    {{ Str::before($product->farmer->name, ' ') }} - "asal"
+                    {{ Str::before($product->farmer->name, ' ') }}
                 </div>
                 <div class="text-sm font-mono font-light">
                     Terjual : {{ WeightConverter::convert($product->orders->sum('quantity_kg')) }}

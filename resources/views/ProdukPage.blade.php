@@ -18,50 +18,31 @@
 
 
     <!-- Hasil pencarian -->
-    <div id="results" class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
-        @if (isset($products) && $products->count() > 0)
-            @foreach ($products as $product)
-                <a href="{{ route('product.show', $product->id) }}">
-                    <div
-                        class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer transition ease-in-out hover:scale-105">
-                        <img src="{{ $product->img_link }}" alt="Gambar Produk"
-                            class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1">
-                        <div class="p-2 grid-cols-2">
-                            <div class="col-span-2 text-base font-mono">
-                                {{ ucwords($product->type->name) }}
-                            </div>
-                            <div class="text-xl font-mono font-bold">
-                                Rp {{ number_format($product->price, 0, ',', '.') }}
-                            </div>
-                            <div class="text-sm font-mono font-light">
-                                {{ Str::before($product->farmer->name, ' ') }} - "asal"
-                            </div>
-                            <div class="text-sm font-mono font-light">
-                                {{ $product->description ?: 'Deskripsi tidak tersedia' }}
-                            </div>
-                            <div class="text-sm font-mono font-light">
-                                Terjual : {{ WeightConverter::convert($product->orders->sum('quantity_kg')) }}
-                            </div>
-                            <div class="text-sm font-mono font-light">
-                                Stok : {{ WeightConverter::convert($product->stock_kg) }}
-                            </div>
-
-                        </div>
-                        {{-- $product->price, 0, ',', '.') }}</p> --}}
-                    </div>
-            @endforeach
-        @elseif(request('query'))
-            <div class="col-span-4">
-                <x-Message-info>Produk tidak ditemukan. Silahkan cari kembali.</x-Message-info>
+    @if (isset($products) && $products->count() > 0)
+        <div id="cardContainer"
+            class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
+            {{-- @foreach ($products as $product) --}}
+            @include('partials.product')
+        </div>
+        <div style="display: none;" id="loading"
+            class="fixed inset-0 flex justify-center items-center w-full h-[100vh]">
+            <div class="relative flex justify-center items-center">
+                <div class="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-green-600"></div>
+                {{-- <img src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg" class="rounded-full h-28 w-28"> --}}
+                <img src="/img/logokecil.png" class="rounded-full h-28 w-28">
             </div>
-            {{-- <p class="text-center"></p> --}}
-        @else
-            <!-- Pesan saat halaman pertama kali dibuka -->
-            <div class="col-span-4">
-                <x-Message-info>Silahkan cari produk yang Anda inginkan.</x-Message-info>
-            </div>
-        @endif
-    </div>
+        </div>
+    @elseif(request('query'))
+        <div class="col-span-4">
+            <x-Message-info>Produk tidak ditemukan. Silahkan cari kembali.</x-Message-info>
+        </div>
+        {{-- <p class="text-center"></p> --}}
+    @else
+        <!-- Pesan saat halaman pertama kali dibuka -->
+        <div class="col-span-4">
+            <x-Message-info>Silahkan cari produk yang Anda inginkan.</x-Message-info>
+        </div>
+    @endif
 
     <button id="scrollToTopBtn"
         class="fixed bottom-8 right-8 bg-green-500 text-white px-3 pt-3 pb-2 rounded-full shadow-lg place-content-center hover:bg-indigo-600 transition duration-300 hidden"
@@ -72,25 +53,64 @@
         <ion-icon name="arrow-up-circle-outline" class="h-6 w-6"></ion-icon>
     </button>
 
-    <script>
-        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+    @isset($query)
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            let page = 1;
+            let isLoading = false; // Tambahkan flag untuk mencegah panggilan berulang
 
-        // Tampilkan tombol saat pengguna scroll ke bawah
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 400) {
-                scrollToTopBtn.classList.remove("hidden");
-            } else {
-                scrollToTopBtn.classList.add("hidden");
-            }
-        });
-
-        // Fungsi untuk scroll ke atas
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
+            $(window).scroll(function() {
+                // Cek jika halaman sudah mencapai bagian bawah
+                if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height() - 15) {
+                        $('#loading').show(); // Tampilkan elemen loading
+                        loadMoreData(++page); // Panggil halaman berikutnya
+                }
             });
-        }
-    </script>
+
+
+            function loadMoreData(page) {
+                isLoading = true; // Set flag untuk mencegah pemanggilan berulang
+                $.ajax({
+                    url: '/search/load?query={{ $query }}&page=' + page,
+                    type: "get",
+                    beforeSend: function() {
+                        $('#loading').show(); // Tampilkan elemen loading sebelum data dimuat
+                    }
+                }).done(function(data) {
+                    if (data === "") {
+                        $('#loading').hide();
+                        isLoading = false; // Izinkan pemanggilan ulang jika diperlukan
+                        return;
+                    }
+                    $('#loading').hide(); // Sembunyikan elemen loading setelah data berhasil dimuat
+                    $("#cardContainer").append(data); // Tambahkan data baru ke kontainer
+                    isLoading = false; // Reset flag
+                }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                    $('#loading').hide();
+                    isLoading = false; // Reset flag
+                });
+            }
+        </script>
+        <script>
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+            // Tampilkan tombol saat pengguna scroll ke bawah
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.remove("hidden");
+                } else {
+                    scrollToTopBtn.classList.add("hidden");
+                }
+            });
+
+            // Fungsi untuk scroll ke atas
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+            }
+        </script>
+    @endisset
 
 </x-layout>
