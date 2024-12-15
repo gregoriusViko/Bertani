@@ -62,6 +62,7 @@
                         <h4 class="bg-[#f44747] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Ditolak</h4>
                     @else
                         <h4 class="bg-[#FF0000] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Dibatalkan</h4>
+                        {{-- <button class="rounded-md px-2 py-1 flex justify-center bg-[#f44747]">Lihat Alasan</button> --}}
                     @endif
                 </div>
             </div>

@@ -92,7 +92,7 @@ Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
-Route::get('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
+Route::post('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
 
 Route::get('/orders/{orderId}/confirm', [OrderController::class, 'showConfirmModal'])->name('orders.confirm');
 
