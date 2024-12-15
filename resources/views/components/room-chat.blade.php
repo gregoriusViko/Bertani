@@ -17,11 +17,10 @@
                             </div>
                         </div>
                         @if ($friend->profile_img_link)
-                            <img src="{{ $friend->profile_img_link }}"
-                            alt="My profile" class="w-6 h-6 rounded-full order-1">
+                            <img src="{{ $friend->profile_img_link }}" alt="My profile"
+                                class="w-6 h-6 rounded-full order-1">
                         @else
-                            <ion-icon name="person-circle-outline"
-                            class="w-6 h-6 rounded-full order-1"></ion-icon>
+                            <ion-icon wire:ignore name="person-circle-outline" class="w-6 h-6 rounded-full order-1"></ion-icon>
                         @endif
                     </div>
                 </div>
@@ -41,11 +40,10 @@
                         </div>
 
                         @if ($user->profile_img_link)
-                            <img src="{{ $user->profile_img_link }}"
-                            alt="My profile" class="w-6 h-6 rounded-full order-2">
+                            <img src="{{ $user->profile_img_link }}" alt="My profile"
+                                class="w-6 h-6 rounded-full order-2">
                         @else
-                            <ion-icon name="person-circle-outline"
-                            class="w-6 h-6 rounded-full order-1"></ion-icon>
+                            <ion-icon wire:ignore name="person-circle-outline" class="w-6 h-6 rounded-full order-1"></ion-icon>
                         @endif
                     </div>
                 </div>
@@ -59,12 +57,14 @@
             <div class="w-full">
                 <input type="text" id="messageInput" placeholder="Write your message!"
                     class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-3 md:pl-8 pr-12 md:pr-20 bg-gray-200 rounded-md py-3 resize-none overflow-auto text-xs md:text-lg"
-                    oninput="autoResize(this);" wire:model.lazy="message">
+                    oninput="autoResize(this); cekTyping(this)" wire:model.lazy="message"
+                    wire:keydown.enter="kirimPesan" onkeydown="clearInputOnEnter(event)">
             </div>
 
             <!-- Send Button -->
-            <button type="button" wire:click="kirimPesan" onclick="getElementById('messageInput').value = ''"
-                class="absolute right-0 inline-flex items-center justify-center rounded-lg px-2 py-1 md:px-4 md:py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none text-xs md:text-lg">
+            <button id="tombolKirim" type="button" wire:click="kirimPesan"
+                onclick="getElementById('messageInput').value = ''"
+                class="absolute right-0 inline-flex items-center justify-center rounded-lg px-2 py-1 md:px-4 md:py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none text-xs md:text-lg opacity-50 cursor-not-allowed">
                 {{-- <span class="font-bold">Send</span> --}}
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                     class="h-6 w-6 transform rotate-90">
@@ -73,9 +73,6 @@
                     </path>
                 </svg>
             </button>
-            <small id="typing" class="text-gray-700" hidden>
-                is typing...
-            </small>
         </div>
     </div>
 </div>
@@ -102,35 +99,26 @@
         border-radius: 0.25rem;
     }
 </style>
+
 <script>
-    // function sendTypingEvent(){
-    //     Echo.private(`chat.{{ $role == 'farmer' ? 'buyer' : 'farmer' }}.{{ $friend->id }}`).whisper("typing", {
-    //         userID: {{ $user->id }},
-    //     });
-    // }
+    function clearInputOnEnter(event) {
+        // Cek apakah tombol yang ditekan adalah Enter (keyCode 13)
+        if (event.keyCode === 13) {
+            // Kosongkan input
+            document.getElementById('messageInput').value = '';
+        }
+    }
 
-    let typingTimer;
-
-    // Echo.private(`chat.{{ $role == 'farmer' ? 'farmer' : 'buyer' }}.{{ $user->id }}`)
-    //     .listen("MessageSent", (response) => {
-    //         // Pastikan cara menambah pesan sesuai framework Anda
-    //         // Misalnya dengan Livewire: @this.call('appendMessage', response.message)
-    //     })
-    //     .listenForWhisper("typing", (response) => {
-    //         const typingIndicator = document.getElementById('typing');
-
-    //         if (response.userID !== {{ $friend->id }}) {
-    //             typingIndicator.hidden = true;
-    //             return;
-    //         }
-
-    //         typingIndicator.hidden = false;
-
-    //         clearTimeout(typingTimer);
-    //         typingTimer = setTimeout(() => {
-    //             typingIndicator.hidden = true;
-    //         }, 1000);
-    //     });
+    function cekTyping(input) {
+        let tombolKirim = document.getElementById('tombolKirim');
+        if (input.value.trim() === '') {
+            tombolKirim.disabled = true;
+            tombolKirim.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            tombolKirim.disabled = false;
+            tombolKirim.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
 
     const el = document.getElementById('messages');
     el.scrollTop = el.scrollHeight;

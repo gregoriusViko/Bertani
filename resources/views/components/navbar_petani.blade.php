@@ -40,10 +40,12 @@
 
                 Echo.private(`chat.farmer.{{ Auth::guard('farmer')->user()->slug }}`)
                     .listen("MessageSent", (response) => {
-                        notifChat.style.visibility = "visible";
-                        jumlahChat.style.visibility = "visible";
-                        jumlahChat.innerHTML = parseInt(jumlahChat.innerHTML) + 1;
-                    })
+                        if('{{ route('chat') }}'+'/'+response['sender'] !== window.location.href){
+                            notifChat.style.visibility = "visible";
+                            jumlahChat.style.visibility = "visible";
+                            jumlahChat.innerHTML = parseInt(jumlahChat.innerHTML) + 1;
+                        }
+                    });
             });
         </script>
     </x-nav-dropdown>
