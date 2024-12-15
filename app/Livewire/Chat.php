@@ -117,6 +117,10 @@ class Chat extends Component
 
     public function kirimPesan()
     {
+        // Validasi pesan tidak kosong dan tidak hanya berisi whitespace
+        $this->validate([
+            'message' => 'required|min:1|string'
+        ]);
 
         if ($this->role == 'farmer') {
             $farmer_id = $this->user->id;
@@ -142,5 +146,7 @@ class Chat extends Component
 
         broadcast(new MessageSent($this->friend->slug, $friendRole, $newChat->id, $this->role));
         $this->content->push($newChat);
+        $this->chats->push($newChat);
+        $this->updateContact();
     }
 }

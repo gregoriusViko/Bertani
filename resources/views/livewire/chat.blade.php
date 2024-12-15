@@ -15,7 +15,7 @@
                     {{-- container nama kontak --}}
                     <div class="h-full md:h-[calc(100vh-10rem)] overflow-y-auto">
                         @foreach ($contacts as $contact)
-                            <a href="{{ route('chat', $contact['slug']) }}" wire:navigate>
+                            <a href="{{ route('chat', $contact['slug']) }}">
                                 <button
                                     class="py-1 w-full pl-1 md:pl-4 pt-4 pb-4 flex items-center justify-start gap-x-1 md:gap-x-0 text-xs md:text-base lg:text-xl font-hind font-medium {{ request()->is(route('chat', $contact['slug'])) ? 'bg-green-400' : 'hover:bg-green-300' }}">
                                     <span>
@@ -23,7 +23,7 @@
                                             <img src="{{ $contact['profile_img_link']}}" alt="profile"
                                             class="w-6 h-6 object-cover md:w-8 md:h-8 mr-5 flex justify-center rounded-full">
                                         @else
-                                            <ion-icon name="person-circle-outline"
+                                            <ion-icon wire:ignore name="person-circle-outline"
                                                 class="w-4 h-4 md:w-8 md:h-8 md:pr-5 flex justify-center"></ion-icon>
                                         @endif
                                     </span>
@@ -52,8 +52,13 @@
                         <div class="pl-3 pb-3 border-b border-black font-bold tracking-tight text-gray-900">
                             <div class="relative flex items-center space-x-4">
                                 <div class="relative">
-                                    <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-                                        alt="" class="w-6 md:w-10 h-6 md:h-10 rounded-full">
+                                    @if ($friend->profile_img_link)
+                                    <img src="{{ $friend->profile_img_link }}"
+                                    alt="profile" class="w-6 md:w-10 h-6 md:h-10 rounded-full">
+                                    @else
+                                    <ion-icon wire:ignore name="person-circle-outline"
+                                    class="w-6 h-6 md:w-8 md:h-8 md:pr-5 flex justify-center"></ion-icon>
+                                    @endif
                                 </div>
                                 <div class="flex flex-col leading-tight">
                                     <div class="text-xs md:text-xl font-hind font-bold mt-1 flex items-center">
