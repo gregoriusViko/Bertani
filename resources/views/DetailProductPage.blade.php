@@ -1,9 +1,9 @@
 <x-layout>
-    <x-slot:title>Detail Product '#idproduk'-Bertani.com</x-slot:title>
+    <x-slot:title>Detail Product-Bertani.com</x-slot:title>
 
     <div class="px-7 mx-auto max-w-screen-lg mt-5 grid lg:grid-rows-16 lg:grid-flow-col gap-4 " x-data="{ imageUrl: '/img/noimage.png' }">
         <div class=" row-span-8 col-span-2 md:col-span-2 flex justify-center items-center">
-            <img :src="imageUrl"
+            <img src="{{ $product->img_link }}" alt="Gambar Produk"
                 class="rounded-md border-2 md:w-[full] md:h-[200px] lg:w-[300px] lg:h-[400px] object-contain" />
         </div>
         <div class="row-span-4 col-span-2 flex items-center">
@@ -11,33 +11,36 @@
                 <div class="rounded-md w-full">
                     <div class="rounded-md grid grid-flow-col">
                         <div class="w 1/2">
-                            <h1 class="font-inter font-bold text-base md:text-2xl mb-1">
+                            <h1 class="font-inter font-bold text-base md:text-2xl mb-1 capitalize ">
                                 {{ ucwords($product->type->name) }}</h1>
                             <div class="flex items-center">
-                                <ion-icon name="person-circle-outline" class="text-nd"></ion-icon>
+                                <img src="/img/chinese-farmer-svgrepo-com.png" alt="iconPetani" id="iconPetani" class="w-5 h-5">
                                 <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">
                                     {{ $product->farmer->name }}</h4>
                             </div>
                             <div class="flex items-center">
-                                <ion-icon name="location-outline" class="text"></ion-icon>
+                                {{-- <ion-icon name="location-outline" class="text"></ion-icon> --}}
+                                <img src="/img/location-pin-svgrepo-com.png" alt="iconPetani" id="iconPetani" class="w-5 h-5">
                                     <a href="{{$product->farmer->home_address}}">
                                     <h4 class="font-inter text-sm md:text-base font-normal ml-1 hover:underline">
                                     {{ $product->farmer->home_address }}</h4>
                                     </a>
                             </div>
                             <h1 class="mt-2 font-inter font-bold text-sm md:text-xl">
-                                {{ Number::currency($product->price, in: 'idr') }}</h1>
+                                Rp {{ number_format($product->price, 0, ',', '.') }}</h1>
                         </div>
                         @if (Auth::guard('buyer')->check())
                         <div class="w 1/2">
                             <div class="flex justify-end">
                                 <a href="{{ route('chat', $product->farmer->slug) }}">
                                     <button
-                                        class="relative p-2 text-black text-sm md:text-base border border-opacity-90 border-black bg-white py-1 rounded-lg hover:bg-green-400 hover:text-white flex items-center justify-center"
+                                        class="relative px-2 py-1 text-black text-sm md:text-base border border-opacity-90 border-black bg-white rounded-lg hover:bg-green-400 transition ease-in-out hover:scale-105  flex items-center justify-center font-libre-franklin font-semibold"
                                         type="button" id="chat-button">
-                                        <ion-icon class="mr-1 text-base md:text-lg"
-                                            name="chatbubble-ellipses-outline"></ion-icon>
-                                        <span>CHAT</span>
+                                        <img src="/img/chat.png" alt="iconPetani" id="iconPetani" class="w-5 h-5 mr-1">
+                                        {{-- <ion-icon class="mr-1 text-base md:text-lg"
+                                            name="chatbubble-ellipses-outline"></ion-icon> --}}
+                                        
+                                            <span>CHAT</span>
                                     </button>
                                 </a>
                             </div>
@@ -70,7 +73,7 @@
                                 <div class="font-inter font-normal text-sm md:text-md lg:text-lg">
                                     <h3 class="ml-2">Jumlah</h3>
                                     <div class="mt-2 grid grid-cols-2 grid-auto-columns:auto">
-                                        <input type="number" id="stokInput" name="quantity" min="1"
+                                        <input type="number" id="stokInput" name="quantity" min="0"
                                             class="w-3/4 md:w-1/2 ml-2 border border-black rounded-md" placeholder=""
                                             data-price="{{ $product->price }}" data-max-stock="{{ $product->stock_kg }}"
                                             oninput="calculateSubtotal()" required />
