@@ -7,6 +7,7 @@
     </div>
     @forelse ($orders as $order)
         <!-- bawah ini adalah component untuk produk -->
+         <a href="{{route('detailpesanan', $order->receipt_number)}}">
         <div id="cardContainer"
             class="mx-auto m2ax-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 md:gap-2 lg:gap-6">
             {{-- <a href=""> --}}
@@ -120,6 +121,7 @@
                     </div>
                 </form>
             </div>
+            </a>
     </x-Modal>
         </div>
     @empty
