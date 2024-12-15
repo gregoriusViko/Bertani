@@ -17,7 +17,7 @@ class ReportResponse extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private $pesan)
+    public function __construct(private $laporan, private $tanggapan)
     {
         //
     }
@@ -39,8 +39,8 @@ class ReportResponse extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.report-user',
-            with: ['pesan' => $this->pesan]
+            view: 'mail.report-system',
+            with: ['laporan' => $this->laporan, 'tanggapan' => $this->tanggapan]
         );
     }
 

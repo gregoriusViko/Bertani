@@ -153,7 +153,18 @@ class AuthController extends Controller
             });
             $farmer->delete();
         } else {
-
+            $buyer = Buyer::findOrFail($request->id);
+            $buyer->orders->each(function ($order) {
+                // Menghapus setiap produk
+                $order->delete();
+            });
+            $buyer->buyerChats->each(function ($chat) {
+                $chat->delete();
+            });
+            $buyer->reports->each(function ($report) {
+                $report->delete();
+            });
+            $buyer->delete();
         }
         return redirect('admin/delete-akun')->with('success', 'Berhasil');
     }
@@ -187,11 +198,15 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6|confirmed'
         ]);
-        $status = Password::reset(
+
+        $user = Farmer::where('email', $request->email)->first();
+        $role = $user ? 'farmers' : 'buyers';
+
+        // dd($request->only('email', 'password', 'password_confirmation', 'token'));
+        $status = Password::broker($role)->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 // Tentukan model berdasarkan tipe user
-                $model = $user instanceof Farmer ? Farmer::class : Buyer::class;
                 $user->forceFill([
                     'password' => Hash::make($password),
                     'remember_token' => Str::random(60)

@@ -20,7 +20,7 @@ class ProductController extends Controller
 {
     function home()
     {
-        $products = Product::with(['farmer', 'type'])->paginate(12);
+        $products = Product::with(['orders'])->paginate(12);
         return view('HomePageDefault', compact('products'));
     }
 
@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function loadMoreProducts(Request $request)
     {
-        $products = Product::with('farmer')->paginate(perPage: 8);
+        $products = Product::with(['orders'])->paginate(perPage: 12);
         return view('partials.product', compact('products'))->render();
     }
     public function farmerProducts()

@@ -113,7 +113,7 @@
                 }
             }).done(function(data) {
                 if (data == "") {
-                    $('#loading').html("");
+                    $('#loading').hide();
                     isLoading = false; // Izinkan pemanggilan ulang jika diperlukan
                     return;
                 }
@@ -121,7 +121,7 @@
                 $("#cardContainer").append(data); // Tambahkan data baru ke kontainer
                 isLoading = false; // Reset flag
             }).fail(function(jqXHR, ajaxOptions, thrownError) {
-                $('#loading').html("Sedang ada gangguan");
+                $('#loading').hide();
                 isLoading = false; // Reset flag
             });
         }

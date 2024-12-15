@@ -7,6 +7,7 @@ use App\Models\Report;
 use App\Models\ReportDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
 class ReportController extends Controller
@@ -31,14 +32,14 @@ class ReportController extends Controller
         }
 
         $imageData = null;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageData = file_get_contents($image->getRealPath());
-
+            $path = $image->store('reports', 'private');
+            $request->merge(['img' => $path]);
         }
 
         $report = Report::create($data);
-        $request->merge(['report_id' => $report->id, 'img'=>$imageData]);
+        $request->merge(['report_id' => $report->id]);
         ReportDetail::create($request->all());
 
         session()->flash('success', 'Laporan anda telah kami terima, terimakasih!');
@@ -47,16 +48,12 @@ class ReportController extends Controller
 
     function createForUser() {}
 
-    function showImage(ReportDetail $id){
-        $imageData = $id->img;
+    function showImage(ReportDetail $file)
+    {
+        $mimeType = Storage::mimeType($file->img);
+        $contents = Storage::get($file->img);
 
-    // Menggunakan finfo untuk mendeteksi MIME type
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $mimeType = $finfo->buffer($imageData);
-
-    return Response::make($imageData, 200, [
-        'Content-Type' => $mimeType,
-        'Content-Length' => strlen($imageData)
-    ]);
+        // Kembalikan response gambar
+        return response($contents)->header('Content-Type', $mimeType);
     }
 }
