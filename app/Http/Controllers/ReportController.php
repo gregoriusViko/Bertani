@@ -42,8 +42,8 @@ class ReportController extends Controller
         $request->merge(['report_id' => $report->id]);
         ReportDetail::create($request->all());
 
-        session()->flash('success', 'Laporan anda telah kami terima, terimakasih!');
-        return redirect('/');
+        session()->flash('success', 'Laporan Anda Berhasil Dikirim');
+        return redirect('/laporan/sistem');
     }
 
     function createForUser() {}
