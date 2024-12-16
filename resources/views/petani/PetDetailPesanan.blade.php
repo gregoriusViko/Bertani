@@ -5,9 +5,11 @@
         class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-2 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pesanan</h1>
         <div class="flex gap-x-2">
-            <button onclick="button" type="button" id="laporkan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto">
+            
+        <a href="{{ route('laporan.form', ['orderId' => $order->id]) }}" 
+                class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto">
                 <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan
-            </button>
+            </a>
 
             <a href="{{ route('dafpesanan') }}">
                 <button type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
@@ -69,9 +71,12 @@
     </div>
 
     <div class="px-8 py-4 font-libre-franklin font-semibold flex flex-col items-center space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
-        <button onclick="button" type="button" id="chat" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-green-500 sm:w-auto">
-            <img src="/img/chat.png" alt="icon_chat" class="w-5 h-5">Chat
-        </button>
+            @if (Auth::guard('farmer')->check())
+                <a href="{{ route('chat', $order->buyer->slug) }}"
+                    class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-green-500 sm:w-auto">
+                    <img src="/img/chat.png" alt="icon_chat" class="w-5 h-5">Chat
+                </a>
+            @endif
 
         @if($order->order_status == 'pending')
         <button onclick="showPopup('batalkanPesanan')" type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto mt-2 sm:mt-0">
