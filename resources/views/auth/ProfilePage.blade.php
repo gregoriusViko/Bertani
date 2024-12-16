@@ -75,31 +75,36 @@
             <div class="mb-5">
                 <label for="email-input"
                     class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Email</label>
-                <input type="text" id="email-input" name="email"
-                    class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    value="{{ $user->email }}" required readonly />
+                    <input type="text" id="email-input" name="email"
+                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        value="{{ $user->email }}" 
+                        required 
+                        readonly 
+                        disabled 
+                        onfocus="this.blur()"/>
             </div>
 
             @if (Auth::guard('farmer')->check())
                 <div class="mb-5">
                     <label for="bank-input"
                         class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Bank</label>
-                    <select id="bank-input" name="bank"
-                        class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        required readonly disabled>
-                        <option value="BRI" {{ $user->bank === 'BRI' ? 'selected' : '' }}>BRI</option>
-                        <option value="BNI" {{ $user->bank === 'BNI' ? 'selected' : '' }}>BNI</option>
-                        <option value="Mandiri" {{ $user->bank === 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
-                        <option value="BCA" {{ $user->bank === 'BCA' ? 'selected' : '' }}>BCA</option>
-                    </select>
+                        <select id="bank-input" name="bank"
+                            class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            required readonly disabled>
+                            <option value="BRI" {{ $user->bank === 'BRI' ? 'selected' : '' }}>BRI</option>
+                            <option value="BNI" {{ $user->bank === 'BNI' ? 'selected' : '' }}>BNI</option>
+                            <option value="Mandiri" {{ $user->bank === 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                            <option value="BCA" {{ $user->bank === 'BCA' ? 'selected' : '' }}>BCA</option>
+                            <option value="" {{ $user->bank === null ? 'selected' : '' }}>Tidak Punya</option>
+                        </select>
                 </div>
 
-                <div class="mb-5">
+                <div class="mb-5" id="norek" >
                     <label for="rekening-input"
                         class="block mb-1 text-base font-libre-franklin font-semibold text-black">Nomor Rekening</label>
                     <input type="text" id="rekening-input" name="nomor_rekening"
                         class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        value="{{ $user->nomor_rekening }}" required readonly pattern="\d{10,15}"
+                        value="{{ $user->nomor_rekening }}"  readonly pattern="\d{10,15}"
                         title="Nomor rekening harus terdiri dari 10 hingga 15 digit" />
                 </div>
             @endif
@@ -124,13 +129,19 @@
             </div>
         </div>
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <div id="errorMessage"
+                class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
+                @foreach ($errors->all() as $error)
+                <x-Message-error message="{{ session('error') }}">
+                    {{ $error }}
+                    <button onclick="closeMessage('errorMessage')"
+                        class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                        <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+                    </button>
+                </x-Message-error>
+                @endforeach
             </div>
+            
         @endif
         @if (session('Sukses'))
             <div id="successMessage"
@@ -160,6 +171,7 @@
 
     </div>
 </x-layout>
+
 <script>
     // Global variable to track if profile image should be deleted
     let shouldDeleteProfileImage = false;
@@ -167,6 +179,11 @@
     function toggleAllInputs() {
         var inputs = document.querySelectorAll('input[readonly], select[disabled]');
         var isEditMode = !inputs[0].hasAttribute('readonly');
+
+        // Input email tetap readonly meskipun tombol edit ditekan
+        var emailInput =document.getElementById('email-input');
+        emailInput.setAttribute('readonly', true);
+        emailInput.style.backgroundColor = '#f3f4f6';
 
         // Tampilkan notif-message ketika tombol edit diaktifkan
         var notifMessage = document.getElementById('notif-message');
@@ -228,6 +245,13 @@
                 input.setAttribute('data-original', input.value);
             }
 
+            if (!isEditMode) {
+                const bankInput = document.getElementById('bank-input');
+                if (!bankInput.value) {
+                    bankInput.value = '';
+                }
+            }
+
             // Set warna border menjadi hitam saat aktif
             if (!input.hasAttribute('readonly') && !input.hasAttribute('disabled')) {
                 input.style.borderColor = 'black';
@@ -243,10 +267,23 @@
 
     // Simulasi: Aktifkan tombol setelah form diisi (contoh sederhana)
     form.addEventListener('input', () => {
-        const isFormValid = form.checkValidity(); // Cek validasi form
-        saveButton.disabled = !isFormValid; // Aktifkan tombol jika valid
-    });
+        const addressInput = document.getElementById('alamat-input').value.trim();
+        const bankInput = document.getElementById('bank-input').value.trim();
+        const rekeningInput = document.getElementById('rekening-input').value.trim();
 
+        // Tombol simpan aktif jika alamat diisi, terlepas dari status bank dan rekening
+        const isFormValid = addressInput.length > 0 && (bankInput.length === 0 || rekeningInput.length === 0 || (bankInput.length > 0 && rekeningInput.length >= 0 && form.checkValidity()));
+
+        saveButton.disabled = !isFormValid; // Aktifkan tombol jika valid
+
+        // Sembunyikan atau tampilkan div #norek berdasarkan nilai bankInput
+        const norekDiv = document.getElementById('norek');
+        if (bankInput.length === 0) {
+            norekDiv.style.display = 'none'; // Sembunyikan div norek jika bankInput kosong
+        } else {
+            norekDiv.style.display = 'block'; // Tampilkan div norek jika bankInput memiliki nilai
+        }
+    });
 
     // Modify the form submission to handle profile image deletion
     document.getElementById('profile-form').addEventListener('submit', function(event) {
@@ -291,6 +328,7 @@
 
         bankInput.addEventListener('change', function() {
             const selectedBank = bankInput.value;
+            
 
             if (selectedBank in bankMaxDigits) {
                 const maxLength = bankMaxDigits[selectedBank];
@@ -301,6 +339,13 @@
                     `Nomor rekening untuk ${selectedBank} harus ${maxLength} digit.`
                 );
             }
+
+            // Perbarui visibilitas div norek saat bank dipilih
+            if (selectedBank.length === 0) {
+                document.getElementById('norek').style.display = 'hidden'; // Sembunyikan jika bank tidak dipilih
+            } else {
+                document.getElementById('norek').style.display = 'block'; // Tampilkan jika bank dipilih
+            }
         });
 
         // Pastikan aturan diperbarui saat halaman dimuat
@@ -309,3 +354,4 @@
         }
     });
 </script>
+

@@ -82,7 +82,7 @@
                             <h4 class="bg-[#00D120] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan selesai
                             </h4>
                         @elseif ($order->order_status == 'pesanan diterima')
-                            <h4 class="bg-[#00D115] text-sm rounded-md p-1 mb-1 flex justify-center">Menunggu pembayaran
+                            <h4 class="bg-[#4379F2] text-sm rounded-md p-1 mb-1 flex justify-center">Menunggu pembayaran
                             </h4>
                         @elseif ($order->order_status == 'ditolak')
                             <h4 class="bg-[#f44747] text-sm rounded-md p-1 mb-1 flex justify-center">Pesanan Ditolak

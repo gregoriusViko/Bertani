@@ -51,6 +51,16 @@
                 @enderror
             </div>
             <div class="relative flex flex-col items-start">
+                <div class="relative flex items-center w-full">
+                    <input type="text" placeholder="Alamat" name="home_address"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
+                        value="{{ old('home_address') }}" required />
+                </div>
+                @error('home_address')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="relative flex flex-col items-start">
                 <div class="relative flex w-full">
                     <!-- Button untuk membuka dropdown dan menampilkan opsi yang terpilih -->
                     <button type="button" id="peran" onclick="toggleDropdown()"
@@ -187,17 +197,6 @@
     </div>
 
     <script>
-        // document.getElementById('peran').addEventListener('click', function() {
-        //     var dropdownMenu = document.getElementById('dropdownMenu');
-        //     dropdownMenu.classList.toggle('hidden');
-        // });
-
-        // document.querySelectorAll('#dropdownMenu li').forEach(function(item) {
-        //     item.addEventListener('click', function() {
-        //         document.getElementById('roleText').textContent = this.textContent;
-        //         document.getElementById('dropdownMenu').classList.add('hidden');
-        //     });
-        // });
 
         // Fungsi untuk toggle dropdown menu
         const togglePassword = document.querySelector("#togglePassword");
@@ -228,10 +227,32 @@
         const noTelpMessage = document.getElementById('notelpMessage');
 
         noTelponInput.addEventListener('input', () => {
-            if (noTelponInput.value.length > 0 && noTelponInput.value.length < 11) {
+            // Remove non-digit characters
+            noTelponInput.value = noTelponInput.value.replace(/\D/g, '');
+            
+            // Limit to 13 digits
+            if (noTelponInput.value.length > 13) {
+                noTelponInput.value = noTelponInput.value.slice(0, 13);
+            }
+            
+            // Show warning if less than 10 digits
+            if (noTelponInput.value.length > 0 && noTelponInput.value.length < 10) {
+                noTelpMessage.textContent = "Nomor telepon harus berjumlah minimal 10 digit dan maksimal 13 digit.";
                 noTelpMessage.classList.remove('hidden');
             } else {
                 noTelpMessage.classList.add('hidden');
+            }
+        });
+
+        // Add validation before form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const noTelponInput = document.getElementById('noTelpon');
+            const noTelpMessage = document.getElementById('notelpMessage');
+            
+            if (noTelponInput.value.length < 10 || noTelponInput.value.length > 13) {
+                e.preventDefault(); // Prevent form submission
+                noTelpMessage.textContent = "Nomor telepon harus berjumlah minimal 10 digit dan maksimal 13 digit.";
+                noTelpMessage.classList.remove('hidden');
             }
         });
 
