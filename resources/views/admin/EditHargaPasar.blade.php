@@ -46,7 +46,7 @@
             class="px-4 py-3 bg-white text-black w-full text-sm border border-gray-300 focus:border-green-600 outline-none rounded-lg" required />
 
         {{-- Tombol Submit --}}
-        <button type="submit"
+        <button type="submit" id="updateharga"
             class="mt-5 mb-8 px-5 py-3 w-auto bg-green-500 hover:bg-green-300 text-white font-bold text-sm rounded-lg tracking-wide">Perbarui Harga</button>
     </form>
 
