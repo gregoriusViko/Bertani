@@ -88,9 +88,9 @@
                                 required></textarea>
                             <input type="hidden" name="id" value="{{ $user->id }}">
                             <div class="flex justify-end space-x-2 mt-4">
-                                <button type="button" onclick="closeDeletePopup()"
+                                <button type="button" onclick="closeDeletePopup()" id="batalkirim"
                                     class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-600">Batal</button>
-                                <button type="submit"
+                                <button type="submit" id="hapuskirim"
                                     class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Hapus</button>
                             </div>
                         </form>
