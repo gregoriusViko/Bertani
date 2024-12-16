@@ -7,8 +7,10 @@ use App\Models\Buyer;
 use App\Models\Farmer;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\PenghapusanAkun;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +26,7 @@ class AuthController extends Controller
     function submitRegister(Request $request)
     {
         $request->validate([
-            'name' => 'required|alpha|unique:farmers,name|unique:buyers,name',
+            'name' => 'required|regex:/^[a-zA-Z\s]+$/|unique:farmers,name|unique:buyers,name',
             'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
             'telepon' => 'required|unique:farmers,phone_number|unique:buyers,phone_number|regex:/^08[0-9]{8,10}$/',
             'password' => 'required|min:6|max:45',
@@ -83,6 +85,17 @@ class AuthController extends Controller
     function tampilLogin()
     {
         return view('auth.login');
+    }
+    function gantiEmail(Request $request){
+        $request->validate([
+            'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
+        ]);
+        $user = Auth::guard('farmer')->check() ? Auth::guard('farmer')->user() : Auth::guard('buyer')->user();
+        $user->email = $request->email;
+        $user->email_verified_at = null;
+        $user->save();
+        event(new Registered($user));
+        return redirect()->back();
     }
 
     function submitLogin(Request $request)
@@ -151,6 +164,7 @@ class AuthController extends Controller
             $farmer->reports->each(function ($report) {
                 $report->delete();
             });
+            Mail::to($farmer->email)->send(new PenghapusanAkun($farmer->name, $request->reason));
             $farmer->delete();
         } else {
             $buyer = Buyer::findOrFail($request->id);
@@ -164,6 +178,7 @@ class AuthController extends Controller
             $buyer->reports->each(function ($report) {
                 $report->delete();
             });
+            Mail::to($buyer->email)->send(new PenghapusanAkun($buyer->name, $request->reason));
             $buyer->delete();
         }
         return redirect('admin/delete-akun')->with('success', 'Berhasil');

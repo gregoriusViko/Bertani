@@ -110,11 +110,6 @@ class Chat extends Component
         return view('livewire.chat')->layout('components.layout');
     }
 
-    public function getTyping()
-    {
-        dd('dfds');
-    }
-
     public function kirimPesan()
     {
         // Validasi pesan tidak kosong dan tidak hanya berisi whitespace

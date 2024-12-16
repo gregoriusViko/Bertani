@@ -70,8 +70,8 @@
                     </div>
                     <div>
                         <p class="font-bold whitespace-nowrap">Alamat Pengambilan Barang</p>
-                        <p class="italic whitespace-normal">{{ $order->product->farmer->home_address }}
-                        </p>
+                        <a href="{{ $order->product->farmer->home_address }}" target="_blank"><p class="italic whitespace-normal">{{ $order->product->farmer->home_address }}
+                        </p></a>
                     </div>
                 </div>
             </div>
@@ -79,20 +79,25 @@
     </div>
 
     <div
-            class="px-8 py-4 font-libre-franklin font-semibold flex flex-col items-center space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
-            @if (Auth::guard('buyer')->check())
-                <a href="{{ route('chat', $order->product->farmer->slug) }}"
-                    class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-green-500 sm:w-auto">
-                    <img src="/img/chat.png" alt="icon_chat" class="w-5 h-5">Chat
-                </a>
-            @endif
+        class="px-8 py-4 font-libre-franklin font-semibold flex flex-col items-center space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
+        <a href="{{ route('chat', $order->product->farmer->slug) }}">
+            <button onclick="button" type="button" id="chat"
+            class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-green-500 sm:w-auto">
+            <img src="/img/chat.png" alt="icon_chat" class="w-5 h-5">Chat
+        </button>
+        </a>
+        @if ($order->order_status == 'dibatalkan')
+            <button onclick="showAlasanA('showDibatalkan')" id="lihatalasan" type="button"
+                class="text-white inline-flex px-4 py-2 bg-[#f44747] rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-600 sm:w-auto ">Lihat
+                Alasan
+            </button>
+        @elseif($order->order_status == 'ditolak')
+            <button onclick="showAlasanB('showDitolak')" id="lihatalasan" type="button"
+                class="text-white inline-flex px-4 py-2 bg-[#f44747] rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-600 sm:w-auto ">Lihat
+                Alasan
+            </button>
+        @endif
 
-            @if($order->order_status == 'ditolak')
-                <button onclick="showAlasanB('showDitolak')" id="lihatalasan" type="button"
-                    class="text-white inline-flex px-4 py-2 bg-[#f44747] rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-600 sm:w-auto">Lihat
-                    Alasan
-                </button>
-            @endif
 
             @if ($order->order_status == 'menunggu konfirmasi')
                 <button onclick="showPopup('batalkanPesanan')" type="button" id="batalkanPesanan"
