@@ -18,8 +18,14 @@ Route::middleware(['auth:farmer', 'verified'])->group(function () {
             // Hapus Produk
             Route::delete('/product/delete', 'destroy')->name('product.destroy');
         });
-        Route::post('/orders/reject/{order}', [OrderController::class, 'reject'])->name('orders.reject');
+        Route::post('/orders/reject/{order:receipt_number}', [OrderController::class, 'reject'])->name('orders.reject');
         Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
         Route::get('/dafpesanan/{order:receipt_number}', [OrderController::class, 'detailOrder'])->name('detailpesanan');
+
+        Route::patch('/orders/{orderId}/accept', [OrderController::class, 'acceptOrder'])
+            ->name('orders.accept');
+        Route::get('/orders/{orderId}/confirm', [OrderController::class, 'showConfirmModal'])->name('orders.confirm');
+        Route::get('/order/showConfirmModal/{orderId}', [OrderController::class, 'showConfirmModal']);
+        Route::post('/order/acceptOrder/{orderId}', [OrderController::class, 'acceptOrder']);
     });
 });

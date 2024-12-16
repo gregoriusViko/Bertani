@@ -122,7 +122,7 @@
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full flex flex-col items-center gap-6 gap-x-10">
             <h2 class="text-xl font-semibold mb-4">Pembatalan Pesanan</h2>
             <p class="text-sm">Tuliskan keterangan alasan pembatalan</p>
-            <form action="{{ route('order.cancel', ['order' => $order->id]) }}" method="POST">
+            <form action="{{ route('order.cancel', $order->receipt_number) }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <textarea id="cancellation_reason" name="cancellation_reason"
