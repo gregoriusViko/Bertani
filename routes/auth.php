@@ -36,6 +36,7 @@ Route::middleware(['auth:farmer,buyer', 'verified'])->group(function () {
 
     Route::get('/laporan/{orderId}/create', [ReportController::class, 'showLaporanForm'])->name('laporan.form');
     Route::post('/laporan/submit', [ReportController::class, 'submitLaporan'])->name('laporan.submit');
+    Route::get('/order/bukti-transfer/{order:receipt_number}', [OrderController::class, 'showImage'])->name('order.bukti-transfer');
 });
 
 // rute untuk orang yang belum login

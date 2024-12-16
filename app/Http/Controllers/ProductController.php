@@ -75,7 +75,7 @@ class ProductController extends Controller
             return back()->withErrors(['Nama' => 'nama produk tidak ditemukan.']);
         }
 
-        $prod = Product::withTrashed()
+        $prod = Product::onlyTrashed()
             ->where('farmer_id', Auth::guard('farmer')->user()->id)
             ->where('type_of_product_id', $typeOfProduct->id)
             ->first();

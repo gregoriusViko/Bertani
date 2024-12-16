@@ -41,16 +41,16 @@
                     <!-- metode pembayaran -->
                     <div
                         class="font-libre-franklin text-sm md:text-base lg:text-lg font-normal row-start-6 col-span-5 col-start-1 md:row-start-3 md:col-start-4 md:col-span-4">
-                        @if ($order->payment_proof == 'transfer')
+                        @if ($order->payment_proof == 'Transfer')
                             <h4 class="font-libre-franklin font-normal">Transfer</h4>
                         @else
                             <h4 class="font-libre-franklin font-normal">COD</h4>
                         @endif
                         {{-- <h4 class="font-libre-franklin font-normal">{{ $order->payment_proof }}</h4> --}}
-                        @if ($order->payment_proof == 'transfer')
+                        @if ($order->payment_proof == 'Transfer' && $order->order_status == 'selesai')
                             <button
                                 class="bg-blue-500 rounded-md p-1 flex items-center text-white font-libre-franklin font-light text-sm hover:bg-blue-900 transition ease-in duration-100"
-                                onclick="showTFModal(event)">
+                                onclick="showTFModal(event, '{{ $order->receipt_number }}')">
                                 <ion-icon name="document-outline" class="mr-2"></ion-icon>
                                 <span class="mt-0.5">Bukti Transfer</span>
                             </button>
@@ -71,7 +71,7 @@
                                 </span>
                             </h4>
                             <div class="flex justify-center gap-x-4">
-                                <button id="batal" class="hover:text-red-500 " onclick="showDecline({{ $order->id }})"><ion-icon
+                                <button id="batal" class="hover:text-red-500 " onclick="showDecline('{{ $order->receipt_number }}')"><ion-icon
                                         name="close-circle-outline"
                                         class="transition ease-in duration-100 text-3xl"></ion-icon></button>
                                 <button id="konfirmasi" class="hover:text-green-500" onclick="showACC({{ $order->id }}, event)"><ion-icon
@@ -133,7 +133,7 @@
         <div class="grid grid-flow row">
             <div class="text-sm md:text-lg font-libre-franklin font-medium">Bukti Transfer</div>
             <div class="flex justify-center h-20 overflow-y-auto">
-                <img class="h-30 md:h-50" src="\img\cthBuktiTF.png" alt="bukti">
+                <img id="gambar-transfer" class="h-30 md:h-50" alt="bukti" onclick="window.open(this.src, '_blank');">
             </div>
             <div class="text-xs md:text-base font-libre-franklin font-bold">
                 <p class="text-sm md:text-base">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
@@ -184,12 +184,14 @@
     <script>
         const body = document.body;
 
-        function showTFModal(event) {
+        function showTFModal(event, receipt_number) {
             event.stopPropagation();
             const modal = document.getElementById('showTF-modal');
+            const transfer = document.getElementById('gambar-transfer');
             if (modal) {
                 modal.classList.remove('hidden');
                 body.style.overflow = 'hidden';
+                transfer.src = '{{ route('order.bukti-transfer', ':receipt_number') }}'.replace(':receipt_number', receipt_number);
             }
         }
         // fungsi untuk munculin modal silang
