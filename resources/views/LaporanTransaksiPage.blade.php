@@ -11,10 +11,12 @@
                         </div>
                         <div class="grid grid-cols-2">
                         @if ($role === 'buyer')
-                            <input  name="farmer_name" value="{{ $farmer_name }}">
+                            <input  name="farmer_name" value="{{ $farmer_name }}"> 
+                           
                         @else
                             <input  name="buyer_name" value="{{ $buyer_name }}">
                         @endif
+                        <input type="hidden"  name="role" value="{{ $role }}">
                         </div>
                     </div>
                     <div class="mb-4">
