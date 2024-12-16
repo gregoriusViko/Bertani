@@ -192,11 +192,11 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div class="v-line-height v-font-size" style="font-size: 14px; line-height: 100%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 100%;">Kepada bapak atau ibu, anda telah kami ban, terimakasih</p>
+    <p style="line-height: 100%;">Kepada bapak atau ibu {{ $name }}, anda telah kami ban, terimakasih</p>
 <p style="line-height: 100%;">&nbsp;</p>
 <p style="line-height: 100%;">&nbsp;</p>
   </div>
-    {{ $alasan }}
+    {{ $reason }}
       </td>
     </tr>
   </tbody>
@@ -234,7 +234,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <p style="line-height: 140%;">&nbsp;</p>
 <p style="line-height: 140%;">&nbsp;</p>
   </div>
-    {{ $tanggapan }}
       </td>
     </tr>
   </tbody>

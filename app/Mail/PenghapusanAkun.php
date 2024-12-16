@@ -17,7 +17,7 @@ class PenghapusanAkun extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(private $name, private $reason)
     {
         //
     }
@@ -28,7 +28,7 @@ class PenghapusanAkun extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('report@bertani.com', 'Bertani'),
+            from: new Address('admin@bertani.com', 'Bertani'),
             subject: 'Penghapusan Akun'
         );
     }
@@ -39,7 +39,8 @@ class PenghapusanAkun extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.delete-account',
+            with:['name'=>$this->name, 'reason'=>$this->reason]
         );
     }
 
