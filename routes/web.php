@@ -40,18 +40,3 @@ Route::get('/products/get-by-category/{category}', [HargaPasarController::class,
 Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-
-Route::get('/orders/{orderId}/confirm', [OrderController::class, 'showConfirmModal'])->name('orders.confirm');
-
-Route::get('/order/showConfirmModal/{orderId}', [OrderController::class, 'showConfirmModal']);
-Route::post('/order/acceptOrder/{orderId}', [OrderController::class, 'acceptOrder']);
-
-
-Route::patch('/orders/{orderId}/accept', [OrderController::class, 'acceptOrder'])
-    ->name('orders.accept')
-    ->middleware('auth:farmer');
-
-Route::get('/order/payment/{orderId}', [OrderController::class, 'showPaymentPage'])->name('order.showPaymentPage');
-
-Route::post('/order/finish/{orderId}', [OrderController::class, 'finishOrder'])->name('order.finish');
-

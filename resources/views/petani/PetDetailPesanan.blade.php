@@ -5,9 +5,11 @@
         class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-2 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pesanan</h1>
         <div class="flex gap-x-2">
-            <button onclick="button" type="button" id="laporkan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto">
-                <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan
-            </button>
+            <form action="" method="POST">
+                <button onclick="button" type="button" id="laporkan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto">
+                    <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan
+                </button>
+            </form>
 
             <a href="{{ route('dafpesanan') }}">
                 <button type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
@@ -80,12 +82,12 @@
         @endif
         
         @if ($order->order_status == 'dibatalkan')
-            <button onclick="showAlasanA('showDibatalkan')" id="lihatalasan" type="button"
+            <button onclick="showAlasanA();" id="lihatalasan" type="button"
                 class="text-white inline-flex px-4 py-2 bg-[#f44747] rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-600 sm:w-auto ">Lihat
                 Alasan
             </button>
         @elseif($order->order_status == 'ditolak')
-            <button onclick="showAlasanB('showDitolak')" id="lihatalasan" type="button"
+            <button onclick="showAlasanB();" id="lihatalasan" type="button"
                 class="text-white inline-flex px-4 py-2 bg-[#f44747] rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-600 sm:w-auto ">Lihat
                 Alasan
             </button>
@@ -93,7 +95,7 @@
     </div>
 
 
-    <div id="popup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    {{-- <div id="popup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full flex flex-col items-center gap-6 gap-x-10">
             <h2 class="text-xl font-semibold mb-4">Pembatalan Pesanan</h2>
             <p class="text-sm">Tuliskan keterangan alasan pembatalan</p>
@@ -108,7 +110,7 @@
                 <img src="/img/paperplane.png" alt="batalkanPesanan" class="w-5 h-5">KIRIM</button>
             </div>
         </form>
-    </div>
+    </div> --}}
 
     <x-Modal id="showDibatalkan" class="hidden">
         <div class="grid grid-flow-row">
@@ -118,6 +120,18 @@
             </div>
             <div class="mt-4">
                 <button type="button" class="bg-gray-400 px-2 py-1 rounded-md hover:bg-gray-700 hover:text-white" id="closeA" onclick="closeModal('showDibatalkan')">TUTUP</button>
+            </div>
+        </div>
+    </x-Modal>
+
+    <x-Modal id="showDitolak" class="hidden">
+        <div class="grid grid-flow-row">
+            <div class="text-xl font-bold mb-4">Alasan Pembatalan</div>
+            <div class="border border-black rounded-md p-2 h-24 scroll-auto">
+                <h3>{{ $order->cancellation_reason }}</h3>
+            </div>
+            <div class="mt-4">
+                <button type="button" class="bg-gray-400 px-2 py-1 rounded-md hover:bg-gray-700 hover:text-white" id="closeB" onclick="closeModal('showDitolak')">TUTUP</button>
             </div>
         </div>
     </x-Modal>

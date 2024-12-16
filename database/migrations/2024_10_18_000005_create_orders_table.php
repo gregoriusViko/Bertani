@@ -40,6 +40,7 @@ return new class  extends Migration
             $table->string('order_status', 30)->nullable();
             $table->text('cancellation_reason')->nullable();
             $table->timestamp('updated_at');
+            $table->string('img', 150)->nullable();
             $table->softDeletes();
         });
  
