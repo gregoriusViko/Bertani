@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Buyer;
 use App\Models\Farmer;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -36,16 +37,22 @@ class ProfileController extends Controller
             'name' => 'required|string|max:50',
             'home_address' => 'required|string|max:150',
             'phone_number' => 'required|string|regex:/^\d{10,13}$/',
-            'email' => 'required|string|max:45',
             'delete_image' => 'required'
         ];
 
         if (Auth::guard('farmer')->check()){
-            $rules['bank'] = 'required|string|in:BRI,BNI,Mandiri,BCA';
+            $rules['bank'] = 'nullable|string|in:BRI,BNI,Mandiri,BCA';
             $rules['nomor_rekening'] = [
-                'required',
-                'string',
+                // Nomor rekening diperlukan jika bank dipilih
                 function ($attribute, $value, $fail) use ($request) {
+                    $bank = $request->input('bank');
+                    
+                    // Jika bank dipilih, nomor rekening wajib diisi
+                    if (!empty($bank) && empty($value)) {
+                        $fail('Nomor rekening wajib diisi jika bank dipilih.');
+                    }
+
+                    // Validasi panjang nomor rekening berdasarkan bank
                     $bankMaxDigits = [
                         'BRI' => 15,
                         'BNI' => 10,
@@ -53,17 +60,18 @@ class ProfileController extends Controller
                         'BCA' => 10,
                     ];
 
-                    $selectedBank = $request->input('bank');
-                    if (isset($bankMaxDigits[$selectedBank]) &&
-                        strlen($value) !== $bankMaxDigits[$selectedBank]) {
-                            $fail("Nomor rekening untuk $selectedBank harus tepat {$bankMaxDigits[$selectedBank]} digit.");
-                        }
+                    // Validasi panjang nomor rekening jika bank dan nomor rekening keduanya diisi
+                    if (!empty($bank) && !empty($value)) {
+                        if (isset($bankMaxDigits[$bank]) &&
+                            strlen($value) !== $bankMaxDigits[$bank]) {
+                                $fail("Nomor rekening untuk $bank harus tepat {$bankMaxDigits[$bank]} digit.");
+                            }
+                    }
                 },
             ];
         }
 
         $validatedData = $request->validate($rules);
-
         // Dapat user
         // Dapatkan user berdasarkan jenis pengguna
         if (Auth::guard('buyer')->check()) {
@@ -75,23 +83,6 @@ class ProfileController extends Controller
         } else {
             return redirect()->route('ProfilePage');
         }
-
-            // Cek apakah ada file gambar baru
-    // if ($request->hasFile('profile_img')) {
-    //     // Jika ada gambar lama, hapus gambar lama
-    //     if ($user->profile_img_link) {
-    //         File::delete(public_path($user->profile_img_link));
-    //     }
-
-    //     // Simpan file gambar baru
-    //     $profileImg = $request->file('profile_img');
-    //     $path = $profileImg->store('users', 'public');
-    //     $user->profile_img_link = '/storage/' . $path;
-
-    // } elseif (!$user->profile_img_link) {
-    //     // Jika tidak ada gambar lama dan tidak ada gambar baru, kosongkan link gambar
-    //     $user->profile_img_link = null;
-    // }
 
             // LOGIKA GAMBAR
             if ($request->hasFile('profile_img')) {
@@ -112,12 +103,13 @@ class ProfileController extends Controller
         $user->name = $validatedData['name'];
         $user->home_address = $validatedData['home_address'];
         $user->phone_number = $validatedData['phone_number'];
-        $user->email = $validatedData['email'];
 
         if (Auth::guard('farmer')->check()){
             $user->bank = $validatedData['bank'];
-            $user->nomor_rekening = $validatedData['nomor_rekening'];
+            // $user->nomor_rekening = $validatedData['nomor_rekening'];
+            $user->nomor_rekening = $validatedData['bank'] ? $validatedData['nomor_rekening'] : null ;
         }
+
 
         if ($user->save()) {
             return redirect()->route('profile')->with('Sukses', 'Berhasil');
