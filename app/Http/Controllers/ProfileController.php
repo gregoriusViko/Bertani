@@ -110,6 +110,7 @@ class ProfileController extends Controller
             $user->nomor_rekening = $validatedData['bank'] ? $validatedData['nomor_rekening'] : null ;
         }
 
+
         if ($user->save()) {
             return redirect()->route('profile')->with('Sukses', 'Berhasil');
         }

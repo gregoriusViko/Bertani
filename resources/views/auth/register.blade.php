@@ -187,17 +187,6 @@
     </div>
 
     <script>
-        // document.getElementById('peran').addEventListener('click', function() {
-        //     var dropdownMenu = document.getElementById('dropdownMenu');
-        //     dropdownMenu.classList.toggle('hidden');
-        // });
-
-        // document.querySelectorAll('#dropdownMenu li').forEach(function(item) {
-        //     item.addEventListener('click', function() {
-        //         document.getElementById('roleText').textContent = this.textContent;
-        //         document.getElementById('dropdownMenu').classList.add('hidden');
-        //     });
-        // });
 
         // Fungsi untuk toggle dropdown menu
         const togglePassword = document.querySelector("#togglePassword");
@@ -228,10 +217,32 @@
         const noTelpMessage = document.getElementById('notelpMessage');
 
         noTelponInput.addEventListener('input', () => {
-            if (noTelponInput.value.length > 0 && noTelponInput.value.length < 11) {
+            // Remove non-digit characters
+            noTelponInput.value = noTelponInput.value.replace(/\D/g, '');
+            
+            // Limit to 13 digits
+            if (noTelponInput.value.length > 13) {
+                noTelponInput.value = noTelponInput.value.slice(0, 13);
+            }
+            
+            // Show warning if less than 10 digits
+            if (noTelponInput.value.length > 0 && noTelponInput.value.length < 10) {
+                noTelpMessage.textContent = "Nomor telepon harus berjumlah minimal 10 digit dan maksimal 13 digit.";
                 noTelpMessage.classList.remove('hidden');
             } else {
                 noTelpMessage.classList.add('hidden');
+            }
+        });
+
+        // Add validation before form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const noTelponInput = document.getElementById('noTelpon');
+            const noTelpMessage = document.getElementById('notelpMessage');
+            
+            if (noTelponInput.value.length < 10 || noTelponInput.value.length > 13) {
+                e.preventDefault(); // Prevent form submission
+                noTelpMessage.textContent = "Nomor telepon harus berjumlah minimal 10 digit dan maksimal 13 digit.";
+                noTelpMessage.classList.remove('hidden');
             }
         });
 
