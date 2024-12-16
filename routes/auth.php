@@ -18,7 +18,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::middleware('auth:admin,buyer,farmer')->group(function () {
     // Rute untuk menampilkan halaman profil
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-
     // Rute untuk memperbarui profil
     Route::post('/profile/update', [ProfileController::class, 'updates'])->name('profile.update');
 
@@ -34,6 +33,9 @@ Route::middleware(['auth:farmer,buyer', 'verified'])->group(function () {
     Route::get('/chat/{slug?}', Chat::class)->name('chat');
     Route::get('/jumlah-chat', [AuthController::class, 'jumlahChat'])->name('sum-of-chat');
     Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+
+    Route::get('/laporan/{orderId}/create', [ReportController::class, 'showLaporanForm'])->name('laporan.form');
+    Route::post('/laporan/submit', [ReportController::class, 'submitLaporan'])->name('laporan.submit');
     Route::get('/order/bukti-transfer/{order:receipt_number}', [OrderController::class, 'showImage'])->name('order.bukti-transfer');
 });
 
