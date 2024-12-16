@@ -30,6 +30,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:farmers,email|unique:buyers,email|max:45',
             'telepon' => 'required|unique:farmers,phone_number|unique:buyers,phone_number|regex:/^08[0-9]{8,10}$/',
             'password' => 'required|min:6|max:45',
+            'home_address' => 'required|string',
             'peran' => 'required|in:Pembeli,Petani'
         ], [
             // Pesan untuk 'name'
@@ -65,12 +66,15 @@ class AuthController extends Controller
             $user = new Buyer();
             $guard = 'buyer';
         }
+
+        
         // Data Berdasar Kolom
         $user->email = $request->email;
         $user->phone_number = $request->telepon;
         $user->password = $request->password;
         $user->slug = Str::slug($request->email);
         $user->name = $request->name;
+        $user->home_address = $request->home_address;
 
         if ($request->peran == 'Petani') {
             $user->bank = $request->bank;
