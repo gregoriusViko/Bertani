@@ -14,7 +14,7 @@
                     <img src="/img/chinese-farmer-svgrepo-com.png" alt="iconPetani" id="iconPetani" class="w-5 h-5"> <span>{{ Str::before($product->farmer->name, ' ')}}</span>
                 </div>
                 <div class="text-sm font-mono font-light">
-                    Terjual : {{ WeightConverter::convert($product->orders->sum('quantity_kg')) }}
+                    Terjual : {{ WeightConverter::convert($product->orders->where('order_status', 'selesai')->sum('quantity_kg')) }}
                 </div>
                 <div class="text-sm font-mono font-light">
                     Stok : {{ WeightConverter::convert($product->stock_kg) }}

@@ -12,7 +12,8 @@
 <div id="chartpie" class=" rounded-md border border-blue-500" style="height: 300px;"></div>
 
 <script>
-    var options = {
+    function pie(){
+        var options = {
         chart: {
             type: 'pie',
             height: 300
@@ -22,8 +23,7 @@
     };
 
     const chartContainer = document.querySelector("#chartpie");
-    if (chartContainer) {
-        var chart = new ApexCharts(chartContainer, options);
-        chart.render();
+    var chart = new ApexCharts(chartContainer, options);
+    chart.render();
     }
 </script>

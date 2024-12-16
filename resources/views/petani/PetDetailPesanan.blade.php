@@ -11,7 +11,7 @@
                 <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan
             </a>
 
-            <a href="{{ route('dafpesanan', ['order'=>$order]) }}">
+            <a href="{{ route('dafpesanan') }}">
                 <button type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
                     Kembali
                 </button>
@@ -25,9 +25,9 @@
                 <p class="text-xl md:text-2xl font-libre-franklin font-bold tracking-tight text-gray-900 py-2">{{ $order->product->type->name}}</p>
                 <img src="{{ $order->product->img_link }}" alt="{{ $order->product->type->name}}" class="w-40 h-48 object-cover rounded-md shadow-md py-12"/>
                     
-                <p class="text-base md:text-lg font-libre-franklin font-bold tracking-tight text-gray-900 py-2">Petani</p>
-                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$order->product->farmer->name}}</p>
-                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$order->product->farmer->phone_number}}</p>
+                <p class="text-base md:text-lg font-libre-franklin font-bold tracking-tight text-gray-900 py-2">Pembeli</p>
+                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$order->buyer->name}}</p>
+                <p class="text-base md:text-lg font-libre-franklin italic tracking-tight text-gray-900">{{$order->buyer->phone_number}}</p>
             </div>
 
             <div class="flex-1">
@@ -83,6 +83,18 @@
             Batalkan Pesanan
         </button>
         @endif
+        
+        @if ($order->order_status == 'dibatalkan')
+            <button onclick="showAlasanA('showDibatalkan')" id="lihatalasan" type="button"
+                class="text-white inline-flex px-4 py-2 bg-[#f44747] rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-600 sm:w-auto ">Lihat
+                Alasan
+            </button>
+        @elseif($order->order_status == 'ditolak')
+            <button onclick="showAlasanB('showDitolak')" id="lihatalasan" type="button"
+                class="text-white inline-flex px-4 py-2 bg-[#f44747] rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-600 sm:w-auto ">Lihat
+                Alasan
+            </button>
+        @endif
     </div>
 
 
@@ -102,17 +114,56 @@
             </div>
         </form>
     </div>
+
+    <x-Modal id="showDibatalkan" class="hidden">
+        <div class="grid grid-flow-row">
+            <div class="text-xl font-bold mb-4">Alasan Pembatalan</div>
+            <div class="border border-black rounded-md p-2 h-24 scroll-auto">
+                <h3>{{ $order->cancellation_reason }}</h3>
+            </div>
+            <div class="mt-4">
+                <button type="button" class="bg-gray-400 px-2 py-1 rounded-md hover:bg-gray-700 hover:text-white" id="closeA" onclick="closeModal('showDibatalkan')">TUTUP</button>
+            </div>
+        </div>
+    </x-Modal>
 </div>
 
-    <script>
-        // Fungsi untuk menampilkan popup berdasarkan ID
-        function showPopup() {
-            document.getElementById('popup').classList.remove("hidden");
-        }
+<script>
+    // Fungsi untuk menampilkan popup berdasarkan ID
+    function showPopup() {
+        document.getElementById('popup').classList.remove("hidden");
+    }
 
-        // Fungsi untuk menutup popup berdasarkan ID
-        function closePopup() {
-            document.getElementById('popup').classList.add("hidden");
+    function showAlasanA() {
+        document.getElementById('showDibatalkan').classList.remove("hidden");
+    }
+
+    function showAlasanB() {
+        document.getElementById('showDitolak').classList.remove("hidden");
+    }
+
+    // Fungsi untuk menutup popup berdasarkan ID
+    function closePopup() {
+        document.getElementById('popup').classList.add("hidden");
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+            // body.style.overflow = '';
         }
-    </script>
+    }
+
+    // Confirm cancellation and update the status (masih belum bisa)
+    // function kirimPembatalan() {
+    //     const alasanBatal = document.getElementById('batalkanPesanan').value.trim();
+    //     if (alasanBatal.trim() === '') {
+    //         alert('Isi alasan pembatalan!');
+    //         return;
+    //     }
+    //     document.getElementById('statusPesanan').innerText = 'Menunggu respon petani';
+    //     closePopup();
+    // }
+</script>
 </x-layout>

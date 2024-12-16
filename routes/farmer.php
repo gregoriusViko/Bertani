@@ -15,8 +15,10 @@ Route::middleware(['auth:farmer', 'verified'])->group(function () {
             // Edit Produk
             Route::get('/product/{product:slug}/edit', 'edit')->name('product.edit');
             Route::put('/product/update/{product:slug}', 'update')->name('product.update');
+            // Hapus Produk
+            Route::delete('/product/delete', 'destroy')->name('product.destroy');
         });
-    
+        Route::post('/orders/reject/{order}', [OrderController::class, 'reject'])->name('orders.reject');
         Route::get('/dafpesanan', [OrderController::class, 'daftarOrder'])->name('dafpesanan');
         Route::get('/dafpesanan/{order:receipt_number}', [OrderController::class, 'detailOrder'])->name('detailpesanan');
     });
