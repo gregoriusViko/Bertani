@@ -51,6 +51,16 @@
                 @enderror
             </div>
             <div class="relative flex flex-col items-start">
+                <div class="relative flex items-center w-full">
+                    <input type="text" placeholder="Alamat" name="home_address"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
+                        value="{{ old('home_address') }}" required />
+                </div>
+                @error('home_address')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="relative flex flex-col items-start">
                 <div class="relative flex w-full">
                     <!-- Button untuk membuka dropdown dan menampilkan opsi yang terpilih -->
                     <button type="button" id="peran" onclick="toggleDropdown()"
