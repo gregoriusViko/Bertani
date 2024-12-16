@@ -3,7 +3,7 @@
     <div id="lineContainer">
         @include('partials.chart-line')
     </div>
-    <h2 class=" font-semibold mt-4 mb-3 text-sm md:text-lg">Visualisasi Stok Barang Terjual</h2>
+    <h2 class="font-semibold mt-4 mb-3 text-sm md:text-lg">Visualisasi Stok Barang Terjual</h2>
     <div id="barContainer">
         @include('partials.chart-pie')
     </div>

@@ -19,7 +19,8 @@
 
 <div id="chartline" class=" rounded-md border border-blue-500" style="height: 300px;"></div>
 <script>
-    var options = {
+    function line(){
+        var options = {
         series: [
             @foreach ($daftar->keys() as $nama)
                 {
@@ -51,4 +52,5 @@
 
     var chart = new ApexCharts(document.querySelector("#chartline"), options);
     chart.render();
+    }
 </script>
