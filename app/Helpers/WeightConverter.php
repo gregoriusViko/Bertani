@@ -7,6 +7,6 @@ class WeightConverter
         }else if($kilograms>=1){
             return number_format($kilograms, 2) . ' Kg';
         }
-        return number_format(($kilograms * 1000), 2) . 'gram';
+        return number_format(($kilograms * 1000), 2) . ' gram';
     }
 }

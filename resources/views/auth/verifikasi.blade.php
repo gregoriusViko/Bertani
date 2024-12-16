@@ -11,9 +11,10 @@
                 <button type="submit" class="font-hind hover:underline">Kirim ulang</button>
             </form>
             <h1 class="font-hind ">Ganti email</h1>
-            <form action="post" method="post">
-                <input type="text" placeholder="Masukkan email baru anda" class="border mb-2 border-gray-300 text-black text-base font-hind font-normal items-center px-2 py-1 rounded-lg">
-                <button class="bg-black text-white hover:bg-green-700 rounded-lg text-base font-hind font-normal items-center mb-2 px-2 py-1">Kirim</button>
+            <form action="{{ route('gantiEmail') }}" method="post">
+              @csrf
+                <input type="text" name="email" placeholder="Masukkan email baru anda" class="border mb-2 border-gray-300 text-black text-base font-hind font-normal items-center px-2 py-1 rounded-lg">
+                <button type="submit" class="bg-black text-white hover:bg-green-700 rounded-lg text-base font-hind font-normal items-center mb-2 px-2 py-1">Kirim</button>
             </form>
           </div>
           

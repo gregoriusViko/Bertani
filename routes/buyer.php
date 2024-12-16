@@ -7,5 +7,8 @@ use App\Http\Controllers\OrderController;
 Route::middleware(['auth:buyer', 'verified'])->group(function(){
     Route::prefix('pembeli')->group(function(){
         Route::get('/DafPesananPembeli', [OrderController::class, 'daftarOrderPem'])->name('DafPesananPembeli');
+        Route::get('/order/{orderId}/pembayaran',[OrderController::class, 'showPaymentPage'])->name('pembeli.PembayaranPage');
+        Route::get('/order/{order:receipt_number}/detail', [OrderController::class, 'showDetailPembelian'])->name('DetailPembelianPage');
+        Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder'])->name('order.cancel');
     });
 });

@@ -13,7 +13,7 @@
             @method('PUT')
             {{-- kiri gambar --}}
             <div>
-                <img src="{{ $product->foto ? asset($product->foto) : '/img/noimage.png' }}"
+                <img src="{{ $product->img_link ? $product->img_link : '/img/noimage.png' }}"
                     class="rounded-md border-2 md:w-full w-[400px] h-[300px] object-contain shadow-md" alt="Foto Produk">
                 <div class="mt-4">
                     <div class="flex justify-between">
@@ -51,7 +51,7 @@
                     <x-input-label for="Stok" :value="__('Jumlah Stok')" />
                     <x-text-input id="Stok"
                         class="block mt-1  border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50 w-full"
-                        type="number" min="0" name="stok" :value="old('Stok')" x-mask:dynamic="$Stok($input, ',')" required />
+                        type="number" min="0" name="stok" :value="old('Stok', $product->stock_kg)" x-mask:dynamic="$Stok($input, ',')" required />
                     <x-input-error :messages="$errors->get('Stok')" class="mt-2 " />
                 </div>
                 {{-- harga --}}
@@ -59,7 +59,7 @@
                     <x-input-label for="harga" :value="__('Harga')" />
                     <x-text-input id="harga"
                         class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50"
-                        type="text" min="0" name="harga" :value="old('harga')" required />
+                        type="text" min="0" name="harga" :value="old('harga', $product->price)" required />
                     <x-input-error :messages="$errors->get('harga')" class="mt-2" />
                 </div>
                 {{-- deskripsi --}}
@@ -67,7 +67,7 @@
                     <x-input-label for="deskripsi" :value="__('Deskripsi')" />
                     <x-text-area id="deskripsi"
                         class="block mt-1 w-full border-gray-300 focus:border-green-600 outline-none rounded-lg hover:bg-gray-50"
-                        type="text" name="deskripsi">{{ old('deskripsi') }}</x-text-area>
+                        type="text" name="deskripsi">{{ old('deskripsi') ? old('deskripsi') : $product->description }}</x-text-area>
                     <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                 </div>
                 {{-- button --}}

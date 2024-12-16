@@ -20,7 +20,7 @@ class ProductController extends Controller
 {
     function home()
     {
-        $products = Product::with(['orders'])->paginate(12);
+        $products = Product::with(['orders'])->latest()->paginate(12);
         return view('HomePageDefault', compact('products'));
     }
 
@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function loadMoreProducts(Request $request)
     {
-        $products = Product::with(['orders'])->paginate(perPage: 12);
+        $products = Product::with(['orders'])->latest()->paginate(perPage: 12);
         return view('partials.product', compact('products'))->render();
     }
     public function farmerProducts()
@@ -74,6 +74,18 @@ class ProductController extends Controller
         if (!$typeOfProduct) {
             return back()->withErrors(['Nama' => 'nama produk tidak ditemukan.']);
         }
+
+        $prod = Product::withTrashed()
+            ->where('farmer_id', Auth::guard('farmer')->user()->id)
+            ->where('type_of_product_id', $typeOfProduct->id)
+            ->first();
+
+        // Jika produk ditemukan dan sudah dihapus, lakukan restore
+        if ($prod) {
+            // Mengembalikan produk yang dihapus (restore)
+            $prod->restore();
+        }
+
         $farmer = Auth::guard('farmer')->user();
         $prod = Product::updateOrCreate(
             [
@@ -127,7 +139,7 @@ class ProductController extends Controller
         $product->description = $request->deskripsi;
         $product->stock_kg = $request->stok;
 
-        if ($product->price !=  $request->harga){
+        if ($product->price !=  $request->harga) {
             $product->price = $request->harga;
             HistoryPrice::Create([
                 'price' => $request->harga,
@@ -144,22 +156,24 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         $product = Product::find($request->product);
-    
+        if($product->farmer->id !== Auth::guard('farmer')->user()->id){
+            abort(404);
+        }
         try {
             $product->delete();
-    
+
             DB::commit();
-    
+
             return redirect('petani/dafproduk')->with('SuksesHapus', 'Berhasil menghapus produk.');
         } catch (\Exception $e) {
             DB::rollBack();
-    
+
             Log::error('Error deleting product: ' . $e->getMessage());
-    
+
             return redirect()->back()->with('GagalHapus', 'Gagal menghapus produk. ' . $e->getMessage());
         }
     }
-    
+
 
     public function laporanPenjualan()
     {
@@ -176,7 +190,7 @@ class ProductController extends Controller
         $bulan = $request->input('bulan');
         $farmer = Auth::guard('farmer')->user();
         $orders = $farmer->products()->with('orders')->latest()->get()->pluck('orders')->flatten();
-        if($bulan !== 'all'){
+        if ($bulan !== 'all') {
             $orders = $orders->where('order_status', 'selesai')->whereBetween('order_time', [now()->subMonth($bulan), now()]);
         }
         return view('partials.data', compact('orders'));

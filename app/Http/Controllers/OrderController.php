@@ -35,6 +35,11 @@ class OrderController extends Controller
     public function showPaymentPage($orderId){
         
         $order = Order::findOrFail($orderId);
+
+        if($order->buyer->id !== Auth::guard('buyer')->user()->id){
+            abort(404);
+        }
+
         $product = $order->product;
         $price = $order->price;
 
@@ -65,13 +70,14 @@ class OrderController extends Controller
             'order_status' => 'menunggu konfirmasi',
         ]);
         
-        return redirect()->route('DetailPembelianPage', ['order' => $order->id])->with('success', 'Order created successfully!');
+        return redirect()->route('DetailPembelianPage', $order->receipt_number)->with('success', 'Order created successfully!');
     }
 
-    public function showDetailPembelian($orderId){
-        // dd('order');
-        $order = Order::findOrFail($orderId);
-        return view('pembeli.DetailPembelianPage', compact('order'));
+    public function showDetailPembelian(Order $order){
+        if($order->buyer->id === Auth::guard('buyer')->user()->id){
+            return view('pembeli.DetailPembelianPage', compact('order'));
+        }
+        abort(404);
     }
 
     public function cancelOrder(Request $request, $orderId){
@@ -92,11 +98,13 @@ class OrderController extends Controller
 
     public function reject(Request $request, $orderId){
         $order = Order::findOrFail($orderId);
-
+        if($order->product->farmer->id !== Auth::guard('farmer')->user()->id){
+            abort(404);
+        }
         $validated = $request->validate([
             'rejection_reason' => 'required|string',
         ]);
-
+        
         $order->update([
             'order_status' => 'ditolak',
             'cancellation_reason' => $validated['rejection_reason']

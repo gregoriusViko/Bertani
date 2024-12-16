@@ -23,49 +23,23 @@ Route::view('/produk','ProdukPage')->name('produk');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('profile.logout');
 
-Route::view('/addProduct', 'petani.addProduct')->name('addProduct');
-
 Route::get('/products/get-by-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
 Route::get('/products/{product:slug}', function (Product $product) {
     return view('DetailProductPage', compact('product'));
 })->name('DetailProductPage');
 
-Route::view('/PembayaranPage','pembeli.PembayaranPage')->name('pembeli.PembayaranPage');
-
-// Hapus Produk
-Route::delete('/product/delete', [ProductController::class, 'destroy'])->name('product.destroy');
-
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/search/load', [SearchController::class, 'loadMoreProducts'])->name('search-load');
 
-Route::view('/EditHargaPasar', 'admin.EditHargaPasar')->name('EditHargaPasar');
-
 Route::view('/hargapasar', 'MelihatHargaPasar')->name('hargapasar');
-
-Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
-Route::get('/order/{orderId}/pembayaran',[OrderController::class, 'showPaymentPage'])->name('pembeli.PembayaranPage');
-
-// Halaman untuk mengedit harga pasar
-Route::get('/edit-harga-pasar', [HargaPasarController::class, 'editHargaPasar'])
-    ->name('admin.editHargaPasar');
-
-// Endpoint untuk memperbarui harga pasar
-Route::post('/update-harga-pasar', [HargaPasarController::class, 'updateHargaPasar'])
-    ->name('admin.updateHargaPasar');
 
 // Endpoint untuk mengambil produk berdasarkan kategori
 Route::get('/products/get-by-category/{category}', [HargaPasarController::class, 'getProductsByCategory']);
 
 Route::get('/melihat-harga-pasar', [HargaPasarController::class, 'melihatHargaPasar'])->name('MelihatHargaPasar');
 
-Route::get('/order/{order}/detail', [OrderController::class, 'showDetailPembelian'])->name('DetailPembelianPage');
-
-Route::patch('/order/{order}/cancel-order',[OrderController::class, 'cancelOrder'])->name('order.cancel');
-
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-
-Route::post('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
 
 Route::get('/orders/{orderId}/confirm', [OrderController::class, 'showConfirmModal'])->name('orders.confirm');
 
