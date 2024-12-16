@@ -89,8 +89,7 @@ class OrderController extends Controller
         abort(404);
     }
 
-    public function cancelOrder(Request $request, $orderId){
-        $order = Order::findOrFail($orderId);
+    public function cancelOrder(Request $request, Order $order){
         if($order->buyer->id !== Auth::guard('buyer')->user()->id && $order->order_status !== 'selesai'){
             abort(404);
         }
@@ -112,8 +111,7 @@ class OrderController extends Controller
         return redirect()->route('DafPesananPembeli')->with('success','order has been cancelled');
     }
 
-    public function reject(Request $request, $orderId){
-        $order = Order::findOrFail($orderId);
+    public function reject(Request $request, Order $order){
         if($order->product->farmer->id !== Auth::guard('farmer')->user()->id){
             abort(404);
         }
@@ -159,7 +157,9 @@ class OrderController extends Controller
         if ($request->hasFile('bukti_transfer')) {
             $image = $request->file('bukti_transfer');
             $path = $image->store('bukti_transfer', 'private');
-        }else if($order->payment_proof === 'Transfer')
+        }else if($order->payment_proof === 'Transfer'){
+            return redirect()->back();
+        }
 
         $order->update([
             'order_status' => 'selesai',

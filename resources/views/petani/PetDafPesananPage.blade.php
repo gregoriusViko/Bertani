@@ -71,7 +71,7 @@
                                 </span>
                             </h4>
                             <div class="flex justify-center gap-x-4">
-                                <button id="batal" class="hover:text-red-500 " onclick="showDecline({{ $order->id }})"><ion-icon
+                                <button id="batal" class="hover:text-red-500 " onclick="showDecline('{{ $order->receipt_number }}')"><ion-icon
                                         name="close-circle-outline"
                                         class="transition ease-in duration-100 text-3xl"></ion-icon></button>
                                 <button id="konfirmasi" class="hover:text-green-500" onclick="showACC({{ $order->id }}, event)"><ion-icon
