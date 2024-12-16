@@ -9,7 +9,7 @@
                 <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan
             </button>
 
-            <a href="{{ route('order.store', ['order'=>$order]) }}">
+            <a href="{{ route('dafpesanan') }}">
                 <button type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
                     Kembali
                 </button>

@@ -153,7 +153,7 @@
     {{-- modal ketika tekan tombol silang --}}
     <x-Modal id="showDecline-modal">
         <!-- Form alasan penolakan -->
-        <form id="decline-product" method="POST" action="{{ route('orders.reject', $order->id) }}" class="grid grid-flow-row">
+        <form id="decline-product" method="POST" class="grid grid-flow-row">
             @csrf
             @method('POST')
             <div class="text-xl flex justify-center font-bold">Konfirmasi Pesanan</div>
@@ -200,7 +200,7 @@
             if (modal) {
                 modal.classList.remove('hidden');
                 body.style.overflow = 'hidden';
-                formDecline.action = '{{ route() }}';
+                formDecline.action = '{{ route('orders.reject', ':id') }}'.replace(':id', id);
             }
         }
 
