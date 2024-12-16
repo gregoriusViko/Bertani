@@ -60,7 +60,7 @@
                 <!-- Jumlah Terjual -->
                 <div
                     class="font-libre-franklin font-medium sm:col-span-1 md:row-start-4 md:col-start-4 md:col-span-3 lg:row-start-4 lg:col-start-3 lg:ml-10 lg:col-span-4 sm:text-sm md:text-base lg:text-lg text-gray-600">
-                    Jumlah Terjual: {{ WeightConverter::convert($product->stock_kg) }}
+                    Jumlah Terjual: {{ WeightConverter::convert($product->orders->where('order_status', 'selesai')->sum('quantity_kg')) }}
                 </div>
 
                 <!-- Tombol Aksi -->

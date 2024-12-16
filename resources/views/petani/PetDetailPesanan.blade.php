@@ -3,7 +3,7 @@
 
     <div class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-2 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pesanan</h1>
-        <a href="{{ route('order.store', ['order'=>$order]) }}">
+        <a href="{{ route('dafpesanan') }}">
             <button  type="button" id="batalkanPesanan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
                 Kembali
             </button>

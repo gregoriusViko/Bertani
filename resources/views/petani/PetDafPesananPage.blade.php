@@ -71,7 +71,7 @@
                                 </span>
                             </h4>
                             <div class="flex justify-center gap-x-4">
-                                <button id="batal" class="hover:text-red-500 " onclick="showDecline(event)"><ion-icon
+                                <button id="batal" class="hover:text-red-500 " onclick="showDecline({{ $order->id }})"><ion-icon
                                         name="close-circle-outline"
                                         class="transition ease-in duration-100 text-3xl"></ion-icon></button>
                                 <button id="konfirmasi" class="hover:text-green-500" onclick="showACC({{ $order->id }}, event)"><ion-icon
@@ -153,7 +153,7 @@
     {{-- modal ketika tekan tombol silang --}}
     <x-Modal id="showDecline-modal">
         <!-- Form alasan penolakan -->
-        <form method="POST" action="{{ route('orders.reject', $order->id) }}" class="grid grid-flow-row">
+        <form id="decline-product" method="POST" action="{{ route('orders.reject', $order->id) }}" class="grid grid-flow-row">
             @csrf
             @method('POST')
             <div class="text-xl flex justify-center font-bold">Konfirmasi Pesanan</div>
@@ -193,12 +193,14 @@
             }
         }
         // fungsi untuk munculin modal silang
-        function showDecline() {
+        function showDecline(id) {
             event.stopPropagation();
             const modal = document.getElementById('showDecline-modal');
+            const formDecline = document.getElementById('decline-product');
             if (modal) {
                 modal.classList.remove('hidden');
                 body.style.overflow = 'hidden';
+                formDecline.action = '{{ route() }}';
             }
         }
 
