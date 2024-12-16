@@ -4,12 +4,18 @@
     <div
         class="font-libre-franklin font-bold mx-auto max-w-7xl px-4 mt-5 mb-2 sm:px-6 lg:px-8 flex justify-between items-center">
         <h1 class="text-xl md:text-3xl font-bold tracking-tight text-gray-900">Detail Pembelian</h1>
-        <a href="{{ route('DafPesananPembeli') }}">
-            <button type="button" id="batalkanPesanan"
-                class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
-                Kembali
+        <div class="flex gap-x-2">
+            <button onclick="button" type="button" id="laporkan" class="inline-flex px-4 py-2 bg-white rounded-lg border border-black gap-x-2 shadow hover:shadow-md hover:border-opacity-10 transition-shadow hover:bg-red-500 sm:w-auto">
+                <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan
             </button>
-        </a>
+
+            <a href="{{ route('DafPesananPembeli', ['order' => $order]) }}">
+                <button type="button" id="batalkanPesanan"
+                    class="inline-flex px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-yellow-500 hover:border-opacity-10 sm:w-auto mt-2 sm:mt-0">
+                    Kembali
+                </button>
+            </a>
+        </div>
     </div>
 
     <div class="border border-gray-300 max-w-4xl mx-auto mt-8 bg-white p-6 rounded-lg">
