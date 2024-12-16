@@ -7,8 +7,10 @@ use App\Models\Buyer;
 use App\Models\Farmer;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\PenghapusanAkun;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
@@ -151,6 +153,7 @@ class AuthController extends Controller
             $farmer->reports->each(function ($report) {
                 $report->delete();
             });
+            Mail::to($farmer->email)->send(new PenghapusanAkun($farmer->name, $request->reason));
             $farmer->delete();
         } else {
             $buyer = Buyer::findOrFail($request->id);
@@ -164,6 +167,7 @@ class AuthController extends Controller
             $buyer->reports->each(function ($report) {
                 $report->delete();
             });
+            Mail::to($buyer->email)->send(new PenghapusanAkun($buyer->name, $request->reason));
             $buyer->delete();
         }
         return redirect('admin/delete-akun')->with('success', 'Berhasil');
