@@ -71,13 +71,13 @@
                         <div class="border rounded-md grid grid-flow-col">
                             <div class="w 1/2">
                                 <div class="font-inter font-normal text-sm md:text-md lg:text-lg">
-                                    <h3 class="ml-2">Jumlah</h3>
+                                    <h3 class="ml-2">Jumlah (Kg)</h3>
                                     <div class="mt-2 grid grid-cols-2 grid-auto-columns:auto">
                                         <input type="number" id="stokInput" name="quantity" min="0"
                                             class="w-3/4 md:w-1/2 ml-2 border border-black rounded-md" placeholder=""
                                             data-price="{{ $product->price }}" data-max-stock="{{ $product->stock_kg }}"
                                             oninput="calculateSubtotal()" required />
-                                        <h3 class="text-sm font-inter md:w-1/2">Sisa stok: {{ $product->stock_kg }}
+                                        <h3 class="text-sm font-inter md:w-1/2">Sisa stok: {{ $product->stock_kg }} Kg
                                         </h3>
                                     </div>
                                     <div class="mt-2 grid grid-cols-2 grid-auto-columns:auto">

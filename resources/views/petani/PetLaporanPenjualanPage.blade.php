@@ -166,93 +166,20 @@
         document.getElementById("categoryDropdown").addEventListener("change", function() {
             const selectedCategory = this.value;
         });
-        // document.addEventListener("DOMContentLoaded", () => {
-        //     // Mengatur tab utama
-        //     const tabs = document.querySelectorAll(".tab-btn");
-
-        //     // Set tab utama pertama sebagai aktif saat halaman dimuat
-        //     tabs[0].classList.add(activeClass);
-        //     tabContents[0].classList.remove("hidden");
-
-        //     // Set sub-tab pertama dalam tab utama pertama sebagai aktif
-        //     const firstSubTabs = tabContents[0].querySelectorAll(".sub-tab-btn");
-        //     const firstSubTabContents = tabContents[0].querySelectorAll(".sub-tab-content");
-
-        //     firstSubTabs[0].classList.add(nestedActiveClass);
-        //     firstSubTabContents[0].classList.remove("hidden");
-
-        //     // Event listener untuk tab utama
-        //     tabs.forEach(tab => {
-        //         tab.addEventListener("click", () => {
-        //             const target = document.querySelector(tab.dataset.tabTarget);
-
-        //             // Reset semua tab utama
-        //             tabs.forEach(btn => btn.classList.remove(activeClass));
-        //             tabContents.forEach(content => content.classList.add("hidden"));
-
-        //             // Aktifkan tab utama yang diklik
-        //             tab.classList.add(activeClass);
-        //             target.classList.remove("hidden");
-
-        //             // Reset sub-tab di dalam tab utama yang baru diaktifkan
-        //             const subTabs = target.querySelectorAll(".sub-tab-btn");
-        //             const subTabContents = target.querySelectorAll(".sub-tab-content");
-
-        //             subTabs.forEach((subTab, index) => {
-        //                 if (index === 0) {
-        //                     subTab.classList.add(nestedActiveClass);
-        //                     subTabContents[index].classList.remove("hidden");
-        //                 } else {
-        //                     subTab.classList.remove(nestedActiveClass);
-        //                     subTabContents[index].classList.add("hidden");
-        //                 }
-        //             });
-        //         });
-        //     });
-
-        //     // Event listener untuk sub-tab
-        //     const allSubTabs = document.querySelectorAll(".sub-tab-btn");
-        //     allSubTabs.forEach(subTab => {
-        //         subTab.addEventListener("click", () => {
-        //             const target = document.querySelector(subTab.dataset.subTabTarget);
-        //             const subTabContainer = subTab.closest(".tab-content");
-
-        //             // Reset semua sub-tab dalam tab utama yang aktif
-        //             const subTabs = subTabContainer.querySelectorAll(".sub-tab-btn");
-        //             const subTabContents = subTabContainer.querySelectorAll(".sub-tab-content");
-
-        //             subTabs.forEach(btn => btn.classList.remove(nestedActiveClass));
-        //             subTabContents.forEach(content => content.classList.add("hidden"));
-
-        //             // Aktifkan sub-tab yang diklik
-        //             subTab.classList.add(nestedActiveClass);
-        //             target.classList.remove("hidden");
-        //         });
-        //     });
-        // });
-
-
-
-
-
-        // cancelButton.addEventListener('click', () => {
-        //     form.reset();
-        //     document.querySelector('#tab1').classList.remove('hidden');
-        //     document.querySelector('#tab2').classList.add('hidden');
-        //     tabs[0].classList.add(activeClass);
-        //     tabs[1].classList.remove(activeClass);
-        // });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
+    window.onload = function() {
+            line();
+            pie();
+    }
         function loadOtherData(bulan) {
             $.ajax({
                 url: '/data-penjualan/load?bulan=' + bulan,
                 type: "get",
                 beforeSend: function() {
-                    // $('#loading').show();
-                    console.log('sfsdf')
+                    console.log('mendapatkan data...');
                 }
             }).done(function(data) {
                 if (data == "") {
@@ -260,47 +187,13 @@
                     return;
                 }
                 $("#dataContainer").html(data);
-                $("#dataContainer script").each(function() {
-                    eval($(this).text());
-                });
+                line();
+                pie();
 
             }).fail(function(jqXHR, ajaxOptions, thrownError) {
                 $('#dataContainer').html("Sedang ada gangguan");
             });
         }
     </script>
-
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript">
-            let page = 1;
-    
-            function loadOtherData(bulan) {
-                console.log('jhj')
-                $.ajax({
-                    url: '/data-penjualan/load?bulan=' + bulan,
-                    type: "get",
-                    beforeSend: function() {
-                        $('#loading').show();
-                    }
-                }).done(function(data) {
-                    if (data == "") {
-                        $('#loading').html("No more records found");
-                        return;
-                    }
-                    $('#loading').hide();
-                    $("#cardContainer").append(data);
-                }).fail(function(jqXHR, ajaxOptions, thrownError) {
-                    $('#loading').html("Sedang ada gangguan");
-                });
-            }
-        </script> --}}
-
-    {{-- <script src="path/to/chartjs/dist/chart.umd.js"></script>
-
-
-    <script>
-        
-    </script> --}}
-
 
 </x-layout>
