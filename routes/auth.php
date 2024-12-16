@@ -34,6 +34,7 @@ Route::middleware(['auth:farmer,buyer', 'verified'])->group(function () {
     Route::get('/chat/{slug?}', Chat::class)->name('chat');
     Route::get('/jumlah-chat', [AuthController::class, 'jumlahChat'])->name('sum-of-chat');
     Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+    Route::get('/order/bukti-transfer/{order:receipt_number}', [OrderController::class, 'showImage'])->name('order.bukti-transfer');
 });
 
 // rute untuk orang yang belum login

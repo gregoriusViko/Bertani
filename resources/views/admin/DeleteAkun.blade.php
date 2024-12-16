@@ -100,6 +100,31 @@
             </div>
         @endisset
     </div>
+    @if (session('error'))
+        <div id="errorMessage"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
+        <x-Message-error message="{{ session('error') }}">
+            Akun tidak ditemukan
+            <button onclick="closeMessage('errorMessage')"
+                class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+            </button>
+        </x-Message-error>
+    </div>
+    @endif
+
+    @if (session('success'))
+        <div id="successMessage"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50 h-screen w-screen">
+            <x-Message-success message="{{ session('success') }}">
+                Akun berhasil dihapus
+                <button onclick="closeMessage('successMessage')"
+                    class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+                    <ion-icon name="close-circle-outline" class="text-2xl"></ion-icon>
+                </button>
+            </x-Message-success>
+        </div>
+    @endif
 
     <script>
         function showDeletePopup() {
@@ -111,5 +136,36 @@
             document.getElementById('deleteModal').classList.add('hidden');
             document.body.style.overflow = '';
         }
+
+        // Function to close the message component
+        function closeMessage(elementId) {
+            const messageElement = document.getElementById(elementId);
+            if (messageElement) {
+                messageElement.style.display = 'none';
+                body.style.overflow = ''; // Aktifkan scroll
+            }
+        }
+
+
+        // Hilangkan pesan secara otomatis setelah 5 detik
+        window.onload = function() {
+            const messageElement = document.getElementById('successMessage');
+            if (messageElement) {
+                // document.body.style.overflow = 'hidden';
+                body.style.overflow = 'hidden'; // Kunci scroll
+                setTimeout(() => {
+                    closeMessage('successMessage');
+                }, 3000); // 5000 ms = 5 detik
+            }
+
+            // Hilangkan pesan error setelah 5 detik
+            const errorMessage = document.getElementById('errorMessage');
+            if (errorMessage) {
+                body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    closeMessage('errorMessage');
+                }, 3000); // 5000 ms = 5 detik
+            }
+        };
     </script>
 </x-layout>

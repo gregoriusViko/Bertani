@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
     function daftarOrder(){
         $farmer = Auth::guard('farmer')->user();
-        $orders = $farmer->products()->with('orders')->get()->pluck('orders')->flatten();
+        $orders = $farmer->products()->withTrashed()->with('orders')->get()->pluck('orders')->flatten();
         return view('petani.PetDafPesananPage', compact('orders'));
     }
 
@@ -52,13 +53,19 @@ class OrderController extends Controller
         
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required',
+            'quantity' => 'required|numeric|min:1',
             'payment_method' => 'required|string',
         ]);
 
         
         $buyer = Auth::guard('buyer')->user();
         $product = Product::findOrFail($validated['product_id']);
+
+        $sisaStok = $product->stock_kg - $validated['quantity'];
+
+        if($sisaStok < 0){
+            return redirect()->back();
+        }
 
         $order = Order::create([
             'buyer_id' => $buyer->id,
@@ -69,6 +76,8 @@ class OrderController extends Controller
             'payment_proof' => $validated['payment_method'],
             'order_status' => 'menunggu konfirmasi',
         ]);
+
+        $product->stock_kg = $sisaStok;
         
         return redirect()->route('DetailPembelianPage', $order->receipt_number)->with('success', 'Order created successfully!');
     }
@@ -82,7 +91,9 @@ class OrderController extends Controller
 
     public function cancelOrder(Request $request, $orderId){
         $order = Order::findOrFail($orderId);
-       
+        if($order->buyer->id !== Auth::guard('buyer')->user()->id && $order->order_status !== 'selesai'){
+            abort(404);
+        }
 
         $validated = $request->validate([
             'cancellation_reason' => 'required'
@@ -92,6 +103,11 @@ class OrderController extends Controller
             'order_status' => 'dibatalkan',
             'cancellation_reason' => $validated['cancellation_reason']
         ]);
+
+        $product = $order->product;
+
+        $product->stock_kg += $order->quantity_kg;
+        $product->save();
 
         return redirect()->route('DafPesananPembeli')->with('success','order has been cancelled');
     }
@@ -110,6 +126,11 @@ class OrderController extends Controller
             'cancellation_reason' => $validated['rejection_reason']
         ]);
 
+        $product = $order->product;
+
+        $product->stock_kg += $order->quantity_kg;
+        $product->save();
+
         return redirect()->back()->with('success', 'Pesanan berhasil ditolak.');
     }
 
@@ -124,13 +145,45 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Pesanan berhasil diterima.');
     }
 
-    public function finishOrder ($orderId) {
+    public function finishOrder ($orderId, Request $request) {
+        $request->validate([
+            'bukti_transfer' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
         $order = Order::findOrFail($orderId);
         
+        if($order->buyer->id !== Auth::guard('buyer')->user()->id && $order->Order_status !== 'pesanan diterima'){
+            return redirect()->back();
+        }
+
+        $path = null;
+        if ($request->hasFile('bukti_transfer')) {
+            $image = $request->file('bukti_transfer');
+            $path = $image->store('bukti_transfer', 'private');
+        }else if($order->payment_proof === 'Transfer')
+
         $order->update([
-            'order_status' => 'selesai'
+            'order_status' => 'selesai',
+            'img' => $path
         ]);
 
         return redirect()->route('DafPesananPembeli')->with('success','order selesai');
+    }
+
+    function showImage(Order $order)
+    {
+        if(Auth::guard('buyer')->check()){
+            if($order->buyer->id !== Auth::guard('buyer')->user()->id){
+                abort(404);
+            }
+        }else{
+            if($order->product->farmer->id !== Auth::guard('farmer')->user()->id){
+                abort(404);
+            }
+        }
+        $mimeType = Storage::mimeType($order->img);
+        $contents = Storage::get($order->img);
+
+        // Kembalikan response gambar
+        return response($contents)->header('Content-Type', $mimeType);
     }
 }
