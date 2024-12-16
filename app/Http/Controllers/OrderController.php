@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     function daftarOrder(){
         $farmer = Auth::guard('farmer')->user();
-        $orders = $farmer->products()->withTrashed()->with('orders')->get()->pluck('orders')->flatten();
+        $orders = $farmer->products()->withTrashed()->with('orders')->get()->pluck('orders')->flatten()->sortByDesc('order_time');
         return view('petani.PetDafPesananPage', compact('orders'));
     }
 
@@ -29,7 +29,7 @@ class OrderController extends Controller
 
     function daftarOrderPem(){
         $buyer = Auth::guard('buyer')->user();
-        $orders = $buyer->orders;
+        $orders = $buyer->orders->sortByDesc('order_time');
         return view ('pembeli.PemDafPesananPage', compact('orders'));
     }
 
