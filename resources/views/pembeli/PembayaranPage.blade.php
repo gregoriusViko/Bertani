@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        @if ($order->product->farmer->nomor_rekening)
+        @if ($order->product->payment_proof === 'Transfer')
         <div class="border border-l-black">
             <div class="ml-4 grid grid-flow-row font-inter font-normal my-3 mx-2">
                 <form action="{{ route('order.finish', $order->id)}}" method="POST" enctype="multipart/form-data">
@@ -84,7 +84,7 @@
         @endif
 
         <!-- Pembayaran COD -->
-         @if ($order->payment_proof === 'COD')
+         @if ($order->payment_proof === 'Cash')
               <div class="border border-1-black">
                 <div class="ml-4 grid grid-flow-row font-inter my-3 mx-2">
                     <h2 class="font-semibold">Metode Pembayaran: COD</h2>
@@ -98,6 +98,7 @@
                                     </a>
                     </div>
                     <form action="{{route('order.finish', ['orderId' => $order->id]) }}"method="POST">
+                        @csrf
                     <button class="my-2 lg:w-3/4 w-3/4 text-white text-sm md:text-md bg-green-600 py-1 rounded-md hover:bg-green-400" type="submit">
                         Konfirmasi Pembayaran
                     </button>

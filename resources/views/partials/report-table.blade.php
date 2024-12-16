@@ -9,7 +9,7 @@
             // Mengakses produk terkait
             $product = $maxQuantityOrder->product;
             $total = $orders->sum(function ($order) {
-                return $order->price * $order->quantity_kg; // Mengalikan harga dengan jumlah
+                return $order->historyPrice->price * $order->quantity_kg; // Mengalikan harga dengan jumlah
             });
         }
     @endphp
@@ -58,7 +58,7 @@
                             {{ WeightConverter::convert($order->quantity_kg) }}
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            {{ Number::currency($order->price * $order->quantity_kg, in: 'idr') }}
+                            {{ Number::currency($order->historyPrice->price * $order->quantity_kg, in: 'idr') }}
                         </th>
                         <th scope="col" class="px-6 py-3">
                             {{ ucwords($order->payment_proof) }}
