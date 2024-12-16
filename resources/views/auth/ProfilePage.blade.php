@@ -91,15 +91,15 @@
                         <select id="bank-input" name="bank"
                             class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required readonly disabled>
-                            <option value="" >Tidak Punya</option>
                             <option value="BRI" {{ $user->bank === 'BRI' ? 'selected' : '' }}>BRI</option>
                             <option value="BNI" {{ $user->bank === 'BNI' ? 'selected' : '' }}>BNI</option>
                             <option value="Mandiri" {{ $user->bank === 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
                             <option value="BCA" {{ $user->bank === 'BCA' ? 'selected' : '' }}>BCA</option>
+                            <option value="" {{ $user->bank === null ? 'selected' : '' }}>Tidak Punya</option>
                         </select>
                 </div>
 
-                <div class="mb-5" id="norek" hidden>
+                <div class="mb-5" id="norek" >
                     <label for="rekening-input"
                         class="block mb-1 text-base font-libre-franklin font-semibold text-black">Nomor Rekening</label>
                     <input type="text" id="rekening-input" name="nomor_rekening"
