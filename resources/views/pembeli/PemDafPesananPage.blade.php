@@ -55,7 +55,7 @@
                             </span>
                         </h4>
                     @elseif ($order->order_status == 'pesanan diterima')
-                        <h4 id="status2" class="bg-[#30FB45] text-sm rounded-md p-1 mb-1 flex justify-center relative animate-bounce transition-all duration-300">Lakukan Pembayaran </h4>
+                        <h4 id="status2" class="bg-[#4379F2] text-sm rounded-md p-1 mb-1 flex justify-center relative animate-bounce transition-all duration-300">Lakukan Pembayaran </h4>
                         <!-- <span
                                 class="absolute top-1 right-0 transform translate-x-1/2 -translate-y-1/2 flex h-3 w-3">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
