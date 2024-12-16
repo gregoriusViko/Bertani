@@ -56,7 +56,7 @@ class DaftarLaporan extends Component
     public function deleteReport($reportId)
     {
         ReportDetail::find($reportId)->delete();
-        session()->flash('message', 'Laporan berhasil dihapus.');
+        session()->flash('message', 'Berhasil');
     }
 
     public function popUpTanggapan(ReportDetail $detailLaporan){
@@ -73,13 +73,20 @@ class DaftarLaporan extends Component
         $detailLaporan->content_of_response = $this->message;
         $detailLaporan->response_time = now();
         $detailLaporan->save();
+        $this->popup_tanggapan = 'hidden';
+        $this->popup_hapus = 'hidden';
         $this->tutup();
         Mail::to($this->user->email)->send(new ReportResponse($detailLaporan->content_of_report, $detailLaporan->content_of_response));
     }
 
-    public function tutup(){
+    public function tutupModal(){
         $this->popup_tanggapan = 'hidden';
         $this->popup_hapus = 'hidden';
+    }
+
+    public function tutup(){
+        session()->flash('success', 'Berhasil');
+        return view('livewire.daftar-laporan');
     }
 
     public function render()
