@@ -1,5 +1,5 @@
 <div>
-    <div class="mx-10">
+    <div class="mx-7">
         <nav class="flex justify-between items-center">
             {{-- <div class="overflow-hidden sm:w-20 sm:h-14 md:w-36 md:h-20 lg:w-40 lg:h-20 flex items-center justify-center"> --}}
             <div>
@@ -12,7 +12,7 @@
                     {{ $slot }}
                 </ul>
             </div>
-            <div class="flex items-center gap-6">
+            <div class="flex items-center md:gap-6 gap-1">
                 @php
                     $user = null;
                     if (Auth::guard('admin')->check()) {
