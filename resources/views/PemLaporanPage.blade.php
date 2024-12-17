@@ -12,7 +12,7 @@
             
             <div class="mb-4">
                 <label for="message" class="block text-xl font-normal mb-2">Deskripsi Laporan</label>
-                <textarea name="content_of_report" id="message" rows="3" placeholder="Ketik kendala yang Anda alami" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
+                <textarea name="content_of_report" id="message" rows="3" placeholder="Ketik kendala yang Anda alami pada sistem" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
             </div>
 
             <p class="text-xl font-bold mb-2">Foto Bukti Laporan</p>
@@ -31,7 +31,7 @@
             <div class="flex justify-end space-x-4">
                 <button type="button" id="cancelButton" class="inline-flex gap-x-2 px-4 py-2 bg-white rounded-lg border border-black  shadow hover:shadow-md transition-shadow hover:bg-orange-300">
                 <img src="/img/laporanbatal.png" alt="icon_batal" class="w-5 h-5">Batal</button>
-                <button type="submit" class="inline-flex gap-x-2 px-4 py-2 bg-white-300 rounded-lg border border-black  shadow hover:shadow-md transition-shadow hover:bg-orange-300">
+                <button id="laporkan" type="submit" class="inline-flex gap-x-2 px-4 py-2 bg-white-300 rounded-lg border border-black  shadow hover:shadow-md transition-shadow hover:bg-orange-300">
                 <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan</button>
             </div>
         </form>
