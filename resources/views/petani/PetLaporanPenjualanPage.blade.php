@@ -66,6 +66,7 @@
 
 
     <script>
+        let subTabsAktif = "tabdiagram";
         const activeClass = "bg-green-500"; // Kelas aktif untuk tab utama
         const nestedActiveClass = "bg-blue-500"; // Kelas aktif untuk sub-tab
         const tabs = document.querySelectorAll(".tab-btn");
@@ -83,12 +84,14 @@
         });
 
         subTabs[0].addEventListener('click', () => {
+            subTabsAktif = "tabdiagram";
             subTabs.forEach(btn => btn.classList.remove(nestedActiveClass));
             subTabs[0].classList.add(nestedActiveClass);
             document.getElementById('sub-tab1-1').classList.remove('hidden');
             document.getElementById('sub-tab1-2').classList.add('hidden');
         });
         subTabs[1].addEventListener('click', () => {
+            subTabsAktif = "tabTabel";
             subTabs.forEach(btn => btn.classList.remove(nestedActiveClass));
             subTabs[1].classList.add(nestedActiveClass);
             document.getElementById('sub-tab1-1').classList.add('hidden');
@@ -122,6 +125,12 @@
                 $("#dataContainer").html(data);
                 line();
                 pie();
+
+                if (subTabsAktif === "tabDiagram") {
+                    subTabs[0].click(); 
+                } else if (subTabsAktif === "tabTabel") {
+                    subTabs[1].click(); 
+                }
 
             }).fail(function(jqXHR, ajaxOptions, thrownError) {
                 $('#dataContainer').html("Sedang ada gangguan");
