@@ -9,7 +9,7 @@
     </div>
 </div>
 <div id="sub-tab1-2" class="sub-tab-content hidden ">
-    <div class="m-3 overflow-x-auto">
+    <div class="m-3 overflow-x-auto" id="tabel">
         @include('partials.report-table')
     </div>
 
