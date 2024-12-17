@@ -1,15 +1,11 @@
 <x-layout>
     <x-slot:title>Laporan Sistem-Bertani.com</x-slot:title>
-    <!-- <div class="mt-4">
-        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab1">Laporan Sistem</button>
-        <button type="button" class="p-4 rounded-lg text-black font-medium flex-grow hover:bg-gray-200" data-tab-target="#tab2">Laporan Transaksi</button>
-    </div> -->
 
     <div id="tab1" class="tab-content border border-black rounded-md w-full h-auto mt-20">
-        <form enctype="multipart/form-data" class="p-8 w-full h-auto" action="/laporan/sistem-create" method="post">
+        <form id="laporanForm" enctype="multipart/form-data" class="p-8 w-full h-auto" action="/laporan/sistem-create" method="post">
             @csrf
             <p class="text-2xl font-bold mb-4">Laporan Sistem</p>
-            
+
             <div class="mb-4">
                 <label for="message" class="block text-xl font-normal mb-2">Deskripsi Laporan</label>
                 <textarea name="content_of_report" id="message" rows="3" placeholder="Ketik kendala yang Anda alami pada sistem" class="w-full h-48 p-2 mt-1 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
@@ -27,16 +23,17 @@
             @enderror
 
             <p class="block text-base font-normal mb-2">Saya dengan ini menyatakan bahwa segala informasi yang dilaporkan memang benar</p>
-                
+
             <div class="flex justify-end space-x-4">
-                <button type="button" id="cancelButton" class="inline-flex gap-x-2 px-4 py-2 bg-white rounded-lg border border-black  shadow hover:shadow-md transition-shadow hover:bg-orange-300">
-                <img src="/img/laporanbatal.png" alt="icon_batal" class="w-5 h-5">Batal</button>
-                <button id="laporkan" type="submit" class="inline-flex gap-x-2 px-4 py-2 bg-white-300 rounded-lg border border-black  shadow hover:shadow-md transition-shadow hover:bg-orange-300">
-                <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan</button>
+                <button type="button" id="cancelButton" class="inline-flex gap-x-2 px-4 py-2 bg-white rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-orange-300">
+                    <img src="/img/laporanbatal.png" alt="icon_batal" class="w-5 h-5">Batal
+                </button>
+                <button id="laporkan" type="submit" class="inline-flex gap-x-2 px-4 py-2 bg-white-300 rounded-lg border border-black shadow hover:shadow-md transition-shadow hover:bg-orange-300">
+                    <img src="/img/laporanlaporkan.png" alt="icon_laporkan" class="w-5 h-5">Laporkan
+                </button>
             </div>
         </form>
     </div>
-
 
     @if (session('success'))
         <div id="successMessage"
@@ -52,33 +49,31 @@
     @endif
 
     <script>
+        const cancelButton = document.getElementById('cancelButton');
+        const form = document.getElementById('laporanForm');
 
         cancelButton.addEventListener('click', () => {
-            form.reset();
-            document.querySelector('#tab1').classList.remove('hidden');
-            document.querySelector('#tab2').classList.add('hidden');
-            tabs[0].classList.add(activeClass);
-            tabs[1].classList.remove(activeClass);
+            if (form) {
+                form.reset(); // Menghapus semua input yang terisi
+            }
         });
 
         function closeMessage(elementId) {
             const messageElement = document.getElementById(elementId);
             if (messageElement) {
                 messageElement.style.display = 'none';
-                body.style.overflow = ''; // Aktifkan scroll
+                document.body.style.overflow = ''; // Aktifkan scroll
             }
         }
 
-        window.onload = function() {
+        window.onload = function () {
             const messageElement = document.getElementById('successMessage');
             if (messageElement) {
-                // document.body.style.overflow = 'hidden';
-                body.style.overflow = 'hidden'; // Kunci scroll
+                document.body.style.overflow = 'hidden'; // Kunci scroll
                 setTimeout(() => {
                     closeMessage('successMessage');
                 }, 3000); // 5000 ms = 5 detik
             }
         };
-
     </script>
 </x-layout>
