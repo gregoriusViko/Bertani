@@ -2,8 +2,7 @@
     <x-slot:title>Laporan Transaksi-Bertani.com</x-slot:title>
     <div>
         <div id="tab2" class="tab-content border border-black rounded-md w-full h-auto mt-20">
-            <form enctype="multipart/form-data" class="p-8 w-full h-auto" action="{{ route('laporan.submit') }}"
-                method="POST">
+            <form id="laporanTransaksiForm" enctype="multipart/form-data" class="p-8 w-full h-auto" action="{{ route('laporan.submit') }}" method="POST">
                 @csrf
                 <p class="text-2xl font-bold mb-4">Laporan Transaksi</p>
                 <div class="w-10/12 md:w-5/12 lg:w-4/12">
@@ -68,30 +67,42 @@
     @endif
 
     <script>
+        // Ambil elemen tombol dan form
+        const cancelButton = document.getElementById('cancelButton');
+        const form = document.getElementById('laporanTransaksiForm');
+
+        // Event listener untuk tombol "Batal"
         cancelButton.addEventListener('click', () => {
-            form.reset();
-            document.querySelector('#tab1').classList.remove('hidden');
-            document.querySelector('#tab2').classList.add('hidden');
-            tabs[0].classList.add(activeClass);
-            tabs[1].classList.remove(activeClass);
-        });
+            if (form) {
+                form.reset(); // Reset semua input di form
+            }
+
+            // Ambil role dari input hidden
+            const role = document.getElementById('statusrole').value;
+
+            // Arahkan pengguna ke halaman yang sesuai
+            if (role === 'buyer') {
+                window.location.href = "{{ route('DafPesananPembeli')}}"; // Halaman untuk pembeli
+            } else if (role === 'farmer') {
+                window.location.href = "{{ route('dafpesanan') }}"; // Halaman untuk petani
+            }
+            });
 
         function closeMessage(elementId) {
             const messageElement = document.getElementById(elementId);
             if (messageElement) {
                 messageElement.style.display = 'none';
-                body.style.overflow = ''; // Aktifkan scroll
+                document.body.style.overflow = ''; // Aktifkan scroll
             }
         }
 
         window.onload = function() {
             const messageElement = document.getElementById('successMessage');
             if (messageElement) {
-                // document.body.style.overflow = 'hidden';
-                body.style.overflow = 'hidden'; // Kunci scroll
+                document.body.style.overflow = 'hidden'; // Kunci scroll
                 setTimeout(() => {
                     closeMessage('successMessage');
-                }, 3000); // 5000 ms = 5 detik
+                }, 3000); // 3000 ms = 3 detik
             }
         };
     </script>
