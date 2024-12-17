@@ -52,7 +52,7 @@
             </div>
             <div class="relative flex flex-col items-start">
                 <div class="relative flex items-center w-full">
-                    <input type="text" placeholder="Alamat" name="home_address"
+                    <input type="text" placeholder="Alamat" name="home_address" id="alamat"
                         class="px-4 py-3 bg-white text-gray-800 w-full text-sm font-inter font-normal border border-gray-300 focus:border-green-600 outline-none rounded-lg"
                         value="{{ old('home_address') }}" required />
                 </div>
