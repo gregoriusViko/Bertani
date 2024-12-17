@@ -49,7 +49,7 @@
                         @if ($order->payment_proof == 'Transfer' && $order->order_status == 'selesai')
                             <button id="buktiTF"
                                 class="bg-blue-500 rounded-md p-1 flex items-center text-white font-libre-franklin font-light text-sm hover:bg-blue-900 transition ease-in duration-100"
-                                onclick="showTFModal(event, '{{ $order->receipt_number }}')">
+                                onclick="showTFModal(event, '{{ $order->receipt_number }}', {{ $order->id }})">
                                 <ion-icon name="document-outline" class="mr-2"></ion-icon>
                                 <span class="mt-0.5">Bukti Transfer</span>
                             </button>
@@ -136,7 +136,7 @@
             </div>
             <div class="text-xs md:text-base font-libre-franklin font-bold">
                 <p class="text-sm md:text-base">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
-                <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a href=""
+                <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a id="link_lapor" href=""
                         class="hover:underline hover:text-red-500 text-sm md:text-base">Disini</a></p>
             </div>
             <div class="mt-4 flex justify-end space-x-2">
@@ -183,14 +183,16 @@
     <script>
         const body = document.body;
 
-        function showTFModal(event, receipt_number) {
+        function showTFModal(event, receipt_number, id) {
             event.stopPropagation();
             const modal = document.getElementById('showTF-modal');
             const transfer = document.getElementById('gambar-transfer');
+            const lapor = document.getElementById('link_lapor');
             if (modal) {
                 modal.classList.remove('hidden');
                 body.style.overflow = 'hidden';
                 transfer.src = '{{ route('order.bukti-transfer', ':receipt_number') }}'.replace(':receipt_number', receipt_number);
+                lapor.href = '{{ route('laporan.form', ':id') }}'.replace(':id', id);
             }
         }
         // fungsi untuk munculin modal silang
