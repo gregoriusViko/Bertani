@@ -123,6 +123,7 @@
             }).fail(function(jqXHR, ajaxOptions, thrownError) {
                 $('#loading').hide();
                 isLoading = false; // Reset flag
+                page--;
             });
         }
     </script>

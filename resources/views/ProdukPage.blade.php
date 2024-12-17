@@ -18,7 +18,7 @@
 
 
     <!-- Hasil pencarian -->
-    <div id="results" class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
+    <div id="cardContainer" class="mx-auto max-w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4">
         @if (isset($products) && $products->count() > 0)
             @foreach ($products as $product)
                 <a href="{{ route('product.show', $product->id) }}">
@@ -61,6 +61,14 @@
                 <x-Message-info>Silahkan cari produk yang Anda inginkan.</x-Message-info>
             </div>
         @endif
+    </div>
+
+    <div style="display: none;" id="loading" class="fixed inset-0 flex justify-center items-center w-full h-[100vh]">
+        <div class="relative flex justify-center items-center">
+            <div class="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-green-600"></div>
+            {{-- <img src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg" class="rounded-full h-28 w-28"> --}}
+            <img src="/img/logokecil.png" class="rounded-full h-28 w-28">
+        </div>
     </div>
 
     <button id="scrollToTopBtn"
@@ -106,6 +114,7 @@
                     isLoading = false; // Reset flag
                 }).fail(function(jqXHR, ajaxOptions, thrownError) {
                     $('#loading').hide();
+                    page--;
                     isLoading = false; // Reset flag
                 });
             }
