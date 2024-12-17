@@ -192,7 +192,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div class="v-line-height v-font-size" style="font-size: 14px; line-height: 100%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 100%;">Kepada bapak atau ibu {{ $name }}, anda telah kami ban, terimakasih</p>
+    <p style="line-height: 100%;">Kepada bapak atau ibu {{ $name }}, karena masalah yang telah terjadi belakangan, kami telah menghapus akun anda. berikut ini alasan kami menghapus akun anda:</p>
 <p style="line-height: 100%;">&nbsp;</p>
 <p style="line-height: 100%;">&nbsp;</p>
   </div>
@@ -222,23 +222,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   </tbody>
 </table>
 
-<table id="u_content_text_5" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
-  <div class="v-line-height v-font-size" style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;">Ini isi tanggapan dari admin</p>
-<p style="line-height: 140%;">&nbsp;</p>
-<p style="line-height: 140%;">&nbsp;</p>
-<p style="line-height: 140%;">&nbsp;</p>
-<p style="line-height: 140%;">&nbsp;</p>
-  </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
     <tr>
@@ -263,10 +246,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
-  <div class="v-line-height v-font-size" style="font-family: inherit; font-size: 10px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;">Terimakasih telah melaporkan sesuatu yang menyebabkan ketidaknyamanan dalam situs website kami. Jika terjadi kendala atau butuh bantuan, silahkan melapor kembali. Have a nice day :)</p>
-  </div>
 
       </td>
     </tr>
