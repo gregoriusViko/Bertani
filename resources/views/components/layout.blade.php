@@ -74,7 +74,7 @@
         </svg> --}}
         <ion-icon name="arrow-up-circle-outline" class="h-6 w-6"></ion-icon>
     </button>
-    <script src="{{ mix('js/app.js') }}"></script>
+    {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 </body>
 
 <script>
