@@ -242,7 +242,6 @@
                 } else {
                     input.removeAttribute('readonly');
                 }
-                input.setAttribute('data-original', input.value);
             }
 
             if (!isEditMode) {
@@ -353,5 +352,7 @@
             bankInput.dispatchEvent(new Event('change'));
         }
     });
+
+    saveButton.disabled = false;
 </script>
 

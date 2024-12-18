@@ -35,11 +35,7 @@
                 <div
                     class="box p-4 rounded-3xl bg-white mb-7 transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex relative">
                     <input type="checkbox" class="self-center mr-4">
-
-                    <div class="w-20 flex-shrink-0 mr-4 flex items-center">
-                        <img src="https://pagedone.io/asset/uploads/1705474950.png" alt="profile image"
-                            class="rounded-md object-cover">
-                    </div>
+                    
 
                     <div class="flex flex-col justify-start items-start space-y-4 flex-grow">
                         <div class="flex items-center space-x-4">
@@ -119,7 +115,7 @@
             </div> --}}
             @if ($detailLaporan && $detailLaporan->img)
                 <a href="{{ route('image-show', $detailLaporan->id) }}" target="_blank">
-                    <button>Lihat lampiran</button>
+                    <button class="text-blue-500 hover:underline">Lihat lampiran</button>
                 </a>
             @endif
 
