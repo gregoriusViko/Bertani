@@ -6,12 +6,12 @@
             <label for="filter" class="text-sm md:text-base lg:text-md text-black px-4 font-semibold">
                 Tampilkan Berdasarkan
             </label>
-            <select wire:model="filter"
+            <select wire:model="filter" wire:change="getReports"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-1 px-4">
-                <option value="all" wire:click='getReports'>Semua</option>
-                <option value="buyer" wire:click='getReports'>Pembeli</option>
-                <option value="farmer" wire:click='getReports'>Petani</option>
-                <option value="system" wire:click='getReports'>Sistem</option>
+                <option value="all">Semua</option>
+                <option value="buyer">Pembeli</option>
+                <option value="farmer">Petani</option>
+                <option value="system">Sistem</option>
             </select>
         </div>
 
@@ -35,7 +35,7 @@
                 <div
                     class="box p-4 rounded-3xl bg-white mb-7 transition-all duration-500 max-lg:max-w-xl max-lg:mx-auto flex relative">
                     <input type="checkbox" class="self-center mr-4">
-                    
+
 
                     <div class="flex flex-col justify-start items-start space-y-4 flex-grow">
                         <div class="flex items-center space-x-4">
@@ -45,7 +45,8 @@
                             <p class="text-xs md:text-sm lg:text-base font-medium text-gray-400">
                                 {{ $reporter == 'buyer' ? 'PEMBELI' : 'PETANI' }}
                             </p>
-                            <p class="text-xs md:text-sm lg:text-base font-medium text-gray-400 flex justify-end">{{ $reportTime }}</p>
+                            <p class="text-xs md:text-sm lg:text-base font-medium text-gray-400 flex justify-end">
+                                {{ $reportTime }}</p>
                         </div>
 
                         <div class="flex flex-col space-y-2 w-full" style="padding-right: 4rem;">
@@ -98,7 +99,8 @@
 
             <div class="mb-12 flex flex-col justify-start items-start space-y-4 flex-grow">
                 <div class="flex items-center space-x-4">
-                    <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">{{ $user ? $user->name : '' }}
+                    <h3 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">
+                        {{ $user ? $user->name : '' }}
                     </h3>
                     <p class="text-lg font-medium text-gray-400">{{ $role }}</p>
                 </div>

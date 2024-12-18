@@ -28,7 +28,6 @@ class ReportResponse extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('report@bertani.com', 'Bertani'),
             subject: 'Tanggapan atas Laporan Anda',
         );
     }
