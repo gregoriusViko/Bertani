@@ -1,10 +1,16 @@
 @foreach ($products as $product)
     <a href="/products/{{ $product->slug }}">
         <div class="shadow-lg border overflow-hidden rounded-lg grid-flow-row cursor-pointer" onclick="handleClick()">
-            <img class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 sm:w-32 sm:h-20 object-cover mb-1" src="{{ $product->img_link }}"
+            <img class="rounded-t-lg lg:w-72 lg:h-44 md:w-60 md:h-36 w-full h-28 object-cover mb-1" src="{{ $product->img_link }}"
                 alt="">
             <div class="p-2 grid-cols-2">
-                <div class="col-span-2 text-base md:text-lg font-mono capitalize">
+                <!-- Untuk media kecil (sm) -->
+                <div class="col-span-2 text-base font-mono capitalize md:hidden">
+                    {{ Str::limit(ucwords($product->type->name), 10) }}
+                </div>
+                
+                <!-- Untuk media lebih besar (md dan lg) -->
+                <div class="col-span-2 text-base font-mono capitalize hidden md:block">
                     {{ ucwords($product->type->name) }}
                 </div>
                 <div class="text-base md:text-lg font-mono font-bold">
