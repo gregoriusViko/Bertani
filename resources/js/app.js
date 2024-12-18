@@ -36,5 +36,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 dropdownToggle.addEventListener('click', handleClick);
-
-import './dropdown';
