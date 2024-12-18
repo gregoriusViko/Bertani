@@ -15,9 +15,33 @@ class AdminSeeder extends Seeder
     {
         Admin::create([
             'email' => 'viko@gmail.com',
-            'password' => 'Admin1234',
+            'password' => 'vk24!%?dkrnr4$',
             'name' => 'Gregorius Viko',
             'phone_number' => '085290697615',
+            'profile_img_link' => '/admins/viko.jpg'
+        ]);
+
+        Admin::create([
+            'email' => 'nicolas@gmail.com',
+            'password' => 'vk24!%?dkrnr4$',
+            'name' => 'Nicholas',
+            'phone_number' => '085290697611',
+            'profile_img_link' => '/admins/viko.jpg'
+        ]);
+
+        Admin::create([
+            'email' => 'angger@gmail.com',
+            'password' => 'vk24!%?dkrnr4$',
+            'name' => 'Angger',
+            'phone_number' => '085290697612',
+            'profile_img_link' => '/admins/viko.jpg'
+        ]);
+
+        Admin::create([
+            'email' => 'boni@gmail.com',
+            'password' => 'vk24!%?dkrnr4$',
+            'name' => 'Raditya',
+            'phone_number' => '085290697613',
             'profile_img_link' => '/admins/viko.jpg'
         ]);
 
