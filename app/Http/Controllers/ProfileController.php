@@ -76,8 +76,10 @@ class ProfileController extends Controller
         // Dapatkan user berdasarkan jenis pengguna
         if (Auth::guard('buyer')->check()) {
             $user = Auth::guard('buyer')->user();
+            $user->home_address = $validatedData['home_address'];
         } elseif (Auth::guard('farmer')->check()) {
             $user = Auth::guard('farmer')->user();
+            $user->home_address = $validatedData['home_address'];
         } elseif (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
         } else {
@@ -101,7 +103,6 @@ class ProfileController extends Controller
 
         // Update data pengguna
         $user->name = $validatedData['name'];
-        $user->home_address = $validatedData['home_address'];
         $user->phone_number = $validatedData['phone_number'];
 
         if (Auth::guard('farmer')->check()){

@@ -28,7 +28,6 @@ class PenghapusanAkun extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('admin@bertani.com', 'Bertani'),
             subject: 'Penghapusan Akun'
         );
     }

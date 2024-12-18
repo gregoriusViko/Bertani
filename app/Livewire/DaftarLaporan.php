@@ -17,13 +17,6 @@ class DaftarLaporan extends Component
     public $popup_tanggapan = 'hidden', $user, $role = '', $isiLaporan = '', $message = '', $detailLaporan;
     public $popup_hapus = 'hidden';
     
-    // Listen for filter changes
-    public function updatedFilter()
-    {
-        // Reset pagination when filter changes
-        $this->resetPage();
-    }
-    
     public function getReports()
     {
         $query = ReportDetail::with(['report.buyer', 'report.farmer'])->where('response_time', null);
