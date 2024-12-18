@@ -16,7 +16,7 @@
             <div class=" grid grid-flow-row gap-4  items-center place-items-center ">
                 <div class="items-center place-items-center">
                     <div class="avatar mb-3 w-20 h-20  ">
-                        <img class="rounded-full object-cover w-20 h-20" src="/img/orang.jpeg.jpg" alt="avatar">
+                        <img class="rounded-full object-cover w-20 h-20" src="{{$user->profile_img_link}}" alt="avatar">
                     </div>
                         <h2 class="text-xs md:text-base font-libre-franklin font-bold text-black">{{ $user->email }}</h2>
                         <h4 class="font-libre-franklin font-normal text-sm text-gray-700">
