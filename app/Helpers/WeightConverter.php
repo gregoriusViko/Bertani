@@ -1,5 +1,4 @@
 <?php
-namespace App\Helpers;
 class WeightConverter
 {
     public static function convert($kilograms){
