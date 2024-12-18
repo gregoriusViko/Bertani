@@ -78,6 +78,7 @@ class OrderController extends Controller
         ]);
 
         $product->stock_kg = $sisaStok;
+        $product->save();
         
         return redirect()->route('DetailPembelianPage', $order->receipt_number)->with('success', 'Order created successfully!');
     }

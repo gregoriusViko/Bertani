@@ -134,9 +134,10 @@
             <div class="flex justify-center h-20 overflow-y-auto">
                 <img id="gambar-transfer" class="h-30 md:h-50" alt="bukti" onclick="window.open(this.src, '_blank');">
             </div>
-            <div class="text-xs md:text-base font-libre-franklin font-bold">
-                <p class="text-sm md:text-base">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
-                <p class="text-sm md:text-base">Laporkan jika terjadi penipuan. <a id="link_lapor" href=""
+            <div class="text-xs md:text-base font-libre-franklin">
+                <p class="text-sm md:text-base font-normal">Tekan gambar untuk melihat bukti pembayaran.</p>
+                <p class="text-sm md:text-base font-bold">Mohon cek rekening anda sebelum melakukan konfirmasi pesanan.</p>
+                <p class="text-sm md:text-base font-bold">Laporkan jika terjadi penipuan. <a id="link_lapor" href=""
                         class="hover:underline hover:text-red-500 text-sm md:text-base">Disini</a></p>
             </div>
             <div class="mt-4 flex justify-end space-x-2">
