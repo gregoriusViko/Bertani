@@ -58,6 +58,7 @@
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     value="{{ $user->name }}" required readonly />
             </div>
+            @if(!Auth::guard('admin')->check())
             <div class="mb-5">
                 <label for="alamat-input"
                     class="block mb-1 text-base font-libre-franklin font-semibold  text-black">Alamat</label>
@@ -65,6 +66,7 @@
                     class="bg-gray-50 border mb-2 border-gray-300 text-black text-base font-libre-franklin font-normal items-center pl-3 py-1 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     value="{{ $user->home_address }}" required readonly />
             </div>
+            @endif
             <div class="mb-5">
                 <label for="notelp-input" class="block mb-1 text-base font-libre-franklin font-semibold  text-black">No
                     Telepon</label>
@@ -173,162 +175,126 @@
 </x-layout>
 
 <script>
-    // Global variable to track if profile image should be deleted
+    // Variabel global untuk melacak mode edit
+    let isEditMode = false;
     let shouldDeleteProfileImage = false;
 
-    function toggleAllInputs() {
-        var inputs = document.querySelectorAll('input[readonly], select[disabled]');
-        var isEditMode = !inputs[0].hasAttribute('readonly');
-
-        // Input email tetap readonly meskipun tombol edit ditekan
-        var emailInput =document.getElementById('email-input');
-        emailInput.setAttribute('readonly', true);
-        emailInput.style.backgroundColor = '#f3f4f6';
-
-        // Tampilkan notif-message ketika tombol edit diaktifkan
-        var notifMessage = document.getElementById('notif-message');
-        notifMessage.style.display = isEditMode ? 'none' : 'block';
-        var editProf = document.getElementById('editGbr');
-        const fileInput = document.getElementById('fileInputAvatar');
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('profile-form');
+        const saveButton = document.getElementById('save-button');
+        const editButton = document.getElementById('edit-button');
+        const editProf = document.getElementById('editGbr');
+        const hapusProf = document.getElementById('hapusGbr');
+        const notifMessage = document.getElementById('notif-message');
+        const emailInput = document.getElementById('email-input');
         const avatar = document.getElementById('avatar');
+        const fileInput = document.getElementById('fileInputAvatar');
+        const bankInput = document.getElementById('bank-input');
+        const rekeningInput = document.getElementById('rekening-input');
+        const norekDiv = document.getElementById('norek');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
 
-        var hapusProf = document.getElementById('hapusGbr');
+        // Fungsi untuk menutup pesan (baik error maupun sukses)
+        function closeMessage(elementId) {
+            const messageElement = document.getElementById(elementId);
+            if (messageElement) {
+                messageElement.style.display = 'none';
+            }
+        }
 
-        editProf.style.display = isEditMode ? 'hidden' : 'block';
-        // Ketika tombol edit diklik, buka input file
-        editGbr.addEventListener('click', () => {
+        // Hilangkan pesan otomatis setelah beberapa detik
+        if (successMessage) {
+            setTimeout(() => {
+                closeMessage('successMessage');
+            }, 2000); // 2 detik
+        }
+        if (errorMessage) {
+            setTimeout(() => {
+                closeMessage('errorMessage');
+            }, 2000); // 2 detik
+        }
+
+        // Fungsi toggle mode edit
+        function toggleEditMode() {
+            isEditMode = !isEditMode; // Balik status edit mode
+            const inputs = document.querySelectorAll('input, select');
+
+            // Tampilkan atau sembunyikan elemen yang sesuai
+            notifMessage.style.display = isEditMode ? 'block' : 'none';
+            editProf.style.display = isEditMode ? 'block' : 'none';
+            hapusProf.style.display = isEditMode ? 'block' : 'none';
+
+            // Atur properti readonly/disabled pada input dan select
+            inputs.forEach(input => {
+                if (input.id === 'email-input') {
+                    input.readOnly = true; // Email tetap readonly
+                    input.style.backgroundColor = '#f3f4f6';
+                } else {
+                    input.readOnly = !isEditMode;
+                    input.disabled = !isEditMode && input.tagName === 'SELECT';
+                }
+            });
+
+            // Atur tombol simpan
+            saveButton.disabled = !isEditMode;
+        }
+
+        // Event listener tombol edit untuk mengganti mode
+        editButton.addEventListener('click', toggleEditMode);
+
+        // Event listener tombol edit gambar
+        editProf.addEventListener('click', () => {
             fileInput.click();
         });
 
-        // Ketika file dipilih, ganti gambar avatar
+        // Event listener input file gambar
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                // Buat URL sementara untuk pratinjau gambar
                 const imageUrl = URL.createObjectURL(file);
                 avatar.src = imageUrl;
-
-                console.log('File yang dipilih:', file.name);
-                document.getElementById('hapusProfil').value = 0;
+                shouldDeleteProfileImage = false; // Reset jika ada perubahan gambar
             }
         });
 
-        // Tambahkan event listener untuk tombol hapus
+        // Event listener tombol hapus gambar
         hapusProf.addEventListener('click', () => {
             const defaultImage = './img/orang.jpeg.jpg'; // Path ke gambar default
-
-            // Set flag to delete profile image when save is clicked
-            shouldDeleteProfileImage = true;
-
-            // Temporarily change avatar to default image
             avatar.src = defaultImage;
-            document.getElementById('hapusProfil').value = 1;
+            shouldDeleteProfileImage = true; // Tandai untuk hapus gambar
         });
 
-        hapusProf.style.display = isEditMode ? 'hidden' : 'block';
+        // Event listener form input untuk validasi
+        form.addEventListener('input', () => {
+            const addressInput = document.getElementById('alamat-input').value.trim();
+            const bankInputVal = bankInput.value.trim();
+            const rekeningInputVal = rekeningInput.value.trim();
 
-        // Mengaktifkan atau menonaktifkan readonly dan disabled pada input dan select
-        inputs.forEach(input => {
-            if (isEditMode) {
-                if (input.tagName === 'SELECT') {
-                    input.setAttribute('disabled', true);
-                } else {
-                    input.setAttribute('readonly', true);
-                }
-                input.value = input.getAttribute('data-original');
-            } else {
-                if (input.tagName === 'SELECT') {
-                    input.removeAttribute('disabled');
-                } else {
-                    input.removeAttribute('readonly');
-                }
-            }
+            // Validasi form
+            const isFormValid =
+                addressInput.length > 0 &&
+                (bankInputVal.length === 0 || rekeningInputVal.length === 0 || (bankInputVal.length > 0 && rekeningInputVal.length >= 0 && form.checkValidity()));
 
-            if (!isEditMode) {
-                const bankInput = document.getElementById('bank-input');
-                if (!bankInput.value) {
-                    bankInput.value = '';
-                }
-            }
+            // Tampilkan div norek jika bank dipilih
+            norekDiv.style.display = bankInputVal.length > 0 ? 'block' : 'none';
 
-            // Set warna border menjadi hitam saat aktif
-            if (!input.hasAttribute('readonly') && !input.hasAttribute('disabled')) {
-                input.style.borderColor = 'black';
-            }
+            // Atur tombol simpan
+            saveButton.disabled = !isFormValid;
         });
 
-        // Aktifkan atau nonaktifkan tombol simpan
-        document.getElementById('save-button').disabled = isEditMode;
-    }
+        // Event listener bank input untuk pengaturan rekening
+        bankInput.addEventListener('change', function () {
+            const bankMaxDigits = {
+                BRI: 15,
+                BNI: 10,
+                Mandiri: 13,
+                BCA: 10,
+            };
 
-    const saveButton = document.getElementById('save-button');
-    const form = document.getElementById('profile-form');
+            rekeningInput.value = '';
 
-    // Simulasi: Aktifkan tombol setelah form diisi (contoh sederhana)
-    form.addEventListener('input', () => {
-        const addressInput = document.getElementById('alamat-input').value.trim();
-        const bankInput = document.getElementById('bank-input').value.trim();
-        const rekeningInput = document.getElementById('rekening-input').value.trim();
-
-        // Tombol simpan aktif jika alamat diisi, terlepas dari status bank dan rekening
-        const isFormValid = addressInput.length > 0 && (bankInput.length === 0 || rekeningInput.length === 0 || (bankInput.length > 0 && rekeningInput.length >= 0 && form.checkValidity()));
-
-        saveButton.disabled = !isFormValid; // Aktifkan tombol jika valid
-
-        // Sembunyikan atau tampilkan div #norek berdasarkan nilai bankInput
-        const norekDiv = document.getElementById('norek');
-        if (bankInput.length === 0) {
-            norekDiv.style.display = 'none'; // Sembunyikan div norek jika bankInput kosong
-        } else {
-            norekDiv.style.display = 'block'; // Tampilkan div norek jika bankInput memiliki nilai
-        }
-    });
-
-    // Modify the form submission to handle profile image deletion
-    document.getElementById('profile-form').addEventListener('submit', function(event) {
-        if (shouldDeleteProfileImage) {
-            // Submit the delete profile image form
-            document.getElementById('delete-profile-image-form').submit();
-
-            // Reset the flag
-            shouldDeleteProfileImage = false;
-        }
-    });
-
-    // Function to close the message component
-    function closeMessage(elementId) {
-        const messageElement = document.getElementById(elementId);
-        if (messageElement) {
-            messageElement.style.display = 'none';
-        }
-    }
-
-    // Hilangkan pesan secara otomatis setelah 5 detik
-    window.onload = function() {
-        const messageElement = document.getElementById('successMessage');
-        if (messageElement) {
-            setTimeout(() => {
-                closeMessage('successMessage');
-            }, 2000);
-        }
-    };
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const bankInput = document.getElementById('bank-input');
-        const rekeningInput = document.getElementById('rekening-input');
-
-        // Atur panjang nomor rekening berdasarkan bank yang dipilih
-        const bankMaxDigits = {
-            BRI: 15,
-            BNI: 10,
-            Mandiri: 13,
-            BCA: 10,
-        };
-
-        bankInput.addEventListener('change', function() {
             const selectedBank = bankInput.value;
-            
-
             if (selectedBank in bankMaxDigits) {
                 const maxLength = bankMaxDigits[selectedBank];
                 rekeningInput.setAttribute('maxlength', maxLength);
@@ -338,21 +304,16 @@
                     `Nomor rekening untuk ${selectedBank} harus ${maxLength} digit.`
                 );
             }
-
-            // Perbarui visibilitas div norek saat bank dipilih
-            if (selectedBank.length === 0) {
-                document.getElementById('norek').style.display = 'hidden'; // Sembunyikan jika bank tidak dipilih
-            } else {
-                document.getElementById('norek').style.display = 'block'; // Tampilkan jika bank dipilih
-            }
         });
 
-        // Pastikan aturan diperbarui saat halaman dimuat
-        if (bankInput.value) {
-            bankInput.dispatchEvent(new Event('change'));
-        }
+        // Event listener untuk form submit
+        form.addEventListener('submit', function (event) {
+            if (shouldDeleteProfileImage) {
+                // Submit form untuk menghapus gambar profil
+                document.getElementById('delete-profile-image-form').submit();
+            }
+        });
     });
-
-    saveButton.disabled = false;
 </script>
+
 

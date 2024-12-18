@@ -70,6 +70,9 @@ class ProfileController extends Controller
                 },
             ];
         }
+        if(Auth::guard('admin')->check()){
+            $rules['home_address'] = '';
+        }
 
         $validatedData = $request->validate($rules);
         // Dapat user
