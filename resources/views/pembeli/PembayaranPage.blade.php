@@ -110,7 +110,7 @@
         @endif
 
         <!-- Pembayaran COD -->
-        @if ($order->payment_proof === 'COD')
+        @if ($order->payment_proof === 'Cash')
             <div class="col-span-2">
                 <div class="ml-4 grid grid-flow-row font-inter my-3 mx-2">
                     {{-- <h2 class="font-semibold">Metode Pembayaran: COD</h2> --}}
