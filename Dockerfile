@@ -27,7 +27,7 @@ COPY package.json package-lock.json* vite.config.js tailwind.config.js* postcss.
 COPY resources/ resources/
 COPY public/ public/
 COPY app/ app/
-COPY .env .
+COPY config/ config/
 
 RUN npm ci
 # (Tambahkan COPY app/ app/ jika Anda menggunakan class Tailwind di dalam controller atau komponen Livewire)

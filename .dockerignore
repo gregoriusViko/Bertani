@@ -7,8 +7,8 @@
 /public/hot
 
 # File Rahasia & Environment
-# .env
-# .env.*
+.env
+.env.*
 
 # Mengabaikan file hasil development lokal, tapi tetap mempertahankan foldernya
 /storage/logs/*.log
