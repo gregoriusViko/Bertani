@@ -2,14 +2,11 @@
 # Tahap 1: Build Dependencies PHP (Composer)
 # ==========================================
 FROM composer:2.7 as vendor
-
 WORKDIR /app
 
-# Salin file yang dibutuhkan untuk instalasi dependensi
 COPY database/ database/
 COPY composer.json composer.lock ./
 
-# Install vendor tanpa dev-dependencies untuk keamanan & ukuran
 RUN composer install \
     --ignore-platform-reqs \
     --no-interaction \
@@ -22,24 +19,21 @@ RUN composer install \
 # Tahap 2: Build Aset Frontend (Node.js)
 # ==========================================
 FROM node:20-alpine as frontend
-
 WORKDIR /app
 
-# Install NPM dependencies
 COPY package.json package-lock.json* vite.config.js ./
 RUN npm ci
 
-# Salin resource frontend dan build (misal: tailwind, vue, react)
 COPY resources/ resources/
 COPY public/ public/
 RUN npm run build
 
 # ==========================================
-# Tahap 3: Image Produksi Akhir
+# Tahap 3: Image Produksi Akhir (PHP-FPM Alpine)
 # ==========================================
 FROM php:8.2-fpm-alpine
 
-# Install ekstensi sistem yang dibutuhkan Laravel
+# Install ekstensi minimal & esensial untuk Laravel + Reverb
 RUN apk add --no-cache \
     zip \
     libzip-dev \
@@ -57,28 +51,20 @@ RUN apk add --no-cache \
     pcntl \
     bcmath \
     gd \
-    intl
+    intl \
+    sockets
 
 WORKDIR /var/www/html
 
-# Salin konfigurasi PHP kustom jika ada (opsional)
-# COPY php.ini /usr/local/etc/php/conf.d/custom.ini
-
-# Salin folder vendor dari tahap 1
+# Salin hasil eliminasi dari Tahap 1 dan Tahap 2
 COPY --from=vendor /app/vendor/ ./vendor/
-
-# Salin folder public (hasil build aset) dari tahap 2
 COPY --from=frontend /app/public/ ./public/
 
 # Salin sisa kode aplikasi
 COPY . .
 
-# Berikan hak akses kepada user www-data (standar PHP-FPM)
-RUN chown -R www-data:www-data \
-    /var/www/html/storage \
-    /var/www/html/bootstrap/cache
+# Atur kepemilikan file secara ketat ke user www-data demi keamanan
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Ekspos port 9000 untuk PHP-FPM
 EXPOSE 9000
-
 CMD ["php-fpm"]

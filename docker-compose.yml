@@ -1,7 +1,75 @@
+version: '3.8'
+
 services:
-  bertani-app:
-    build: .
+  # Web Server Utama (Nginx Alpine - Super Ringan & Cepat)
+  laravel-web:
+    image: nginx:alpine
+    container_name: laravel-web
+    restart: unless-stopped
     ports:
-      - "9000:9000"
-    env_file:
-      - .env # Mengambil file .env yang ada di server host
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - laravel-app
+      - laravel-reverb
+
+  # Pemroses Kode PHP Laravel (PHP-FPM Alpine)
+  laravel-app:
+    build:
+      context: .
+    container_name: laravel-app
+    restart: unless-stopped
+    environment:
+      - APP_ENV=production
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql-db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql-db
+
+  # Server Khusus WebSockets (Laravel Reverb - PHP-CLI Alpine)
+  laravel-reverb:
+    build:
+      context: .
+    container_name: laravel-reverb
+    restart: unless-stopped
+    command: php artisan reverb:start --host=0.0.0.0 --port=8080
+    expose:
+      - "8080"
+    environment:
+      - APP_ENV=production
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql-db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql-db
+
+  # Database Engine (MariaDB - Lebih ringan dari MySQL standar)
+  mysql-db:
+    image: mariadb:10.11
+    container_name: mysql-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: rootsecurepassword
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:

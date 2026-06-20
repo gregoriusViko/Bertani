@@ -1,8 +1,43 @@
+# Dependensi Lokal
 /node_modules
 /vendor
+
+# Aset Build Lokal
 /public/build
 /public/hot
+
+# File Rahasia & Environment
 .env
-.git
-.phpunit.cache
+.env.*
+
+# Mengabaikan file hasil development lokal, tapi tetap mempertahankan foldernya
+/storage/logs/*.log
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*.php
+/storage/app/public/*
+!/storage/app/public/.gitignore
+
+# Kunci rahasia OAuth/Passport (tetap dipertahankan)
 storage/*.key
+
+# Version Control
+.git
+.gitignore
+
+# Testing
+/tests
+phpunit.xml
+Pest.php
+.phpunit.cache
+.phpunit.result.cache
+
+# Infrastruktur Docker
+Dockerfile
+docker-compose.yml
+nginx.conf
+
+# Editor & IDE
+.vscode
+.idea
+README.md
