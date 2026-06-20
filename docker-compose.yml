@@ -1,0 +1,7 @@
+services:
+  bertani-app:
+    build: .
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env # Mengambil file .env yang ada di server host
