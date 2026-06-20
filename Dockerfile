@@ -21,11 +21,17 @@ RUN composer install \
 FROM node:20-alpine as frontend
 WORKDIR /app
 
-COPY package.json package-lock.json* vite.config.js ./
-RUN npm ci
+COPY package.json package-lock.json* vite.config.js tailwind.config.js* postcss.config.js* ./
 
+# Masukkan SEMUA folder yang mungkin berisi class Tailwind (sesuai isi content di tailwind.config.js)
 COPY resources/ resources/
 COPY public/ public/
+COPY app/ app/
+COPY .env .
+
+RUN npm ci
+# (Tambahkan COPY app/ app/ jika Anda menggunakan class Tailwind di dalam controller atau komponen Livewire)
+
 RUN npm run build
 
 # ==========================================
@@ -34,6 +40,7 @@ RUN npm run build
 FROM php:8.2-fpm-alpine
 
 # Install ekstensi minimal & esensial untuk Laravel + Reverb
+# Install ekstensi minimal & esensial untuk Laravel + Reverb
 RUN apk add --no-cache \
     zip \
     libzip-dev \
@@ -41,11 +48,10 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     libpng-dev \
     icu-dev \
-    oniguruma-dev \
+    linux-headers \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
     pdo_mysql \
-    mbstring \
     zip \
     exif \
     pcntl \
@@ -56,12 +62,11 @@ RUN apk add --no-cache \
 
 WORKDIR /var/www/html
 
+COPY . .
+
 # Salin hasil eliminasi dari Tahap 1 dan Tahap 2
 COPY --from=vendor /app/vendor/ ./vendor/
 COPY --from=frontend /app/public/ ./public/
-
-# Salin sisa kode aplikasi
-COPY . .
 
 # Atur kepemilikan file secara ketat ke user www-data demi keamanan
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
